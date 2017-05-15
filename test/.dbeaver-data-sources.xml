@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data-sources>
+	<data-source id="derby-15c0b3f716e-6e6d58e17a3bdefd" provider="generic" driver="derby" name="Derby - testDB" save-password="true" show-system-objects="true" read-only="false">
+		<connection server="" database="C:\workspace\testDB" url="jdbc:derby:C:\workspace\testDB" type="dev"/>
+	</data-source>
+</data-sources>
