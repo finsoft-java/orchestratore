@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="persistenceUnit" transaction-type="JTA">
+		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+		<jta-data-source>jdbc/testDB</jta-data-source>
+		<class>it.finsoft.entity.Calendario</class>
+		<class>it.finsoft.entity.CalendarioMilestone</class>
+		<class>it.finsoft.entity.DettaglioEvento</class>
+		<class>it.finsoft.entity.Entita</class>
+		<class>it.finsoft.entity.Evento</class>
+		<class>it.finsoft.entity.Milestone</class>
+		<class>it.finsoft.entity.Semaforo</class>
+		<class>it.finsoft.entity.TipoEvento</class>
+		<properties>			
+			<!--  Non abbiamo user e pwd per accedere al db
+			<property name="javax.persistence.jdbc.user" value="user" />
+			<property name="javax.persistence.jdbc.password" value="user" />
+			<property name="hibernate.hbm2ddl.auto" value="create-drop" /> -->
+			
+			<!-- aggiunta per prevenire l'errore:
+			Unable to build Hibernate SessionFactory at 
+			org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.
+			persistenceException(EntityManagerFactoryBuilderImpl.java:967) -->
+			
+			<property name="hibernate.transaction.jta.platform" 
+			value="org.hibernate.service.jta.platform.internal.SunOneJtaPlatform" />
+			
+			<property name="javax.persistence.schema-generation.database.action" value="drop-and-create" />			
+			<property name="hibernate.show_sql" value="true" />
+		</properties>
+	</persistence-unit>
+</persistence>
