@@ -20,6 +20,9 @@ public class Entita implements Serializable {
 	@Column(name ="ID_ENTITA")
 	private Long idEntita;
 	
+	@Column(name ="CODICE", length=20)
+	private String codice;
+	
 	@Column(name ="ACRONIMO")
 	private String acronimo;
 	
@@ -27,74 +30,69 @@ public class Entita implements Serializable {
 	private String descrizione;
 
 	
-	//costruttori
+	/*costruttori*/
 	public Entita() {
 		
 	}
 
-	public Entita(String acronimo, String descrizione) {
+
+	public Entita(String codice, String acronimo, String descrizione) {
+		this.codice = codice;
 		this.acronimo = acronimo;
 		this.descrizione = descrizione;
 	}
 
-	//getter and setter
-	public Long getidEntita() {
+	/*getter and setter*/
+	public Long getIdEntita() {
 		return idEntita;
 	}
 
-	public void setidEntita(Long idEntita) {
+
+	public void setIdEntita(Long idEntita) {
 		this.idEntita = idEntita;
 	}
+
+
+	public String getCodice() {
+		return codice;
+	}
+
+
+	public void setCodice(String codice) {
+		this.codice = codice;
+	}
+
 
 	public String getAcronimo() {
 		return acronimo;
 	}
 
+
 	public void setAcronimo(String acronimo) {
 		this.acronimo = acronimo;
 	}
+
 
 	public String getDescrizione() {
 		return descrizione;
 	}
 
+
 	public void setDescrizione(String descrizione) {
 		this.descrizione = descrizione;
 	}
 
-	//hashcode and equals
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((idEntita == null) ? 0 : idEntita.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Entita other = (Entita) obj;
-		if (idEntita == null) {
-			if (other.idEntita != null)
-				return false;
-		} else if (!idEntita.equals(other.idEntita))
-			return false;
-		return true;
-	}
-
-	//tostring
+	/*to string*/
 	@Override
 	public String toString() {
-		return "Entita [ID_entita=" + idEntita + ", acronimo=" + acronimo + ", descrizione=" + descrizione + "]";
+		return "Entita [idEntita=" + idEntita + ", codice=" + codice + ", acronimo=" + acronimo + ", descrizione="
+				+ descrizione + "]";
 	}
-
-		
+	
+	
+	
+	
 	
 
+	
 }
