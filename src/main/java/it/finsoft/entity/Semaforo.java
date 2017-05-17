@@ -24,6 +24,9 @@ public class Semaforo implements Serializable {
 	@Column(name ="ID_SEMAFORO")
 	private Long idSemaforo;
 	
+	@Column(name ="CODICE")
+	private String codice;
+	
 	@Column(name ="DESCRIZIONE")
 	private String descrizione;
 	
@@ -35,22 +38,32 @@ public class Semaforo implements Serializable {
 			)
 	private Collection<Milestone>processiMilestones;
 
-	//costruttori
+	/*costruttori*/
 	public Semaforo() {
 		
-	}
+	}	
 
-	public Semaforo(String descrizione) {
+	public Semaforo(String codice, String descrizione, Collection<Milestone> processiMilestones) {
+		this.codice = codice;
 		this.descrizione = descrizione;
+		this.processiMilestones = processiMilestones;
 	}
 
-	//getter and setter
-	public Long getidSemaforo() {
+	/*getter and setter*/
+	public Long getIdSemaforo() {
 		return idSemaforo;
 	}
 
-	public void setidSemaforo(Long idSemaforo) {
+	public void setIdSemaforo(Long idSemaforo) {
 		this.idSemaforo = idSemaforo;
+	}
+
+	public String getCodice() {
+		return codice;
+	}
+
+	public void setCodice(String codice) {
+		this.codice = codice;
 	}
 
 	public String getDescrizione() {
@@ -61,36 +74,20 @@ public class Semaforo implements Serializable {
 		this.descrizione = descrizione;
 	}
 
-	//hashcode and equals
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((idSemaforo == null) ? 0 : idSemaforo.hashCode());
-		return result;
+	public Collection<Milestone> getProcessiMilestones() {
+		return processiMilestones;
 	}
 
-	//tostring
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Semaforo other = (Semaforo) obj;
-		if (idSemaforo == null) {
-			if (other.idSemaforo != null)
-				return false;
-		} else if (!idSemaforo.equals(other.idSemaforo))
-			return false;
-		return true;
+	public void setProcessiMilestones(Collection<Milestone> processiMilestones) {
+		this.processiMilestones = processiMilestones;
 	}
 
+	/*to string*/
 	@Override
 	public String toString() {
-		return "Semaforo [ID_semaforo=" + idSemaforo + ", descrizione=" + descrizione + "]";
+		return "Semaforo [idSemaforo=" + idSemaforo + ", codice=" + codice + ", descrizione=" + descrizione
+				+ ", processiMilestones=" + processiMilestones + "]";
 	}
-	
+
+
 }

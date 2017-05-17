@@ -16,6 +16,7 @@ public class EventoManager {
 	
 
 	public Evento save(Evento tosave) {
+		System.out.println("post manager ...." + tosave.toString());
 		return em.merge(tosave);
 	}
 
@@ -34,7 +35,7 @@ public class EventoManager {
 	 */
 	
 	public List<Evento> findAll() {		
-		return em.createQuery("FROM Eventi", Evento.class).getResultList();
+		return em.createQuery("FROM Evento", Evento.class).getResultList();
 	}
 
 }

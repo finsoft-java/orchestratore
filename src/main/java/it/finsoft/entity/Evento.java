@@ -30,11 +30,11 @@ public class Evento implements Serializable {
 	@Column(name ="ID_EVENTO")
 	private Long idEvento;	
 	
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = true)
 	@JoinColumn(name = "ID_TIPO_EVENTO", referencedColumnName ="ID_TIPO")
 	private TipoEvento tipoEvento; //foreign key tabella Tipi_evento	
 	
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = true)
 	@JoinColumn(name = "ID_ENTITA", referencedColumnName ="ID_ENTITA")
 	private Entita entita; //foreign key tabella entita
 	
@@ -55,18 +55,17 @@ public class Evento implements Serializable {
 	}
 
 	public Evento(TipoEvento tipoEvento, Entita entita, Date tStampEvento, String tag) {
-		super();
 		this.tipoEvento = tipoEvento;
 		this.entita = entita;
 		this.tStampEvento = tStampEvento;
 		this.tag = tag;
 	}
 
-	public Long getIDevento() {
+	public Long getidEvento() {
 		return idEvento;
 	}
 
-	public void setIDevento(Long idEvento) {
+	public void setidEvento(Long idEvento) {
 		this.idEvento = idEvento;
 	}
 

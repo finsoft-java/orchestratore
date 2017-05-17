@@ -14,7 +14,7 @@ import it.finsoft.entity.Semaforo;
 import it.finsoft.manager.SemaforoManager;
 
 @Stateless
-@Path("semafori")
+@Path("polling")
 @Produces({ MediaType.APPLICATION_JSON })
 public class SemaforoResources {
 	
@@ -23,7 +23,6 @@ public class SemaforoResources {
 	
 	/* ---- TEST RESOURCES ---- */
 	@GET
-	@Path("test")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String prova(){
 		System.out.println("ok semafori");
@@ -31,10 +30,12 @@ public class SemaforoResources {
 	}
 	/* ---- TEST RESOURCES ---- */
 
+	/*
 	@GET
 	public List<Semaforo> findAll() {
 		return semaforomanager.findAll();
 	}
+	*/
 
 	@GET
 	@Path("{id}")

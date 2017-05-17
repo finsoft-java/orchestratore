@@ -1,0 +1,3 @@
+NOTE 
+
+File per non lasciar la cartella vuota e non creare errori di progetto!

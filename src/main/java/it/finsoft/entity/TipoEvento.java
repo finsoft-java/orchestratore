@@ -20,24 +20,37 @@ public class TipoEvento implements Serializable {
 	@Column(name ="ID_TIPO")
 	private Long idTipo;
 	
+	@Column(name ="CODICE")
+	private String codice;
+	
 	@Column(name ="DESCRIZIONE")
 	private String descrizione;
 
-	//costruttori
+	/*costruttori*/
 	public TipoEvento() {
 		
 	}
 
-	public TipoEvento(String descrizione) {
+	public TipoEvento(String codice, String descrizione) {
+		this.codice = codice;
 		this.descrizione = descrizione;
 	}
 
-	public Long getidTipo() {
+	/*getter and setter*/
+	public Long getIdTipo() {
 		return idTipo;
 	}
 
-	public void setidTipo(Long idTipo) {
+	public void setIdTipo(Long idTipo) {
 		this.idTipo = idTipo;
+	}
+
+	public String getCodice() {
+		return codice;
+	}
+
+	public void setCodice(String codice) {
+		this.codice = codice;
 	}
 
 	public String getDescrizione() {
@@ -48,36 +61,14 @@ public class TipoEvento implements Serializable {
 		this.descrizione = descrizione;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((idTipo == null) ? 0 : idTipo.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		TipoEvento other = (TipoEvento) obj;
-		if (idTipo == null) {
-			if (other.idTipo != null)
-				return false;
-		} else if (!idTipo.equals(other.idTipo))
-			return false;
-		return true;
-	}
-
+	/*to string*/
 	@Override
 	public String toString() {
-		return "TipiEvento [IDtipo=" + idTipo + ", descrizione=" + descrizione + "]";
+		return "TipoEvento [idTipo=" + idTipo + ", codice=" + codice + ", descrizione=" + descrizione + "]";
 	}
+	
+	
+	
+	
 
-	
-	
 }

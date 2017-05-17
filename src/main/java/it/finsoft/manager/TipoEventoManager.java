@@ -29,7 +29,7 @@ public class TipoEventoManager {
 	}
 	
 	public List<TipoEvento> findAll() {		
-		return em.createQuery("FROM TipiEvento", TipoEvento.class).getResultList();
+		return em.createQuery("FROM TipoEvento", TipoEvento.class).getResultList();
 	}
 
 }
