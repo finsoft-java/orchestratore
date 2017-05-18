@@ -16,6 +16,7 @@ plugin eclipse consigliati:
 == INSTALLAZIONE ==
 -- DERBY --
 <<<<<<< Upstream, based on branch 'master' of https://github.com/luca-vercelli/orchestratore.git
+<<<<<<< Upstream, based on branch 'master' of https://github.com/luca-vercelli/orchestratore.git
 * scompattare il db (vuoto) dbOrchestratore.7z dalla directory Utility/db, es. in c:\miopercorso\dbOrchestratore
   (non è necessario installare derby server, perchè utilizziamo la versione embedded)
 
@@ -67,6 +68,9 @@ Per evitarlo, rimuovere l'opzione "drop-and-create" nel file persistence.xml.
 (TODO)
 =======
 * scompattare il db (vuoto) dbOrchestratore.7z dalla directory Utility/db, in una cartella a piacere
+=======
+* scompattare il db (vuoto) dbOrchestratore.7z dalla directory Utility/db, es. in c:\miopercorso\dbOrchestratore
+>>>>>>> b29b131 documentazione quasi completata
   (non è necessario installare derby server, perchè utilizziamo la versione embedded)
 
 
@@ -94,18 +98,24 @@ Per evitarlo, rimuovere l'opzione "drop-and-create" nel file persistence.xml.
 * Copiare il file jboss-logging-3.3.0.Final.jar (dalla cartella Utiliy/jar) in c:\glassfish4\glassfish\module
 
 --- CONFIGURAZIONE DATASOURCE DERBY ---
-* Avviare il server glassfish da Eclipse (se non si è avviato in automatico) 
+* Avviare (o riavviare) il server glassfish da Eclipse 
 * Aprire un browser e inserire l'indirizzo "http://localhost:4848/" per accedere alla console di amministrazione
 * (1) menù JDBC -> JDBC Connection Pool -> New:
 ** Pool name: orchestratore
 ** Resources type: javax.sql.DataSource
 ** Database Driver Vendor: Embedded-Derby-30
 * cliccare su next e andare in fondo alla nuova pagina e nella tabella "Additional Properties" impostare il seguente parametro:
-** DatabaseName: inserire il percorso assoluto del db (nel nostro caso c:\workspace\dbOrchestratore)
+** DatabaseName: inserire il percorso assoluto del db (es. c:\miopercorso\dbOrchestratore)
 ** rimuovere tutte le altre voci
-** VARIANTE: se si imposta anche il parametro createDatabase=true il db verrà creato in automatico se non esiste
 * (2) menù JDBC -> JDBC Resources -> New
 **  JNDI name: jdbc/orchestratore 
 **  poolname: orchestratore
 >>>>>>> 3b2e3e9 completata documentazione
+
+--- CREAZIONE DELLE TABELLE ---
+Attualmente, le tabelle vengono cancellate e ricreate automaticamente a ogni avvio.
+Per evitarlo, rimuovere l'opzione "drop-and-create" nel file persistence.xml.
+
+--- POPOLAMENTO DELLE TABELLE CON DATI DI DEFAULT ---
+(TODO)
 
