@@ -95,7 +95,7 @@ Per evitarlo, rimuovere l'opzione "drop-and-create" nel file persistence.xml.
 
 --- AGGIUNTA FILE NECESSARI PER IL DATASOURCE DERBY ---
 * Aggiungere i "derby*.jar" contenuti nella cartella Utility/jar nella cartella c:\glassfish4\glassfish\domains\domain1\lib\ext
-* Copiare il file jboss-logging-3.3.0.Final.jar (dalla cartella Utiliy/jar) in c:\glassfish4\glassfish\module
+* Copiare il file jboss-logging-3.3.0.Final.jar (dalla cartella Utiliy/jar) in c:\glassfish4\glassfish\modules
 
 --- CONFIGURAZIONE DATASOURCE DERBY ---
 * Avviare (o riavviare) il server glassfish da Eclipse 
