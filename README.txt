@@ -38,8 +38,11 @@ plugin eclipse consigliati:
 * Nella pagina seguente cliccare su finish  (*non* deployare ancora nulla nel dominio). L'aggiunta del progetto in glassfish (per il deployment) 
 * la si farà successivamente alla configurazione dei Data source.
 
+
 --- AGGIUNTA FILE NECESSARI PER IL DATASOURCE DERBY ---
-* Aggiungere i "jar" contenuti nella cartella Utility/jar nella cartella c:\glassfish4\glassfish\domains\domain1\lib\ext
+* Copiare i "derby*.jar" contenuti nella cartella Utility/jar nella cartella c:\glassfish4\glassfish\domains\domain1\lib\ext
+* Copiare jboss-logging-3.3.0.Final.jar (dalla cartella Utiliy/jar) in c:\glassfish4\glassfish\module
+
 
 --- CONFIGURAZIONE DATASOURCE DERBY ---
 * Avviare (o riavviare) il server glassfish da Eclipse 
