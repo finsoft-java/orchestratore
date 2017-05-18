@@ -21,9 +21,9 @@ import it.finsoft.entity.Entita;
 import it.finsoft.manager.EntitaManager;
 
 @Stateless
-@Path("resources/entita")
+@Path("collector")
 @Produces({ MediaType.APPLICATION_JSON })
-public class EntitaResources {
+public class CollectorResources {
 	
 	@Inject
 	EntitaManager em;
@@ -41,9 +41,13 @@ public class EntitaResources {
 	 * 
 	*/
 	@GET
-	public Entita create(@QueryParam("acronimo")String acronimo, 
-			@QueryParam("descrizione")String descrizione) {
+	public Entita create(
+			@QueryParam("codice")String codice,
+			@QueryParam("acronimo")String acronimo, 
+			@QueryParam("descrizione")String descrizione
+			) {
 		Entita ent = new Entita();
+		ent.setCodice(codice);
 		ent.setAcronimo(acronimo);
 		ent.setDescrizione(descrizione);
 		System.out.println("salva resources, salvo entita " + ent);
