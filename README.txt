@@ -34,7 +34,7 @@ plugin eclipse consigliati:
 * la si farà successivamente alla configurazione dei jdbc.
 
 *** AGGIUNTA FILE NECESSARI PER IL JDBC ***
-* aggiungere i "jar" contenuti nella cartella Utility/jar nella cartella c:\glassfish4\glassfish\domains\domain1\lib\ext
+* aggiungere i "derby*.jar" contenuti nella cartella Utility/jar nella cartella c:\glassfish4\glassfish\domains\domain1\lib\ext
 
 *** CONFIGURAZIONE JDBC ***
 * Al termine dei passaggi precedenti avviare il server glassfish (se non si è avviato in automatico), aprire un browser 
@@ -50,4 +50,7 @@ plugin eclipse consigliati:
 
 * a questo punto si può creare il JDBC Resources con il nome di jdbc/orchestratore, 
 * selezionando alla voce poolname il nome scelto nella creazione del connection pool
+
+* Prima di avviare il server, copiare il file jboss-logging-3.3.0.Final.jar (dalla cartella Utiliy/jar) nella directory "module" di 
+* glassfish (c:\glassfish4\glassfish\module)
 
