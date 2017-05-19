@@ -1,10 +1,8 @@
 package it.finsoft.entity;
 
-
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
-
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -20,38 +18,36 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name ="EVENTI")
+@Table(name = "EVENTI")
 public class Evento implements Serializable {
-	
+
 	private static final long serialVersionUID = 1706249082759274352L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name ="ID_EVENTO")
-	private Long idEvento;	
-	
-	@ManyToOne(optional = true)
-	@JoinColumn(name = "ID_TIPO_EVENTO", referencedColumnName ="ID_TIPO")
-	private TipoEvento tipoEvento; //foreign key tabella Tipi_evento	
-	
-	@ManyToOne(optional = true)
-	@JoinColumn(name = "ID_ENTITA", referencedColumnName ="ID_ENTITA")
-	private Entita entita; //foreign key tabella entita
-	
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name ="TSTAMP_EVENTO")
-	private Date tStampEvento = new Date(); //timestamp per la registrazione
-	
-	@Column(name ="TAG")
-	private String tag;	
-	
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "ID_EVENTO")
+	private Long idEvento;
 
-	
-	@OneToMany(cascade=CascadeType.ALL, mappedBy ="evento")
+	@ManyToOne(optional = true)
+	@JoinColumn(name = "ID_TIPO_EVENTO", referencedColumnName = "ID_TIPO")
+	private TipoEvento tipoEvento; // foreign key tabella Tipi_evento
+
+	@ManyToOne(optional = true)
+	@JoinColumn(name = "ID_ENTITA", referencedColumnName = "ID_ENTITA")
+	private Entita entita; // foreign key tabella entita
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "TSTAMP_EVENTO")
+	private Date tStampEvento = new Date(); // timestamp per la registrazione
+
+	@Column(name = "TAG")
+	private String tag;
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "evento")
 	private Collection<DettaglioEvento> dettaglioEvento;
 
 	public Evento() {
-		
+
 	}
 
 	public Evento(TipoEvento tipoEvento, Entita entita, Date tStampEvento, String tag) {
@@ -90,7 +86,7 @@ public class Evento implements Serializable {
 	}
 
 	public void settStampEvento(Date tStampEvento) {
-		 this.tStampEvento = tStampEvento;
+		this.tStampEvento = tStampEvento;
 	}
 
 	public String getTag() {
@@ -100,7 +96,7 @@ public class Evento implements Serializable {
 	public void setTag(String tag) {
 		this.tag = tag;
 	}
-	
+
 	public Collection<DettaglioEvento> getDettagliEvento() {
 		return dettaglioEvento;
 	}
@@ -139,10 +135,5 @@ public class Evento implements Serializable {
 		return "Eventi [IDevento=" + idEvento + ", tipoEvento=" + tipoEvento + ", entita=" + entita + ", tStampEvento="
 				+ tStampEvento + ", tag=" + tag + ", dettagliEvento=" + dettaglioEvento + "]";
 	}
-		
-	
-	}
 
-	
-
-
+}

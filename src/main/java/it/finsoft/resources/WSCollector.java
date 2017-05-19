@@ -23,7 +23,7 @@ import it.finsoft.manager.EntitaManager;
 @Stateless
 @Path("collector")
 @Produces({ MediaType.APPLICATION_JSON })
-public class CollectorResources {
+public class WSCollector {
 	
 	@Inject
 	EntitaManager em;
