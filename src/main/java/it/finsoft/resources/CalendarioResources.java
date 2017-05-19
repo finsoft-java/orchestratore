@@ -18,7 +18,7 @@ import it.finsoft.entity.Calendario;
 import it.finsoft.manager.CalendarioManager;
 
 @Stateless
-@Path("resources/calendariMilestones")
+@Path("resources/calendari")
 @Produces(MediaType.APPLICATION_JSON)
 public class CalendarioResources {
 	

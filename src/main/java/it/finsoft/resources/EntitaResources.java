@@ -18,7 +18,7 @@ import it.finsoft.entity.Entita;
 import it.finsoft.manager.EntitaManager;
 
 @Stateless
-@Path("resources/calendariMilestones")
+@Path("resources/entita")
 @Produces(MediaType.APPLICATION_JSON)
 public class EntitaResources {
 	

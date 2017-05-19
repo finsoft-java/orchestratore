@@ -18,7 +18,7 @@ import it.finsoft.entity.Evento;
 import it.finsoft.manager.EventoManager;
 
 @Stateless
-@Path("resources/calendariMilestones")
+@Path("resources/eventi")
 @Produces(MediaType.APPLICATION_JSON)
 public class EventoResources {
 	

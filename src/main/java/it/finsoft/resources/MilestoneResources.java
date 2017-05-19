@@ -18,7 +18,7 @@ import it.finsoft.entity.Milestone;
 import it.finsoft.manager.MilestoneManager;
 
 @Stateless
-@Path("resources/calendariMilestones")
+@Path("resources/milestones")
 @Produces(MediaType.APPLICATION_JSON)
 public class MilestoneResources {
 	
