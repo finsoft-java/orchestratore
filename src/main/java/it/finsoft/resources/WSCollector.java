@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.resource.spi.IllegalStateException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
@@ -18,29 +19,49 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import it.finsoft.entity.Entita;
+import it.finsoft.entity.Evento;
 import it.finsoft.manager.EntitaManager;
+import it.finsoft.manager.EventoManager;
 
 @Stateless
 @Path("collector")
 @Produces({ MediaType.APPLICATION_JSON })
-public class CollectorResources {
+public class WSCollector {
 	
 	@Inject
-	EntitaManager em;
+	EventoManager em;
 	
-	
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	public Entita create(Entita ent) {
-		System.out.println("post resources, salvo entita " + ent);
-		return em.save(ent);
+	@GET
+	public Evento create(
+			@QueryParam("codice")String tipoEvento,
+			@QueryParam("entita")String entita, 
+			@QueryParam("tag")String tag
+			) {
+		//Evento ev = new Evento();
+		/*ev.setTipoEvento(tipoEvento);
+		ev.setEntita(entita);*/
+		//ev.setTag(tag);
+		//System.out.println("salva resources, salvo entita " + ev);
+		//return em.save(ev);
+		
+		throw new UnsupportedOperationException("TODO");
 	}
+
+	/* ---- TEST RESOURCES ---- */
+	@GET
+	@Path("test")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String prova() {
+		System.out.println("ok collector");
+		return "ok collector";
+	}
+	/* ---- TEST RESOURCES ---- */
 	
 	/*
 	 * Metodo GET per inserire dati via http
 	 * 
 	*/
-	@GET
+	/*@GET
 	public Entita create(
 			@QueryParam("codice")String codice,
 			@QueryParam("acronimo")String acronimo, 
@@ -52,7 +73,8 @@ public class CollectorResources {
 		ent.setDescrizione(descrizione);
 		System.out.println("salva resources, salvo entita " + ent);
 		return em.save(ent);
-	}
+	}*/
+	
 	
 	/*
 	public Response getEventoAsJSON(@Context HttpHeaders httpHeaders, Entita entita1) {
@@ -63,6 +85,14 @@ public class CollectorResources {
 		System.out.println("post resources, salvo entita1 " + ents);
 		return Response.ok(ents).build();		 
 	}
+		
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Entita create(Entita ent) {
+		System.out.println("post resources, salvo entita " + ent);
+		return em.save(ent);
+	}
 	*/
+	
 
 }

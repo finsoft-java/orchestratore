@@ -29,7 +29,7 @@ public class DettaglioEventoManager {
 	}
 	
 	public List<DettaglioEvento> findAll() {		
-		return em.createQuery("FROM DettagliEvento", DettaglioEvento.class).getResultList();
+		return em.createQuery("FROM DettaglioEvento", DettaglioEvento.class).getResultList();
 	}
 
 }

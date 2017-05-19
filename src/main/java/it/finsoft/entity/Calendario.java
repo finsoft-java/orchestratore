@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "CALENDARI")
+@Table(name ="CALENDARI")
 public class Calendario implements Serializable {
 	
 	private static final long serialVersionUID = 6714115891652097006L;
