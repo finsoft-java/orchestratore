@@ -19,7 +19,7 @@ import it.finsoft.manager.SemaforoManager;
 
 @Stateless
 @Path("resources/semafori")
-@Produces({ MediaType.APPLICATION_JSON })
+@Produces({ MediaType.APPLICATION_JSON})
 public class SemaforoResources {
 
 	@Inject

@@ -1,68 +1,41 @@
 package it.finsoft.resources;
 
-import java.util.List;
-
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-
-import it.finsoft.entity.Entita;
+import it.finsoft.entity.Evento;
 import it.finsoft.manager.EntitaManager;
+import it.finsoft.manager.EventoManager;
+import it.finsoft.manager.TipoEventoManager;
 
 @Stateless
 @Path("collector")
 @Produces({ MediaType.APPLICATION_JSON })
 public class WSCollector {
-	
+
 	@Inject
-	EntitaManager em;
-	
-	
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	public Entita create(Entita ent) {
-		System.out.println("post resources, salvo entita " + ent);
-		return em.save(ent);
-	}
-	
+	EntitaManager entitam;
+	@Inject
+	EventoManager eventom;
+	@Inject
+	TipoEventoManager tipoevm;
+
 	/*
 	 * Metodo GET per inserire dati via http
-	 * 
-	*/
+	 * esegue due query per risolvere dal codiceEnt a Entita e da codiceTipi a TipoEvento 
+	 */
 	@GET
-	public Entita create(
-			@QueryParam("codice")String codice,
-			@QueryParam("acronimo")String acronimo, 
-			@QueryParam("descrizione")String descrizione
-			) {
-		Entita ent = new Entita();
-		ent.setCodice(codice);
-		ent.setAcronimo(acronimo);
-		ent.setDescrizione(descrizione);
-		System.out.println("salva resources, salvo entita " + ent);
-		return em.save(ent);
+	public Evento create(@QueryParam("entita") String codiceEnt, @QueryParam("tipiEvento") String codiceTipi,
+			@QueryParam("tag") String tag) {
+		Evento evento = new Evento();
+		evento.setEntita(entitam.findByCod(codiceEnt));
+		evento.setTipoEvento(tipoevm.findByCod(codiceTipi));
+		evento.setTag(tag);
+		System.out.println("salva resources, salvo entita " + evento);
+		return eventom.save(evento);
 	}
-	
-	/*
-	public Response getEventoAsJSON(@Context HttpHeaders httpHeaders, Entita entita1) {
-		List<Entita> ents = em.findAll();
-		ents.add(entita1);
-		System.out.println("post resources, creo entita1 " + ents);
-		em.save(entita1);
-		System.out.println("post resources, salvo entita1 " + ents);
-		return Response.ok(ents).build();		 
-	}
-	*/
-
 }

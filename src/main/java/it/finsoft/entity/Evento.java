@@ -1,6 +1,7 @@
 package it.finsoft.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
@@ -16,9 +17,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
 @Table(name = "EVENTI")
+@XmlRootElement
 public class Evento implements Serializable {
 
 	private static final long serialVersionUID = 1706249082759274352L;
@@ -44,7 +48,7 @@ public class Evento implements Serializable {
 	private String tag;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "evento")
-	private Collection<DettaglioEvento> dettaglioEvento;
+	private Collection<DettaglioEvento>dettaglioEvento=new ArrayList<>();
 
 	public Evento() {
 
@@ -97,6 +101,7 @@ public class Evento implements Serializable {
 		this.tag = tag;
 	}
 
+	@XmlTransient
 	public Collection<DettaglioEvento> getDettagliEvento() {
 		return dettaglioEvento;
 	}
@@ -133,7 +138,7 @@ public class Evento implements Serializable {
 	@Override
 	public String toString() {
 		return "Eventi [IDevento=" + idEvento + ", tipoEvento=" + tipoEvento + ", entita=" + entita + ", tStampEvento="
-				+ tStampEvento + ", tag=" + tag + ", dettagliEvento=" + dettaglioEvento + "]";
+				+ tStampEvento + ", tag=" + tag + "]";
 	}
 
 }

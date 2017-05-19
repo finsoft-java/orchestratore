@@ -9,38 +9,36 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Cascade;
-
 import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name ="CALENDARI_MILESTONES")
+@Table(name = "CALENDARI_MILESTONES")
 public class CalendarioMilestone implements Serializable {
-	
+
 	private static final long serialVersionUID = -3328166212616139600L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name ="ID_CALENDARIO_MILESTONE")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "ID_CALENDARIO_MILESTONE")
 	private Long idCalendarioMilestone;
-	
-	@JoinColumn(name ="ID_CALENDARIO", referencedColumnName ="ID_CALENDARIO")
+
+	@JoinColumn(name = "ID_CALENDARIO", referencedColumnName = "ID_CALENDARIO")
 	@ManyToOne(optional = false)
 	private Calendario calendario;
 
-	@JoinColumn(name ="ID_MILESTONE", referencedColumnName ="ID_MILESTONE")
+	@JoinColumn(name = "ID_MILESTONE", referencedColumnName = "ID_MILESTONE")
 	@ManyToOne(optional = false)
 	private Milestone milestone;
-	
-	@Column(name ="TAG")
+
+	@Column(name = "TAG")
 	private String tag;
-	
+
 	@Column(name = "DATA_ORA_PREVISTE")
 	private Date dataOraPreviste;
 
 	public CalendarioMilestone() {
-		
+
 	}
 
 	public CalendarioMilestone(Calendario calendario, Milestone milestone, String tag, Date dataOraPreviste) {
@@ -120,9 +118,5 @@ public class CalendarioMilestone implements Serializable {
 		return "CalendarioMilestone [idCalendarioMilestone=" + idCalendarioMilestone + ", calendario=" + calendario
 				+ ", milestone=" + milestone + ", tag=" + tag + ", dataOraPreviste=" + dataOraPreviste + "]";
 	}
-	
-	
-	
-	
-	
+
 }

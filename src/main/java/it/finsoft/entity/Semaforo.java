@@ -1,6 +1,7 @@
 package it.finsoft.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.persistence.Column;
@@ -12,9 +13,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
 @Table(name ="SEMAFORI")
+@XmlRootElement
 public class Semaforo implements Serializable {
 	
 	private static final long serialVersionUID = 5334333055740995630L;
@@ -36,7 +40,7 @@ public class Semaforo implements Serializable {
 			joinColumns=@JoinColumn(name="ID_SEMAFORO", referencedColumnName="ID_SEMAFORO"),
 			inverseJoinColumns=@JoinColumn(name="ID_MILESTONE", referencedColumnName="ID_MILESTONE")
 			)
-	private Collection<Milestone>processiMilestones;
+	private Collection<Milestone>processiMilestones=new ArrayList<>();
 
 	/*costruttori*/
 	public Semaforo() {
@@ -74,6 +78,7 @@ public class Semaforo implements Serializable {
 		this.descrizione = descrizione;
 	}
 
+	@XmlTransient
 	public Collection<Milestone> getProcessiMilestones() {
 		return processiMilestones;
 	}
