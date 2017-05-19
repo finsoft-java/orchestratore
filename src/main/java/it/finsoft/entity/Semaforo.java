@@ -13,10 +13,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
 @Table(name ="SEMAFORI")
+@XmlRootElement
 public class Semaforo implements Serializable {
 	
 	private static final long serialVersionUID = 5334333055740995630L;

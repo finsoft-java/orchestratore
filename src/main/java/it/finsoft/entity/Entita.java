@@ -20,7 +20,7 @@ public class Entita implements Serializable {
 	@Column(name ="ID_ENTITA")
 	private Long idEntita;
 	
-	@Column(name ="CODICE", length=20)
+	@Column(name ="CODICE", length=20, unique=true)
 	private String codice;
 	
 	@Column(name ="ACRONIMO")

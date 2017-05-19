@@ -20,7 +20,7 @@ import it.finsoft.manager.EntitaManager;
 
 @Stateless
 @Path("resources/entita")
-@Produces({ MediaType.APPLICATION_JSON })
+@Produces(MediaType.APPLICATION_JSON)
 public class EntitaResources {
 	
 	@Inject

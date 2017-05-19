@@ -22,19 +22,19 @@ import it.finsoft.manager.SemaforoManager;
 @Path("resources/semafori")
 @Produces({ MediaType.APPLICATION_JSON })
 public class SemaforoResources {
-	
+
 	@Inject
 	SemaforoManager manager;
-
-	@GET
-	public List<Semaforo> findAll() {
-		return manager.findAll();
-	}
 
 	@GET
 	@Path("{id}")
 	public Semaforo findById(@PathParam("id") Long id) {
 		return manager.findById(id);
+	}
+
+	@GET
+	public List<Semaforo> findAll() {
+		return manager.findAll();
 	}
 
 	@POST

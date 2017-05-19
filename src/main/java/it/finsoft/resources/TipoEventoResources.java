@@ -20,7 +20,7 @@ import it.finsoft.manager.TipoEventoManager;
 
 @Stateless
 @Path("resources/tipievento")
-@Produces({ MediaType.APPLICATION_JSON })
+@Produces(MediaType.APPLICATION_JSON)
 public class TipoEventoResources {
 	
 	@Inject
