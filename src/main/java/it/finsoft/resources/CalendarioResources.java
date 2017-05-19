@@ -1,6 +1,7 @@
 package it.finsoft.resources;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -19,40 +20,53 @@ import it.finsoft.manager.CalendarioManager;
 
 @Stateless
 @Path("resources/calendari")
-@Produces(MediaType.APPLICATION_JSON)
+@Produces({ MediaType.APPLICATION_JSON })
 public class CalendarioResources {
-	
+
 	@Inject
 	CalendarioManager manager;
-	
-    @GET
-    public List<Calendario> findAll() {
-        return manager.findAll();
-    }
-    
-    @GET
-    @Path("{id}")
-    public Calendario findById(@PathParam("id") long id) {
-        return manager.findById(id);
-    }
 
-    @DELETE
-    @Path("{id}")
-    public void delete(@PathParam("id") long id) {
-    	manager.remove(id);
-    }
-    @POST
-    @Path("crea")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Calendario create(Calendario c) {
-        return manager.save(c);
-    }
+	@GET
+	public List<Calendario> findAll() {
+		return manager.findAll();
+	}
 
-    @PUT
-    @Path("{id}")
-    public void update(@PathParam("id") long id, Calendario c) {
-        c.setIdCalendario(id);
-        manager.save(c);
-    }
+	@GET
+	@Path("{id}")
+	public Calendario findById(@PathParam("id") Long id) {
+		return manager.findById(id);
+	}
+
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Calendario create(Calendario cal) {
+		System.out.println("post resources, salvo entita " + cal);
+		return manager.save(cal);
+	}
+
+	@DELETE
+	@Path("{id}")
+	public void delete(@PathParam("id") Long id) {
+		manager.remove(id);
+	}
+
+	@PUT
+	@Path("{id}")
+	public void update(@PathParam("id") Long id, Calendario m) {
+		if (!Objects.equals(id, m.getIdCalendario())) {
+			System.out.println("generare errore..");
+		}
+		manager.save(m);
+	}
+
+	/* ---- TEST RESOURCES ---- */
+	@GET
+	@Path("test")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String prova() {
+		System.out.println("ok calendari");
+		return "ok calendari";
+	}
+	/* ---- TEST RESOURCES ---- */
 
 }

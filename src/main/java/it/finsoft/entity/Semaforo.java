@@ -40,7 +40,7 @@ public class Semaforo implements Serializable {
 			joinColumns=@JoinColumn(name="ID_SEMAFORO", referencedColumnName="ID_SEMAFORO"),
 			inverseJoinColumns=@JoinColumn(name="ID_MILESTONE", referencedColumnName="ID_MILESTONE")
 			)
-	private Collection<Milestone>processiMilestones=new ArrayList<>();
+	private Collection<Milestone>processiMilestones = new ArrayList<>();
 
 	/*costruttori*/
 	public Semaforo() {

@@ -1,6 +1,7 @@
 package it.finsoft.resources;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -19,39 +20,53 @@ import it.finsoft.manager.MilestoneManager;
 
 @Stateless
 @Path("resources/milestones")
-@Produces(MediaType.APPLICATION_JSON)
+@Produces({ MediaType.APPLICATION_JSON })
 public class MilestoneResources {
 	
 	@Inject
 	MilestoneManager manager;
-	
-    @GET
-    public List<Milestone> findAll() {
-        return manager.findAll();
-    }
-    
-    @GET
-    @Path("{id}")
-    public Milestone findById(@PathParam("id") long id) {
-        return manager.findById(id);
-    }
 
-    @DELETE
-    @Path("{id}")
-    public void delete(@PathParam("id") long id) {
-    	manager.remove(id);
-    }
-    @POST
-    @Path("crea")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Milestone create(Milestone m) {
-        return manager.save(m);
-    }
+	@GET
+	public List<Milestone> findAll() {
+		return manager.findAll();
+	}
 
-    @PUT
-    @Path("{id}")
-    public void update(@PathParam("id") long id, Milestone m) {
-    	m.setidMilestone(id);
-        manager.save(m);
-    }
+	@GET
+	@Path("{id}")
+	public Milestone findById(@PathParam("id") Long id) {
+		return manager.findById(id);
+	}
+
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Milestone create(Milestone cal) {
+		System.out.println("post resources, salvo entita " + cal);
+		return manager.save(cal);
+	}
+
+	@DELETE
+	@Path("{id}")
+	public void delete(@PathParam("id") Long id) {
+		manager.remove(id);
+	}
+
+	@PUT
+	@Path("{id}")
+	public void update(@PathParam("id") Long id, Milestone m) {
+		if (!Objects.equals(id, m.getidMilestones())) {
+			System.out.println("generare errore..");
+		}
+		manager.save(m);
+	}
+
+	/* ---- TEST RESOURCES ---- */
+	@GET
+	@Path("test")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String prova() {
+		System.out.println("ok milestones");
+		return "ok milestones";
+	}
+	/* ---- TEST RESOURCES ---- */
+
 }

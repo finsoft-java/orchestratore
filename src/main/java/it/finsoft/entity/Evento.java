@@ -48,7 +48,7 @@ public class Evento implements Serializable {
 	private String tag;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "evento")
-	private Collection<DettaglioEvento>dettaglioEvento=new ArrayList<>();
+	private Collection<DettaglioEvento> dettaglioEvento = new ArrayList<>();
 
 	public Evento() {
 
@@ -100,7 +100,7 @@ public class Evento implements Serializable {
 	public void setTag(String tag) {
 		this.tag = tag;
 	}
-
+  
 	@XmlTransient
 	public Collection<DettaglioEvento> getDettagliEvento() {
 		return dettaglioEvento;

@@ -1,7 +1,7 @@
 package it.finsoft.resources;
 
 import java.util.List;
-
+import java.util.Objects;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -17,9 +17,10 @@ import javax.ws.rs.core.MediaType;
 import it.finsoft.entity.Semaforo;
 import it.finsoft.manager.SemaforoManager;
 
+
 @Stateless
 @Path("resources/semafori")
-@Produces({ MediaType.APPLICATION_JSON})
+@Produces({ MediaType.APPLICATION_JSON })
 public class SemaforoResources {
 
 	@Inject
@@ -36,23 +37,36 @@ public class SemaforoResources {
 		return manager.findAll();
 	}
 
-	@DELETE
-	@Path("{id}")
-	public void delete(@PathParam("id") long id) {
-		manager.remove(id);
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Semaforo create(Semaforo cal) {
+		System.out.println("post resources, salvo entita " + cal);
+		return manager.save(cal);
 	}
 
-	@POST
-	@Path("crea")
-	@Consumes(MediaType.APPLICATION_JSON)
-	public Semaforo create(Semaforo te) {
-		return manager.save(te);
+	@DELETE
+	@Path("{id}")
+	public void delete(@PathParam("id") Long id) {
+		manager.remove(id);
 	}
 
 	@PUT
 	@Path("{id}")
-	public void update(@PathParam("id") long id, Semaforo s) {
-		s.setIdSemaforo(id);
-		manager.save(s);
+	public void update(@PathParam("id") Long id, Semaforo m) {
+		if (!Objects.equals(id, m.getIdSemaforo())) {
+			System.out.println("generare errore..");
+		}
+		manager.save(m);
 	}
+
+	/* ---- TEST RESOURCES ---- */
+	@GET
+	@Path("test")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String prova() {
+		System.out.println("ok semafori");
+		return "ok semafori";
+	}
+	/* ---- TEST RESOURCES ---- */
+
 }

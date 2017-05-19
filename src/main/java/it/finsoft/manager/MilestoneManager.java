@@ -29,7 +29,7 @@ public class MilestoneManager {
 	}
 	
 	public List<Milestone> findAll() {		
-		return em.createQuery("FROM Milestones", Milestone.class).getResultList();
+		return em.createQuery("FROM Milestone", Milestone.class).getResultList();
 	}
 
 }

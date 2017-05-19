@@ -1,6 +1,7 @@
 package it.finsoft.resources;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -20,38 +21,52 @@ import it.finsoft.manager.DettaglioEventoManager;
 @Stateless
 @Path("resources/dettaglievento")
 @Produces(MediaType.APPLICATION_JSON)
-public class DettaglioEventoResources {
-	
+public class DettaglioEventoResources {	
+
 	@Inject
 	DettaglioEventoManager manager;
-	
-    @GET
-    public List<DettaglioEvento> findAll() {
-        return manager.findAll();
-    }
-    
-    @GET
-    @Path("{id}")
-    public DettaglioEvento findById(@PathParam("id") long id) {
-        return manager.findById(id);
-    }
 
-    @DELETE
-    @Path("{id}")
-    public void delete(@PathParam("id") long id) {
-    	manager.remove(id);
-    }
-    @POST
-    @Path("crea")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public DettaglioEvento create(DettaglioEvento de) {
-        return manager.save(de);
-    }
+	@GET
+	public List<DettaglioEvento> findAll() {
+		return manager.findAll();
+	}
 
-    @PUT
-    @Path("{id}")
-    public void update(@PathParam("id") long id, DettaglioEvento de) {
-        de.setidDettaglioEvento(id);
-        manager.save(de);
-    }
+	@GET
+	@Path("{id}")
+	public DettaglioEvento findById(@PathParam("id") Long id) {
+		return manager.findById(id);
+	}
+
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	public DettaglioEvento create(DettaglioEvento cal) {
+		System.out.println("post resources, salvo entita " + cal);
+		return manager.save(cal);
+	}
+
+	@DELETE
+	@Path("{id}")
+	public void delete(@PathParam("id") Long id) {
+		manager.remove(id);
+	}
+
+	@PUT
+	@Path("{id}")
+	public void update(@PathParam("id") Long id, DettaglioEvento m) {
+		if (!Objects.equals(id, m.getidDettaglioEvento())) {
+			System.out.println("generare errore..");
+		}
+		manager.save(m);
+	}
+
+	/* ---- TEST RESOURCES ---- */
+	@GET
+	@Path("test")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String prova() {
+		System.out.println("ok calendarimilestones");
+		return "ok calendarimilestones";
+	}
+	/* ---- TEST RESOURCES ---- */
+
 }

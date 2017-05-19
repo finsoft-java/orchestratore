@@ -53,7 +53,7 @@ plugin eclipse consigliati:
 * cliccare su next e andare in fondo alla nuova pagina e nella tabella "Additional Properties" impostare il seguente parametro:
 ** DatabaseName: inserire il percorso assoluto del db (es. c:\miopercorso\dbOrchestratore)
 ** rimuovere tutte le altre voci
-* (2) menù JDBC -> JDBC Resources -> New
+* (2) menu JDBC -> JDBC Resources -> New
 **  JNDI name: jdbc/orchestratore 
 **  poolname: orchestratore
 

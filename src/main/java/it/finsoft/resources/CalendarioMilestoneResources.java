@@ -1,6 +1,7 @@
 package it.finsoft.resources;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -18,41 +19,55 @@ import it.finsoft.entity.CalendarioMilestone;
 import it.finsoft.manager.CalendarioMilestoneManager;
 
 @Stateless
-@Path("resources/calendariMilestones")
-@Produces(MediaType.APPLICATION_JSON)
-public class CalendarioMilestoneResources {
-	
+@Path("resources/calendarimilestones")
+@Produces({ MediaType.APPLICATION_JSON })
+public class CalendarioMilestoneResources {	
+
 	@Inject
 	CalendarioMilestoneManager manager;
-	
-    @GET
-    public List<CalendarioMilestone> findAll() {
-        return manager.findAll();
-    }
-    
-    @GET
-    @Path("{id}")
-    public CalendarioMilestone findById(@PathParam("id") long id) {
-        return manager.findById(id);
-    }
 
-    @DELETE
-    @Path("{id}")
-    public void delete(@PathParam("id") long id) {
-    	manager.remove(id);
-    }
-    @POST
-    @Path("crea")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public CalendarioMilestone create(CalendarioMilestone cm) {
-        return manager.save(cm);
-    }
+	@GET
+	public List<CalendarioMilestone> findAll() {
+		return manager.findAll();
+	}
 
-    @PUT
-    @Path("{id}")
-    public void update(@PathParam("id") long id, CalendarioMilestone cm) {
-        cm.setIdCalendarioMilestone(id);
-        manager.save(cm);
-    }
+	@GET
+	@Path("{id}")
+	public CalendarioMilestone findById(@PathParam("id") Long id) {
+		return manager.findById(id);
+	}
+
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	public CalendarioMilestone create(CalendarioMilestone cal) {
+		System.out.println("post resources, salvo entita " + cal);
+		return manager.save(cal);
+	}
+
+	@DELETE
+	@Path("{id}")
+	public void delete(@PathParam("id") Long id) {
+		manager.remove(id);
+	}
+
+	@PUT
+	@Path("{id}")
+	public void update(@PathParam("id") Long id, CalendarioMilestone m) {
+		if (!Objects.equals(id, m.getIdCalendarioMilestone())) {
+			System.out.println("generare errore..");
+		}
+		manager.save(m);
+	}
+
+	/* ---- TEST RESOURCES ---- */
+	@GET
+	@Path("test")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String prova() {
+		System.out.println("ok calendarimilestones");
+		return "ok calendarimilestones";
+	}
+	/* ---- TEST RESOURCES ---- */
+
 
 }

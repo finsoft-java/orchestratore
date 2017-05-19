@@ -47,4 +47,5 @@ public class WSReset {
 		System.out.println("RESET effettuato con successo");
 		return "RESET dati predefiniti DB effettuato";
 	}
+  
 }
