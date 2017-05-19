@@ -14,25 +14,25 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import it.finsoft.entity.Evento;
-import it.finsoft.manager.EventoManager;
+import it.finsoft.entity.Calendario;
+import it.finsoft.manager.CalendarioManager;
 
 @Stateless
-@Path("resources/eventi")
+@Path("resources/calendari")
 @Produces(MediaType.APPLICATION_JSON)
-public class EventoResources {
+public class CalendarioResources {
 	
 	@Inject
-	EventoManager manager;
+	CalendarioManager manager;
 	
     @GET
-    public List<Evento> findAll() {
+    public List<Calendario> findAll() {
         return manager.findAll();
     }
     
     @GET
     @Path("{id}")
-    public Evento findById(@PathParam("id") long id) {
+    public Calendario findById(@PathParam("id") long id) {
         return manager.findById(id);
     }
 
@@ -44,14 +44,15 @@ public class EventoResources {
     @POST
     @Path("crea")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Evento create(Evento e) {
-        return manager.save(e);
+    public Calendario create(Calendario c) {
+        return manager.save(c);
     }
 
     @PUT
     @Path("{id}")
-    public void update(@PathParam("id") long id, Evento e) {
-    	e.setidEvento(id);
-        manager.save(e);
+    public void update(@PathParam("id") long id, Calendario c) {
+        c.setIdCalendario(id);
+        manager.save(c);
     }
+
 }

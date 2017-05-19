@@ -14,25 +14,25 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import it.finsoft.entity.Evento;
-import it.finsoft.manager.EventoManager;
+import it.finsoft.entity.Entita;
+import it.finsoft.manager.EntitaManager;
 
 @Stateless
-@Path("resources/eventi")
+@Path("resources/entita")
 @Produces(MediaType.APPLICATION_JSON)
-public class EventoResources {
+public class EntitaResources {
 	
 	@Inject
-	EventoManager manager;
+	EntitaManager manager;
 	
     @GET
-    public List<Evento> findAll() {
+    public List<Entita> findAll() {
         return manager.findAll();
     }
     
     @GET
     @Path("{id}")
-    public Evento findById(@PathParam("id") long id) {
+    public Entita findById(@PathParam("id") long id) {
         return manager.findById(id);
     }
 
@@ -44,14 +44,14 @@ public class EventoResources {
     @POST
     @Path("crea")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Evento create(Evento e) {
+    public Entita create(Entita e) {
         return manager.save(e);
     }
 
     @PUT
     @Path("{id}")
-    public void update(@PathParam("id") long id, Evento e) {
-    	e.setidEvento(id);
+    public void update(@PathParam("id") long id, Entita e) {
+        e.setIdEntita(id);
         manager.save(e);
     }
 }

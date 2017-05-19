@@ -10,10 +10,9 @@ import it.finsoft.entity.TipoEvento;
 
 @Stateless
 public class TipoEventoManager {
-	
+
 	@PersistenceContext(unitName = "persistenceUnit")
 	private EntityManager em;
-	
 
 	public TipoEvento save(TipoEvento tosave) {
 		return em.merge(tosave);
@@ -24,12 +23,17 @@ public class TipoEventoManager {
 		em.remove(c);
 	}
 
-	public TipoEvento findById(Long id){
+	public TipoEvento findById(Long id) {
 		return em.find(TipoEvento.class, id);
 	}
-	
-	public List<TipoEvento> findAll() {		
+
+	public List<TipoEvento> findAll() {
 		return em.createQuery("FROM TipoEvento", TipoEvento.class).getResultList();
+	}
+
+	public TipoEvento findByCod(String cod) {
+		return em.createQuery("FROM TipoEvento WHERE codice=  :cod", TipoEvento.class).setParameter("cod", cod)
+				.getSingleResult();
 	}
 
 }

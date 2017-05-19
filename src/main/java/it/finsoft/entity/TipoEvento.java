@@ -20,7 +20,7 @@ public class TipoEvento implements Serializable {
 	@Column(name ="ID_TIPO")
 	private Long idTipo;
 	
-	@Column(name ="CODICE")
+	@Column(name ="CODICE", unique=true)
 	private String codice;
 	
 	@Column(name ="DESCRIZIONE")

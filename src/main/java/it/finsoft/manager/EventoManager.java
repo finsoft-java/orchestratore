@@ -37,5 +37,8 @@ public class EventoManager {
 	public List<Evento> findAll() {		
 		return em.createQuery("FROM Evento", Evento.class).getResultList();
 	}
+	
+	
+
 
 }
