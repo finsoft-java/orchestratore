@@ -62,4 +62,4 @@ Attualmente, le tabelle vengono cancellate e ricreate automaticamente a ogni avv
 Per evitarlo, rimuovere l'opzione "drop-and-create" nel file persistence.xml.
 
 --- POPOLAMENTO DELLE TABELLE CON DATI DI DEFAULT ---
-** Le tabelle si popolano grazie al servizio WSReset che richiama il file "scriptsql.txt" (dati in continuo aggiornamento)
+** Le tabelle si popolano grazie al servizio /ws/reset che richiama il file "scriptsql.txt" (dati in continuo aggiornamento)
