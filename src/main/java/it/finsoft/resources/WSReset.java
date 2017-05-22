@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -30,8 +31,8 @@ public class WSReset {
 	@Produces(MediaType.TEXT_PLAIN)
 	public String reset() throws FileNotFoundException, IOException {
 		BufferedReader reader = new BufferedReader(
-				new FileReader("C:/workspace/orchestratore/src/main/resources/scriptsql.txt"));
-
+				//new FileReader("C:/Users/Finsoft-PC/git/orchestratore/src/main/resources/scriptsql.txt"));
+				new InputStreamReader(getClass().getResourceAsStream("/scriptsql.txt")));
 		String sql = "";
 		while (reader.ready() == true) {
 			try {
