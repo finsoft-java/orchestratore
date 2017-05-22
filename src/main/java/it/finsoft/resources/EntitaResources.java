@@ -51,11 +51,9 @@ public class EntitaResources {
 	}
 
 	@PUT
-	@Path("{id}")
+	@Path("{id}")//richiede di inserire (in json) tutti i campi obbligatori
 	public void update(@PathParam("id") Long id, Entita m) {
-		if (!Objects.equals(id, m.getIdEntita())) {
-			System.out.println("generare errore..");
-		}
+		m.setIdEntita(id);
 		manager.save(m);
 	}
 

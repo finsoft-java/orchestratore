@@ -17,8 +17,8 @@ public class TipoEvento implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name ="ID_TIPO")
-	private Long idTipo;
+	@Column(name ="ID_TIPO_EVENTO")
+	private Long idTipoEvento;
 	
 	@Column(name ="CODICE", unique=true)
 	private String codice;
@@ -37,12 +37,12 @@ public class TipoEvento implements Serializable {
 	}
 
 	/*getter and setter*/
-	public Long getIdTipo() {
-		return idTipo;
+	public Long getidTipoEvento() {
+		return idTipoEvento;
 	}
 
-	public void setIdTipo(Long idTipo) {
-		this.idTipo = idTipo;
+	public void setidTipoEvento(Long idTipoEvento) {
+		this.idTipoEvento = idTipoEvento;
 	}
 
 	public String getCodice() {
@@ -64,7 +64,7 @@ public class TipoEvento implements Serializable {
 	/*to string*/
 	@Override
 	public String toString() {
-		return "TipoEvento [idTipo=" + idTipo + ", codice=" + codice + ", descrizione=" + descrizione + "]";
+		return "TipoEvento [idTipo=" + idTipoEvento + ", codice=" + codice + ", descrizione=" + descrizione + "]";
 	}
 	
 	

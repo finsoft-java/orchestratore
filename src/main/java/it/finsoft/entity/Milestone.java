@@ -23,7 +23,7 @@ public class Milestone implements Serializable {
 	private Long idMilestone;
 	
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "ID_TIPO_EVENTO", referencedColumnName ="ID_TIPO")
+	@JoinColumn(name = "ID_TIPO_EVENTO", referencedColumnName ="ID_TIPO_EVENTO")
 	private TipoEvento tipoEvento; //foreign key tabella tipo_evento
 	
 	@ManyToOne(optional = false)
@@ -35,23 +35,21 @@ public class Milestone implements Serializable {
 		
 	}
 
-
-	public Long getidMilestones() {
+	public Long getIdMilestone() {
 		return idMilestone;
 	}
 
-
-	public void setidMilestone(Long idMilestone) {
+	public void setIdMilestone(Long idMilestone) {
 		this.idMilestone = idMilestone;
 	}
 
 
-	public TipoEvento gettipoEvento() {
+	public TipoEvento getTipoEvento() {
 		return tipoEvento;
 	}
 
 
-	public void settipoEvento(TipoEvento tipoEvento) {
+	public void setTipoEvento(TipoEvento tipoEvento) {
 		this.tipoEvento = tipoEvento;
 	}
 

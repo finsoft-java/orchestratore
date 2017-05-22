@@ -33,7 +33,7 @@ public class Evento implements Serializable {
 	private Long idEvento;
 
 	@ManyToOne(optional = true)
-	@JoinColumn(name = "ID_TIPO_EVENTO", referencedColumnName = "ID_TIPO")
+	@JoinColumn(name = "ID_TIPO_EVENTO", referencedColumnName = "ID_TIPO_EVENTO")
 	private TipoEvento tipoEvento; // foreign key tabella Tipi_evento
 
 	@ManyToOne(optional = true)
@@ -61,11 +61,11 @@ public class Evento implements Serializable {
 		this.tag = tag;
 	}
 
-	public Long getidEvento() {
+	public Long getIdEvento() {
 		return idEvento;
 	}
 
-	public void setidEvento(Long idEvento) {
+	public void setIdEvento(Long idEvento) {
 		this.idEvento = idEvento;
 	}
 

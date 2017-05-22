@@ -40,17 +40,17 @@ public class Semaforo implements Serializable {
 			joinColumns=@JoinColumn(name="ID_SEMAFORO", referencedColumnName="ID_SEMAFORO"),
 			inverseJoinColumns=@JoinColumn(name="ID_MILESTONE", referencedColumnName="ID_MILESTONE")
 			)
-	private Collection<Milestone>processiMilestones = new ArrayList<>();
+	private Collection<Milestone>semaforiMilestones = new ArrayList<>();
 
 	/*costruttori*/
 	public Semaforo() {
 		
 	}	
 
-	public Semaforo(String codice, String descrizione, Collection<Milestone> processiMilestones) {
+	public Semaforo(String codice, String descrizione, Collection<Milestone> semaforiMilestones) {
 		this.codice = codice;
 		this.descrizione = descrizione;
-		this.processiMilestones = processiMilestones;
+		this.semaforiMilestones = semaforiMilestones;
 	}
 
 	/*getter and setter*/
@@ -79,19 +79,19 @@ public class Semaforo implements Serializable {
 	}
 
 	@XmlTransient
-	public Collection<Milestone> getProcessiMilestones() {
-		return processiMilestones;
+	public Collection<Milestone> getSemaforiMilestones() {
+		return semaforiMilestones;
 	}
 
-	public void setProcessiMilestones(Collection<Milestone> processiMilestones) {
-		this.processiMilestones = processiMilestones;
+	public void setProcessiMilestones(Collection<Milestone> semaforiMilestones) {
+		this.semaforiMilestones = semaforiMilestones;
 	}
 
 	/*to string*/
 	@Override
 	public String toString() {
 		return "Semaforo [idSemaforo=" + idSemaforo + ", codice=" + codice + ", descrizione=" + descrizione
-				+ ", processiMilestones=" + processiMilestones + "]";
+				+ ", processiMilestones=" + semaforiMilestones + "]";
 	}
 
 

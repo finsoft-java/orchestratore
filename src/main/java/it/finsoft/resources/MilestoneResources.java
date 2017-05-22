@@ -51,11 +51,9 @@ public class MilestoneResources {
 	}
 
 	@PUT
-	@Path("{id}")
+	@Path("{id}")//richiede di inserire (in json) tutti i campi obbligatori
 	public void update(@PathParam("id") Long id, Milestone m) {
-		if (!Objects.equals(id, m.getidMilestones())) {
-			System.out.println("generare errore..");
-		}
+		m.setIdMilestone(id);
 		manager.save(m);
 	}
 
