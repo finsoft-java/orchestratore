@@ -10,10 +10,9 @@ import it.finsoft.entity.Semaforo;
 
 @Stateless
 public class SemaforoManager {
-	
+
 	@PersistenceContext(unitName = "persistenceUnit")
 	private EntityManager em;
-
 
 	public Semaforo save(Semaforo tosave) {
 		return em.merge(tosave);
@@ -24,12 +23,21 @@ public class SemaforoManager {
 		em.remove(c);
 	}
 
-	public Semaforo findById(Long id){
+	public Semaforo findById(Long id) {
 		return em.find(Semaforo.class, id);
 	}
-	
-	public List<Semaforo> findAll() {		
+
+	public List<Semaforo> findAll() {
 		return em.createQuery("FROM Semaforo", Semaforo.class).getResultList();
+	}
+
+	public Semaforo findByCod(String cod) {
+		System.out.println(cod);
+		Semaforo semaforo = em.createQuery("FROM Semaforo WHERE codice = :cod", Semaforo.class).setParameter("cod", cod)
+				.getSingleResult();
+		System.out.println(semaforo);
+		return semaforo;
+
 	}
 
 }
