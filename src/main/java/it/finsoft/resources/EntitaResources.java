@@ -1,8 +1,6 @@
 package it.finsoft.resources;
 
 import java.util.List;
-import java.util.Objects;
-
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
