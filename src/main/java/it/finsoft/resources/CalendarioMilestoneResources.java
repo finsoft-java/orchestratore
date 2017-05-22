@@ -1,8 +1,6 @@
 package it.finsoft.resources;
 
 import java.util.List;
-import java.util.Objects;
-
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -14,7 +12,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-
 import it.finsoft.entity.CalendarioMilestone;
 import it.finsoft.manager.CalendarioMilestoneManager;
 
@@ -49,15 +46,25 @@ public class CalendarioMilestoneResources {
 	public void delete(@PathParam("id") Long id) {
 		manager.remove(id);
 	}
-
+	
 	@PUT
-	@Path("{id}")
-	public void update(@PathParam("id") Long id, CalendarioMilestone m) {
-		if (!Objects.equals(id, m.getIdCalendarioMilestone())) {
-			System.out.println("generare errore..");
-		}
+	@Path("{id}") //richiede di inserire (in json) tutti i campi obbligatori
+	public void update(@PathParam("id") Long id, CalendarioMilestone m) {	
+		m.setIdCalendarioMilestone(id);
 		manager.save(m);
 	}
+	/*
+	 * {
+	"milestone" : {
+		"idMilestone" : 1
+	},
+	"calendario" : {
+		"idCalendario" : 1
+	},
+	"tag" : "fasdfafa"
+}
+	 */
+	
 
 	/* ---- TEST RESOURCES ---- */
 	@GET

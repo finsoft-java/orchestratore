@@ -50,11 +50,9 @@ public class EventoResources {
 	}
 
 	@PUT
-	@Path("{id}")
+	@Path("{id}")//richiede di inserire (in json) tutti i campi obbligatori
 	public void update(@PathParam("id") Long id, Evento m) {
-		if (!Objects.equals(id, m.getidEvento())) {
-			System.out.println("generare errore..");
-		}
+		m.setIdEvento(id);
 		manager.save(m);
 	}
 

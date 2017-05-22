@@ -51,11 +51,9 @@ public class SemaforoResources {
 	}
 
 	@PUT
-	@Path("{id}")
+	@Path("{id}")//richiede di inserire (in json) tutti i campi obbligatori
 	public void update(@PathParam("id") Long id, Semaforo m) {
-		if (!Objects.equals(id, m.getIdSemaforo())) {
-			System.out.println("generare errore..");
-		}
+		m.setIdSemaforo(id);
 		manager.save(m);
 	}
 

@@ -35,7 +35,6 @@ public class Entita implements Serializable {
 		
 	}
 
-
 	public Entita(String codice, String acronimo, String descrizione) {
 		this.codice = codice;
 		this.acronimo = acronimo;

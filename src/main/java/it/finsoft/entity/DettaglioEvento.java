@@ -42,11 +42,11 @@ public class DettaglioEvento implements Serializable {
 		this.evento = evento;
 	}
 
-	public Long getidDettaglioEvento() {
+	public Long getIdDettaglioEvento() {
 		return idDettaglioEvento;
 	}
 
-	public void setidDettaglioEvento(Long idDettaglioEvento) {
+	public void setIdDettaglioEvento(Long idDettaglioEvento) {
 		this.idDettaglioEvento = idDettaglioEvento;
 	}
 

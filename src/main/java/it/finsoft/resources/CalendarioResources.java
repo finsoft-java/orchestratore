@@ -51,11 +51,9 @@ public class CalendarioResources {
 	}
 
 	@PUT
-	@Path("{id}")
+	@Path("{id}")//richiede di inserire (in json) tutti i campi obbligatori
 	public void update(@PathParam("id") Long id, Calendario m) {
-		if (!Objects.equals(id, m.getIdCalendario())) {
-			System.out.println("generare errore..");
-		}
+		m.setIdCalendario(id);
 		manager.save(m);
 	}
 
