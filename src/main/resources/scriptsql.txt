@@ -1,3 +1,7 @@
+<<<<<<< Upstream, based on branch 'master' of https://github.com/finsoft-java/orchestratore.git
+=======
+
+>>>>>>> 685e123 Risolto:Errore legato alla procedura WSReset+WSCollector (al momento del reset ora lo script riavvolge a 1 gli indici di ogni tabella)
 DELETE FROM APP.CALENDARI_MILESTONES
 DELETE FROM APP.DETTAGLI_EVENTO
 DELETE FROM APP.EVENTI
