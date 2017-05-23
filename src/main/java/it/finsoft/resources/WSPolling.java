@@ -12,10 +12,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
-<<<<<<< Upstream, based on branch 'master' of https://github.com/finsoft-java/orchestratore.git
+
 import it.finsoft.entity.Semaforo;
-=======
->>>>>>> 2564889 corretti import non utilizzati
 import it.finsoft.manager.EntitaManager;
 import it.finsoft.manager.SemaforoManager;
 
