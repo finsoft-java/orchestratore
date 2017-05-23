@@ -16,7 +16,7 @@ plugin eclipse consigliati:
 == INSTALLAZIONE ==
 -- DERBY --
 * scompattare il db (vuoto) dbOrchestratore.7z dalla directory Utility/db, es. in c:\miopercorso\dbOrchestratore
-  (non è necessario installare derby server, perchè utilizziamo la versione embedded)
+  (non e' necessario installare derby server, perche' utilizziamo la versione embedded)
 
 
 -- GLASSFISH --
@@ -32,21 +32,27 @@ plugin eclipse consigliati:
 * Tasto dx, new, server
 * Nella finestra "Define new server" selezionare Glassfish, lasciare "localhost" come hostname, immettere un server name (di solito si lascia quello di default),
 * cliccare su next.
-* Nella pagina seguente ci verrà richiesto il path dell'installazione (esempio: C:\glassfish4\glassfish\domains\domain1), mettere la spunta su:
+* Nella pagina seguente ci verra'� richiesto il path dell'installazione (esempio: C:\glassfish4\glassfish\domains\domain1), mettere la spunta su:
 * "use JAR archive for deployment" e cliccare su next.
 * Consigliato lasciare la password di admin vuota!!!
 * Nella pagina seguente cliccare su finish  (*non* deployare ancora nulla nel dominio). L'aggiunta del progetto in glassfish (per il deployment) 
-* la si farà successivamente alla configurazione dei Data source.
+* la si fara'� successivamente alla configurazione dei Data source.
+
+
+--- CORREZIONE VERSIONI LIBRERIE ---
+Occorre copiare/sostituire alcune librerie di glassfish, che hanno una versione incompatibile con la nostra:
+* Copiare jboss-logging-3.3.0.Final.jar (dalla cartella Utiliy/jar) in c:\glassfish4\glassfish\module
+* Copiare org.eclipse.persistence.moxy.jar (dalla cartella Utiliy/jar) in c:\glassfish4\glassfish\module
+
 
 --- AGGIUNTA FILE NECESSARI PER IL DATASOURCE DERBY ---
 * Copiare i "derby*.jar" contenuti nella cartella Utility/jar nella cartella c:\glassfish4\glassfish\domains\domain1\lib\ext
-* Copiare jboss-logging-3.3.0.Final.jar (dalla cartella Utiliy/jar) in c:\glassfish4\glassfish\module
 
 
 --- CONFIGURAZIONE DATASOURCE DERBY ---
 * Avviare (o riavviare) il server glassfish da Eclipse 
 * Aprire un browser e inserire l'indirizzo "http://localhost:4848/" per accedere alla console di amministrazione
-* (1) menù JDBC -> JDBC Connection Pool -> New:
+* (1) menu' JDBC -> JDBC Connection Pool -> New:
 ** Pool name: orchestratore
 ** Resources type: javax.sql.DataSource
 ** Database Driver Vendor: Embedded-Derby-30
