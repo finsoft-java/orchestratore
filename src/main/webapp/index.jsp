@@ -16,12 +16,26 @@ URL per visualizzare i tipi di evento (JSON):
 
 URL per visualizzare le entità (JSON):
 <a href="ws/resources/entita">click here</a><br/>
-
+<br/>
 FORM per inserire un evento:
 <form action="ws/collector" method="get">
-<input name="tipiEvento" value="CARICAMENTO"/>
-<input name="entita" value="U7SC0_PCR_M"/>
+Codice evento: <input name="tipiEvento" value="CARICAMENTO"/><br/>
+Codice entit&agrave;: <input name="entita" value="U7SC0_PCR_M"/><br/>
+Tag: <input name="tag" value="20170523U"/><br/>
 <input type="submit"/>
 </form>
+<br/><br/>
+
+FORM per recuperare lo stato di un semaforo:
+<form action="ws/polling" method="get">
+Codice semaforo: <input name="semaforo" value="PROVA"/><br/>
+Tag1: <input name="tag" value="20170523U"/><br/>
+Tag2: <input name="tag" value="20170523U"/><br/>
+Tag3: <input name="tag" value="20170523U"/><br/>
+Tag4: <input name="tag" value="20170523U"/><br/>
+Tag5: <input name="tag" value="20170523U"/><br/>
+<input type="submit"/>
+</form>
+
 </body>
 </html>
