@@ -25,8 +25,8 @@ public class WSCollector {
 	TipoEventoManager tipoevm;
 
 	/*
-	 * Metodo GET per inserire dati via http
-	 * esegue due query per risolvere dal codiceEnt a Entita e da codiceTipi a TipoEvento 
+	 * Metodo GET per inserire dati via http esegue due query per risolvere dal
+	 * codiceEnt a Entita e da codiceTipi a TipoEvento
 	 */
 	@GET
 	public Evento create(@QueryParam("entita") String codiceEnt, @QueryParam("tipiEvento") String codiceTipi,
@@ -35,7 +35,6 @@ public class WSCollector {
 		evento.setEntita(entitam.findByCod(codiceEnt));
 		evento.setTipoEvento(tipoevm.findByCod(codiceTipi));
 		evento.setTag(tag);
-		System.out.println("salva resources, salvo entita " + evento);
 		return eventom.save(evento);
 	}
 }
