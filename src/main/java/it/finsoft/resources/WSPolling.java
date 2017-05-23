@@ -1,5 +1,7 @@
 package it.finsoft.resources;
 
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -12,7 +14,11 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
+import it.finsoft.entity.Entita;
+import it.finsoft.entity.Evento;
+import it.finsoft.entity.Milestone;
 import it.finsoft.entity.Semaforo;
+import it.finsoft.entity.TipoEvento;
 import it.finsoft.manager.EntitaManager;
 import it.finsoft.manager.SemaforoManager;
 
@@ -30,17 +36,18 @@ public class WSPolling {
 
 	@GET
 	// TODO: restituire sia un Boolean, sia una List<Evento>
-	public Boolean get(
+	public List<Evento> get(
 
 			@QueryParam("semaforo") String semaforo, @QueryParam(value = "tags") final List<String> tags) {
 
 		System.out.println(semaforo + " " + tags);
 		Semaforo Sm = managerSem.findByCod(semaforo);
-		System.out.println(Sm.toString());
-		Long idSm = Sm.getIdSemaforo();
-		System.out.println(idSm);
-		System.out.println(Sm.getSemaforiMilestones());
+		Collection<Milestone> test = Sm.getSemaforiMilestones();
 		// throw new UnsupportedOperationException("TODO");
+		for(Milestone milestone:test){
+			Entita ent=milestone.getEntita();
+			TipoEvento tp=milestone.getTipoEvento();
+		}
 		return null;
 	}
 

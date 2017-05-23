@@ -10,10 +10,9 @@ import it.finsoft.entity.Evento;
 
 @Stateless
 public class EventoManager {
-	
+
 	@PersistenceContext(unitName = "persistenceUnit")
-	private EntityManager em;	
-	
+	private EntityManager em;
 
 	public Evento save(Evento tosave) {
 		System.out.println("post manager ...." + tosave.toString());
@@ -25,20 +24,21 @@ public class EventoManager {
 		em.remove(c);
 	}
 
-	public Evento findById(Long id){
+	public Evento findById(Long id) {
 		return em.find(Evento.class, id);
 	}
-	
+
 	/*
 	 * DA inserire un metodo che esegua il "find by tag"
 	 * 
 	 */
-	
-	public List<Evento> findAll() {		
+
+	public List<Evento> findAll() {
 		return em.createQuery("FROM Evento", Evento.class).getResultList();
 	}
-	
-	
 
+	public List<Evento> findByTag(String tag) {
+		return em.createQuery("FROM Evento WHERE tag= :tag", Evento.class).setParameter("tag", tag).getResultList();
+	}
 
 }
