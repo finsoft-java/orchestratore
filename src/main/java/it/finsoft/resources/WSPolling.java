@@ -13,12 +13,13 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
-
 import it.finsoft.entity.Entita;
 import it.finsoft.entity.Evento;
 import it.finsoft.entity.Milestone;
 import it.finsoft.entity.Semaforo;
 import it.finsoft.entity.TipoEvento;
+
+import it.finsoft.entity.Semaforo;
 import it.finsoft.manager.EntitaManager;
 import it.finsoft.manager.SemaforoManager;
 
