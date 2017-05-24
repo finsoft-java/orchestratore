@@ -6,12 +6,10 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-<<<<<<< HEAD
 import it.finsoft.entity.Entita;
-=======
+
 import org.jboss.logging.Logger;
 
->>>>>>> branch 'master' of https://github.com/finsoft-java/orchestratore.git
 import it.finsoft.entity.Evento;
 import it.finsoft.entity.TipoEvento;
 

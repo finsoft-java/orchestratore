@@ -36,9 +36,9 @@ public class WSPolling {
 	 */
 	@Inject
 	EventoManager managerEvt;
-	
+
 	private List<Evento> tmp;
-	
+
 	@GET
 	// TODO: restituire sia un Boolean, sia una List<Evento>
 	public List<Evento> get(
@@ -51,27 +51,12 @@ public class WSPolling {
 		System.out.println(tags.size()); // Tags [] vuoto???
 		// RISOLTO, input name cambiato da tag a tags sull'index.jsp
 		Collection<Milestone> test = Sm.getSemaforiMilestones();
-		// throw new UnsupportedOperationException("TODO");
-<<<<<<< HEAD
+		// thr
 		for (Milestone milestone : test) {
 			Entita ent = milestone.getEntita();
 			TipoEvento tp = milestone.getTipoEvento();
-			for (String tag : tags) {
-				System.out.println(tag);
-				System.out.println("ok, il tag su cui fare la ricerca e': " + tag);
-				tmp.contains(managerEvt.findPolling(tag, ent, tp));
-				System.out.println(tmp);
-			}
-		}
-
-		return tmp;
-=======
-		for(Milestone milestone:test){
-			Entita ent=milestone.getEntita();
-			TipoEvento tp=milestone.getTipoEvento();
 		}
 		return null;
->>>>>>> branch 'master' of https://github.com/finsoft-java/orchestratore.git
 	}
 
 	/* ---- TEST RESOURCES ---- */
