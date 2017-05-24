@@ -38,7 +38,12 @@ public class EventoManager {
 		return em.createQuery("FROM Evento", Evento.class).getResultList();
 	}
 	
-	
+	/*Aggiunta per test*/
+	public List<Evento> findByTag(String tag) {
+		return em.createQuery("FROM Evento WHERE tag= :tag", Evento.class)
+				.setParameter("tag", tag)
+				.getResultList();
+	}
 
 
 }
