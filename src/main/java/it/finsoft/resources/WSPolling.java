@@ -2,7 +2,6 @@ package it.finsoft.resources;
 
 import java.util.Collection;
 import java.util.List;
-
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -12,7 +11,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
-
 import it.finsoft.entity.Entita;
 import it.finsoft.entity.Evento;
 import it.finsoft.entity.Milestone;
@@ -36,6 +34,7 @@ public class WSPolling {
 	EntityManager em;
 
 	// TODO: restituire sia un Boolean, sia una List<Evento>
+
 	@GET public Collection<Milestone> get(
 			@QueryParam("semaforo") String semaforo,
 			@QueryParam(value = "tags") final List<String> tags) {
@@ -45,7 +44,6 @@ public class WSPolling {
 		Long idSm = Sm.getIdSemaforo();
 		System.out.println(idSm);
 		// System.out.println(Sm.getSemaforiMilestones());
-		// throw new UnsupportedOperationException("TODO");
 		Collection<Milestone> test = Sm.getSemaforiMilestones();
 		for (Milestone milestone : test) {
 			Entita ent = milestone.getEntita();

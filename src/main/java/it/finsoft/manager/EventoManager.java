@@ -6,17 +6,20 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.jboss.logging.Logger;
+
 import it.finsoft.entity.Evento;
 
 @Stateless
 public class EventoManager {
-	
+
+	public static final Logger LOG = Logger.getLogger(EventoManager.class);
+
 	@PersistenceContext(unitName = "persistenceUnit")
-	private EntityManager em;	
-	
+	private EntityManager em;
 
 	public Evento save(Evento tosave) {
-		System.out.println("post manager ...." + tosave.toString());
+		LOG.info("post manager ...." + tosave.toString());
 		return em.merge(tosave);
 	}
 
@@ -25,16 +28,16 @@ public class EventoManager {
 		em.remove(c);
 	}
 
-	public Evento findById(Long id){
+	public Evento findById(Long id) {
 		return em.find(Evento.class, id);
 	}
-	
+
 	/*
 	 * DA inserire un metodo che esegua il "find by tag"
 	 * 
 	 */
-	
-	public List<Evento> findAll() {		
+
+	public List<Evento> findAll() {
 		return em.createQuery("FROM Evento", Evento.class).getResultList();
 	}
 	
@@ -44,6 +47,5 @@ public class EventoManager {
 				.setParameter("tag", tag)
 				.getResultList();
 	}
-
 
 }
