@@ -1,5 +1,6 @@
 package it.finsoft.resources;
 
+<<<<<<< Upstream, based on branch 'master' of https://github.com/finsoft-java/orchestratore.git
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -49,6 +50,50 @@ public class WSPolling {
 			Entita ent=milestone.getEntita();
 			TipoEvento tp=milestone.getTipoEvento();
 		}
+=======
+import java.util.List;
+
+import javax.ejb.Stateless;
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
+
+
+import it.finsoft.entity.Semaforo;
+import it.finsoft.manager.EntitaManager;
+import it.finsoft.manager.SemaforoManager;
+
+@Stateless
+@Path("polling")
+@Produces({ MediaType.APPLICATION_JSON })
+public class WSPolling {
+
+	@Inject
+	EntitaManager managerEnt;
+	@Inject
+	SemaforoManager managerSem;
+	@PersistenceContext
+	EntityManager em;
+
+	@GET
+	// TODO: restituire sia un Boolean, sia una List<Evento>
+	public Boolean get(
+
+			@QueryParam("semaforo") String semaforo, @QueryParam(value = "tags") final List<String> tags) {
+
+		System.out.println(semaforo + " " + tags);
+		Semaforo Sm = managerSem.findByCod(semaforo);
+		System.out.println(Sm.toString());
+		Long idSm = Sm.getIdSemaforo();
+		System.out.println(idSm);
+		System.out.println(Sm.getSemaforiMilestones());
+		// throw new UnsupportedOperationException("TODO");
+>>>>>>> 3ecc9fc ripristinato file eliminato
 		return null;
 	}
 
