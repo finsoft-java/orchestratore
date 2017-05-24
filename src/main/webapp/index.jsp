@@ -29,11 +29,11 @@ Tag: <input name="tag" value="20170523U"/><br/>
 FORM per recuperare lo stato di un semaforo:
 <form action="ws/polling" method="get">
 Codice semaforo: <input name="semaforo" value="PROVA"/><br/>
-Tag1: <input name="tag" value="20170523U"/><br/>
-Tag2: <input name="tag" value="20170523U"/><br/>
-Tag3: <input name="tag" value="20170523U"/><br/>
-Tag4: <input name="tag" value="20170523U"/><br/>
-Tag5: <input name="tag" value="20170523U"/><br/>
+Tag1: <input name="tags" value="20170523U"/><br/>
+Tag2: <input name="tags" value="20170523U"/><br/>
+Tag3: <input name="tags" value="20170523U"/><br/>
+Tag4: <input name="tags" value="20170523U"/><br/>
+Tag5: <input name="tags" value="20170523U"/><br/>
 <input type="submit"/>
 </form>
 

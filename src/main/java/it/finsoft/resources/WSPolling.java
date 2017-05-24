@@ -1,7 +1,6 @@
 package it.finsoft.resources;
 
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -19,8 +18,8 @@ import it.finsoft.entity.Milestone;
 import it.finsoft.entity.Semaforo;
 import it.finsoft.entity.TipoEvento;
 
-import it.finsoft.entity.Semaforo;
 import it.finsoft.manager.EntitaManager;
+import it.finsoft.manager.EventoManager;
 import it.finsoft.manager.SemaforoManager;
 
 @Stateless
@@ -32,24 +31,39 @@ public class WSPolling {
 	EntitaManager managerEnt;
 	@Inject
 	SemaforoManager managerSem;
-	@PersistenceContext
-	EntityManager em;
-
+	/*
+	 * @PersistenceContext EntityManager em;
+	 */
+	@Inject
+	EventoManager managerEvt;
+	
+	private List<Evento> tmp;
+	
 	@GET
 	// TODO: restituire sia un Boolean, sia una List<Evento>
 	public List<Evento> get(
 
-			@QueryParam("semaforo") String semaforo, @QueryParam(value = "tags") final List<String> tags) {
+			@QueryParam("semaforo") String semaforo, @QueryParam(value = "tags") List<String> tags) {
 
-		System.out.println(semaforo + " " + tags);
+		System.out.println("Parametri di ricerca: Semaforo " + semaforo + " Tags " + tags);
+		// Non visualizza i tags BLOCCANTE PER LA RICERCA
 		Semaforo Sm = managerSem.findByCod(semaforo);
+		System.out.println(tags.size()); // Tags [] vuoto???
+		// RISOLTO, input name cambiato da tag a tags sull'index.jsp
 		Collection<Milestone> test = Sm.getSemaforiMilestones();
 		// throw new UnsupportedOperationException("TODO");
-		for(Milestone milestone:test){
-			Entita ent=milestone.getEntita();
-			TipoEvento tp=milestone.getTipoEvento();
+		for (Milestone milestone : test) {
+			Entita ent = milestone.getEntita();
+			TipoEvento tp = milestone.getTipoEvento();
+			for (String tag : tags) {
+				System.out.println(tag);
+				System.out.println("ok, il tag su cui fare la ricerca e': " + tag);
+				tmp.contains(managerEvt.findPolling(tag, ent, tp));
+				System.out.println(tmp);
+			}
 		}
-		return null;
+
+		return tmp;
 	}
 
 	/* ---- TEST RESOURCES ---- */
