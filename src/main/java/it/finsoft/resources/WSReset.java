@@ -39,9 +39,12 @@ public class WSReset {
 		while (reader.ready() == true) {
 			try {
 				sql = reader.readLine().toString();
-				if (sql == null || sql.startsWith("--"))
+				if (sql == null)
 					continue;
-				// inutile, lo fa già Hibernate LOG.info(sql);
+				sql = sql.trim();
+				if (sql.equals("") || sql.startsWith("--"))
+					continue;
+				// LOG.info(sql); // inutile, lo fa già Hibernate
 				Query q = manager.createNativeQuery(sql);
 				q.executeUpdate();
 			} catch (Exception e) {
