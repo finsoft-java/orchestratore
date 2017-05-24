@@ -38,12 +38,9 @@ public class WSPolling {
 	@GET public Collection<Milestone> get(
 			@QueryParam("semaforo") String semaforo,
 			@QueryParam(value = "tags") final List<String> tags) {
-		// System.out.println(semaforo + " " + tags);
 		Semaforo Sm = managerSem.findByCod(semaforo);
-		// System.out.println(Sm.toString());
 		Long idSm = Sm.getIdSemaforo();
-		System.out.println(idSm);
-		// System.out.println(Sm.getSemaforiMilestones());
+		System.out.println(idSm);//stampo id del Semaforo
 		Collection<Milestone> test = Sm.getSemaforiMilestones();
 		for (Milestone milestone : test) {
 			Entita ent = milestone.getEntita();
