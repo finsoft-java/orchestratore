@@ -1,16 +1,20 @@
+#Questo script si aspetta 3 parametri obbligatori, ent, evn, tag
+#Funziona solo su Windows 10!!!
+
 param (
-[Parameter(Mandatory=$True,Position=1)]
-                [string]$ent,
-                [Parameter(Mandatory=$True)]
-                [string]$evn,
-		[string]$tag
+	[Parameter(Mandatory=$True)][string]$ent,
+    [Parameter(Mandatory=$True)][string]$evn,
+	[Parameter(Mandatory=$True)][string]$tag
 )
+
 $evento = @{
     entita=$ent
     tipiEvento=$evn
     tag=$tag
 }
 
-$response = Invoke-RestMethod 'http://localhost:8080/orchestratoreRADAR/ws/collector' -Body $evento 
+$endpoint = 'http://localhost:8080/orchestratoreRADAR/ws/collector'
+
+$response = Invoke-RestMethod $endpoint -Body $evento 
 
 
