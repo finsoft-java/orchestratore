@@ -6,18 +6,25 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+<<<<<<< HEAD
 import it.finsoft.entity.Entita;
+=======
+import org.jboss.logging.Logger;
+
+>>>>>>> branch 'master' of https://github.com/finsoft-java/orchestratore.git
 import it.finsoft.entity.Evento;
 import it.finsoft.entity.TipoEvento;
 
 @Stateless
 public class EventoManager {
 
+	public static final Logger LOG = Logger.getLogger(EventoManager.class);
+
 	@PersistenceContext(unitName = "persistenceUnit")
 	private EntityManager em;
 
 	public Evento save(Evento tosave) {
-		System.out.println("post manager ...." + tosave.toString());
+		LOG.info("post manager ...." + tosave.toString());
 		return em.merge(tosave);
 	}
 

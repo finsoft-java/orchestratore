@@ -52,6 +52,7 @@ public class WSPolling {
 		// RISOLTO, input name cambiato da tag a tags sull'index.jsp
 		Collection<Milestone> test = Sm.getSemaforiMilestones();
 		// throw new UnsupportedOperationException("TODO");
+<<<<<<< HEAD
 		for (Milestone milestone : test) {
 			Entita ent = milestone.getEntita();
 			TipoEvento tp = milestone.getTipoEvento();
@@ -64,6 +65,13 @@ public class WSPolling {
 		}
 
 		return tmp;
+=======
+		for(Milestone milestone:test){
+			Entita ent=milestone.getEntita();
+			TipoEvento tp=milestone.getTipoEvento();
+		}
+		return null;
+>>>>>>> branch 'master' of https://github.com/finsoft-java/orchestratore.git
 	}
 
 	/* ---- TEST RESOURCES ---- */
