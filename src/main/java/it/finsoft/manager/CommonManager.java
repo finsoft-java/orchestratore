@@ -2,19 +2,21 @@ package it.finsoft.manager;
 
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.metamodel.EntityType;
 
 import org.apache.commons.beanutils.BeanUtils;
 
 /**
- * Not very different from EntityManager.
+ * Not very different from EntityManager. Just a bit more.
  * 
- * @author LV
+ * @author Luca Vercelli 2017
  *
  */
 @Stateless
@@ -23,25 +25,38 @@ public class CommonManager {
 	@PersistenceContext(unitName = "persistenceUnit")
 	private EntityManager em;
 
+	private Map<String, Class<?>> entityCache = new HashMap<String, Class<?>>();
+
 	/**
-	 * Return a Class, if any, or null if class does not exist.
-	 * 
-	 * @param entity
-	 *            Class name, either in format it-mypackage-ClassName or
-	 *            it.mypackage.ClassName
+	 * Return a managed entity Class, if any, or null if entity is not managed.
 	 */
-	public Class<?> getClazz(String entity) {
-		try {
-			return Class.forName(entity.replaceAll("-", "."));
-		} catch (ClassNotFoundException exc) {
-			try {
-				return Class.forName(entity);
-			} catch (ClassNotFoundException exc1) {
-				return null;
+	public Class<?> getEntityClass(String entity) {
+
+		Class<?> clazz = null;
+
+		if (!entityCache.containsKey(entity)) {
+
+			for (EntityType<?> tp : em.getMetamodel().getEntities()) {
+				if (tp.getName().equals(entity)) {
+					clazz = tp.getJavaType();
+					entityCache.put(entity, clazz);
+					break;
+				}
 			}
+
 		}
+
+		return clazz;
 	}
 
+	/**
+	 * Return a new object with given attributes set. Class must have a
+	 * no-argument constructor.
+	 * 
+	 * @param entity
+	 * @param attributes
+	 * @return
+	 */
 	public <T> T bean2object(Class<T> entity, Map<String, ? extends Object> attributes) {
 		T obj;
 		try {
@@ -54,6 +69,12 @@ public class CommonManager {
 		return obj;
 	}
 
+	/**
+	 * Return object attributes.
+	 * 
+	 * @param obj
+	 * @return
+	 */
 	public Map<String, String> object2bean(Object obj) {
 		try {
 			return BeanUtils.describe(obj);
