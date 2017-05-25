@@ -30,7 +30,7 @@ public class SemaforoResources {
 	public Semaforo findById(@PathParam("id") Long id) {
 		return manager.findById(id);
 	}
-
+	
 	@GET
 	public List<Semaforo> findAll() {
 		return manager.findAll();
