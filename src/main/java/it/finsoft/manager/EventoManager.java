@@ -49,9 +49,12 @@ public class EventoManager {
 	}
 
 	public List<Evento> findPolling(String tag, Entita ent, TipoEvento tp) {
-		System.out.println("ok Manager");
-		return em.createQuery("FROM Evento WHERE tag= :tag AND entita = :ent AND tipoEvento = :tp", Evento.class)
-				.setParameter("tag", tag).setParameter("ent", ent).setParameter("tp", tp).getResultList();
-	}
+		
+		List<Evento> e=em.createQuery("FROM Evento WHERE tag= :tag AND entita = :ent AND tipoEvento = :tp",
+							Evento.class)
+					.setParameter("tag", tag).setParameter("ent", ent).setParameter("tp", tp).getResultList();
+		
+		return e;
+		}
 
 }

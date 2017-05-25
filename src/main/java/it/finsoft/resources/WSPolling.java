@@ -1,12 +1,11 @@
 package it.finsoft.resources;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -37,26 +36,60 @@ public class WSPolling {
 	@Inject
 	EventoManager managerEvt;
 
-	private List<Evento> tmp;
+	/*
+	 * @GET // TODO: restituire sia un Boolean, sia una List<Evento> public
+	 * List<Evento> get(
+	 * 
+	 * @QueryParam("semaforo") String semaforo, @QueryParam(value = "tags")
+	 * List<String> tags) {
+	 * 
+	 * System.out.println("Parametri di ricerca: Semaforo " + semaforo +
+	 * " Tags " + tags); // Non visualizza i tags BLOCCANTE PER LA RICERCA
+	 * Semaforo Sm = managerSem.findByCod(semaforo);
+	 * System.out.println(tags.size()); // Tags [] vuoto??? // RISOLTO, input
+	 * name cambiato da tag a tags sull'index.jsp Collection<Milestone> test =
+	 * Sm.getSemaforiMilestones(); // thr for (Milestone milestone : test) {
+	 * Entita ent = milestone.getEntita(); TipoEvento tp =
+	 * milestone.getTipoEvento(); } return null; }
+	 */
 
 	@GET
-	// TODO: restituire sia un Boolean, sia una List<Evento>
-	public List<Evento> get(
+	public DatiPolling get(@QueryParam("semaforo") String semaforo, @QueryParam(value = "tag") List<String> tags) {
 
-			@QueryParam("semaforo") String semaforo, @QueryParam(value = "tags") List<String> tags) {
-
-		System.out.println("Parametri di ricerca: Semaforo " + semaforo + " Tags " + tags);
+		DatiPolling result = new DatiPolling();
+		result.semaforoOk = Boolean.TRUE;
+		result.eventi = new ArrayList<>();
+		System.out.println("Parametri di ricerca: Semaforo " + semaforo + " Tag " + tags);
 		// Non visualizza i tags BLOCCANTE PER LA RICERCA
 		Semaforo Sm = managerSem.findByCod(semaforo);
-		System.out.println(tags.size()); // Tags [] vuoto???
-		// RISOLTO, input name cambiato da tag a tags sull'index.jsp
-		Collection<Milestone> test = Sm.getSemaforiMilestones();
-		// thr
-		for (Milestone milestone : test) {
-			Entita ent = milestone.getEntita();
-			TipoEvento tp = milestone.getTipoEvento();
-		}
-		return null;
+		// System.out.println(tags.size()); // Tags [] vuoto???
+		// RISOLTO, value cambiato da tag a tags nel QueryParam del metodo GET
+		Collection<Milestone> milestones = Sm.getSemaforiMilestones();
+		System.out.println(milestones.size());
+		System.out.println(tags.size());
+		// throw new UnsupportedOperationException("TODO");
+		String tag = "";
+		int i = 0;
+		for (Milestone milestone : milestones) {
+			//Sembra funzionare, prevede solamente che i tag siano inseriti in ordine, alternativamente devo attrezzarmi per uno scorrimento.
+				tag = tags.get(i);
+				System.out.println(tag);
+				Entita ent = milestone.getEntita();
+				TipoEvento tp = milestone.getTipoEvento();
+				// for (String tag : tags) {
+				List<Evento> tmp = null;
+				tmp = managerEvt.findPolling(tag, ent, tp);
+				System.out.println(tmp);
+				i++;
+				if (tmp.isEmpty()) {
+					result.semaforoOk = Boolean.FALSE;
+				}
+				result.eventi.addAll(tmp);
+
+				// }
+			}
+		
+		return result;
 	}
 
 	/* ---- TEST RESOURCES ---- */
@@ -77,4 +110,8 @@ public class WSPolling {
 	 * ents); return Response.ok(ents).build(); }
 	 */
 
+	public static class DatiPolling {
+		public Boolean semaforoOk;
+		public List<Evento> eventi;
+	}
 }
