@@ -40,12 +40,16 @@ public class EventoManager {
 	 * 
 	 */
 
-	public List<Evento> findAll() {
+	public List<Evento> findAll() {		
 		return em.createQuery("FROM Evento", Evento.class).getResultList();
 	}
-
+	
+	/*Aggiunta per test*/
 	public List<Evento> findByTag(String tag) {
-		return em.createQuery("FROM Evento WHERE tag= :tag", Evento.class).setParameter("tag", tag).getResultList();
+		LOG.info("EventoManager TAG");
+		return em.createQuery("FROM Evento WHERE tag= :tag", Evento.class)
+				.setParameter("tag", tag)
+				.getResultList();
 	}
 
 	public List<Evento> findPolling(String tag, Entita ent, TipoEvento tp) {

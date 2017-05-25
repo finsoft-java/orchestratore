@@ -3,7 +3,6 @@ package it.finsoft.resources;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
@@ -15,6 +14,7 @@ import it.finsoft.entity.Entita;
 import it.finsoft.entity.Evento;
 import it.finsoft.entity.Milestone;
 import it.finsoft.entity.Semaforo;
+
 import it.finsoft.entity.TipoEvento;
 
 import it.finsoft.manager.EntitaManager;
@@ -28,6 +28,8 @@ public class WSPolling {
 
 	@Inject
 	EntitaManager managerEnt;
+	@Inject
+	EventoManager managerEvn;
 	@Inject
 	SemaforoManager managerSem;
 	/*
@@ -53,7 +55,7 @@ public class WSPolling {
 	 * milestone.getTipoEvento(); } return null; }
 	 */
 
-	@GET
+
 	public DatiPolling get(@QueryParam("semaforo") String semaforo, @QueryParam(value = "tag") List<String> tags) {
 
 		DatiPolling result = new DatiPolling();
@@ -61,7 +63,12 @@ public class WSPolling {
 		result.eventi = new ArrayList<>();
 		System.out.println("Parametri di ricerca: Semaforo " + semaforo + " Tag " + tags);
 		// Non visualizza i tags BLOCCANTE PER LA RICERCA
+
+	// TODO: restituire sia un Boolean, sia una List<Evento>
+
+
 		Semaforo Sm = managerSem.findByCod(semaforo);
+
 		// System.out.println(tags.size()); // Tags [] vuoto???
 		// RISOLTO, value cambiato da tag a tags nel QueryParam del metodo GET
 		Collection<Milestone> milestones = Sm.getSemaforiMilestones();
@@ -91,6 +98,34 @@ public class WSPolling {
 		
 		return result;
 	}
+	/*
+	 * ricerca CODICE + TAG
+	 * 
+	 * @GET // TODO: restituire sia un Boolean, sia una List<Evento> public
+	 * Collection<Milestone> get(
+	 * 
+	 * @QueryParam("semaforo") String semaforo, @QueryParam(value = "tags")
+	 * final List<String> tags) {
+	 * 
+	 * // System.out.println(semaforo + " " + tags); Semaforo Sm =
+	 * managerSem.findByCod(semaforo); // System.out.println(Sm.toString());
+	 * Evento ev = (Evento) managerEvn.findByTag(tags); Long idSm =
+	 * Sm.getIdSemaforo(); System.out.println(idSm); //
+	 * System.out.println(Sm.getSemaforiMilestones()); // throw new
+	 * UnsupportedOperationException("TODO"); Collection<Milestone> test =
+	 * Sm.getSemaforiMilestones(); for (Milestone milestone : test) { Entita ent
+	 * = milestone.getEntita();
+	 * 
+	 * 
+	 * String evn = ev.getTag();
+	 * 
+	 * List<Evento> tmp =
+	 * em.createQuery("FROM Evento WHERE entita = :ent AND tag = :evn",
+	 * Evento.class) .setParameter("ent", ent).setParameter("evn", evn)
+	 * .getResultList(); System.out.println(tmp); }
+	 * 
+	 * return test; }
+	 */
 
 	/* ---- TEST RESOURCES ---- */
 	@GET
@@ -101,14 +136,6 @@ public class WSPolling {
 		return "ok polling";
 	}
 	/* ---- TEST RESOURCES ---- */
-
-	/*
-	 * public Response getEventoAsJSON(@Context HttpHeaders httpHeaders, Entita
-	 * entita1) { List<Entita> ents = em.findAll(); ents.add(entita1);
-	 * System.out.println("post resources, creo entita1 " + ents);
-	 * em.save(entita1); System.out.println("post resources, salvo entita1 " +
-	 * ents); return Response.ok(ents).build(); }
-	 */
 
 	public static class DatiPolling {
 		public Boolean semaforoOk;
