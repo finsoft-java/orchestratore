@@ -32,11 +32,11 @@ public class WSPolling {
 	EventoManager managerEvn;
 	@Inject
 	SemaforoManager managerSem;
+	@Inject
+	EventoManager managerEvt;
 	/*
 	 * @PersistenceContext EntityManager em;
 	 */
-	@Inject
-	EventoManager managerEvt;
 
 	/*
 	 * @GET // TODO: restituire sia un Boolean, sia una List<Evento> public
@@ -55,7 +55,7 @@ public class WSPolling {
 	 * milestone.getTipoEvento(); } return null; }
 	 */
 
-
+	@GET
 	public DatiPolling get(@QueryParam("semaforo") String semaforo, @QueryParam(value = "tag") List<String> tags) {
 
 		DatiPolling result = new DatiPolling();
@@ -64,38 +64,42 @@ public class WSPolling {
 		System.out.println("Parametri di ricerca: Semaforo " + semaforo + " Tag " + tags);
 		// Non visualizza i tags BLOCCANTE PER LA RICERCA
 
-	// TODO: restituire sia un Boolean, sia una List<Evento>
-
+		// TODO: restituire sia un Boolean, sia una List<Evento>
 
 		Semaforo Sm = managerSem.findByCod(semaforo);
 
 		// System.out.println(tags.size()); // Tags [] vuoto???
 		// RISOLTO, value cambiato da tag a tags nel QueryParam del metodo GET
 		Collection<Milestone> milestones = Sm.getSemaforiMilestones();
+		result.expectedMilestones = milestones.size();
 		System.out.println(milestones.size());
 		System.out.println(tags.size());
 		// throw new UnsupportedOperationException("TODO");
 		String tag = "";
 		int i = 0;
+		result.okMilestones = 0;
 		for (Milestone milestone : milestones) {
-			//Sembra funzionare, prevede solamente che i tag siano inseriti in ordine, alternativamente devo attrezzarmi per uno scorrimento.
-				tag = tags.get(i);
-				System.out.println(tag);
-				Entita ent = milestone.getEntita();
-				TipoEvento tp = milestone.getTipoEvento();
-				// for (String tag : tags) {
-				List<Evento> tmp = null;
-				tmp = managerEvt.findPolling(tag, ent, tp);
-				System.out.println(tmp);
-				i++;
-				if (tmp.isEmpty()) {
-					result.semaforoOk = Boolean.FALSE;
-				}
-				result.eventi.addAll(tmp);
-
-				// }
+			// Sembra funzionare, prevede solamente che i tag siano inseriti in
+			// ordine, alternativamente devo attrezzarmi per uno scorrimento.
+			tag = tags.get(i);
+			System.out.println(tag);
+			Entita ent = milestone.getEntita();
+			TipoEvento tp = milestone.getTipoEvento();
+			// for (String tag : tags) {
+			List<Evento> tmp = null;
+			tmp = managerEvt.findPolling(tag, ent, tp);
+			System.out.println(tmp);
+			i++;
+			if (tmp.isEmpty()) {
+				result.semaforoOk = Boolean.FALSE;
+			} else {
+				++result.okMilestones;
 			}
-		
+			result.eventi.addAll(tmp);
+
+			// }
+		}
+
 		return result;
 	}
 	/*
@@ -139,6 +143,8 @@ public class WSPolling {
 
 	public static class DatiPolling {
 		public Boolean semaforoOk;
+		public Integer expectedMilestones;
+		public Integer okMilestones;
 		public List<Evento> eventi;
 	}
 }
