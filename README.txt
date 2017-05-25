@@ -73,3 +73,7 @@ Per popolare i dati visitare l'indirizzo:
 http://localhost:8080/orchestratoreRADAR/ws/reset
 il servizio richiama il file "script.sql" (dati in continuo aggiornamento)
 
+--- SCRIPT COLLECTOR ---
+per utilizzare il WGET scaricare il file "vwget-2.4-wget-1.11.4-bin.zip" dal seguente url:
+https://sites.google.com/site/visualwget/a-download-manager-gui-based-on-wget-for-windows
+Estrarre il contenuto in: .....
