@@ -6,9 +6,12 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import it.finsoft.entity.Entita;
+
 import org.jboss.logging.Logger;
 
 import it.finsoft.entity.Evento;
+import it.finsoft.entity.TipoEvento;
 
 @Stateless
 public class EventoManager {
@@ -48,5 +51,14 @@ public class EventoManager {
 				.setParameter("tag", tag)
 				.getResultList();
 	}
+
+	public List<Evento> findPolling(String tag, Entita ent, TipoEvento tp) {
+		
+		List<Evento> e=em.createQuery("FROM Evento WHERE tag= :tag AND entita = :ent AND tipoEvento = :tp",
+							Evento.class)
+					.setParameter("tag", tag).setParameter("ent", ent).setParameter("tp", tp).getResultList();
+		
+		return e;
+		}
 
 }
