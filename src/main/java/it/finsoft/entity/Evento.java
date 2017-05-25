@@ -98,6 +98,9 @@ public class Evento implements Serializable {
 	}
 
 	public void setTag(String tag) {
+		//FIXME remove ' ' e ',' e porta uppercase
+		tag = tag.replaceAll(",", "");
+		tag = tag.replaceAll(" ", "").toUpperCase();		
 		this.tag = tag;
 	}
   

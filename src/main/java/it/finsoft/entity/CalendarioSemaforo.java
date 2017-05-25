@@ -13,15 +13,19 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "CALENDARI_MILESTONES")
-public class CalendarioMilestone implements Serializable {
+@Table(name = "CALENDARI_SEMAFORI")
+public class CalendarioSemaforo implements Serializable {
 
 	private static final long serialVersionUID = -3328166212616139600L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ID_CALENDARIO_MILESTONE")
-	private Long idCalendarioMilestone;
+	@Column(name = "ID_CALENDARIO_SEMAFORO")
+	private Long idCalendarioSemaforo;
+	
+	@JoinColumn(name = "ID_SEMAFORO", referencedColumnName = "ID_SEMAFORO")
+	@ManyToOne(optional = false)
+	private Semaforo semaforo;
 
 	@JoinColumn(name = "ID_CALENDARIO", referencedColumnName = "ID_CALENDARIO")
 	@ManyToOne(optional = false)
@@ -31,29 +35,39 @@ public class CalendarioMilestone implements Serializable {
 	@ManyToOne(optional = false)
 	private Milestone milestone;
 
-	@Column(name = "TAG")
-	private String tag;
+	@Column(name = "TAGS")
+	private String tags;
 
 	@Column(name = "DATA_ORA_PREVISTE")
 	private Date dataOraPreviste;
 
-	public CalendarioMilestone() {
+	public CalendarioSemaforo() {
 
 	}
-
-	public CalendarioMilestone(Calendario calendario, Milestone milestone, String tag, Date dataOraPreviste) {
+		
+	public CalendarioSemaforo(Semaforo semaforo, Calendario calendario, Milestone milestone, String tags,
+			Date dataOraPreviste) {
+		this.semaforo = semaforo;
 		this.calendario = calendario;
 		this.milestone = milestone;
-		this.tag = tag;
+		this.tags = tags;
 		this.dataOraPreviste = dataOraPreviste;
 	}
 
-	public Long getIdCalendarioMilestone() {
-		return idCalendarioMilestone;
+	public Long getIdCalendarioSemaforo() {
+		return idCalendarioSemaforo;
 	}
 
-	public void setIdCalendarioMilestone(Long idCalendarioMilestone) {
-		this.idCalendarioMilestone = idCalendarioMilestone;
+	public void setIdCalendarioSemaforo(Long idCalendarioSemaforo) {
+		this.idCalendarioSemaforo = idCalendarioSemaforo;
+	}
+
+	public Semaforo getSemaforo() {
+		return semaforo;
+	}
+
+	public void setSemaforo(Semaforo semaforo) {
+		this.semaforo = semaforo;
 	}
 
 	public Calendario getCalendario() {
@@ -72,12 +86,15 @@ public class CalendarioMilestone implements Serializable {
 		this.milestone = milestone;
 	}
 
-	public String getTag() {
-		return tag;
+	public String getTags() {
+		return tags;
 	}
 
-	public void setTag(String tag) {
-		this.tag = tag;
+	public void setTags(String tags) {
+		//FIXME split(',') normalizziamo i tag poi lo ricostruiamo
+		
+		tags = tags.replaceAll(" ", "").toUpperCase();	
+		this.tags = tags;
 	}
 
 	public Date getDataOraPreviste() {
@@ -92,7 +109,7 @@ public class CalendarioMilestone implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((idCalendarioMilestone == null) ? 0 : idCalendarioMilestone.hashCode());
+		result = prime * result + ((idCalendarioSemaforo == null) ? 0 : idCalendarioSemaforo.hashCode());
 		return result;
 	}
 
@@ -104,19 +121,21 @@ public class CalendarioMilestone implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		CalendarioMilestone other = (CalendarioMilestone) obj;
-		if (idCalendarioMilestone == null) {
-			if (other.idCalendarioMilestone != null)
+		CalendarioSemaforo other = (CalendarioSemaforo) obj;
+		if (idCalendarioSemaforo == null) {
+			if (other.idCalendarioSemaforo != null)
 				return false;
-		} else if (!idCalendarioMilestone.equals(other.idCalendarioMilestone))
+		} else if (!idCalendarioSemaforo.equals(other.idCalendarioSemaforo))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "CalendarioMilestone [idCalendarioMilestone=" + idCalendarioMilestone + ", calendario=" + calendario
-				+ ", milestone=" + milestone + ", tag=" + tag + ", dataOraPreviste=" + dataOraPreviste + "]";
+		return "CalendarioSemaforo [idCalendarioSemaforo=" + idCalendarioSemaforo + ", semaforo=" + semaforo
+				+ ", calendario=" + calendario + ", milestone=" + milestone + ", tags=" + tags + ", dataOraPreviste="
+				+ dataOraPreviste + "]";
 	}
+	
 
 }
