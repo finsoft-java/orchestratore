@@ -23,7 +23,7 @@ public class SemaforoManager {
 		em.remove(c);
 	}
 
-	public Semaforo findById(Long id) {
+	public Semaforo findById(long id) {
 		return em.find(Semaforo.class, id);
 	}
 
@@ -32,11 +32,9 @@ public class SemaforoManager {
 	}
 
 	public Semaforo findByCod(String cod) {
-		System.out.println(cod);
 		Semaforo semaforo = em.createQuery("FROM Semaforo WHERE codice = :cod", Semaforo.class)
 				.setParameter("cod", cod)
 				.getSingleResult();
-		System.out.println(semaforo);
 		return semaforo;
 
 	}

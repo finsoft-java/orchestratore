@@ -1,5 +1,6 @@
 package it.finsoft.manager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -40,25 +41,34 @@ public class EventoManager {
 	 * 
 	 */
 
-	public List<Evento> findAll() {		
+	public List<Evento> findAll() {
 		return em.createQuery("FROM Evento", Evento.class).getResultList();
 	}
-	
-	/*Aggiunta per test*/
+
+	/* Aggiunta per test */
 	public List<Evento> findByTag(String tag) {
 		LOG.info("EventoManager TAG");
-		return em.createQuery("FROM Evento WHERE tag= :tag", Evento.class)
-				.setParameter("tag", tag)
-				.getResultList();
+		return em.createQuery("FROM Evento WHERE tag= :tag", Evento.class).setParameter("tag", tag).getResultList();
 	}
 
 	public List<Evento> findPolling(String tag, Entita ent, TipoEvento tp) {
-		
-		List<Evento> e=em.createQuery("FROM Evento WHERE tag= :tag AND entita = :ent AND tipoEvento = :tp",
-							Evento.class)
-					.setParameter("tag", tag).setParameter("ent", ent).setParameter("tp", tp).getResultList();
-		
+
+		List<Evento> e = em
+				.createQuery("FROM Evento WHERE tag= :tag AND entita = :ent AND tipoEvento = :tp", Evento.class)
+				.setParameter("tag", tag).setParameter("ent", ent).setParameter("tp", tp).getResultList();
+
 		return e;
-		}
+	}
+
+	/*
+	 * public List<Evento> findPolling(List<String> tags, Entita ent, TipoEvento
+	 * tp) { List<Evento> e = new ArrayList<Evento>(); for (String tag : tags) {
+	 * System.out.println(tag); e.addAll(em.
+	 * createQuery("FROM Evento WHERE tag= :tag AND entita = :ent AND tipoEvento = :tp"
+	 * , Evento.class) .setParameter("tag", tag).setParameter("ent",
+	 * ent).setParameter("tp", tp).getResultList());
+	 * 
+	 * } return e; }
+	 */
 
 }
