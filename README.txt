@@ -73,3 +73,15 @@ Per popolare i dati visitare l'indirizzo:
 http://localhost:8080/orchestratoreRADAR/ws/reset
 il servizio richiama il file "script.sql" (dati in continuo aggiornamento)
 
+--- SCRIPT COLLECTOR ---
+per utilizzare il WGET scaricare il file "vwget-2.4-wget-1.11.4-bin.zip" dal seguente url:
+https://sites.google.com/site/visualwget/a-download-manager-gui-based-on-wget-for-windows
+Estrarre il contenuto in una directory a piacere (esempio c:\Progetti\Wget)
+Editare lo script "WS_Collector.bat" inserendo nel set WGET= 
+il percorso in cui abbiamo scompattato il file precedente c:\Progetti\WGet\ aggiungendo wget.exe
+inserire anche l'url che si vuole raggiungere nel set ENDPOINT= (es: http://localhost:8080/orchestratoreRADAR/ws/collector)
+Successivamente editare il file "WS_Collector_example_wget.bat" e modificare (se necessario) il percorso dopo "cd" con il 
+percorso della cartella dove risiede il file .bat che va eseguito (c:\Progetti\Script)
+editare la riga che inizia per "call" con i parametri corretti 
+es: call "WS_Collector.bat" U7SC0_BO VALIDAZIONE ParamWGetUltimoTest
+
