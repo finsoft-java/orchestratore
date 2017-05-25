@@ -29,40 +29,52 @@ public class Milestone implements Serializable {
 	@ManyToOne(optional = false)
 	@JoinColumn(name ="ID_ENTITA", referencedColumnName ="ID_ENTITA")
 	private Entita entita; //foreign key tabella entita
-
+	
+	@Column(name ="DESCRIZIONE")
+	private String descrizione;
 	
 	public Milestone() {
 		
+	}
+	
+	public Milestone(Long idMilestone, TipoEvento tipoEvento, Entita entita, String descrizione) {
+		this.idMilestone = idMilestone;
+		this.tipoEvento = tipoEvento;
+		this.entita = entita;
+		this.descrizione = descrizione;
 	}
 
 	public Long getIdMilestone() {
 		return idMilestone;
 	}
 
+	public String getDescrizione() {
+		return descrizione;
+	}
+
+	public void setDescrizione(String descrizione) {
+		this.descrizione = descrizione;
+	}
+
 	public void setIdMilestone(Long idMilestone) {
 		this.idMilestone = idMilestone;
 	}
-
 
 	public TipoEvento getTipoEvento() {
 		return tipoEvento;
 	}
 
-
 	public void setTipoEvento(TipoEvento tipoEvento) {
 		this.tipoEvento = tipoEvento;
 	}
-
 
 	public Entita getEntita() {
 		return entita;
 	}
 
-
 	public void setEntita(Entita entita) {
 		this.entita = entita;
 	}
-
 
 	@Override
 	public int hashCode() {
@@ -71,7 +83,6 @@ public class Milestone implements Serializable {
 		result = prime * result + ((idMilestone == null) ? 0 : idMilestone.hashCode());
 		return result;
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -90,11 +101,14 @@ public class Milestone implements Serializable {
 		return true;
 	}
 
-
 	@Override
 	public String toString() {
-		return "Milestones [IDmilestones=" + idMilestone + ", tipoevento=" + tipoEvento + ", entita=" + entita + "]";
+		return "Milestone [idMilestone=" + idMilestone + ", tipoEvento=" + tipoEvento + ", entita=" + entita
+				+ ", descrizione=" + descrizione + "]";
 	}
+
+
+	
 	
 	
 	

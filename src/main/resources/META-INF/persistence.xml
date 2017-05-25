@@ -4,7 +4,7 @@
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 		<jta-data-source>jdbc/orchestratore</jta-data-source>
 		<class>it.finsoft.entity.Calendario</class>
-		<class>it.finsoft.entity.CalendarioMilestone</class>
+		<class>it.finsoft.entity.CalendarioSemaforo</class>
 		<class>it.finsoft.entity.DettaglioEvento</class>
 		<class>it.finsoft.entity.Entita</class>
 		<class>it.finsoft.entity.Evento</class>
