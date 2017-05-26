@@ -2,8 +2,8 @@ package it.finsoft.entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -48,7 +48,7 @@ public class Evento implements Serializable {
 	private String tag;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "evento")
-	private Collection<DettaglioEvento> dettaglioEvento = new ArrayList<>();
+	private List<DettaglioEvento> dettaglioEvento = new ArrayList<>();
 
 	public Evento() {
 
@@ -104,11 +104,11 @@ public class Evento implements Serializable {
 	}
   
 	@XmlTransient
-	public Collection<DettaglioEvento> getDettagliEvento() {
+	public List<DettaglioEvento> getDettagliEvento() {
 		return dettaglioEvento;
 	}
 
-	public void setDettagliEvento(Collection<DettaglioEvento> dettaglioEvento) {
+	public void setDettagliEvento(List<DettaglioEvento> dettaglioEvento) {
 		this.dettaglioEvento = dettaglioEvento;
 	}
 
