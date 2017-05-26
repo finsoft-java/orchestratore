@@ -17,6 +17,7 @@ public class DependencyBinder extends AbstractBinder {
 		// SHOUDN'T BE AUTOMATIC ???
 		System.err.println("CONFIGURING BINDING - SHOUDN'T BE AUTOMATIC ?!?");
 		
+<<<<<<< Upstream, based on branch 'jetty' of https://github.com/finsoft-java/orchestratore.git
 		bind(CalendarioManager.class).to(CalendarioManager.class);
 		bind(CalendarioSemaforoManager.class).to(CalendarioSemaforoManager.class);
 		bind(DettaglioEventoManager.class).to(DettaglioEventoManager.class);
@@ -26,6 +27,15 @@ public class DependencyBinder extends AbstractBinder {
 		bind(SemaforoManager.class).to(SemaforoManager.class);
 		bind(SemaforoMilestoneManager.class).to(SemaforoMilestoneManager.class);
 		bind(TipoEventoManager.class).to(TipoEventoManager.class);
+=======
+		bind(EventoManager.class).to(EventoManager.class);
+		bind(CalendarioManager.class).to(CalendarioManager.class);
+		bind(CalendarioSemaforoManager.class).to(CalendarioSemaforoManager.class);
+		bind(DettaglioEventoManager.class).to(DettaglioEventoManager.class);
+		bind(SemaforoManager.class).to(SemaforoManager.class);
+		bind(TipoEventoManager.class).to(TipoEventoManager.class);
+		bind(MilestoneManager.class).to(MilestoneManager.class);
+>>>>>>> cdf0c3c dependency injection
 
 		// REM
 		// request scope binding
