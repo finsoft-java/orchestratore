@@ -11,7 +11,6 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import it.finsoft.entity.CalendarioSemaforo;
@@ -69,6 +68,7 @@ public class CalendarioSemaforoResources {
 	 * { "milestone" : { "idMilestone" : 1 }, "calendario" : { "idCalendario" :
 	 * 1 }, "tag" : "fasdfafa" }
 	 */
+<<<<<<< HEAD
 
 	/* Aggiunta per inserimento in get via http */
 	@GET
@@ -84,6 +84,9 @@ public class CalendarioSemaforoResources {
 		return csm.save(cals);
 	}
 	/* Aggiunta per inserimento in get via http */
+=======
+	
+>>>>>>> branch 'master' of https://github.com/finsoft-java/orchestratore.git
 
 	/* ---- TEST RESOURCES ---- */
 	@GET

@@ -11,7 +11,14 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
+<<<<<<< HEAD
+=======
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.ResponseBuilder;
+
+>>>>>>> branch 'master' of https://github.com/finsoft-java/orchestratore.git
 import it.finsoft.entity.Semaforo;
 import it.finsoft.manager.SemaforoManager;
 
@@ -35,6 +42,18 @@ public class SemaforoResources {
 		return manager.findAll();
 	}
 	
+	/*prova visualizzazione elenco semafori*/
+	/*
+	@GET
+	public Response findAll() {
+		System.out.println("siamo nel nuovo get ");
+		GenericEntity<List<Semaforo>> semafori = new GenericEntity<List<Semaforo>>(manager.findAll()) {};
+		System.out.println("siamo nel nuovo get " + semafori);
+		return Response.ok(semafori).build();
+        }
+     */  
+	/*prova visualizzazione elenco semafori*/
+
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)

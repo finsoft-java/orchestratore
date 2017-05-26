@@ -27,7 +27,13 @@ public class SemaforoManager {
 	}
 
 	public List<Semaforo> findAll() {
-		return em.createQuery("FROM Semaforo", Semaforo.class).getResultList();
+		List<Semaforo> list = em.createQuery("FROM Semaforo", Semaforo.class).getResultList();
+		for (Semaforo l : list) {
+			System.out.println("l=" + l);
+			System.out.println("m=" + l.getSemaforoMilestones());
+		}
+
+		return list;
 
 	}
 
