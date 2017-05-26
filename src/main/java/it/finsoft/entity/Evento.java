@@ -20,7 +20,6 @@ import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-
 @Entity
 @Table(name = "EVENTI")
 @XmlRootElement
@@ -99,6 +98,8 @@ public class Evento implements Serializable {
 	}
 
 	public void setTag(String tag) {
+		tag = tag.replaceAll(",", "");
+		tag = tag.replaceAll(" ", "").toUpperCase();		
 		this.tag = tag;
 	}
   

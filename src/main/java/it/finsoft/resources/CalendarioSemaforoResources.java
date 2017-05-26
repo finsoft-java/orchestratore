@@ -12,31 +12,42 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import it.finsoft.entity.CalendarioMilestone;
-import it.finsoft.manager.CalendarioMilestoneManager;
+
+import it.finsoft.entity.CalendarioSemaforo;
+import it.finsoft.manager.CalendarioManager;
+import it.finsoft.manager.CalendarioSemaforoManager;
+import it.finsoft.manager.MilestoneManager;
+import it.finsoft.manager.SemaforoManager;
 
 @Stateless
-@Path("resources/calendarimilestones")
+@Path("resources/calendarisemafori")
 @Produces({ MediaType.APPLICATION_JSON })
-public class CalendarioMilestoneResources {	
+public class CalendarioSemaforoResources {	
 
 	@Inject
-	CalendarioMilestoneManager manager;
+	CalendarioSemaforoManager manager;
+	
+	/* test inserimento calendari semafori*/
+	CalendarioSemaforoManager csm;
+	CalendarioManager cm;
+	SemaforoManager sm;
+	MilestoneManager mm;
+	/* test inserimento calendari semafori*/
 
 	@GET
-	public List<CalendarioMilestone> findAll() {
+	public List<CalendarioSemaforo> findAll() {
 		return manager.findAll();
 	}
 
 	@GET
 	@Path("{id}")
-	public CalendarioMilestone findById(@PathParam("id") Long id) {
+	public CalendarioSemaforo findById(@PathParam("id") Long id) {
 		return manager.findById(id);
 	}
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public CalendarioMilestone create(CalendarioMilestone cal) {
+	public CalendarioSemaforo create(CalendarioSemaforo cal) {
 		System.out.println("post resources, salvo entita " + cal);
 		return manager.save(cal);
 	}
@@ -49,8 +60,8 @@ public class CalendarioMilestoneResources {
 	
 	@PUT
 	@Path("{id}") //richiede di inserire (in json) tutti i campi obbligatori
-	public void update(@PathParam("id") Long id, CalendarioMilestone m) {	
-		m.setIdCalendarioMilestone(id);
+	public void update(@PathParam("id") Long id, CalendarioSemaforo m) {	
+		m.setIdCalendarioSemaforo(id);
 		manager.save(m);
 	}
 	/*
@@ -71,7 +82,7 @@ public class CalendarioMilestoneResources {
 	@Path("test")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String prova() {
-		System.out.println("ok calendarimilestones");
+		System.out.println("ok calendarisemafori");
 		return "ok calendarimilestones";
 	}
 	/* ---- TEST RESOURCES ---- */

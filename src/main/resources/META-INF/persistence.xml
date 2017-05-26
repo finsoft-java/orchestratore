@@ -4,12 +4,13 @@
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 		<jta-data-source>jdbc/orchestratore</jta-data-source>
 		<class>it.finsoft.entity.Calendario</class>
-		<class>it.finsoft.entity.CalendarioMilestone</class>
+		<class>it.finsoft.entity.CalendarioSemaforo</class>
 		<class>it.finsoft.entity.DettaglioEvento</class>
 		<class>it.finsoft.entity.Entita</class>
 		<class>it.finsoft.entity.Evento</class>
 		<class>it.finsoft.entity.Milestone</class>
 		<class>it.finsoft.entity.Semaforo</class>
+		<class>it.finsoft.entity.SemaforoMilestone</class>
 		<class>it.finsoft.entity.TipoEvento</class>
 		<properties>			
 			<!--  Non abbiamo user e pwd per accedere al db
