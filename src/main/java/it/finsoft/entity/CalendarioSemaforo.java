@@ -91,12 +91,10 @@ public class CalendarioSemaforo implements Serializable {
 	}
 
 	public void setTags(String tags) {
-		//FIXME split(',') normalizziamo i tag poi lo ricostruiamo
-		
 		tags = tags.replaceAll(" ", "").toUpperCase();	
 		this.tags = tags;
 	}
-
+		
 	public Date getDataOraPreviste() {
 		return dataOraPreviste;
 	}

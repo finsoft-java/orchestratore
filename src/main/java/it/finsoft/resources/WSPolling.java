@@ -1,7 +1,6 @@
 package it.finsoft.resources;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -23,7 +22,6 @@ import it.finsoft.entity.TipoEvento;
 import it.finsoft.manager.EntitaManager;
 import it.finsoft.manager.EventoManager;
 import it.finsoft.manager.SemaforoManager;
-import it.finsoft.manager.SemaforoMilestoneManager;
 
 @Stateless
 @Path("polling")
