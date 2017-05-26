@@ -20,7 +20,7 @@ import it.finsoft.manager.MilestoneManager;
 @Path("resources/milestones")
 @Produces({ MediaType.APPLICATION_JSON })
 public class MilestoneResources {
-	
+
 	@Inject
 	MilestoneManager manager;
 
@@ -49,7 +49,7 @@ public class MilestoneResources {
 	}
 
 	@PUT
-	@Path("{id}")//richiede di inserire (in json) tutti i campi obbligatori
+	@Path("{id}") // richiede di inserire (in json) tutti i campi obbligatori
 	public void update(@PathParam("id") Long id, Milestone m) {
 		m.setIdMilestone(id);
 		manager.save(m);

@@ -12,7 +12,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-
 import it.finsoft.entity.Semaforo;
 import it.finsoft.manager.SemaforoManager;
 
@@ -35,6 +34,7 @@ public class SemaforoResources {
 	public List<Semaforo> findAll() {
 		return manager.findAll();
 	}
+	
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)

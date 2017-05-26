@@ -49,7 +49,7 @@ public class CalendarioResources {
 	}
 
 	@PUT
-	@Path("{id}")//richiede di inserire (in json) tutti i campi obbligatori
+	@Path("{id}") // richiede di inserire (in json) tutti i campi obbligatori
 	public void update(@PathParam("id") Long id, Calendario m) {
 		m.setIdCalendario(id);
 		manager.save(m);

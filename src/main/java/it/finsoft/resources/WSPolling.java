@@ -22,6 +22,7 @@ import it.finsoft.entity.TipoEvento;
 import it.finsoft.manager.EntitaManager;
 import it.finsoft.manager.EventoManager;
 import it.finsoft.manager.SemaforoManager;
+import it.finsoft.manager.UtilityChecker;
 
 @Stateless
 @Path("polling")
@@ -38,6 +39,8 @@ public class WSPolling {
 	SemaforoManager managerSem;
 	@Inject
 	EventoManager managerEvt;
+	@Inject
+	UtilityChecker syntax;
 
 	@GET
 	public DatiPolling get(@QueryParam("semaforo") String codSemaforo, @QueryParam(value = "tag") List<String> tags) {
@@ -45,28 +48,38 @@ public class WSPolling {
 		DatiPolling result = new DatiPolling();
 
 		LOG.info("Parametri di ricerca: Semaforo " + codSemaforo + " Tag " + tags);
-		Semaforo semaforo = managerSem.findByCod(codSemaforo);
-		List<SemaforoMilestone> semMilestones = semaforo.getSemaforoMilestones();
-		result.expectedMilestones = semMilestones.size();
-		System.out.println(semMilestones.size());
-		System.out.println(semMilestones);
-		for (int i = 0; i < semMilestones.size(); i++) {
-			SemaforoMilestone sc = semMilestones.get(i);
-			Milestone m = sc.getMilestone();
-			String tag = tags.get(i);
-			Entita ent = m.getEntita();
-			TipoEvento tp = m.getTipoEvento();
-			List<Evento> tmp = null;
-			tmp = managerEvt.findPolling(tag, ent, tp);
-			System.out.println(tmp);
-			if (tmp.isEmpty()) {
-				result.semaforoOk = Boolean.FALSE;
-			} else {
-				++result.okMilestones;
+		codSemaforo = syntax.trimToUp(codSemaforo);
+		try {
+			Semaforo semaforo = managerSem.findByCod(codSemaforo);
+			List<SemaforoMilestone> semMilestones = semaforo.getSemaforoMilestones();
+			result.expectedMilestones = semMilestones.size();
+			System.out.println(semMilestones.size());
+			System.out.println(semMilestones);
+			for (int i = 0; i < semMilestones.size(); i++) {
+				SemaforoMilestone sc = semMilestones.get(i);
+				Milestone m = sc.getMilestone();
+				String tag = tags.get(i);
+				tag = syntax.trimToUp(tag);
+				Entita ent = m.getEntita();
+				TipoEvento tp = m.getTipoEvento();
+				List<Evento> tmp = null;
+				tmp = managerEvt.findPolling(tag, ent, tp);
+				System.out.println(tmp);
+				if (tmp.isEmpty()) {
+					result.semaforoOk = Boolean.FALSE;
+					result.tagNonVerificati.add(i + " - " + tag);
+				} else {
+					++result.okMilestones;
+				}
+				result.eventi.addAll(tmp);
 			}
-			result.eventi.addAll(tmp);
+		} catch (Exception sqlError) {
+			LOG.error("ERROR: il Semaforo: " + codSemaforo
+					+ " non e' stato trovato, controllare la sintassi o la presenza effettiva sul database");
+			result.errorMessage = "ERROR: il Semaforo: " + codSemaforo
+					+ " non e' stato trovato, controllare la sintassi o la presenza effettiva sul database";
+			result.semaforoOk = false;
 		}
-
 		return result;
 	}
 
@@ -86,5 +99,6 @@ public class WSPolling {
 		public Integer okMilestones = 0;
 		public List<Evento> eventi = new ArrayList<>();
 		public String errorMessage = null;
+		public List<String> tagNonVerificati = new ArrayList<>();
 	}
 }

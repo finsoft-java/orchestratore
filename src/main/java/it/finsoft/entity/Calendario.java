@@ -10,21 +10,21 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name ="CALENDARI")
+@Table(name = "CALENDARI")
 public class Calendario implements Serializable {
-	
+
 	private static final long serialVersionUID = 6714115891652097006L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name ="ID_CALENDARIO")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "ID_CALENDARIO")
 	private Long idCalendario;
-	
-	@Column(name ="DESCRIZIONE")
+
+	@Column(name = "DESCRIZIONE")
 	private String descrizione;
 
 	public Calendario() {
-		
+
 	}
 
 	public Calendario(String descrizione) {
@@ -76,6 +76,5 @@ public class Calendario implements Serializable {
 	public String toString() {
 		return "Calendario [idCalendario=" + idCalendario + ", descrizione=" + descrizione + "]";
 	}
-	
 
 }

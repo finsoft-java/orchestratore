@@ -40,8 +40,7 @@ public class Semaforo implements Serializable {
 	@OrderBy("ordinamento")
 	private List<SemaforoMilestone> semaforoMilestones = new ArrayList<>();
 
-	public Semaforo(Long idSemaforo, String codice, String descrizione,
-			List<SemaforoMilestone> semaforoMilestones) {
+	public Semaforo(Long idSemaforo, String codice, String descrizione, List<SemaforoMilestone> semaforoMilestones) {
 		this.idSemaforo = idSemaforo;
 		this.codice = codice;
 		this.descrizione = descrizione;

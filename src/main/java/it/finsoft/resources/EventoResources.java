@@ -48,7 +48,7 @@ public class EventoResources {
 	}
 
 	@PUT
-	@Path("{id}")//richiede di inserire (in json) tutti i campi obbligatori
+	@Path("{id}") // richiede di inserire (in json) tutti i campi obbligatori
 	public void update(@PathParam("id") Long id, Evento m) {
 		m.setIdEvento(id);
 		manager.save(m);
