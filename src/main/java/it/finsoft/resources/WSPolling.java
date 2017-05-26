@@ -1,7 +1,6 @@
 package it.finsoft.resources;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -23,7 +22,6 @@ import it.finsoft.entity.TipoEvento;
 import it.finsoft.manager.EntitaManager;
 import it.finsoft.manager.EventoManager;
 import it.finsoft.manager.SemaforoManager;
-import it.finsoft.manager.SemaforoMilestoneManager;
 
 @Stateless
 @Path("polling")
@@ -40,26 +38,6 @@ public class WSPolling {
 	SemaforoManager managerSem;
 	@Inject
 	EventoManager managerEvt;
-	/*
-	 * @PersistenceContext EntityManager em;
-	 */
-
-	/*
-	 * @GET // TODO: restituire sia un Boolean, sia una List<Evento> public
-	 * List<Evento> get(
-	 * 
-	 * @QueryParam("semaforo") String semaforo, @QueryParam(value = "tags")
-	 * List<String> tags) {
-	 * 
-	 * System.out.println("Parametri di ricerca: Semaforo " + semaforo +
-	 * " Tags " + tags); // Non visualizza i tags BLOCCANTE PER LA RICERCA
-	 * Semaforo Sm = managerSem.findByCod(semaforo);
-	 * System.out.println(tags.size()); // Tags [] vuoto??? // RISOLTO, input
-	 * name cambiato da tag a tags sull'index.jsp Collection<Milestone> test =
-	 * Sm.getSemaforiMilestones(); // thr for (Milestone milestone : test) {
-	 * Entita ent = milestone.getEntita(); TipoEvento tp =
-	 * milestone.getTipoEvento(); } return null; }
-	 */
 
 	@GET
 	public DatiPolling get(@QueryParam("semaforo") String codSemaforo, @QueryParam(value = "tag") List<String> tags) {
@@ -68,22 +46,16 @@ public class WSPolling {
 
 		LOG.info("Parametri di ricerca: Semaforo " + codSemaforo + " Tag " + tags);
 		Semaforo semaforo = managerSem.findByCod(codSemaforo);
-		// List<SemaforoMilestone> SMilestone = managerSM.findBySemaforo(Sm);
-		List<SemaforoMilestone> semMilestones = semaforo.getSemaforoMilestones();// getSemaforoMilestones
-																					// vuoto???
+		List<SemaforoMilestone> semMilestones = semaforo.getSemaforoMilestones();
 		result.expectedMilestones = semMilestones.size();
 		System.out.println(semMilestones.size());
-		int i = 0; // temporaneamente ripristinato il contatore i, da FIXARE
-		for (SemaforoMilestone sc : semMilestones) {
-			// Sembra funzionare, prevede solamente che i tag siano inseriti in
-			// ordine, alternativamente devo attrezzarmi per uno scorrimento.
-			// tag = tags.get(i);
+		System.out.println(semMilestones);
+		for (int i = 0; i < semMilestones.size(); i++) {
+			SemaforoMilestone sc = semMilestones.get(i);
 			Milestone m = sc.getMilestone();
 			String tag = tags.get(i);
-			// System.out.println(tag);
 			Entita ent = m.getEntita();
 			TipoEvento tp = m.getTipoEvento();
-			// for (String tag : tags) {
 			List<Evento> tmp = null;
 			tmp = managerEvt.findPolling(tag, ent, tp);
 			System.out.println(tmp);
@@ -93,7 +65,6 @@ public class WSPolling {
 				++result.okMilestones;
 			}
 			result.eventi.addAll(tmp);
-			i++;
 		}
 
 		return result;
