@@ -11,7 +11,6 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import it.finsoft.entity.CalendarioSemaforo;
@@ -77,22 +76,6 @@ public class CalendarioSemaforoResources {
 }
 	 */
 	
-	/* Aggiunta per inserimento in get via http */
-	@GET
-	@Path("inscalsem")
-	public CalendarioSemaforo create(
-			@QueryParam("tags") String tags,
-			@QueryParam("semaforo") Long ids, 
-			@QueryParam("calendario") Long idc, 
-			@QueryParam("milestone") Long idm
-			) {
-		CalendarioSemaforo cals = new CalendarioSemaforo();
-		cals.setSemaforo(sm.findById(ids));
-		cals.setCalendario(cm.findById(idc));
-		cals.setMilestone(mm.findById(idm));
-		cals.setTags(tags);;
-		return csm.save(cals);	}
-	/* Aggiunta per inserimento in get via http */
 
 	/* ---- TEST RESOURCES ---- */
 	@GET

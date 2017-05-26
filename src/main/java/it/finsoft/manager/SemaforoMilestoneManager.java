@@ -6,7 +6,6 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import it.finsoft.entity.Semaforo;
 import it.finsoft.entity.SemaforoMilestone;
 
 @Stateless
