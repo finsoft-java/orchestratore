@@ -13,12 +13,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
-<<<<<<< HEAD
-=======
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
-
->>>>>>> branch 'master' of https://github.com/finsoft-java/orchestratore.git
 import it.finsoft.entity.Semaforo;
 import it.finsoft.manager.SemaforoManager;
 
