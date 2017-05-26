@@ -1,6 +1,7 @@
 package it.finsoft.resources;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -67,7 +68,7 @@ public class WSPolling {
 		LOG.info("Parametri di ricerca: Semaforo " + codSemaforo + " Tag " + tags);
 		Semaforo semaforo = managerSem.findByCod(codSemaforo);
 		// List<SemaforoMilestone> SMilestone = managerSM.findBySemaforo(Sm);
-		List<SemaforoMilestone> semMilestones = semaforo.getSemaforoMilestones();// getSemaforoMilestones
+		Collection<SemaforoMilestone> semMilestones = semaforo.getSemaforoMilestones();// getSemaforoMilestones
 																					// vuoto???
 		result.expectedMilestones = semMilestones.size();
 		System.out.println(semMilestones.size());

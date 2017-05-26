@@ -2,6 +2,7 @@ package it.finsoft.entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.Basic;
@@ -40,14 +41,6 @@ public class Semaforo implements Serializable {
 	@OrderBy("ordinamento")
 	private List<SemaforoMilestone> semaforoMilestones = new ArrayList<>();
 
-	public Semaforo(Long idSemaforo, String codice, String descrizione,
-			List<SemaforoMilestone> semaforoMilestones) {
-		this.idSemaforo = idSemaforo;
-		this.codice = codice;
-		this.descrizione = descrizione;
-		this.semaforoMilestones = semaforoMilestones;
-	}
-
 	/* costruttori */
 	public Semaforo() {
 
@@ -57,6 +50,14 @@ public class Semaforo implements Serializable {
 		this.codice = codice;
 		this.descrizione = descrizione;
 
+	}
+	
+	public Semaforo(Long idSemaforo, String codice, String descrizione,
+			List<SemaforoMilestone> semaforoMilestones) {
+		this.idSemaforo = idSemaforo;
+		this.codice = codice;
+		this.descrizione = descrizione;
+		this.semaforoMilestones = semaforoMilestones;
 	}
 
 	public Long getIdSemaforo() {
