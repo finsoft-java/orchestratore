@@ -44,15 +44,14 @@ public class WSReset {
 				sql = sql.trim();
 				if (sql.equals("") || sql.startsWith("--"))
 					continue;
-				// LOG.info(sql); // inutile, lo fa già Hibernate
 				Query q = manager.createNativeQuery(sql);
 				q.executeUpdate();
 			} catch (Exception e) {
 				LOG.error("Error while executing SQL command", e);
-				break;
 			}
 		}
 		reader.close();
+		// mettere un if, eventualmente considerare di stampare la riga SQL che ha restituito l'errore
 		LOG.info("RESET effettuato con successo");
 		return "RESET dati predefiniti DB effettuato";
 	}
