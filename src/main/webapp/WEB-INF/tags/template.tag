@@ -340,7 +340,7 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="dashboard-v1.jsp"><i class="fa fa-circle-o"></i> Dashboard v1</a></li>
-            <li class="active"><a href="dashboard-v2.jsp"><i class="fa fa-circle-o"></i> Dashboard v2</a></li>
+            <li class="active"><a href="testPage.jsp"><i class="fa fa-circle-o"></i> Test Page</a></li>
           </ul>
         </li>
         <li class="treeview">
