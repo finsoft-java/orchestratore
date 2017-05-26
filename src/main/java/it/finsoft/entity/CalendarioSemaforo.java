@@ -22,7 +22,7 @@ public class CalendarioSemaforo implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID_CALENDARIO_SEMAFORO")
 	private Long idCalendarioSemaforo;
-	
+
 	@JoinColumn(name = "ID_SEMAFORO", referencedColumnName = "ID_SEMAFORO")
 	@ManyToOne(optional = false)
 	private Semaforo semaforo;
@@ -44,7 +44,7 @@ public class CalendarioSemaforo implements Serializable {
 	public CalendarioSemaforo() {
 
 	}
-		
+
 	public CalendarioSemaforo(Semaforo semaforo, Calendario calendario, Milestone milestone, String tags,
 			Date dataOraPreviste) {
 		this.semaforo = semaforo;
@@ -91,7 +91,13 @@ public class CalendarioSemaforo implements Serializable {
 	}
 
 	public void setTags(String tags) {
+
+		// FIXME split(',') normalizziamo i tag poi lo ricostruiamo
+
+		tags = tags.replaceAll(" ", "").toUpperCase();
+
 		tags = tags.replaceAll(" ", "").toUpperCase();	
+
 		this.tags = tags;
 	}
 		
@@ -134,6 +140,5 @@ public class CalendarioSemaforo implements Serializable {
 				+ ", calendario=" + calendario + ", milestone=" + milestone + ", tags=" + tags + ", dataOraPreviste="
 				+ dataOraPreviste + "]";
 	}
-	
 
 }

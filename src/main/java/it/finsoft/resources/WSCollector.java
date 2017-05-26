@@ -18,6 +18,7 @@ import it.finsoft.entity.Evento;
 import it.finsoft.manager.EntitaManager;
 import it.finsoft.manager.EventoManager;
 import it.finsoft.manager.TipoEventoManager;
+import it.finsoft.manager.UtilityChecker;
 
 @Stateless
 @Path("collector")
@@ -31,6 +32,8 @@ public class WSCollector {
 	EventoManager eventom;
 	@Inject
 	TipoEventoManager tipoevm;
+	@Inject
+	UtilityChecker syntax;
 
 	/*
 	 * Metodo GET per inserire dati via http esegue due query per risolvere dal
@@ -43,6 +46,8 @@ public class WSCollector {
 		DatiCollector result = new DatiCollector();
 		try {
 			Evento e = new Evento();
+			codiceEnt = syntax.trimToUp(codiceEnt);
+			codiceTipi = syntax.trimToUp(codiceTipi);
 			e.setEntita(entitam.findByCod(codiceEnt));
 			e.setTipoEvento(tipoevm.findByCod(codiceTipi));
 			e.setTag(tag);
@@ -56,8 +61,8 @@ public class WSCollector {
 				DettaglioEvento dettaglioErr = new DettaglioEvento();
 				dettaglioErr.setEvento(e);
 				dettaglioErr.setChiave("ERROR");
-				dettaglioErr.setValore("il numero di key e di valori inseriti non corrisponde: key=" + keys.size()
-						+ " valori=" + values.size());
+				dettaglioErr.setValore("il numero di key e di valori inseriti non corrisponde: key=" + keys.toString()
+						+ " valori=" + values.toString());
 				listaDettagliEvento.add(dettaglioErr);
 			} else {
 				for (int i = 0; i < keys.size(); i++) {

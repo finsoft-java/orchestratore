@@ -20,7 +20,7 @@ import it.finsoft.manager.EntitaManager;
 @Path("resources/entita")
 @Produces(MediaType.APPLICATION_JSON)
 public class EntitaResources {
-	
+
 	@Inject
 	EntitaManager manager;
 
@@ -49,7 +49,7 @@ public class EntitaResources {
 	}
 
 	@PUT
-	@Path("{id}")//richiede di inserire (in json) tutti i campi obbligatori
+	@Path("{id}") // richiede di inserire (in json) tutti i campi obbligatori
 	public void update(@PathParam("id") Long id, Entita m) {
 		m.setIdEntita(id);
 		manager.save(m);

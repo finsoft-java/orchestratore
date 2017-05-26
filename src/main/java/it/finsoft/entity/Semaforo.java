@@ -41,6 +41,7 @@ public class Semaforo implements Serializable {
 	@OrderBy("ordinamento")
 	private List<SemaforoMilestone> semaforoMilestones = new ArrayList<>();
 
+
 	/* costruttori */
 	public Semaforo() {
 

@@ -5,7 +5,6 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-
 import it.finsoft.entity.Semaforo;
 
 @Stateless
@@ -28,20 +27,18 @@ public class SemaforoManager {
 	}
 
 	public List<Semaforo> findAll() {
-		List<Semaforo> list= em.createQuery("FROM Semaforo", Semaforo.class).getResultList();
-		for(Semaforo l:list){
-			
-			System.out.println("l="+l);
-			System.out.println("m="+l.getSemaforoMilestones());
-			
+		List<Semaforo> list = em.createQuery("FROM Semaforo", Semaforo.class).getResultList();
+		for (Semaforo l : list) {
+			System.out.println("l=" + l);
+			System.out.println("m=" + l.getSemaforoMilestones());
 		}
-		
+
 		return list;
+
 	}
 
 	public Semaforo findByCod(String cod) {
-		Semaforo semaforo = em.createQuery("FROM Semaforo WHERE codice = :cod", Semaforo.class)
-				.setParameter("cod", cod)
+		Semaforo semaforo = em.createQuery("FROM Semaforo WHERE codice = :cod", Semaforo.class).setParameter("cod", cod)
 				.getSingleResult();
 		return semaforo;
 

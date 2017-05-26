@@ -30,5 +30,5 @@ public class SemaforoMilestoneManager {
 	public List<SemaforoMilestone> findAll() {
 		return em.createQuery("FROM SemaforoMilestone", SemaforoMilestone.class).getResultList();
 	}
-	
+
 }

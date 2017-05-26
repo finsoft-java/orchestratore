@@ -10,10 +10,9 @@ import it.finsoft.entity.Milestone;
 
 @Stateless
 public class MilestoneManager {
-	
+
 	@PersistenceContext(unitName = "persistenceUnit")
 	private EntityManager em;
-	
 
 	public Milestone save(Milestone tosave) {
 		return em.merge(tosave);
@@ -24,11 +23,11 @@ public class MilestoneManager {
 		em.remove(c);
 	}
 
-	public Milestone findById(Long id){
+	public Milestone findById(Long id) {
 		return em.find(Milestone.class, id);
 	}
-	
-	public List<Milestone> findAll() {		
+
+	public List<Milestone> findAll() {
 		return em.createQuery("FROM Milestone", Milestone.class).getResultList();
 	}
 

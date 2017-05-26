@@ -15,7 +15,6 @@ import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
-
 import it.finsoft.entity.Semaforo;
 import it.finsoft.manager.SemaforoManager;
 
@@ -50,6 +49,7 @@ public class SemaforoResources {
         }
      */  
 	/*prova visualizzazione elenco semafori*/
+
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)

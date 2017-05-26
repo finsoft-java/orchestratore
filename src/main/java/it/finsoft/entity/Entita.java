@@ -10,29 +10,28 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name ="ENTITA")
+@Table(name = "ENTITA")
 public class Entita implements Serializable {
-	
+
 	private static final long serialVersionUID = -1890110511455534110L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name ="ID_ENTITA")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "ID_ENTITA")
 	private Long idEntita;
-	
-	@Column(name ="CODICE", length=20, unique=true)
+
+	@Column(name = "CODICE", length = 20, unique = true)
 	private String codice;
-	
-	@Column(name ="ACRONIMO")
+
+	@Column(name = "ACRONIMO")
 	private String acronimo;
-	
-	@Column(name ="DESCRIZIONE")
+
+	@Column(name = "DESCRIZIONE")
 	private String descrizione;
 
-	
-	/*costruttori*/
+	/* costruttori */
 	public Entita() {
-		
+
 	}
 
 	public Entita(String codice, String acronimo, String descrizione) {
@@ -41,57 +40,44 @@ public class Entita implements Serializable {
 		this.descrizione = descrizione;
 	}
 
-	/*getter and setter*/
+	/* getter and setter */
 	public Long getIdEntita() {
 		return idEntita;
 	}
-
 
 	public void setIdEntita(Long idEntita) {
 		this.idEntita = idEntita;
 	}
 
-
 	public String getCodice() {
 		return codice;
 	}
-
 
 	public void setCodice(String codice) {
 		this.codice = codice;
 	}
 
-
 	public String getAcronimo() {
 		return acronimo;
 	}
-
 
 	public void setAcronimo(String acronimo) {
 		this.acronimo = acronimo;
 	}
 
-
 	public String getDescrizione() {
 		return descrizione;
 	}
-
 
 	public void setDescrizione(String descrizione) {
 		this.descrizione = descrizione;
 	}
 
-	/*to string*/
+	/* to string */
 	@Override
 	public String toString() {
 		return "Entita [idEntita=" + idEntita + ", codice=" + codice + ", acronimo=" + acronimo + ", descrizione="
 				+ descrizione + "]";
 	}
-	
-	
-	
-	
-	
 
-	
 }

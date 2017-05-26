@@ -19,7 +19,7 @@ import it.finsoft.manager.DettaglioEventoManager;
 @Stateless
 @Path("resources/dettaglievento")
 @Produces(MediaType.APPLICATION_JSON)
-public class DettaglioEventoResources {	
+public class DettaglioEventoResources {
 
 	@Inject
 	DettaglioEventoManager manager;
@@ -49,7 +49,7 @@ public class DettaglioEventoResources {
 	}
 
 	@PUT
-	@Path("{id}")//richiede di inserire (in json) tutti i campi obbligatori
+	@Path("{id}") // richiede di inserire (in json) tutti i campi obbligatori
 	public void update(@PathParam("id") Long id, DettaglioEvento m) {
 		m.setIdDettaglioEvento(id);
 		manager.save(m);
