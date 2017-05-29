@@ -81,9 +81,6 @@ public class CalendarioSemaforo implements Serializable {
 		// FIXME split(',') normalizziamo i tag poi lo ricostruiamo
 
 		tags = tags.replaceAll(" ", "").toUpperCase();
-
-		tags = tags.replaceAll(" ", "").toUpperCase();	
-
 		this.tags = tags;
 	}
 		
