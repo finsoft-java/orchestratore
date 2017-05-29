@@ -32,7 +32,7 @@ public class CalendarioSemaforoResources {
 	CalendarioSemaforoManager csm;
 	CalendarioManager cm;
 	SemaforoManager sm;
-	MilestoneManager mm;
+	/*MilestoneManager mm;*/
 	/* test inserimento calendari semafori */
 
 	@GET
@@ -75,11 +75,11 @@ public class CalendarioSemaforoResources {
 	@GET
 	@Path("inscalsem")
 	public CalendarioSemaforo create(@QueryParam("tags") String tags, @QueryParam("semaforo") Long ids,
-			@QueryParam("calendario") Long idc, @QueryParam("milestone") Long idm) {
+			@QueryParam("calendario") Long idc) /*, @QueryParam("milestone") Long idm)*/ {
 		CalendarioSemaforo cals = new CalendarioSemaforo();
 		cals.setSemaforo(sm.findById(ids));
 		cals.setCalendario(cm.findById(idc));
-		cals.setMilestone(mm.findById(idm));
+		/*cals.setMilestone(mm.findById(idm));*/
 		cals.setTags(tags);
 		;
 		return csm.save(cals);

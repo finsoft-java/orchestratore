@@ -78,7 +78,6 @@ public class WSCollector {
 			}
 			// per ogni chiave, inserire un record chiave/valore nella tabella
 			// dettagli
-			System.out.println("errore qui");
 			eventom.save(e);
 			result.evento = e;
 			result.listaDettagli.addAll(listaDettagliEvento);
