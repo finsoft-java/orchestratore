@@ -84,4 +84,9 @@ Successivamente editare il file "WS_Collector_example_wget.bat" e modificare (se
 percorso della cartella dove risiede il file .bat che va eseguito (c:\Progetti\Script)
 editare la riga che inizia per "call" con i parametri corretti 
 es: call "WS_Collector.bat" U7SC0_BO VALIDAZIONE ParamWGetUltimoTest
-
+Linux: per ambiente Linux i file sono: wgetCollector.sh, wgetCollectorCALL.sh, wgetPolling.sh e wgetPollingCALL.sh
+i rispettivi file CALL vengono richiamati da quelli semplici passando i parametri (rimane la limitazione a 9 parametri),
+prima di usarli cambiare il path dell'ENDPOINT poiche' non e' localhost ma un indirizzo
+Se fosse necessario rendere gli script eseguibili da console linux chmod 755 *percorso/nomescript*.sh; chmod +x *percorso/nomescript*.sh
+tramite la riga 'source "percorso/nomescript.sh"' inserita all'inizio dello script 
+e' possibile dare un percorso fisso per lo scriptCALL
