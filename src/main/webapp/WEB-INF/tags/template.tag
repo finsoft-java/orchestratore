@@ -85,7 +85,7 @@
 					<!-- sidebar menu: : style can be found in sidebar.less -->
 					<ul class="sidebar-menu">
 						<li class="active treeview">
-							<a href="monitorCalendario.jsp"> <i class="fa fa-calendar"></i><span>Monitor Calendario</span></a>
+							<a href="index.jsp"> <i class="fa fa-calendar"></i><span>Monitor Calendario</span></a>
 						</li>
 	
 						<li>
