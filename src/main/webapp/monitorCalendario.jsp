@@ -17,7 +17,7 @@
 
 
 			      <!-- SELECT2 EXAMPLE -->
-      <div class="box box-info">
+      <div class="box box-primary">
         <div class="box-header with-border">
           <h3 class="box-title">Seleziona calendario</h3>
         </div>
