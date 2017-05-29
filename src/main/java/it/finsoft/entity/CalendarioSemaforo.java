@@ -31,12 +31,6 @@ public class CalendarioSemaforo implements Serializable {
 	@ManyToOne(optional = false)
 	private Calendario calendario;
 
-	/*
-	@JoinColumn(name = "ID_MILESTONE", referencedColumnName = "ID_MILESTONE")
-	@ManyToOne(optional = false)
-	private Milestone milestone;
-	*/
-
 	@Column(name = "TAGS")
 	private String tags;
 
@@ -47,11 +41,9 @@ public class CalendarioSemaforo implements Serializable {
 
 	}
 
-	public CalendarioSemaforo(Semaforo semaforo, Calendario calendario, /*Milestone milestone,*/ String tags,
-			Date dataOraPreviste) {
+	public CalendarioSemaforo(Semaforo semaforo, Calendario calendario, String tags, Date dataOraPreviste) {
 		this.semaforo = semaforo;
 		this.calendario = calendario;
-		/*this.milestone = milestone;*/
 		this.tags = tags;
 		this.dataOraPreviste = dataOraPreviste;
 	}
@@ -79,16 +71,6 @@ public class CalendarioSemaforo implements Serializable {
 	public void setCalendario(Calendario calendario) {
 		this.calendario = calendario;
 	}
-
-	/*
-	public Milestone getMilestone() {
-		return milestone;
-	}
-
-	public void setMilestone(Milestone milestone) {
-		this.milestone = milestone;
-	}
-	*/
 
 	public String getTags() {
 		return tags;
@@ -141,7 +123,7 @@ public class CalendarioSemaforo implements Serializable {
 	@Override
 	public String toString() {
 		return "CalendarioSemaforo [idCalendarioSemaforo=" + idCalendarioSemaforo + ", semaforo=" + semaforo
-				+ ", calendario=" + calendario + /*", milestone=" + milestone +*/ ", tags=" + tags + ", dataOraPreviste="
+				+ ", calendario=" + calendario + ", tags=" + tags + ", dataOraPreviste="
 				+ dataOraPreviste + "]";
 	}
 
