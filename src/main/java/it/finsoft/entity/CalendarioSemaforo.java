@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -34,6 +36,7 @@ public class CalendarioSemaforo implements Serializable {
 	@Column(name = "TAGS")
 	private String tags;
 
+	@Temporal(TemporalType.DATE)
 	@Column(name = "DATA_ORA_PREVISTE")
 	private Date dataOraPreviste;
 
