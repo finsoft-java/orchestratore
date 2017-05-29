@@ -17,7 +17,6 @@ import javax.ws.rs.core.MediaType;
 import it.finsoft.entity.CalendarioSemaforo;
 import it.finsoft.manager.CalendarioManager;
 import it.finsoft.manager.CalendarioSemaforoManager;
-import it.finsoft.manager.MilestoneManager;
 import it.finsoft.manager.SemaforoManager;
 
 @Stateless
@@ -32,7 +31,6 @@ public class CalendarioSemaforoResources {
 	CalendarioSemaforoManager csm;
 	CalendarioManager cm;
 	SemaforoManager sm;
-	MilestoneManager mm;
 	/* test inserimento calendari semafori */
 
 	@GET
@@ -75,11 +73,10 @@ public class CalendarioSemaforoResources {
 	@GET
 	@Path("inscalsem")
 	public CalendarioSemaforo create(@QueryParam("tags") String tags, @QueryParam("semaforo") Long ids,
-			@QueryParam("calendario") Long idc, @QueryParam("milestone") Long idm) {
+			@QueryParam("calendario") Long idc) {
 		CalendarioSemaforo cals = new CalendarioSemaforo();
 		cals.setSemaforo(sm.findById(ids));
 		cals.setCalendario(cm.findById(idc));
-		cals.setMilestone(mm.findById(idm));
 		cals.setTags(tags);
 		;
 		return csm.save(cals);
