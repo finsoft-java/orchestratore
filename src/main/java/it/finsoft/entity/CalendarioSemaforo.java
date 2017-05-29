@@ -13,7 +13,6 @@ import javax.persistence.TemporalType;
 
 import java.io.Serializable;
 import java.util.Date;
-
 @Entity
 @Table(name = "CALENDARI_SEMAFORI")
 public class CalendarioSemaforo implements Serializable {
@@ -36,7 +35,7 @@ public class CalendarioSemaforo implements Serializable {
 	@Column(name = "TAGS")
 	private String tags;
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DATA_ORA_PREVISTE")
 	private Date dataOraPreviste;
 
