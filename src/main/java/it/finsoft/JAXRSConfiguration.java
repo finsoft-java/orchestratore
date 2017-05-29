@@ -1,7 +1,9 @@
 package it.finsoft;
 
 import javax.ws.rs.ApplicationPath;
-import javax.ws.rs.core.Application;
+import org.glassfish.jersey.server.ResourceConfig;
+
+import it.finsoft.server.DependencyBinder;
 
 /**
  * Configures a JAX-RS endpoint. Delete this class, if you are not exposing
@@ -10,6 +12,14 @@ import javax.ws.rs.core.Application;
  * @author airhacks.com
  */
 @ApplicationPath("ws")
-public class JAXRSConfiguration extends Application {
-	
+public class JAXRSConfiguration extends ResourceConfig {
+
+	// ResourceConfig is Jetty-specific extension of Application
+
+	public JAXRSConfiguration() {
+		System.err.println("REGISTERING JAX-RS");
+		
+		register(new DependencyBinder());
+	}
+
 }
