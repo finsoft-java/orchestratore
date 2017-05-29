@@ -8,10 +8,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import java.io.Serializable;
 import java.util.Date;
-
 @Entity
 @Table(name = "CALENDARI_SEMAFORI")
 public class CalendarioSemaforo implements Serializable {
@@ -31,13 +32,10 @@ public class CalendarioSemaforo implements Serializable {
 	@ManyToOne(optional = false)
 	private Calendario calendario;
 
-	@JoinColumn(name = "ID_MILESTONE", referencedColumnName = "ID_MILESTONE")
-	@ManyToOne(optional = false)
-	private Milestone milestone;
-
 	@Column(name = "TAGS")
 	private String tags;
 
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DATA_ORA_PREVISTE")
 	private Date dataOraPreviste;
 
@@ -45,11 +43,9 @@ public class CalendarioSemaforo implements Serializable {
 
 	}
 
-	public CalendarioSemaforo(Semaforo semaforo, Calendario calendario, Milestone milestone, String tags,
-			Date dataOraPreviste) {
+	public CalendarioSemaforo(Semaforo semaforo, Calendario calendario, String tags, Date dataOraPreviste) {
 		this.semaforo = semaforo;
 		this.calendario = calendario;
-		this.milestone = milestone;
 		this.tags = tags;
 		this.dataOraPreviste = dataOraPreviste;
 	}
@@ -78,14 +74,6 @@ public class CalendarioSemaforo implements Serializable {
 		this.calendario = calendario;
 	}
 
-	public Milestone getMilestone() {
-		return milestone;
-	}
-
-	public void setMilestone(Milestone milestone) {
-		this.milestone = milestone;
-	}
-
 	public String getTags() {
 		return tags;
 	}
@@ -95,9 +83,6 @@ public class CalendarioSemaforo implements Serializable {
 		// FIXME split(',') normalizziamo i tag poi lo ricostruiamo
 
 		tags = tags.replaceAll(" ", "").toUpperCase();
-
-		tags = tags.replaceAll(" ", "").toUpperCase();	
-
 		this.tags = tags;
 	}
 		
@@ -137,7 +122,7 @@ public class CalendarioSemaforo implements Serializable {
 	@Override
 	public String toString() {
 		return "CalendarioSemaforo [idCalendarioSemaforo=" + idCalendarioSemaforo + ", semaforo=" + semaforo
-				+ ", calendario=" + calendario + ", milestone=" + milestone + ", tags=" + tags + ", dataOraPreviste="
+				+ ", calendario=" + calendario + ", tags=" + tags + ", dataOraPreviste="
 				+ dataOraPreviste + "]";
 	}
 

@@ -54,6 +54,15 @@ public class Evento implements Serializable {
 
 	}
 
+	public Evento(TipoEvento tipoEvento, Entita entita, Date tStampEvento, String tag,
+			List<DettaglioEvento> dettaglioEvento) {
+		this.tipoEvento = tipoEvento;
+		this.entita = entita;
+		this.tStampEvento = tStampEvento;
+		this.tag = tag;
+		this.dettaglioEvento = dettaglioEvento;
+	}
+
 	public Evento(TipoEvento tipoEvento, Entita entita, Date tStampEvento, String tag) {
 		this.tipoEvento = tipoEvento;
 		this.entita = entita;
