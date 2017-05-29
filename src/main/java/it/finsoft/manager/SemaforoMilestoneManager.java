@@ -6,7 +6,6 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import it.finsoft.entity.Semaforo;
 import it.finsoft.entity.SemaforoMilestone;
 
 @Stateless
@@ -31,5 +30,5 @@ public class SemaforoMilestoneManager {
 	public List<SemaforoMilestone> findAll() {
 		return em.createQuery("FROM SemaforoMilestone", SemaforoMilestone.class).getResultList();
 	}
-	
+
 }

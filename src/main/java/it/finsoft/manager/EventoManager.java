@@ -1,6 +1,5 @@
 package it.finsoft.manager;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -52,7 +51,7 @@ public class EventoManager {
 	}
 
 	public List<Evento> findPolling(String tag, Entita ent, TipoEvento tp) {
-
+		System.out.println(tag + " " + ent.getIdEntita() + " " + tp.getidTipoEvento());
 		List<Evento> e = em
 				.createQuery("FROM Evento WHERE tag= :tag AND entita = :ent AND tipoEvento = :tp", Evento.class)
 				.setParameter("tag", tag).setParameter("ent", ent).setParameter("tp", tp).getResultList();

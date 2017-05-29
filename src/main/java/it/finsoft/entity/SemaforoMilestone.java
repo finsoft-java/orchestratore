@@ -32,8 +32,8 @@ public class SemaforoMilestone implements Serializable {
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "ID_SEMAFORO", referencedColumnName = "ID_SEMAFORO")
 	private Semaforo semaforo;
-	
-	@Column(name="ORDINAMENTO")
+
+	@Column(name = "ORDINAMENTO")
 	private Integer ordinamento;
 
 	public SemaforoMilestone() {
@@ -120,7 +120,5 @@ public class SemaforoMilestone implements Serializable {
 		return "SemaforoMilestone [idSemaforoMilestone=" + idSemaforoMilestone + ", milestone=" + milestone
 				+ ", semaforo=" + semaforo + ", ordinamento=" + ordinamento + "]";
 	}
-	
-	
-	
+
 }

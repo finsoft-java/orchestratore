@@ -17,13 +17,15 @@ public class DependencyBinder extends AbstractBinder {
 		// SHOUDN'T BE AUTOMATIC ???
 		System.err.println("CONFIGURING BINDING - SHOUDN'T BE AUTOMATIC ?!?");
 		
-		bind(EventoManager.class).to(EventoManager.class);
 		bind(CalendarioManager.class).to(CalendarioManager.class);
 		bind(CalendarioSemaforoManager.class).to(CalendarioSemaforoManager.class);
 		bind(DettaglioEventoManager.class).to(DettaglioEventoManager.class);
-		bind(SemaforoManager.class).to(SemaforoManager.class);
-		bind(TipoEventoManager.class).to(TipoEventoManager.class);
+		bind(EntitaManager.class).to(EntitaManager.class);
+		bind(EventoManager.class).to(EventoManager.class);
 		bind(MilestoneManager.class).to(MilestoneManager.class);
+		bind(SemaforoManager.class).to(SemaforoManager.class);
+		bind(SemaforoMilestoneManager.class).to(SemaforoMilestoneManager.class);
+		bind(TipoEventoManager.class).to(TipoEventoManager.class);
 
 		// REM
 		// request scope binding

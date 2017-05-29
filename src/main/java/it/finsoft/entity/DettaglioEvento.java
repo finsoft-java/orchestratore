@@ -12,28 +12,28 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name ="DETTAGLI_EVENTO")
+@Table(name = "DETTAGLI_EVENTO")
 public class DettaglioEvento implements Serializable {
-	
+
 	private static final long serialVersionUID = 3310069293232292518L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name ="ID_DETTAGLIO")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "ID_DETTAGLIO")
 	private Long idDettaglioEvento;
-			
-	@Column(name ="CHIAVE")
+
+	@Column(name = "CHIAVE")
 	private String chiave;
-	
-	@Column(name ="VALORE")
+
+	@Column(name = "VALORE")
 	private String valore;
-	
-	@ManyToOne(optional=false)
-	@JoinColumn(name ="ID_EVENTO", referencedColumnName ="ID_EVENTO")
-	private Evento evento; //foreign key with tabella Eventi
+
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "ID_EVENTO", referencedColumnName = "ID_EVENTO")
+	private Evento evento; // foreign key with tabella Eventi
 
 	public DettaglioEvento() {
-		
+
 	}
 
 	public DettaglioEvento(String chiave, String valore, Evento evento) {
@@ -104,14 +104,5 @@ public class DettaglioEvento implements Serializable {
 		return "DettagliEvento [IDdettaglioEvento=" + idDettaglioEvento + ", chiave=" + chiave + ", valore=" + valore
 				+ ", evento=" + evento + "]";
 	}
-	
-	
-	
-
-	
-	
-	
-	
-
 
 }

@@ -10,10 +10,9 @@ import it.finsoft.entity.Calendario;
 
 @Stateless
 public class CalendarioManager {
-	
+
 	@PersistenceContext(unitName = "persistenceUnit")
 	private EntityManager em;
-
 
 	public Calendario save(Calendario tosave) {
 		return em.merge(tosave);
@@ -24,11 +23,11 @@ public class CalendarioManager {
 		em.remove(c);
 	}
 
-	public Calendario findById(Long id){
+	public Calendario findById(Long id) {
 		return em.find(Calendario.class, id);
 	}
-	
-	public List<Calendario> findAll() {		
+
+	public List<Calendario> findAll() {
 		return em.createQuery("FROM Calendario", Calendario.class).getResultList();
 	}
 

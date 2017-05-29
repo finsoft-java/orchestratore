@@ -20,7 +20,7 @@ import it.finsoft.manager.TipoEventoManager;
 @Path("resources/tipievento")
 @Produces(MediaType.APPLICATION_JSON)
 public class TipoEventoResources {
-	
+
 	@Inject
 	TipoEventoManager manager;
 
@@ -49,7 +49,7 @@ public class TipoEventoResources {
 	}
 
 	@PUT
-	@Path("{id}")//richiede di inserire (in json) tutti i campi obbligatori
+	@Path("{id}") // richiede di inserire (in json) tutti i campi obbligatori
 	public void update(@PathParam("id") Long id, TipoEvento m) {
 		m.setidTipoEvento(id);
 		manager.save(m);

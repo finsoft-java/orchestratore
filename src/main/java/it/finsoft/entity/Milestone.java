@@ -12,31 +12,31 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name ="MILESTONES")
+@Table(name = "MILESTONES")
 public class Milestone implements Serializable {
-	
+
 	private static final long serialVersionUID = 1070315680400921784L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name ="ID_MILESTONE")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "ID_MILESTONE")
 	private Long idMilestone;
-	
+
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "ID_TIPO_EVENTO", referencedColumnName ="ID_TIPO_EVENTO")
-	private TipoEvento tipoEvento; //foreign key tabella tipo_evento
-	
+	@JoinColumn(name = "ID_TIPO_EVENTO", referencedColumnName = "ID_TIPO_EVENTO")
+	private TipoEvento tipoEvento; // foreign key tabella tipo_evento
+
 	@ManyToOne(optional = false)
-	@JoinColumn(name ="ID_ENTITA", referencedColumnName ="ID_ENTITA")
-	private Entita entita; //foreign key tabella entita
-	
-	@Column(name ="DESCRIZIONE")
+	@JoinColumn(name = "ID_ENTITA", referencedColumnName = "ID_ENTITA")
+	private Entita entita; // foreign key tabella entita
+
+	@Column(name = "DESCRIZIONE")
 	private String descrizione;
-	
+
 	public Milestone() {
-		
+
 	}
-	
+
 	public Milestone(Long idMilestone, TipoEvento tipoEvento, Entita entita, String descrizione) {
 		this.idMilestone = idMilestone;
 		this.tipoEvento = tipoEvento;
@@ -106,13 +106,5 @@ public class Milestone implements Serializable {
 		return "Milestone [idMilestone=" + idMilestone + ", tipoEvento=" + tipoEvento + ", entita=" + entita
 				+ ", descrizione=" + descrizione + "]";
 	}
-
-
-	
-	
-	
-	
-
-	
 
 }

@@ -10,25 +10,25 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name ="TIPI_EVENTO")
+@Table(name = "TIPI_EVENTO")
 public class TipoEvento implements Serializable {
-	
+
 	private static final long serialVersionUID = 314854374810280841L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name ="ID_TIPO_EVENTO")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "ID_TIPO_EVENTO")
 	private Long idTipoEvento;
-	
-	@Column(name ="CODICE", unique=true)
+
+	@Column(name = "CODICE", unique = true)
 	private String codice;
-	
-	@Column(name ="DESCRIZIONE")
+
+	@Column(name = "DESCRIZIONE")
 	private String descrizione;
 
-	/*costruttori*/
+	/* costruttori */
 	public TipoEvento() {
-		
+
 	}
 
 	public TipoEvento(String codice, String descrizione) {
@@ -36,7 +36,7 @@ public class TipoEvento implements Serializable {
 		this.descrizione = descrizione;
 	}
 
-	/*getter and setter*/
+	/* getter and setter */
 	public Long getidTipoEvento() {
 		return idTipoEvento;
 	}
@@ -61,14 +61,10 @@ public class TipoEvento implements Serializable {
 		this.descrizione = descrizione;
 	}
 
-	/*to string*/
+	/* to string */
 	@Override
 	public String toString() {
 		return "TipoEvento [idTipo=" + idTipoEvento + ", codice=" + codice + ", descrizione=" + descrizione + "]";
 	}
-	
-	
-	
-	
 
 }

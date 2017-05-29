@@ -10,10 +10,9 @@ import it.finsoft.entity.DettaglioEvento;
 
 @Stateless
 public class DettaglioEventoManager {
-	
+
 	@PersistenceContext(unitName = "persistenceUnit")
 	private EntityManager em;
-	
 
 	public DettaglioEvento save(DettaglioEvento tosave) {
 		return em.merge(tosave);
@@ -24,11 +23,11 @@ public class DettaglioEventoManager {
 		em.remove(c);
 	}
 
-	public DettaglioEvento findById(Long id){
+	public DettaglioEvento findById(Long id) {
 		return em.find(DettaglioEvento.class, id);
 	}
-	
-	public List<DettaglioEvento> findAll() {		
+
+	public List<DettaglioEvento> findAll() {
 		return em.createQuery("FROM DettaglioEvento", DettaglioEvento.class).getResultList();
 	}
 

@@ -36,6 +36,7 @@ public class WSReset {
 		BufferedReader reader = new BufferedReader(
 				new InputStreamReader(getClass().getResourceAsStream("/script.sql")));
 		String sql = "";
+		String error = "";
 		while (reader.ready() == true) {
 			try {
 				sql = reader.readLine().toString();
@@ -44,17 +45,24 @@ public class WSReset {
 				sql = sql.trim();
 				if (sql.equals("") || sql.startsWith("--"))
 					continue;
-				// LOG.info(sql); // inutile, lo fa già Hibernate
 				Query q = manager.createNativeQuery(sql);
 				q.executeUpdate();
 			} catch (Exception e) {
 				LOG.error("Error while executing SQL command", e);
-				break;
+				error += "Error while executing SQL command: " + sql + ";";
 			}
 		}
 		reader.close();
-		LOG.info("RESET effettuato con successo");
-		return "RESET dati predefiniti DB effettuato";
+		// mettere un if, eventualmente considerare di stampare la riga SQL che
+		// ha restituito l'errore
+		// TODO da completare
+		if (error == "") {
+			LOG.info("RESET effettuato con successo");
+			return "RESET dati predefiniti DB effettuato";
+		} else {
+			return "RESET eseguito con errori: ";
+		}
+
 	}
 
 }
