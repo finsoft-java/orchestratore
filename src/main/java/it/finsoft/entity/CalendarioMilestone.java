@@ -14,19 +14,23 @@ import javax.persistence.TemporalType;
 import java.io.Serializable;
 import java.util.Date;
 @Entity
-@Table(name = "CALENDARI_SEMAFORI")
-public class CalendarioSemaforo implements Serializable {
+@Table(name = "CALENDARI_MILESTONE")
+public class CalendarioMilestone implements Serializable {
 
 	private static final long serialVersionUID = -3328166212616139600L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ID_CALENDARIO_SEMAFORO")
+	@Column(name = "ID_CALENDARIO_MILESTONE")
 	private Long idCalendarioSemaforo;
 
-	@JoinColumn(name = "ID_SEMAFORO", referencedColumnName = "ID_SEMAFORO")
-	@ManyToOne(optional = false)
+	@JoinColumn(name = "ID_AZIONE", referencedColumnName = "ID_AZIONE")
+	@ManyToOne(optional = true)
 	private Azione azione;
+
+	@JoinColumn(name = "ID_MILESTONE", referencedColumnName = "ID_MILESTONE")
+	@ManyToOne(optional = false)
+	private Milestone milestone;
 
 	@JoinColumn(name = "ID_CALENDARIO", referencedColumnName = "ID_CALENDARIO")
 	@ManyToOne(optional = false)
@@ -39,11 +43,11 @@ public class CalendarioSemaforo implements Serializable {
 	@Column(name = "DATA_ORA_PREVISTE")
 	private Date dataOraPreviste;
 
-	public CalendarioSemaforo() {
+	public CalendarioMilestone() {
 
 	}
 
-	public CalendarioSemaforo(Azione azione, Calendario calendario, String tags, Date dataOraPreviste) {
+	public CalendarioMilestone(Azione azione, Calendario calendario, String tags, Date dataOraPreviste) {
 		this.azione = azione;
 		this.calendario = calendario;
 		this.tags = tags;
@@ -58,12 +62,20 @@ public class CalendarioSemaforo implements Serializable {
 		this.idCalendarioSemaforo = idCalendarioSemaforo;
 	}
 
-	public Azione getSemaforo() {
+	public Azione getAzione() {
 		return azione;
 	}
 
-	public void setSemaforo(Azione azione) {
+	public void setAzione(Azione azione) {
 		this.azione = azione;
+	}
+
+	public Milestone getMilestone() {
+		return milestone;
+	}
+
+	public void setMilestone(Milestone milestone) {
+		this.milestone = milestone;
 	}
 
 	public Calendario getCalendario() {
@@ -79,9 +91,6 @@ public class CalendarioSemaforo implements Serializable {
 	}
 
 	public void setTags(String tags) {
-
-		// FIXME split(',') normalizziamo i tag poi lo ricostruiamo
-
 		tags = tags.replaceAll(" ", "").toUpperCase();
 		this.tags = tags;
 	}
@@ -110,7 +119,7 @@ public class CalendarioSemaforo implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		CalendarioSemaforo other = (CalendarioSemaforo) obj;
+		CalendarioMilestone other = (CalendarioMilestone) obj;
 		if (idCalendarioSemaforo == null) {
 			if (other.idCalendarioSemaforo != null)
 				return false;

@@ -13,7 +13,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import it.finsoft.entity.CalendarioSemaforo;
+import it.finsoft.entity.CalendarioMilestone;
 import it.finsoft.manager.CalendarioSemaforoManager;
 
 @Stateless
@@ -25,19 +25,19 @@ public class CalendarioSemaforoResources {
 	CalendarioSemaforoManager manager;
 
 	@GET
-	public List<CalendarioSemaforo> findAll() {
+	public List<CalendarioMilestone> findAll() {
 		return manager.findAll();
 	}
 
 	@GET
 	@Path("{id}")
-	public CalendarioSemaforo findById(@PathParam("id") Long id) {
+	public CalendarioMilestone findById(@PathParam("id") Long id) {
 		return manager.findById(id);
 	}
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public CalendarioSemaforo create(CalendarioSemaforo cal) {
+	public CalendarioMilestone create(CalendarioMilestone cal) {
 		System.out.println("post resources, salvo entita " + cal);
 		return manager.save(cal);
 	}
@@ -50,7 +50,7 @@ public class CalendarioSemaforoResources {
 
 	@PUT
 	@Path("{id}") // richiede di inserire (in json) tutti i campi obbligatori
-	public void update(@PathParam("id") Long id, CalendarioSemaforo m) {
+	public void update(@PathParam("id") Long id, CalendarioMilestone m) {
 		m.setIdCalendarioSemaforo(id);
 		manager.save(m);
 	}

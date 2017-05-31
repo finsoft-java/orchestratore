@@ -6,7 +6,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import it.finsoft.entity.CalendarioSemaforo;
+import it.finsoft.entity.CalendarioMilestone;
 
 @Stateless
 public class CalendarioSemaforoManager {
@@ -14,21 +14,21 @@ public class CalendarioSemaforoManager {
 	@PersistenceContext(unitName = "persistenceUnit")
 	private EntityManager em;
 
-	public CalendarioSemaforo save(CalendarioSemaforo tosave) {
+	public CalendarioMilestone save(CalendarioMilestone tosave) {
 		return em.merge(tosave);
 	}
 
 	public void remove(Long id) {
-		CalendarioSemaforo c = em.find(CalendarioSemaforo.class, id);
+		CalendarioMilestone c = em.find(CalendarioMilestone.class, id);
 		em.remove(c);
 	}
 
-	public CalendarioSemaforo findById(Long id) {
-		return em.find(CalendarioSemaforo.class, id);
+	public CalendarioMilestone findById(Long id) {
+		return em.find(CalendarioMilestone.class, id);
 	}
 
-	public List<CalendarioSemaforo> findAll() {
-		return em.createQuery("FROM CalendarioSemaforo", CalendarioSemaforo.class).getResultList();
+	public List<CalendarioMilestone> findAll() {
+		return em.createQuery("FROM CalendarioSemaforo", CalendarioMilestone.class).getResultList();
 	}
 
 }

@@ -1,4 +1,7 @@
 target/
+src/main/webapp/WEB-INF/classes
+src/main/webapp/WEB-INF/lib
+src/main/webapp/META-INF
 pom.xml.tag
 pom.xml.releaseBackup
 pom.xml.versionsBackup
