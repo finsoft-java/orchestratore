@@ -33,12 +33,6 @@ public class EntitaManager {
 	}
 
 	public Entita findByCod(String cod) {
-		/*
-		 * System.out.println(cod); Entita test =
-		 * em.createQuery("FROM Entita WHERE codice = :cod",
-		 * Entita.class).setParameter("cod", cod) .getSingleResult();
-		 * System.out.println(test); return test;
-		 */
 		return em.createQuery("FROM Entita WHERE codice = :cod", Entita.class).setParameter("cod", cod)
 				.getSingleResult();
 	}

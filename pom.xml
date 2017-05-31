@@ -6,6 +6,7 @@
 	<groupId>it.finsoft</groupId>
 	<artifactId>orchestratoreRADAR</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+<<<<<<< HEAD
 
 	<packaging>war</packaging>
 
@@ -16,6 +17,8 @@
 		<failOnMissingWebXml>false</failOnMissingWebXml>
 	</properties>
 
+=======
+>>>>>>> branch 'master' of https://github.com/finsoft-java/orchestratore.git
 	<dependencies>
 		<dependency>
 			<groupId>javax</groupId>
@@ -143,4 +146,13 @@
 	<build>
 		<finalName>orchestratoreRADAR</finalName>
 	</build>
+<<<<<<< HEAD
+=======
+	<properties>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<failOnMissingWebXml>false</failOnMissingWebXml>
+	</properties>
+	<packaging>war</packaging>
+>>>>>>> branch 'master' of https://github.com/finsoft-java/orchestratore.git
 </project>

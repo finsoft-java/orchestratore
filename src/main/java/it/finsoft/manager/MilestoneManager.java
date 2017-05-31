@@ -28,6 +28,11 @@ public class MilestoneManager {
 		return em.find(Milestone.class, id);
 	}
 
+	public Milestone findByDesc(String desc) {
+		return em.createQuery("FROM Milestone WHERE descrizione= :desc", Milestone.class).setParameter("desc", desc)
+				.getSingleResult();
+	}
+
 	public List<Milestone> findAll() {
 		return em.createQuery("FROM Milestone", Milestone.class).getResultList();
 	}

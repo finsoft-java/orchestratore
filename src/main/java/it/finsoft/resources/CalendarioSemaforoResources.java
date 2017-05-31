@@ -11,13 +11,10 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import it.finsoft.entity.CalendarioSemaforo;
-import it.finsoft.manager.CalendarioManager;
 import it.finsoft.manager.CalendarioSemaforoManager;
-import it.finsoft.manager.SemaforoManager;
 
 @Stateless
 @Path("resources/calendarisemafori")
@@ -26,12 +23,6 @@ public class CalendarioSemaforoResources {
 
 	@Inject
 	CalendarioSemaforoManager manager;
-
-	/* test inserimento calendari semafori */
-	CalendarioSemaforoManager csm;
-	CalendarioManager cm;
-	SemaforoManager sm;
-	/* test inserimento calendari semafori */
 
 	@GET
 	public List<CalendarioSemaforo> findAll() {
@@ -67,21 +58,6 @@ public class CalendarioSemaforoResources {
 	 * { "milestone" : { "idMilestone" : 1 }, "calendario" : { "idCalendario" :
 	 * 1 }, "tag" : "fasdfafa" }
 	 */
-
-
-	/* Aggiunta per inserimento in get via http */
-	@GET
-	@Path("inscalsem")
-	public CalendarioSemaforo create(@QueryParam("tags") String tags, @QueryParam("semaforo") Long ids,
-			@QueryParam("calendario") Long idc) {
-		CalendarioSemaforo cals = new CalendarioSemaforo();
-		cals.setSemaforo(sm.findById(ids));
-		cals.setCalendario(cm.findById(idc));
-		cals.setTags(tags);
-		;
-		return csm.save(cals);
-	}
-	/* Aggiunta per inserimento in get via http */
 
 
 	/* ---- TEST RESOURCES ---- */

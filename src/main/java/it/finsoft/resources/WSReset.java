@@ -29,7 +29,7 @@ public class WSReset {
 	 * Questo e' un reset in GET quando si richiama la pagina, svuota le tabelle
 	 * indicate nello scriptsql.txt e le ripopola, e' da ottimizzare ma per il
 	 * momento funziona (ritorna un errore sulla prima istruzione)
-	 */
+	 **/
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
 	public String reset() throws FileNotFoundException, IOException {

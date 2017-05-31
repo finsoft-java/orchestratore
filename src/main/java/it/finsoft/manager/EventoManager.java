@@ -60,15 +60,4 @@ public class EventoManager {
 		return e;
 	}
 
-	/*
-	 * public List<Evento> findPolling(List<String> tags, Entita ent, TipoEvento
-	 * tp) { List<Evento> e = new ArrayList<Evento>(); for (String tag : tags) {
-	 * System.out.println(tag); e.addAll(em.
-	 * createQuery("FROM Evento WHERE tag= :tag AND entita = :ent AND tipoEvento = :tp"
-	 * , Evento.class) .setParameter("tag", tag).setParameter("ent",
-	 * ent).setParameter("tp", tp).getResultList());
-	 * 
-	 * } return e; }
-	 */
-
 }
