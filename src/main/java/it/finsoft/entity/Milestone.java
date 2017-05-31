@@ -37,7 +37,7 @@ public class Milestone implements Serializable {
 	@JoinColumn(name = "ID_ENTITA", referencedColumnName = "ID_ENTITA")
 	private Entita entita; // foreign key tabella entita
 
-	@Column(name = "DESCRIZIONE")
+	@Column(name = "DESCRIZIONE", unique=true)
 	private String descrizione;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "milestone")
