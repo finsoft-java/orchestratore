@@ -3,14 +3,15 @@ package it.finsoft.manager;
 import java.util.List;
 
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import it.finsoft.entity.Semaforo;
 
 @Stateless
 public class SemaforoManager {
 
-	@PersistenceContext(unitName = "persistenceUnit")
+	//@PersistenceContext(unitName = "persistenceUnit")
+	@Inject
 	private EntityManager em;
 
 	public Semaforo save(Semaforo tosave) {

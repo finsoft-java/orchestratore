@@ -3,8 +3,8 @@ package it.finsoft.manager;
 import java.util.List;
 
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 import it.finsoft.entity.Entita;
 
@@ -18,7 +18,8 @@ public class EventoManager {
 
 	public static final Logger LOG = Logger.getLogger(EventoManager.class);
 
-	@PersistenceContext(unitName = "persistenceUnit")
+	//@PersistenceContext(unitName = "persistenceUnit")
+	@Inject
 	private EntityManager em;
 
 	public Evento save(Evento tosave) {
