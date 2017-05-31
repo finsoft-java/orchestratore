@@ -14,20 +14,21 @@
 		<!-- Main content -->
 		<section class="content">
 
-		<div class="row">
-			<div class="col-md-12">
-				<form class="form-horizontal">
-	              <div class="box-body">
-	                <div class="form-group">
-	                  <label for="denomNuovoCal" class="col-sm-2 control-label">Denominazione calendario</label>
-	                  <div class="col-sm-10">
-	                    <input type="text" class="form-control" id="denomNuovoCal" placeholder="Denominazione">
-	                  </div>
-	                </div>
-	              </div>
-	            </form>
-            </div>
-        </div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="box box-warning">
+						<div class="box-header with-border">
+							<h3 class="box-title">Info</h3>
+						</div>
+			              <div class="box-body">
+			                <div class="form-group">
+			                  <label for="denomNuovoCal">Denominazione nuovo calendario:</label>
+			                  <input type="text" class="form-control" id="denomNuovoCal" placeholder="Denominazione">
+			                </div>
+			              </div>
+	            	</div>
+	            </div>
+	        </div>
 
 			<div class="row">
 				<!-- TABLE: LATEST ORDERS -->
@@ -39,14 +40,14 @@
 						<!-- /.box-header -->
 						<div class="box-body">
 							<div class="table-responsive">
-								<table class="table no-margin">
+								<table id="tableNuovoCalendario" class="table no-margin" style="margin-bottom: 90px !important">
 									<thead>
 										<tr role="row">
 											<th style="text-align: center">#</th>
 											<th style="text-align: center">Milestones</th>
 											<th style="text-align: center">Data cut-off</th>
 											<th style="text-align: center">Ora cut-off</th>
-											<th style="text-align: center">Dettagli</th>
+											<th style="text-align: center">TAG</th>
 											<th style="text-align: center">Opz.</th>
 										</tr>
 									</thead>
@@ -56,7 +57,7 @@
 											
 											<td>
 								              <div class="form-group">
-								                <select class="form-control select2" style="width: 100%;">
+								                <select id="milestoneNuovoCal0" class="form-control select2" style="width: 100%;">
 								                  <option></option>
 								                  <option>Milestone 4</option>
 								                  <option>Milestone 4 3</option>
@@ -68,11 +69,11 @@
 											
 											<td>
 									        	<div class="form-group">
-									                <div class="input-group date">
+									                <div class="input-group">
 									                  <div class="input-group-addon">
 									                    <i class="fa fa-calendar"></i>
 									                  </div>
-									                  <input onkeydown="return false" type="text" placeholder="Data" class="form-control pull-right" id="datepicker" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask>
+									                  <input id="dataNuovoCal0" onkeydown="return false" type="text" placeholder="Data" class="form-control pull-right datepicker">
 									                </div>
 									            </div>
 								            </td>
@@ -84,7 +85,7 @@
 									                  	<div class="input-group-addon">
 									                    	<i class="fa fa-clock-o"></i>
 									                    </div>
-									                    <input onkeydown="return false" placeholder="Ora" type="text" class="form-control timepicker">
+									                    <input id="oraNuovoCal0" onkeydown="return false" placeholder="Ora" type="text" class="form-control timepicker">
 									                  </div>
 									                </div>
 									            </div>
@@ -95,13 +96,14 @@
 											</td>
 											
 											<td style="text-align: center">
-											    <a style="cursor: pointer;"><i style="color:green" class="fa fa-plus-circle"></i></a>
+											    <a style="cursor: pointer;" onclick="addRiga()" id="buttonToAddRiga0"><i style="color:green" class="fa fa-plus-circle"></i></a>
 											</td>
 											
 										</tr>
 									</tbody>
 								</table>
 							</div>
+							<a id="id_button_elimina_protocollo" type="button" class="btn btn-success"><i class="fa fa-check"></i> Inserisci</a>							
 						</div>
 
 						

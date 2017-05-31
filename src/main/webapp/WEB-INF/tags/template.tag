@@ -8,7 +8,7 @@
 		
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>ORCHESTRATORE RADAR</title>
+		<title>OrchestratoreRADAR</title>
 		<!-- Tell the browser to be responsive to screen width -->
 		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 		
@@ -65,7 +65,7 @@
 		
 			<header class="main-header">
 	
-			    <a href="monitorCalendario.jsp" class="logo">
+			    <a href="index.jsp" class="logo">
 			      <span class="logo-mini"><b>O</b>RD</span>
 			      <span class="logo-lg"><b>Orchestratore</b>RADAR</span>
 			    </a>
@@ -97,7 +97,6 @@
 							<ul class="treeview-menu">
 								<li><a href="#"><i class="fa fa-edit"></i> Gestione Entità</a></li>
 								<li><a href="#"><i class="fa fa-edit"></i> Gestione Eventi</a></li>
-								<li><a href="#"><i class="fa fa-edit"></i> Gestione Semafori</a></li>
 								<li><a href="#"><i class="fa fa-edit"></i> Gestione Milestone</a></li>
 							</ul>
 						</li>
@@ -167,6 +166,7 @@
 		<script src="plugins/daterangepicker/daterangepicker.js"></script>
 		<!-- bootstrap datepicker -->
 		<script src="plugins/datepicker/bootstrap-datepicker.js"></script>
+		<script src="plugins/datepicker/locales/bootstrap-datepicker.it.js"></script>
 		<!-- bootstrap color picker -->
 		<script src="plugins/colorpicker/bootstrap-colorpicker.min.js"></script>
 		<!-- bootstrap time picker -->
@@ -178,40 +178,26 @@
 		<script>
 		  $(function () {
 		    //Initialize Select2 Elements
-		    $(".select2").select2();
+		    $(".select2").select2({
+		    	placeholder: "Seleziona",
+		        minimumResultsForSearch: 10,
+		    });
 		
 		    //Datemask dd/mm/yyyy
 		    $("#datemask").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
+		    
 		    //Money Euro
 		    $("[data-mask]").inputmask();
 		
-		    //Date range picker
-		    $('#reservation').daterangepicker();
-		    //Date range picker with time picker
-		    $('#reservationtime').daterangepicker({timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A'});
-		    //Date range as a button
-		    $('#daterange-btn').daterangepicker(
-		        {
-		          ranges: {
-		            'Today': [moment(), moment()],
-		            'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-		            'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-		            'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-		            'This Month': [moment().startOf('month'), moment().endOf('month')],
-		            'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-		          },
-		          startDate: moment().subtract(29, 'days'),
-		          endDate: moment()
-		        },
-		        function (start, end) {
-		          $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
-		        }
-		    );
-		
 		    //Date picker
-		    $('#datepicker').datepicker({
+		    $('.datepicker').datepicker({
+		   	  language: 'it',
+		   	  orientation: "auto",
+		      format: 'dd/mm/yyyy',
+		      todayHighlight: true,
 		      autoclose: true,
-		   	  language: 'it'
+		      todayBtn: "linked",
+		      toggleActive: true
 		    });
 		
 		    //iCheck for checkbox and radio inputs
@@ -222,12 +208,21 @@
 		    
 		    //Timepicker
 		    $(".timepicker").timepicker({
-		      showInputs: false
+		      showInputs: false,
+		      showMeridian: false,
+		      defaultTime: false,
+		      minuteStep: 1,
+		      autoclose: true,
+		      //appendWidgetTo: '.table-responsive'
 		    });
+
+		    
+		    
 		  });
 		</script>
 
-		
+		<!-- funzioni terze -->
+		<script src="dist/js/functions.js"></script>
 		
 	</body>
 </html>
