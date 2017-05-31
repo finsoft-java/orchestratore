@@ -3,15 +3,16 @@ package it.finsoft.manager;
 import java.util.List;
 
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 import it.finsoft.entity.Entita;
 
 @Stateless
 public class EntitaManager {
 
-	@PersistenceContext(unitName = "persistenceUnit")
+	//@PersistenceContext(unitName = "persistenceUnit")
+	@Inject
 	private EntityManager em;
 
 	public Entita save(Entita tosave) {
@@ -32,12 +33,6 @@ public class EntitaManager {
 	}
 
 	public Entita findByCod(String cod) {
-		/*
-		 * System.out.println(cod); Entita test =
-		 * em.createQuery("FROM Entita WHERE codice = :cod",
-		 * Entita.class).setParameter("cod", cod) .getSingleResult();
-		 * System.out.println(test); return test;
-		 */
 		return em.createQuery("FROM Entita WHERE codice = :cod", Entita.class).setParameter("cod", cod)
 				.getSingleResult();
 	}

@@ -3,15 +3,16 @@ package it.finsoft.manager;
 import java.util.List;
 
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 import it.finsoft.entity.TipoEvento;
 
 @Stateless
 public class TipoEventoManager {
 
-	@PersistenceContext(unitName = "persistenceUnit")
+	//@PersistenceContext(unitName = "persistenceUnit")
+	@Inject
 	private EntityManager em;
 
 	public TipoEvento save(TipoEvento tosave) {

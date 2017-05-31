@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Map;
 
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.persistence.metamodel.EntityType;
 
 import org.apache.commons.beanutils.BeanUtils;
@@ -22,7 +22,8 @@ import org.apache.commons.beanutils.BeanUtils;
 @Stateless
 public class CommonManager {
 
-	@PersistenceContext(unitName = "persistenceUnit")
+	//@PersistenceContext(unitName = "persistenceUnit")
+	@Inject
 	private EntityManager em;
 
 	private Map<String, Class<?>> entityCache = new HashMap<String, Class<?>>();

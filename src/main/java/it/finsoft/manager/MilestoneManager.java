@@ -3,15 +3,16 @@ package it.finsoft.manager;
 import java.util.List;
 
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 import it.finsoft.entity.Milestone;
 
 @Stateless
 public class MilestoneManager {
 
-	@PersistenceContext(unitName = "persistenceUnit")
+	//@PersistenceContext(unitName = "persistenceUnit")
+	@Inject
 	private EntityManager em;
 
 	public Milestone save(Milestone tosave) {
@@ -25,6 +26,11 @@ public class MilestoneManager {
 
 	public Milestone findById(Long id) {
 		return em.find(Milestone.class, id);
+	}
+
+	public Milestone findByDesc(String desc) {
+		return em.createQuery("FROM Milestone WHERE descrizione= :desc", Milestone.class).setParameter("desc", desc)
+				.getSingleResult();
 	}
 
 	public List<Milestone> findAll() {

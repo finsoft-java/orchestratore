@@ -1,7 +1,9 @@
 package it.finsoft;
 
 import javax.ws.rs.ApplicationPath;
+
 import org.glassfish.jersey.server.ResourceConfig;
+import org.jboss.logging.Logger;
 
 import it.finsoft.server.DependencyBinder;
 
@@ -12,14 +14,19 @@ import it.finsoft.server.DependencyBinder;
  * @author airhacks.com
  */
 @ApplicationPath("ws")
-public class JAXRSConfiguration extends ResourceConfig {
+public class JAXRSConfiguration extends ResourceConfig // ResourceConfig is Jersey-specific
+{
+
+	public static Logger LOG = Logger.getLogger(DependencyBinder.class);
 
 	// ResourceConfig is Jetty-specific extension of Application
 
 	public JAXRSConfiguration() {
-		System.err.println("REGISTERING JAX-RS");
-		
-		register(new DependencyBinder());
+
+		LOG.info("Registering JAX-RS...");
+
+		register(new DependencyBinder()); // HK2-specific
+
 	}
 
 }

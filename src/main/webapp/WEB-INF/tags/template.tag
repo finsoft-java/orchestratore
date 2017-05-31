@@ -8,7 +8,7 @@
 		
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>ORCHESTRATORE RADAR</title>
+		<title>OrchestratoreRADAR</title>
 		<!-- Tell the browser to be responsive to screen width -->
 		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 		
@@ -23,17 +23,6 @@
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
 		<!-- jvectormap -->
 		<link rel="stylesheet" href="plugins/jvectormap/jquery-jvectormap-1.2.2.css">
-		<!-- Theme style -->
-		<link rel="stylesheet" href="dist/css/AdminLTE.min.css">
-		<!-- AdminLTE Skins. Choose a skin from the css/skins folder instead of downloading all of them to reduce the load. -->
-		<link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
-		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-		<!--[if lt IE 9]>
-		    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-		    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-		    <![endif]
-		-->
 		
 		<link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">
 		<!-- bootstrap datepicker -->
@@ -47,10 +36,25 @@
 		<!-- Select2 -->
 		<link rel="stylesheet" href="plugins/select2/select2.min.css">
 
+		<!-- Theme style -->
+		<link rel="stylesheet" href="dist/css/AdminLTE.min.css">
+		<!-- AdminLTE Skins. Choose a skin from the css/skins folder instead of downloading all of them to reduce the load. -->
+		<link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
+		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+		    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+		    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+		    <![endif]
+		-->
+
      	<!-- Google Font -->
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 		
 		<link rel="stylesheet" href="dist/css/orchestratoreStyleSheet.css">
+		
+		
+    	<link rel="shortcut icon" type="image/png" href="dist/img/favicon.ico"/>
 		
 	
 	</head>
@@ -61,9 +65,9 @@
 		
 			<header class="main-header">
 	
-			    <a href="index2.html" class="logo">
-			      <span class="logo-mini"><b>A</b>LT</span>
-			      <span class="logo-lg"><b>Orchestratore</b></span>
+			    <a href="index.jsp" class="logo">
+			      <span class="logo-mini"><b>O</b>RD</span>
+			      <span class="logo-lg"><b>Orchestratore</b>RADAR</span>
 			    </a>
 			
 			    <nav class="navbar navbar-static-top">
@@ -81,20 +85,19 @@
 					<!-- sidebar menu: : style can be found in sidebar.less -->
 					<ul class="sidebar-menu">
 						<li class="active treeview">
-							<a href="dashboard-v1.jsp"> <i class="fa fa-calendar"></i><span>Monitor Calendario</span></a>
+							<a href="index.jsp"> <i class="fa fa-calendar"></i><span>Monitor Calendario</span></a>
 						</li>
 	
 						<li>
-							<a href="#"> <i class="fa fa-edit"></i><span>Gestione Calendario</span></a>
+							<a href="gestioneCalendario.jsp"> <i class="fa fa-edit"></i><span>Gestione Calendario</span></a>
 						</li>
 	
 						<li class="treeview"><a href="#"> 
 							<i class="fa fa-cogs"></i><span>Amministrazione</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i></span></a>
 							<ul class="treeview-menu">
-								<li><a href="#"><i class="fa fa-edit"></i> Gestione entità</a></li>
-								<li><a href="#"><i class="fa fa-edit"></i> Gestione eventi</a></li>
-								<li><a href="#"><i class="fa fa-edit"></i> Gestione semafori</a></li>
-								<li><a href="#"><i class="fa fa-edit"></i> Gestione milestone</a></li>
+								<li><a href="#"><i class="fa fa-edit"></i> Gestione Entità</a></li>
+								<li><a href="#"><i class="fa fa-edit"></i> Gestione Eventi</a></li>
+								<li><a href="#"><i class="fa fa-edit"></i> Gestione Milestone</a></li>
 							</ul>
 						</li>
 	
@@ -114,7 +117,7 @@
 	
 			<footer class="main-footer">
 				<div class="pull-right hidden-xs">
-					<b>Versione</b> 1.0
+					<b>Versione</b> Beta 0.1
 				</div>
 				<strong>Copyright &copy; 2017 <a
 					href="http://www.finsoft.it">Finsoft S.r.l. </a>.
@@ -140,6 +143,7 @@
 		<script src="plugins/fastclick/fastclick.js"></script>
 		<!-- AdminLTE App -->
 		<script src="dist/js/app.min.js"></script>
+		<script type="text/javascript" src="dist/js/adminlte.min.js"></script>		
 		<!-- Sparkline -->
 		<script src="plugins/sparkline/jquery.sparkline.min.js"></script>
 		<!-- jvectormap -->
@@ -149,8 +153,6 @@
 		<script src="plugins/slimScroll/jquery.slimscroll.min.js"></script>
 		<!-- ChartJS 1.0.1 -->
 		<script src="plugins/chartjs/Chart.min.js"></script>
-		<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-		<script src="dist/js/pages/dashboard2.js"></script>
 		<!-- AdminLTE for demo purposes -->
 		<script src="dist/js/demo.js"></script>
 		<!-- Select2 -->
@@ -164,51 +166,38 @@
 		<script src="plugins/daterangepicker/daterangepicker.js"></script>
 		<!-- bootstrap datepicker -->
 		<script src="plugins/datepicker/bootstrap-datepicker.js"></script>
+		<script src="plugins/datepicker/locales/bootstrap-datepicker.it.js"></script>
 		<!-- bootstrap color picker -->
 		<script src="plugins/colorpicker/bootstrap-colorpicker.min.js"></script>
 		<!-- bootstrap time picker -->
 		<script src="plugins/timepicker/bootstrap-timepicker.min.js"></script>
 		<!-- iCheck 1.0.1 -->
 		<script src="plugins/iCheck/icheck.min.js"></script>
+		
 		<!-- Page script -->
 		<script>
 		  $(function () {
 		    //Initialize Select2 Elements
-		    $(".select2").select2();
+		    $(".select2").select2({
+		    	placeholder: "Seleziona",
+		        minimumResultsForSearch: 10,
+		    });
 		
 		    //Datemask dd/mm/yyyy
 		    $("#datemask").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
-		    //Datemask2 mm/dd/yyyy
-		    $("#datemask2").inputmask("mm/dd/yyyy", {"placeholder": "mm/dd/yyyy"});
+		    
 		    //Money Euro
 		    $("[data-mask]").inputmask();
 		
-		    //Date range picker
-		    $('#reservation').daterangepicker();
-		    //Date range picker with time picker
-		    $('#reservationtime').daterangepicker({timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A'});
-		    //Date range as a button
-		    $('#daterange-btn').daterangepicker(
-		        {
-		          ranges: {
-		            'Today': [moment(), moment()],
-		            'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-		            'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-		            'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-		            'This Month': [moment().startOf('month'), moment().endOf('month')],
-		            'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-		          },
-		          startDate: moment().subtract(29, 'days'),
-		          endDate: moment()
-		        },
-		        function (start, end) {
-		          $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
-		        }
-		    );
-		
 		    //Date picker
-		    $('#datepicker').datepicker({
-		      autoclose: true
+		    $('.datepicker').datepicker({
+		   	  language: 'it',
+		   	  orientation: "auto",
+		      format: 'dd/mm/yyyy',
+		      todayHighlight: true,
+		      autoclose: true,
+		      todayBtn: "linked",
+		      toggleActive: true
 		    });
 		
 		    //iCheck for checkbox and radio inputs
@@ -219,12 +208,21 @@
 		    
 		    //Timepicker
 		    $(".timepicker").timepicker({
-		      showInputs: false
+		      showInputs: false,
+		      showMeridian: false,
+		      defaultTime: false,
+		      minuteStep: 1,
+		      autoclose: true,
+		      //appendWidgetTo: '.table-responsive'
 		    });
+
+		    
+		    
 		  });
 		</script>
 
-		
+		<!-- funzioni terze -->
+		<script src="dist/js/functions.js"></script>
 		
 	</body>
 </html>

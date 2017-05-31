@@ -3,8 +3,8 @@ package it.finsoft.manager;
 import java.util.List;
 
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 import it.finsoft.entity.Entita;
 
@@ -18,7 +18,8 @@ public class EventoManager {
 
 	public static final Logger LOG = Logger.getLogger(EventoManager.class);
 
-	@PersistenceContext(unitName = "persistenceUnit")
+	//@PersistenceContext(unitName = "persistenceUnit")
+	@Inject
 	private EntityManager em;
 
 	public Evento save(Evento tosave) {
@@ -58,16 +59,5 @@ public class EventoManager {
 
 		return e;
 	}
-
-	/*
-	 * public List<Evento> findPolling(List<String> tags, Entita ent, TipoEvento
-	 * tp) { List<Evento> e = new ArrayList<Evento>(); for (String tag : tags) {
-	 * System.out.println(tag); e.addAll(em.
-	 * createQuery("FROM Evento WHERE tag= :tag AND entita = :ent AND tipoEvento = :tp"
-	 * , Evento.class) .setParameter("tag", tag).setParameter("ent",
-	 * ent).setParameter("tp", tp).getResultList());
-	 * 
-	 * } return e; }
-	 */
 
 }
