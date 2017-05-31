@@ -22,7 +22,7 @@ public class WSReset {
 
 	public final static Logger LOG = Logger.getLogger(WSReset.class);
 
-	@PersistenceContext
+	@PersistenceContext(unitName = "persistenceUnit")
 	EntityManager manager;
 
 	/**

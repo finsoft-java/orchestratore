@@ -1,21 +1,33 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
 	<modelVersion>4.0.0</modelVersion>
+
 	<groupId>it.finsoft</groupId>
 	<artifactId>orchestratoreRADAR</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+
 	<packaging>war</packaging>
+
+	<properties>
+		<jetty.version>9.4.5.v20170502</jetty.version>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<failOnMissingWebXml>false</failOnMissingWebXml>
+	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>javax</groupId>
 			<artifactId>javaee-api</artifactId>
 			<version>7.0</version>
-			<scope>provided</scope>
+			<!-- should be "provided" -->
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
 			<version>4.0.0-b05</version>
+			<!-- <scope>provided</scope> -->
 		</dependency>
 		<dependency>
 			<groupId>javax.inject</groupId>
@@ -57,13 +69,73 @@
 			<artifactId>commons-logging</artifactId>
 			<version>1.2</version>
 		</dependency>
+
+		<!-- Da qui in avanti, servono solo per lanciare l'app tramite Jetty Embedded -->
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-server</artifactId>
+			<version>${jetty.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-jndi</artifactId>
+			<version>${jetty.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-plus</artifactId>
+			<version>${jetty.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-annotations</artifactId>
+			<version>${jetty.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-webapp</artifactId>
+			<version>${jetty.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>apache-jsp</artifactId>
+			<version>${jetty.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-util</artifactId>
+			<version>${jetty.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.web</groupId>
+			<artifactId>javax.el</artifactId>
+			<version>2.2.6</version>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.web</groupId>
+			<artifactId>el-impl</artifactId>
+			<version>2.2</version>
+		</dependency>
+		<!-- Derby (for Jetty Datasource) -->
+		<dependency>
+			<groupId>org.apache.derby</groupId>
+			<artifactId>derby</artifactId>
+			<version>10.13.1.1</version>
+		</dependency>
+		<!-- Jersey for JAX-RS... -->
+		<dependency>
+			<groupId>org.glassfish.jersey.containers</groupId>
+			<artifactId>jersey-container-servlet</artifactId>
+			<version>2.25.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.containers.glassfish</groupId>
+			<artifactId>jersey-gf-cdi</artifactId>
+			<version>2.14</version>
+		</dependency>
+
 	</dependencies>
 	<build>
 		<finalName>orchestratoreRADAR</finalName>
 	</build>
-	<properties>
-		<maven.compiler.source>1.8</maven.compiler.source>
-		<maven.compiler.target>1.8</maven.compiler.target>
-		<failOnMissingWebXml>false</failOnMissingWebXml>
-	</properties>
 </project>
