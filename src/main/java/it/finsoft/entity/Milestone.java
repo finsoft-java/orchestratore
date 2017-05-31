@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -41,6 +42,7 @@ public class Milestone implements Serializable {
 	private String descrizione;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "milestone")
+	@OrderBy("ordinamento")
 	private List<MilestoneMilestone> milestoneMilestone = new ArrayList<>();
 	
 	public Milestone() {

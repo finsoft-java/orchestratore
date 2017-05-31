@@ -36,8 +36,8 @@ public class MilestoneMilestone implements Serializable {
 	public MilestoneMilestone() {
 	}
 
-	public MilestoneMilestone(long idSemaforoMilestone, Milestone milestone, Milestone milestoneChild, int ordinamento) {
-		this.idMilestoneMilestone = idSemaforoMilestone;
+	public MilestoneMilestone(long id, Milestone milestone, Milestone milestoneChild, int ordinamento) {
+		this.idMilestoneMilestone = id;
 		this.milestone = milestone;
 		this.milestoneChild = milestoneChild;
 		this.ordinamento = ordinamento;
