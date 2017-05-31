@@ -154,8 +154,6 @@
 		<script src="plugins/slimScroll/jquery.slimscroll.min.js"></script>
 		<!-- ChartJS 1.0.1 -->
 		<script src="plugins/chartjs/Chart.min.js"></script>
-		<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-		<script src="dist/js/pages/dashboard2.js"></script>
 		<!-- AdminLTE for demo purposes -->
 		<script src="dist/js/demo.js"></script>
 		<!-- Select2 -->
@@ -168,6 +166,8 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
 		<script src="plugins/daterangepicker/daterangepicker.js"></script>
 		<!-- bootstrap datepicker -->
+		<script src="plugins/datepicker/bootstrap-datepicker.js"></script>
+		<!-- bootstrap color picker -->
 		<script src="plugins/colorpicker/bootstrap-colorpicker.min.js"></script>
 		<!-- bootstrap time picker -->
 		<script src="plugins/timepicker/bootstrap-timepicker.min.js"></script>
@@ -210,7 +210,8 @@
 		
 		    //Date picker
 		    $('#datepicker').datepicker({
-		      autoclose: true
+		      autoclose: true,
+		   	  language: 'it'
 		    });
 		
 		    //iCheck for checkbox and radio inputs
