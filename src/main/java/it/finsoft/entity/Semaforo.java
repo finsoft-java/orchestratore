@@ -83,6 +83,15 @@ public class Semaforo implements Serializable {
 	public void setDescrizione(String descrizione) {
 		this.descrizione = descrizione;
 	}
+	
+	@XmlTransient
+	public List<SemaforoMilestone> getSemaforoMilestones() {
+		return semaforoMilestones;
+	}
+
+	public void setSemaforoMilestones(List<SemaforoMilestone> semaforoMilestones) {
+		this.semaforoMilestones = semaforoMilestones;
+	}
 
 	@Override
 	public int hashCode() {
@@ -126,15 +135,6 @@ public class Semaforo implements Serializable {
 	@Override
 	public String toString() {
 		return "Semaforo [idSemaforo=" + idSemaforo + ", codice=" + codice + ", descrizione=" + descrizione + "]";
-	}
-
-	@XmlTransient
-	public List<SemaforoMilestone> getSemaforoMilestones() {
-		return semaforoMilestones;
-	}
-
-	public void setSemaforoMilestones(List<SemaforoMilestone> semaforoMilestones) {
-		this.semaforoMilestones = semaforoMilestones;
 	}
 
 }

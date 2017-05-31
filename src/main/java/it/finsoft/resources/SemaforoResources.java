@@ -35,19 +35,6 @@ public class SemaforoResources {
 		return manager.findAll();
 	}
 	
-	/*prova visualizzazione elenco semafori*/
-	/*
-	@GET
-	public Response findAll() {
-		System.out.println("siamo nel nuovo get ");
-		GenericEntity<List<Semaforo>> semafori = new GenericEntity<List<Semaforo>>(manager.findAll()) {};
-		System.out.println("siamo nel nuovo get " + semafori);
-		return Response.ok(semafori).build();
-        }
-     */  
-	/*prova visualizzazione elenco semafori*/
-
-
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Semaforo create(Semaforo cal) {

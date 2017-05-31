@@ -32,16 +32,13 @@ public class SemaforoManager {
 			System.out.println("l=" + l);
 			System.out.println("m=" + l.getSemaforoMilestones());
 		}
-
 		return list;
-
 	}
 
 	public Semaforo findByCod(String cod) {
 		Semaforo semaforo = em.createQuery("FROM Semaforo WHERE codice = :cod", Semaforo.class).setParameter("cod", cod)
 				.getSingleResult();
 		return semaforo;
-
 	}
 
 }
