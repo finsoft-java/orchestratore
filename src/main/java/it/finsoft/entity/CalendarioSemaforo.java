@@ -8,10 +8,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import java.io.Serializable;
 import java.util.Date;
-
 @Entity
 @Table(name = "CALENDARI_SEMAFORI")
 public class CalendarioSemaforo implements Serializable {
@@ -25,7 +26,7 @@ public class CalendarioSemaforo implements Serializable {
 
 	@JoinColumn(name = "ID_SEMAFORO", referencedColumnName = "ID_SEMAFORO")
 	@ManyToOne(optional = false)
-	private Semaforo semaforo;
+	private Azione azione;
 
 	@JoinColumn(name = "ID_CALENDARIO", referencedColumnName = "ID_CALENDARIO")
 	@ManyToOne(optional = false)
@@ -34,6 +35,7 @@ public class CalendarioSemaforo implements Serializable {
 	@Column(name = "TAGS")
 	private String tags;
 
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DATA_ORA_PREVISTE")
 	private Date dataOraPreviste;
 
@@ -41,8 +43,8 @@ public class CalendarioSemaforo implements Serializable {
 
 	}
 
-	public CalendarioSemaforo(Semaforo semaforo, Calendario calendario, String tags, Date dataOraPreviste) {
-		this.semaforo = semaforo;
+	public CalendarioSemaforo(Azione azione, Calendario calendario, String tags, Date dataOraPreviste) {
+		this.azione = azione;
 		this.calendario = calendario;
 		this.tags = tags;
 		this.dataOraPreviste = dataOraPreviste;
@@ -56,12 +58,12 @@ public class CalendarioSemaforo implements Serializable {
 		this.idCalendarioSemaforo = idCalendarioSemaforo;
 	}
 
-	public Semaforo getSemaforo() {
-		return semaforo;
+	public Azione getSemaforo() {
+		return azione;
 	}
 
-	public void setSemaforo(Semaforo semaforo) {
-		this.semaforo = semaforo;
+	public void setSemaforo(Azione azione) {
+		this.azione = azione;
 	}
 
 	public Calendario getCalendario() {
@@ -81,9 +83,6 @@ public class CalendarioSemaforo implements Serializable {
 		// FIXME split(',') normalizziamo i tag poi lo ricostruiamo
 
 		tags = tags.replaceAll(" ", "").toUpperCase();
-
-		tags = tags.replaceAll(" ", "").toUpperCase();	
-
 		this.tags = tags;
 	}
 		
@@ -122,7 +121,7 @@ public class CalendarioSemaforo implements Serializable {
 
 	@Override
 	public String toString() {
-		return "CalendarioSemaforo [idCalendarioSemaforo=" + idCalendarioSemaforo + ", semaforo=" + semaforo
+		return "CalendarioSemaforo [idCalendarioSemaforo=" + idCalendarioSemaforo + ", semaforo=" + azione
 				+ ", calendario=" + calendario + ", tags=" + tags + ", dataOraPreviste="
 				+ dataOraPreviste + "]";
 	}

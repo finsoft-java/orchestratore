@@ -12,8 +12,8 @@
 		<class>it.finsoft.entity.Entita</class>
 		<class>it.finsoft.entity.Evento</class>
 		<class>it.finsoft.entity.Milestone</class>
-		<class>it.finsoft.entity.Semaforo</class>
-		<class>it.finsoft.entity.SemaforoMilestone</class>
+		<class>it.finsoft.entity.Azione</class>
+		<class>it.finsoft.entity.MilestoneMilestone</class>
 		<class>it.finsoft.entity.TipoEvento</class>
 		<properties>
 			<!-- Non abbiamo user e pwd per accedere al db <property name="javax.persistence.jdbc.user" 
@@ -26,8 +26,7 @@
 			<property name="hibernate.transaction.jta.platform"
 				value="org.hibernate.service.jta.platform.internal.SunOneJtaPlatform" />
 
-			<property name="javax.persistence.schema-generation.database.action"
-				value="drop-and-create" />
+			<property name="javax.persistence.schema-generation.database.action" value="drop-and-create" />
 
 			<property name="hibernate.show_sql" value="true" />
 		</properties>
