@@ -15,7 +15,7 @@ import org.jboss.logging.Logger;
 import it.finsoft.entity.Entita;
 import it.finsoft.entity.Evento;
 import it.finsoft.entity.Milestone;
-import it.finsoft.entity.Semaforo;
+import it.finsoft.entity.Azione;
 import it.finsoft.entity.SemaforoMilestone;
 import it.finsoft.entity.TipoEvento;
 
@@ -50,8 +50,8 @@ public class WSPolling {
 		LOG.info("Parametri di ricerca: Semaforo " + codSemaforo + " Tag " + tags);
 		codSemaforo = syntax.trimToUp(codSemaforo);
 		try {
-			Semaforo semaforo = managerSem.findByCod(codSemaforo);
-			List<SemaforoMilestone> semMilestones = semaforo.getSemaforoMilestones();
+			Azione azione = managerSem.findByCod(codSemaforo);
+			List<SemaforoMilestone> semMilestones = azione.getSemaforoMilestones();
 			result.expectedMilestones = semMilestones.size();
 			System.out.println(semMilestones.size());
 			System.out.println(semMilestones);
