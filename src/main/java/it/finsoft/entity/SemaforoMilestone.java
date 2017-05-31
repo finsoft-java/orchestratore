@@ -28,7 +28,7 @@ public class SemaforoMilestone implements Serializable {
 
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "ID_SEMAFORO", referencedColumnName = "ID_SEMAFORO")
-	private Semaforo semaforo;
+	private Azione azione;
 
 	@Column(name = "ORDINAMENTO")
 	private Integer ordinamento;
@@ -36,10 +36,10 @@ public class SemaforoMilestone implements Serializable {
 	public SemaforoMilestone() {
 	}
 
-	public SemaforoMilestone(long idSemaforoMilestone, Milestone milestone, Semaforo semaforo, int ordinamento) {
+	public SemaforoMilestone(long idSemaforoMilestone, Milestone milestone, Azione azione, int ordinamento) {
 		this.idSemaforoMilestone = idSemaforoMilestone;
 		this.milestone = milestone;
-		this.semaforo = semaforo;
+		this.azione = azione;
 		this.ordinamento = ordinamento;
 	}
 
@@ -59,12 +59,12 @@ public class SemaforoMilestone implements Serializable {
 		this.milestone = milestone;
 	}
 
-	public Semaforo getSemaforo() {
-		return semaforo;
+	public Azione getSemaforo() {
+		return azione;
 	}
 
-	public void setSemaforo(Semaforo semaforo) {
-		this.semaforo = semaforo;
+	public void setSemaforo(Azione azione) {
+		this.azione = azione;
 	}
 
 	public Integer getOrdinamento() {
@@ -82,7 +82,7 @@ public class SemaforoMilestone implements Serializable {
 		result = prime * result + (int) (idSemaforoMilestone ^ (idSemaforoMilestone >>> 32));
 		result = prime * result + ((milestone == null) ? 0 : milestone.hashCode());
 		result = prime * result + ordinamento;
-		result = prime * result + ((semaforo == null) ? 0 : semaforo.hashCode());
+		result = prime * result + ((azione == null) ? 0 : azione.hashCode());
 		return result;
 	}
 
@@ -104,10 +104,10 @@ public class SemaforoMilestone implements Serializable {
 			return false;
 		if (ordinamento != other.ordinamento)
 			return false;
-		if (semaforo == null) {
-			if (other.semaforo != null)
+		if (azione == null) {
+			if (other.azione != null)
 				return false;
-		} else if (!semaforo.equals(other.semaforo))
+		} else if (!azione.equals(other.azione))
 			return false;
 		return true;
 	}
@@ -115,7 +115,7 @@ public class SemaforoMilestone implements Serializable {
 	@Override
 	public String toString() {
 		return "SemaforoMilestone [idSemaforoMilestone=" + idSemaforoMilestone + ", milestone=" + milestone
-				+ ", semaforo=" + semaforo + ", ordinamento=" + ordinamento + "]";
+				+ ", semaforo=" + azione + ", ordinamento=" + ordinamento + "]";
 	}
 
 }
