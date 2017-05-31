@@ -12,43 +12,43 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "SEMAFORI_MILESTONES")
-public class SemaforoMilestone implements Serializable {
+@Table(name = "MILESTONE_MILESTONES")
+public class MilestoneMilestone implements Serializable {
 
 	private static final long serialVersionUID = 1501385652586677633L;
 
 	@Id
-	@Column(name = "ID_SEMAFORO_MILESTONE")
+	@Column(name = "ID_MILESTONE_MILESTONE")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long idSemaforoMilestone;
+	private Long idMilestoneMilestone;
 
 	@ManyToOne
 	@JoinColumn(name = "ID_MILESTONE", referencedColumnName = "ID_MILESTONE")
 	private Milestone milestone;
 
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "ID_SEMAFORO", referencedColumnName = "ID_SEMAFORO")
-	private Azione azione;
+	@JoinColumn(name = "ID_MILESTONE_CHILD", referencedColumnName = "ID_MILESTONE")
+	private Milestone milestoneChild;
 
 	@Column(name = "ORDINAMENTO")
 	private Integer ordinamento;
 
-	public SemaforoMilestone() {
+	public MilestoneMilestone() {
 	}
 
-	public SemaforoMilestone(long idSemaforoMilestone, Milestone milestone, Azione azione, int ordinamento) {
-		this.idSemaforoMilestone = idSemaforoMilestone;
+	public MilestoneMilestone(long idSemaforoMilestone, Milestone milestone, Milestone milestoneChild, int ordinamento) {
+		this.idMilestoneMilestone = idSemaforoMilestone;
 		this.milestone = milestone;
-		this.azione = azione;
+		this.milestoneChild = milestoneChild;
 		this.ordinamento = ordinamento;
 	}
 
-	public Long getIdSemaforoMilestone() {
-		return idSemaforoMilestone;
+	public Long getIdMilestoneMilestone() {
+		return idMilestoneMilestone;
 	}
 
 	public void setIdSemaforoMilestone(long idSemaforoMilestone) {
-		this.idSemaforoMilestone = idSemaforoMilestone;
+		this.idMilestoneMilestone = idSemaforoMilestone;
 	}
 
 	public Milestone getMilestone() {
@@ -59,12 +59,12 @@ public class SemaforoMilestone implements Serializable {
 		this.milestone = milestone;
 	}
 
-	public Azione getSemaforo() {
-		return azione;
+	public Milestone getMilestoneChild() {
+		return milestoneChild;
 	}
 
-	public void setSemaforo(Azione azione) {
-		this.azione = azione;
+	public void setMilestoneChild(Milestone milestoneChild) {
+		this.milestoneChild = milestoneChild;
 	}
 
 	public Integer getOrdinamento() {
@@ -79,10 +79,10 @@ public class SemaforoMilestone implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + (int) (idSemaforoMilestone ^ (idSemaforoMilestone >>> 32));
+		result = prime * result + (int) (idMilestoneMilestone ^ (idMilestoneMilestone >>> 32));
 		result = prime * result + ((milestone == null) ? 0 : milestone.hashCode());
 		result = prime * result + ordinamento;
-		result = prime * result + ((azione == null) ? 0 : azione.hashCode());
+		result = prime * result + ((milestoneChild == null) ? 0 : milestoneChild.hashCode());
 		return result;
 	}
 
@@ -94,8 +94,8 @@ public class SemaforoMilestone implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		SemaforoMilestone other = (SemaforoMilestone) obj;
-		if (idSemaforoMilestone != other.idSemaforoMilestone)
+		MilestoneMilestone other = (MilestoneMilestone) obj;
+		if (idMilestoneMilestone != other.idMilestoneMilestone)
 			return false;
 		if (milestone == null) {
 			if (other.milestone != null)
@@ -104,18 +104,18 @@ public class SemaforoMilestone implements Serializable {
 			return false;
 		if (ordinamento != other.ordinamento)
 			return false;
-		if (azione == null) {
-			if (other.azione != null)
+		if (milestoneChild == null) {
+			if (other.milestoneChild != null)
 				return false;
-		} else if (!azione.equals(other.azione))
+		} else if (!milestoneChild.equals(other.milestoneChild))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "SemaforoMilestone [idSemaforoMilestone=" + idSemaforoMilestone + ", milestone=" + milestone
-				+ ", semaforo=" + azione + ", ordinamento=" + ordinamento + "]";
+		return "SemaforoMilestone [idMilestoneMilestone=" + idMilestoneMilestone + ", milestone=" + milestone
+				+ ", semaforo=" + milestoneChild + ", ordinamento=" + ordinamento + "]";
 	}
 
 }

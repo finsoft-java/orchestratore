@@ -1,7 +1,10 @@
 package it.finsoft.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,10 +12,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
 @Table(name = "MILESTONES")
+@XmlRootElement
 public class Milestone implements Serializable {
 
 	private static final long serialVersionUID = 1070315680400921784L;
@@ -30,9 +37,12 @@ public class Milestone implements Serializable {
 	@JoinColumn(name = "ID_ENTITA", referencedColumnName = "ID_ENTITA")
 	private Entita entita; // foreign key tabella entita
 
-	@Column(name = "DESCRIZIONE")
+	@Column(name = "DESCRIZIONE", unique=true)
 	private String descrizione;
 
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "milestone")
+	private List<MilestoneMilestone> milestoneMilestone = new ArrayList<>();
+	
 	public Milestone() {
 
 	}
@@ -74,6 +84,15 @@ public class Milestone implements Serializable {
 
 	public void setEntita(Entita entita) {
 		this.entita = entita;
+	}
+	
+	@XmlTransient
+	public List<MilestoneMilestone> getMilestoneMilestone() {
+		return milestoneMilestone;
+	}
+
+	public void setMilestoneMilestone(List<MilestoneMilestone> milestoneMilestone) {
+		this.milestoneMilestone = milestoneMilestone;
 	}
 
 	@Override

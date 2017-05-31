@@ -15,13 +15,12 @@ import org.jboss.logging.Logger;
 import it.finsoft.entity.Entita;
 import it.finsoft.entity.Evento;
 import it.finsoft.entity.Milestone;
-import it.finsoft.entity.Azione;
-import it.finsoft.entity.SemaforoMilestone;
+import it.finsoft.entity.MilestoneMilestone;
 import it.finsoft.entity.TipoEvento;
 
 import it.finsoft.manager.EntitaManager;
 import it.finsoft.manager.EventoManager;
-import it.finsoft.manager.SemaforoManager;
+import it.finsoft.manager.MilestoneManager;
 import it.finsoft.manager.UtilityChecker;
 
 @Stateless
@@ -36,27 +35,27 @@ public class WSPolling {
 	@Inject
 	EventoManager managerEvn;
 	@Inject
-	SemaforoManager managerSem;
+	MilestoneManager managerMil;
 	@Inject
 	EventoManager managerEvt;
 	@Inject
 	UtilityChecker syntax;
 
 	@GET
-	public DatiPolling get(@QueryParam("semaforo") String codSemaforo, @QueryParam(value = "tag") List<String> tags) {
+	public DatiPolling get(@QueryParam("milestone") String descMilestone, @QueryParam(value = "tag") List<String> tags) {
 
 		DatiPolling result = new DatiPolling();
 
-		LOG.info("Parametri di ricerca: Semaforo " + codSemaforo + " Tag " + tags);
-		codSemaforo = syntax.trimToUp(codSemaforo);
+		LOG.info("Parametri di ricerca: Semaforo " + descMilestone + " Tag " + tags);
+		descMilestone = syntax.trimToUp(descMilestone);
 		try {
-			Azione azione = managerSem.findByCod(codSemaforo);
-			List<SemaforoMilestone> semMilestones = azione.getSemaforoMilestones();
-			result.expectedMilestones = semMilestones.size();
-			System.out.println(semMilestones.size());
-			System.out.println(semMilestones);
-			for (int i = 0; i < semMilestones.size(); i++) {
-				SemaforoMilestone sc = semMilestones.get(i);
+			Milestone milestone = managerMil.findByDesc(descMilestone); //esempio se descrizione e' un campo univoco (bisognera crearne uno ex CODICE)
+			List<MilestoneMilestone> milestoneMilestones = milestone.getMilestoneMilestone();
+			result.expectedMilestones = milestoneMilestones.size();
+			System.out.println(milestoneMilestones.size());
+			System.out.println(milestoneMilestones);
+			for (int i = 0; i < milestoneMilestones.size(); i++) {
+				MilestoneMilestone sc = milestoneMilestones.get(i);
 				Milestone m = sc.getMilestone();
 				String tag = tags.get(i);
 				tag = syntax.trimToUp(tag);
@@ -74,9 +73,9 @@ public class WSPolling {
 				result.eventi.addAll(tmp);
 			}
 		} catch (Exception sqlError) {
-			LOG.error("ERROR: il Semaforo: " + codSemaforo
+			LOG.error("ERROR: il Semaforo: " + descMilestone
 					+ " non e' stato trovato, controllare la sintassi o la presenza effettiva sul database");
-			result.errorMessage = "ERROR: il Semaforo: " + codSemaforo
+			result.errorMessage = "ERROR: il Semaforo: " + descMilestone
 					+ " non e' stato trovato, controllare la sintassi o la presenza effettiva sul database";
 			result.semaforoOk = false;
 		}
@@ -91,7 +90,7 @@ public class WSPolling {
 		public String errorMessage = null;
 		public List<String> tagNonVerificati = new ArrayList<>();
 	}
-	
+
 	/* ---- TEST RESOURCES ---- */
 	@GET
 	@Path("test")
