@@ -15,9 +15,6 @@ import javax.persistence.Table;
 @Table(name = "SEMAFORI_MILESTONES")
 public class SemaforoMilestone implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1501385652586677633L;
 
 	@Id
