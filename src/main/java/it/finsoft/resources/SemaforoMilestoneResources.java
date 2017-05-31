@@ -28,15 +28,7 @@ public class SemaforoMilestoneResources {
 	public List<SemaforoMilestone> findAll() {
 		return manager.findAll();
 	}
-	/*
-	@GET
-	public Response findAll() {
-		System.out.println("siamo nel nuovo get ");
-		GenericEntity<List<SemaforoMilestone>> semafmil = new GenericEntity<List<SemaforoMilestone>>(manager.findAll()) {};
-		System.out.println("siamo nel nuovo get " + semafmil);
-		return Response.ok(semafmil).build();
-        }
-	*/
+	
 	@GET
 	@Path("{id}")
 	public SemaforoMilestone findById(@PathParam("id") Long id) {

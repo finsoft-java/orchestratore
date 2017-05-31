@@ -83,6 +83,15 @@ public class WSPolling {
 		return result;
 	}
 
+	public static class DatiPolling {
+		public Boolean semaforoOk = Boolean.TRUE;
+		public Integer expectedMilestones = 0;
+		public Integer okMilestones = 0;
+		public List<Evento> eventi = new ArrayList<>();
+		public String errorMessage = null;
+		public List<String> tagNonVerificati = new ArrayList<>();
+	}
+	
 	/* ---- TEST RESOURCES ---- */
 	@GET
 	@Path("test")
@@ -92,13 +101,4 @@ public class WSPolling {
 		return "ok polling";
 	}
 	/* ---- TEST RESOURCES ---- */
-
-	public static class DatiPolling {
-		public Boolean semaforoOk = Boolean.TRUE;
-		public Integer expectedMilestones = 0;
-		public Integer okMilestones = 0;
-		public List<Evento> eventi = new ArrayList<>();
-		public String errorMessage = null;
-		public List<String> tagNonVerificati = new ArrayList<>();
-	}
 }
