@@ -9,12 +9,12 @@
 		<section class="content-header">
 			<h1>Test page</h1>
 
-			URL per ripopolare il database (DELETE+INSERT): <a href="ws/reset">click
+			URL per ripopolare il database (DELETE+INSERT): <a href="ws/reset" target="_blank">click
 				here</a><br /> URL per visualizzare gli eventi (JSON): <a
-				href="ws/resources/eventi">click here</a><br /> URL per visualizzare
-			i tipi di evento (JSON): <a href="ws/resources/tipievento">click
+				href="ws/resources/eventi" target="_blank">click here</a><br /> URL per visualizzare
+			i tipi di evento (JSON): <a href="ws/resources/tipievento" target="_blank">click
 				here</a><br /> URL per visualizzare le entità (JSON): <a
-				href="ws/resources/entita">click here</a><br /> <br /> FORM per
+				href="ws/resources/entita" target="_blank">click here</a><br /> <br /> FORM per
 			inserire un evento:
 			<form action="ws/collector" method="get">
 				Codice evento: <input name="tipiEvento" value="LOAD" /><br />
