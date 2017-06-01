@@ -42,7 +42,7 @@ public class Milestone implements Serializable {
 	private String descrizione;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "milestone")
-	//@OrderBy("ordinamento") // possibile soluzione
+	@OrderBy("ordinamento") // possibile soluzione
 	private List<MilestoneMilestone> milestoneMilestone = new ArrayList<>();
 
 	// TODO Milestone su Azione
