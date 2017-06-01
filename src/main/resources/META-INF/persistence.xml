@@ -7,7 +7,7 @@
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 		<jta-data-source>jdbc/orchestratore</jta-data-source>
 		<class>it.finsoft.entity.Calendario</class>
-		<class>it.finsoft.entity.CalendarioSemaforo</class>
+		<class>it.finsoft.entity.CalendarioMilestone</class>
 		<class>it.finsoft.entity.DettaglioEvento</class>
 		<class>it.finsoft.entity.Entita</class>
 		<class>it.finsoft.entity.Evento</class>
@@ -25,8 +25,6 @@
 
 			<property name="hibernate.transaction.jta.platform"
 				value="org.hibernate.service.jta.platform.internal.SunOneJtaPlatform" />
-
-			<property name="javax.persistence.schema-generation.database.action" value="drop-and-create" />
 
 			<property name="hibernate.show_sql" value="true" />
 		</properties>
