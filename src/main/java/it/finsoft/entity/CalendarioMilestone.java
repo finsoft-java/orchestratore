@@ -23,6 +23,10 @@ public class CalendarioMilestone implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID_CALENDARIO_MILESTONE")
 	private Long idCalendarioMilestone;
+	
+	@JoinColumn(name = "ID_AZIONE", referencedColumnName = "ID_AZIONE")
+	@ManyToOne(optional = true)
+	private Azione azione;
 
 	@JoinColumn(name = "ID_MILESTONE", referencedColumnName = "ID_MILESTONE")
 	@ManyToOne(optional = false)
@@ -43,15 +47,14 @@ public class CalendarioMilestone implements Serializable {
 
 	}
 
-	public CalendarioMilestone(Milestone milestone, Calendario calendario, String tags, Date dataOraPreviste) {
-		super();
+	public CalendarioMilestone(Azione azione, Milestone milestone, Calendario calendario, String tags,
+			Date dataOraPreviste) {
+		this.azione = azione;
 		this.milestone = milestone;
 		this.calendario = calendario;
 		this.tags = tags;
 		this.dataOraPreviste = dataOraPreviste;
 	}
-
-
 
 	public Long getIdCalendarioMilestone() {
 		return idCalendarioMilestone;
@@ -59,6 +62,14 @@ public class CalendarioMilestone implements Serializable {
 
 	public void setIdCalendarioMilestone(Long idCalendarioMilestone) {
 		this.idCalendarioMilestone = idCalendarioMilestone;
+	}
+	
+	public Azione getAzione() {
+		return azione;
+	}
+
+	public void setAzione(Azione azione) {
+		this.azione = azione;
 	}
 
 	public Milestone getMilestone() {
@@ -121,8 +132,8 @@ public class CalendarioMilestone implements Serializable {
 
 	@Override
 	public String toString() {
-		return "CalendarioMilestone [idCalendarioMilestone=" + idCalendarioMilestone + ", "
-				+ "calendario=" + calendario + ", tags=" + tags + ", dataOraPreviste="
+		return "CalendarioMilestone [idCalendarioMilestone=" + idCalendarioMilestone + ", azione=" + azione
+				+ ", milestone=" + milestone + ", calendario=" + calendario + ", tags=" + tags + ", dataOraPreviste="
 				+ dataOraPreviste + "]";
 	}
 
