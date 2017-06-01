@@ -38,34 +38,34 @@ public class Milestone implements Serializable {
 	@JoinColumn(name = "ID_ENTITA", referencedColumnName = "ID_ENTITA")
 	private Entita entita; // foreign key tabella entita
 
-	@Column(name = "DESCRIZIONE", unique=true)
+	@Column(name = "DESCRIZIONE", unique = true)
 	private String descrizione;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "milestone")
-	@OrderBy("ordinamento")
+	//@OrderBy("ordinamento") // possibile soluzione
 	private List<MilestoneMilestone> milestoneMilestone = new ArrayList<>();
-	
+
+	// TODO Milestone su Azione
+	// o ManyToOne su AZIONI.ID_AZIONE???
+
+	@ManyToOne
+	@JoinColumn(name = "ID_AZIONE", referencedColumnName = "ID_AZIONE", nullable = true)
+	private Azione azione;
+
 	public Milestone() {
 
 	}
 
-	public Milestone(Long idMilestone, TipoEvento tipoEvento, Entita entita, String descrizione) {
+	public Milestone(Long idMilestone, TipoEvento tipoEvento, Entita entita, String descrizione, Azione azione) {
 		this.idMilestone = idMilestone;
 		this.tipoEvento = tipoEvento;
 		this.entita = entita;
 		this.descrizione = descrizione;
+		this.azione = azione;
 	}
 
 	public Long getIdMilestone() {
 		return idMilestone;
-	}
-
-	public String getDescrizione() {
-		return descrizione;
-	}
-
-	public void setDescrizione(String descrizione) {
-		this.descrizione = descrizione;
 	}
 
 	public void setIdMilestone(Long idMilestone) {
@@ -87,7 +87,15 @@ public class Milestone implements Serializable {
 	public void setEntita(Entita entita) {
 		this.entita = entita;
 	}
-	
+
+	public String getDescrizione() {
+		return descrizione;
+	}
+
+	public void setDescrizione(String descrizione) {
+		this.descrizione = descrizione;
+	}
+
 	@XmlTransient
 	public List<MilestoneMilestone> getMilestoneMilestone() {
 		return milestoneMilestone;
@@ -97,35 +105,12 @@ public class Milestone implements Serializable {
 		this.milestoneMilestone = milestoneMilestone;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((idMilestone == null) ? 0 : idMilestone.hashCode());
-		return result;
+	public Azione getAzione() {
+		return azione;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Milestone other = (Milestone) obj;
-		if (idMilestone == null) {
-			if (other.idMilestone != null)
-				return false;
-		} else if (!idMilestone.equals(other.idMilestone))
-			return false;
-		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "Milestone [idMilestone=" + idMilestone + ", tipoEvento=" + tipoEvento + ", entita=" + entita
-				+ ", descrizione=" + descrizione + "]";
+	public void setAzione(Azione azione) {
+		this.azione = azione;
 	}
 
 }

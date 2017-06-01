@@ -42,43 +42,65 @@ public class WSPolling {
 	UtilityChecker syntax;
 
 	@GET
-	public DatiPolling get(@QueryParam("milestone") String descMilestone, @QueryParam(value = "tag") List<String> tags) {
+	public DatiPolling get(@QueryParam("milestone") String descMilestone,
+			@QueryParam(value = "tag") List<String> tags) {
 
 		DatiPolling result = new DatiPolling();
 
 		LOG.info("Parametri di ricerca: Semaforo " + descMilestone + " Tag " + tags);
-		descMilestone = syntax.trimToUp(descMilestone);
+		// descMilestone = syntax.trimToUp(descMilestone);
+		Milestone milestone = new Milestone();
 		try {
-			Milestone milestone = managerMil.findByDesc(descMilestone); //esempio se descrizione e' un campo univoco (bisognera crearne uno ex CODICE)
-			List<MilestoneMilestone> milestoneMilestones = milestone.getMilestoneMilestone();
-			result.expectedMilestones = milestoneMilestones.size();
-			System.out.println(milestoneMilestones.size());
-			System.out.println(milestoneMilestones);
-			for (int i = 0; i < milestoneMilestones.size(); i++) {
-				MilestoneMilestone sc = milestoneMilestones.get(i);
-				Milestone m = sc.getMilestone();
-				String tag = tags.get(i);
-				tag = syntax.trimToUp(tag);
-				Entita ent = m.getEntita();
-				TipoEvento tp = m.getTipoEvento();
-				List<Evento> tmp = null;
-				tmp = managerEvt.findPolling(tag, ent, tp);
-				System.out.println(tmp);
-				if (tmp.isEmpty()) {
-					result.semaforoOk = Boolean.FALSE;
-					result.tagNonVerificati.add(i + " - " + tag);
-				} else {
-					++result.okMilestones;
-				}
-				result.eventi.addAll(tmp);
-			}
+			milestone = managerMil.findByDesc(descMilestone);
 		} catch (Exception sqlError) {
-			LOG.error("ERROR: il Semaforo: " + descMilestone
-					+ " non e' stato trovato, controllare la sintassi o la presenza effettiva sul database");
-			result.errorMessage = "ERROR: il Semaforo: " + descMilestone
-					+ " non e' stato trovato, controllare la sintassi o la presenza effettiva sul database";
+			LOG.error("ERROR: La Milestone: " + descMilestone
+					+ " non e' stata trovata, controllare la sintassi o la presenza effettiva sul database");
+			result.errorMessage = "ERROR: La Milestone: " + descMilestone
+					+ " non e' stata trovata, controllare la sintassi o la presenza effettiva sul database";
 			result.semaforoOk = false;
 		}
+		System.out.println(milestone.getMilestoneMilestone());
+		List<MilestoneMilestone> milestoneMilestones = milestone.getMilestoneMilestone();
+		result.expectedMilestones = milestoneMilestones.size();
+		System.out.println(milestoneMilestones.size());
+		System.out.println(milestoneMilestones);
+		for (int i = 0; i < milestoneMilestones.size(); i++) {
+			// non va in errore qui
+			MilestoneMilestone sc = milestoneMilestones.get(i);
+			// Milestone m = sc.getMilestone(); non deve piu' prendere la
+			// milestone "GENITORE" ma verificare se le child si sono
+			// verificate.
+			Milestone m = sc.getMilestoneChild();
+			// va in errore qui
+			String tag = "";
+			try {
+				tag = tags.get(i);
+				tag = syntax.trimToUp(tag);
+			} catch (Exception e) {
+				LOG.error("ERROR:non sono stati passati sufficienti tag");
+				result.errorMessage = "ERROR:il numero di tag in input (" + tags.size()
+						+ ") non corrisponde con il numero di Milestone da controllare (" + milestoneMilestones.size()
+						+ "), i tag mancanti verranno calcolati come vuoti";
+			}
+			Entita ent = m.getEntita();
+			TipoEvento tp = m.getTipoEvento();
+			List<Evento> tmp = null;
+			tmp = managerEvt.findPolling(tag, ent, tp);
+			System.out.println(tmp);
+			if (tmp.isEmpty()) {
+				result.semaforoOk = Boolean.FALSE;
+				result.tagNonVerificati.add(i + 1 + " - " + tag);
+			} else {
+				++result.okMilestones;
+			}
+			result.eventi.addAll(tmp);
+
+		}
+		/*
+		 * } catch (Exception e) {
+		 * 
+		 * }
+		 */
 		return result;
 	}
 
