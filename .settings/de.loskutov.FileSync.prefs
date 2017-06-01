@@ -1,0 +1,7 @@
+WARNING=DO NOT MODIFY THIS FILE IF YOU DON'T UNDERSTAND
+defaultDestination=C\:/glassfish4/glassfish/domains/domain1/applications/orchestratore
+defaultVariables=
+eclipse.preferences.version=1
+includeTeamPrivateFiles=false
+map|0=src/main/webapp|,|,|,|,
+useCurrentDateForDestinationFiles=false
