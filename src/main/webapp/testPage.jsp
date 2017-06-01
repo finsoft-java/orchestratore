@@ -17,8 +17,8 @@
 				href="ws/resources/entita">click here</a><br /> <br /> FORM per
 			inserire un evento:
 			<form action="ws/collector" method="get">
-				Codice evento: <input name="tipiEvento" value="CARICAMENTO" /><br />
-				Codice entit&agrave;: <input name="entita" value="U7SC0_PCR_M" /><br />
+				Codice evento: <input name="tipiEvento" value="LOAD" /><br />
+				Codice entit&agrave;: <input name="entita" value="U7RM0ESP" /><br />
 				Tag: <input name="tag" value="20170523U" /><br /> <input
 					type="submit" />
 			</form>
