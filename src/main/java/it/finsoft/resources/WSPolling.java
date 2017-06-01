@@ -68,7 +68,7 @@ public class WSPolling {
 			// non va in errore qui
 			MilestoneMilestone sc = milestoneMilestones.get(i);
 			// Milestone m = sc.getMilestone(); non deve piu' prendere la
-			// milestone "GENITORE" ma verificare se le child si sono
+			// milestone "INSERITA" ma verificare se le child si sono
 			// verificate.
 			Milestone m = sc.getMilestoneChild();
 			// va in errore qui
@@ -89,7 +89,7 @@ public class WSPolling {
 			System.out.println(tmp);
 			if (tmp.isEmpty()) {
 				result.semaforoOk = Boolean.FALSE;
-				result.tagNonVerificati.add(i + 1 + " - " + tag);
+				result.NonVerificati.add(m.getDescrizione() + " - " + tag);
 			} else {
 				++result.okMilestones;
 			}
@@ -110,7 +110,7 @@ public class WSPolling {
 		public Integer okMilestones = 0;
 		public List<Evento> eventi = new ArrayList<>();
 		public String errorMessage = null;
-		public List<String> tagNonVerificati = new ArrayList<>();
+		public List<String> NonVerificati = new ArrayList<>();
 	}
 
 	/* ---- TEST RESOURCES ---- */
