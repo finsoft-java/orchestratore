@@ -28,7 +28,7 @@ public class CalendarioMilestoneManager {
 	}
 
 	public List<CalendarioMilestone> findAll() {
-		return em.createQuery("FROM CalendarioSemaforo", CalendarioMilestone.class).getResultList();
+		return em.createQuery("FROM CalendarioMilestone", CalendarioMilestone.class).getResultList();
 	}
 
 }
