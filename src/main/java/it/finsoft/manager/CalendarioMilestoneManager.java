@@ -9,7 +9,7 @@ import javax.persistence.PersistenceContext;
 import it.finsoft.entity.CalendarioMilestone;
 
 @Stateless
-public class CalendarioSemaforoManager {
+public class CalendarioMilestoneManager {
 
 	@PersistenceContext(unitName = "persistenceUnit")
 	private EntityManager em;
