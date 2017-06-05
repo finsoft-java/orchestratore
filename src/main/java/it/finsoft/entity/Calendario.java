@@ -1,13 +1,18 @@
 package it.finsoft.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
 @Table(name = "CALENDARI")
@@ -22,6 +27,9 @@ public class Calendario implements Serializable {
 
 	@Column(name = "DESCRIZIONE")
 	private String descrizione;
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "calendario")
+	private List<CalendarioMilestone> calendarioMilestone = new ArrayList<>();
 
 	public Calendario() {
 
@@ -29,6 +37,15 @@ public class Calendario implements Serializable {
 
 	public Calendario(String descrizione) {
 		this.descrizione = descrizione;
+	}
+
+	@XmlTransient
+	public List<CalendarioMilestone> getCalendarioMilestone() {
+		return calendarioMilestone;
+	}
+
+	public void setCalendarioMilestone(List<CalendarioMilestone> calendarioMilestone) {
+		this.calendarioMilestone = calendarioMilestone;
 	}
 
 	public Long getIdCalendario() {
