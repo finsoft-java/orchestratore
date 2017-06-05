@@ -20,8 +20,10 @@ public class WSReset {
 
 	/**
 	 * Questo e' un reset in GET quando si richiama la pagina, svuota le tabelle
-	 * indicate nello scriptsql.txt e le ripopola, e' da ottimizzare ma per il
+	 * indicate nello script.sql e le ripopola, e' da ottimizzare ma per il
 	 * momento funziona (ritorna un errore sulla prima istruzione)
+	 * 
+	 * Puo' essere sostituito da javax.persistence.sql-load-script-source
 	 **/
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
