@@ -14,6 +14,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import org.jboss.logging.Logger;
 
+import it.finsoft.entity.DettaglioEvento;
 import it.finsoft.entity.Entita;
 import it.finsoft.entity.Evento;
 import it.finsoft.entity.Milestone;
@@ -23,12 +24,25 @@ import it.finsoft.entity.TipoEvento;
 @Stateless
 public class WSManager {
 
-	public final static Logger LOG = Logger.getLogger(WSManager.class);
-
 	@PersistenceContext
 	EntityManager em;
+	@Inject
+	EntitaManager managerEnt;
+	@Inject
+	EventoManager managerEvn;
+	@Inject
+	MilestoneManager managerMil;
+	@Inject
+	EventoManager managerEvt;
+	@Inject
+	TipoEventoManager managerTp;
+	@Inject
+	UtilityChecker syntax;
 
-	// metodo reset richiamato dal servizio REST reset
+	// ---------------------------------WSReset----------------------------------------//
+
+	public final static Logger LOG = Logger.getLogger(WSManager.class);
+
 	public String resetDb() throws FileNotFoundException, IOException {
 		BufferedReader reader = new BufferedReader(
 				new InputStreamReader(getClass().getResourceAsStream("/script.sql")));
@@ -62,23 +76,12 @@ public class WSManager {
 	}
 	// ------------------------------------WSPolling--------------------------------------//
 
-	@Inject
-	EntitaManager managerEnt;
-	@Inject
-	EventoManager managerEvn;
-	@Inject
-	MilestoneManager managerMil;
-	@Inject
-	EventoManager managerEvt;
-	@Inject
-	UtilityChecker syntax;
-
 	public DatiPolling getPolling(String descMilestone, List<String> tags) {
 		DatiPolling result = new DatiPolling();
 
-		LOG.info("Parametri di ricerca: Semaforo " + descMilestone + " Tag " + tags);
+		LOG.info("Parametri di ricerca: Milestone " + descMilestone + " Tag " + tags);
 		// descMilestone = syntax.trimToUp(descMilestone);
-		Milestone milestone = new Milestone();
+		Milestone milestone = null;
 		try {
 			milestone = managerMil.findByDesc(descMilestone);
 		} catch (Exception sqlError) {
@@ -143,4 +146,67 @@ public class WSManager {
 		public List<String> NonVerificati = new ArrayList<>();
 	}
 
+	// ------------------------------------WSCollector--------------------------------------//
+
+	public DatiCollector getCollector(String codiceEnt, String codiceTipi, String tag, List<String> keys,
+			List<String> values) {
+		DatiCollector result = new DatiCollector();
+		try {
+			Evento e = new Evento();
+			codiceEnt = syntax.trimToUp(codiceEnt);
+			codiceTipi = syntax.trimToUp(codiceTipi);
+			e.setEntita(managerEnt.findByCod(codiceEnt));
+			e.setTipoEvento(managerTp.findByCod(codiceTipi));
+			e.setTag(tag);
+			List<DettaglioEvento> listaDettagliEvento = e.getDettagliEvento();
+			// TODO controllare che keys e values abbiano lo stesso numero di
+			// valori
+			if (keys.size() != values.size()) {
+				// GENERARE ERRORE
+				LOG.error("ERROR:il numero di key e di valori inseriti non corrisponde");
+				result.detailError = "Il numero di key e di valori inseriti non corrisponde, vedere dettaglio per maggiori informazioni";
+				DettaglioEvento dettaglioErr = new DettaglioEvento();
+				dettaglioErr.setEvento(e);
+				dettaglioErr.setChiave("ERROR");
+				dettaglioErr.setValore("il numero di key e di valori inseriti non corrisponde: key=" + keys.toString()
+						+ " valori=" + values.toString());
+				listaDettagliEvento.add(dettaglioErr);
+			} else {
+				for (int i = 0; i < keys.size(); i++) {
+					DettaglioEvento dettaglio = new DettaglioEvento();
+					String key = keys.get(i);
+					String value = values.get(i);
+					dettaglio.setChiave(key);
+					dettaglio.setValore(value);
+					dettaglio.setEvento(e);
+					listaDettagliEvento.add(dettaglio);
+				}
+				e.setDettagliEvento(listaDettagliEvento);
+			}
+			// per ogni chiave, inserire un record chiave/valore nella tabella
+			// dettagli
+			managerEvn.save(e);
+			result.evento = e;
+			result.listaDettagli.addAll(listaDettagliEvento);
+
+		} catch (Exception sqlError) {
+			if (result.detailError == null) {
+				LOG.error("ERROR: nessuna corrispondenza con " + codiceEnt + " e " + codiceTipi
+						+ " nella base dati, controllare che siano presenti");
+				result.eventError = "ERROR: nessuna corrispondenza con " + codiceEnt + " e " + codiceTipi
+						+ " nella base dati, controllare che siano presenti";
+				return result;
+			}
+
+		}
+		return result;
+	}
+
+	// classe di output per il collector
+	public static class DatiCollector {
+		public Evento evento;
+		public String eventError = null;
+		public String detailError = null;
+		public List<DettaglioEvento> listaDettagli = new ArrayList<>();
+	}
 }

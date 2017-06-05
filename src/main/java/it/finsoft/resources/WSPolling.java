@@ -1,6 +1,5 @@
 package it.finsoft.resources;
 
-import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -10,18 +9,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
-import org.jboss.logging.Logger;
-
-import it.finsoft.entity.Entita;
-import it.finsoft.entity.Evento;
-import it.finsoft.entity.Milestone;
-import it.finsoft.entity.MilestoneMilestone;
-import it.finsoft.entity.TipoEvento;
-
-import it.finsoft.manager.EntitaManager;
-import it.finsoft.manager.EventoManager;
-import it.finsoft.manager.MilestoneManager;
-import it.finsoft.manager.UtilityChecker;
 import it.finsoft.manager.WSManager;
 import it.finsoft.manager.WSManager.DatiPolling;
 
@@ -49,7 +36,7 @@ public class WSPolling {
 	@GET
 	public DatiPolling get(@QueryParam("milestone") String descMilestone,
 			@QueryParam(value = "tag") List<String> tags) {
-
+		return wsManager.getPolling(descMilestone, tags);
 		/*
 		 * DatiPolling result = new DatiPolling();
 		 * 
@@ -88,7 +75,7 @@ public class WSPolling {
 		 * 
 		 * }
 		 */
-		return wsManager.getPolling(descMilestone, tags);
+
 	}
 
 	/*
