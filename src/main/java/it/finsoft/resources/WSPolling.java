@@ -29,7 +29,7 @@ public class WSPolling {
 	@GET
 	public DatiPolling get(@QueryParam("milestone") String descMilestone,
 			@QueryParam(value = "tag") List<String> tags) {
-		
+
 		return wsManager.getPolling(descMilestone, tags);
 
 	}
@@ -44,6 +44,7 @@ public class WSPolling {
 	}
 	/* ---- TEST RESOURCES ---- */
 
+	//TEST per l'esplosione della gerarchia
 	@GET
 	@Path("testTree")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -51,5 +52,13 @@ public class WSPolling {
 		Milestone m = managerMil.findByDesc(descMilestone);
 		return managerMil.getHierarchy(m);
 	}
-
+	
+	//TEST per l'esplosione solo delle foglie
+	@GET
+	@Path("testLeaf")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Milestone> Leaf(@QueryParam("milestone") String descMilestone) {
+		Milestone m = managerMil.findByDesc(descMilestone);
+		return managerMil.getFoglie(m);
+	}
 }
