@@ -17,7 +17,7 @@ import it.finsoft.entity.CalendarioMilestone;
 import it.finsoft.manager.CalendarioMilestoneManager;
 
 @Stateless
-@Path("resources/calendarimilestone")
+@Path("resources")
 @Produces({ MediaType.APPLICATION_JSON })
 public class CalendarioMilestoneResources {
 
@@ -25,31 +25,34 @@ public class CalendarioMilestoneResources {
 	CalendarioMilestoneManager manager;
 
 	@GET
+	@Path("CalendariMilestone")
 	public List<CalendarioMilestone> findAll() {
 		return manager.findAll();
 	}
 
 	@GET
-	@Path("{id}")
+	@Path("CalendariMilestone({id})")
 	public CalendarioMilestone findById(@PathParam("id") Long id) {
 		return manager.findById(id);
 	}
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("CalendariMilestone")
 	public CalendarioMilestone create(CalendarioMilestone cal) {
 		System.out.println("post resources, salvo entita " + cal);
 		return manager.save(cal);
 	}
 
 	@DELETE
-	@Path("{id}")
+	@Path("CalendariMilestone({id})")
 	public void delete(@PathParam("id") Long id) {
 		manager.remove(id);
 	}
 
 	@PUT
-	@Path("{id}") // richiede di inserire (in json) tutti i campi obbligatori
+	@Path("CalendariMilestone({id})") // richiede di inserire (in json) tutti i
+										// campi obbligatori
 	public void update(@PathParam("id") Long id, CalendarioMilestone m) {
 		m.setIdCalendarioMilestone(id);
 		manager.save(m);
@@ -59,10 +62,24 @@ public class CalendarioMilestoneResources {
 	 * 1 }, "tag" : "fasdfafa" }
 	 */
 
+	/* ---- RELAZIONI ---- */
+	
+	@GET
+	@Path("Calendari({idc})/Milestone")
+	public List<CalendarioMilestone> findByIdCalendario(@PathParam("idc") Long idCalendario) {
+		return manager.findByIdCalendario(idCalendario);
+	}
+	
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("Calendari({idc})/Milestone")
+	public CalendarioMilestone create(@PathParam("idc") Long idCalendario, CalendarioMilestone cal) {
+		return manager.save(idCalendario, cal);
+	}
 
 	/* ---- TEST RESOURCES ---- */
 	@GET
-	@Path("test")
+	@Path("calendarimilestone/test")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String prova() {
 		System.out.println("ok calendarisemafori");
