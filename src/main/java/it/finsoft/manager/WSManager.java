@@ -1,12 +1,146 @@
 package it.finsoft.manager;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import org.jboss.logging.Logger;
+
+import it.finsoft.entity.Entita;
+import it.finsoft.entity.Evento;
+import it.finsoft.entity.Milestone;
+import it.finsoft.entity.MilestoneMilestone;
+import it.finsoft.entity.TipoEvento;
 
 @Stateless
 public class WSManager {
 
+	public final static Logger LOG = Logger.getLogger(WSManager.class);
+
 	@PersistenceContext
 	EntityManager em;
+
+	// metodo reset richiamato dal servizio REST reset
+	public String resetDb() throws FileNotFoundException, IOException {
+		BufferedReader reader = new BufferedReader(
+				new InputStreamReader(getClass().getResourceAsStream("/script.sql")));
+		String sql = "";
+		String error = "";
+		while (reader.ready() == true) {
+			try {
+				sql = reader.readLine().toString();
+				if (sql == null)
+					continue;
+				sql = sql.trim();
+				if (sql.equals("") || sql.startsWith("--"))
+					continue;
+				Query q = em.createNativeQuery(sql);
+				q.executeUpdate();
+			} catch (Exception e) {
+				LOG.error("Error while executing SQL command", e);
+				error += "Error while executing SQL command: " + sql + ";";
+			}
+		}
+		reader.close();
+		// mettere un if, eventualmente considerare di stampare la riga SQL che
+		// ha restituito l'errore
+		// TODO da completare
+		if (error == "") {
+			LOG.info("RESET effettuato con successo");
+			return "RESET dati predefiniti DB effettuato";
+		} else {
+			return "RESET eseguito con errori: ";
+		}
+	}
+	// ------------------------------------WSPolling--------------------------------------//
+
+	@Inject
+	EntitaManager managerEnt;
+	@Inject
+	EventoManager managerEvn;
+	@Inject
+	MilestoneManager managerMil;
+	@Inject
+	EventoManager managerEvt;
+	@Inject
+	UtilityChecker syntax;
+
+	public DatiPolling getPolling(String descMilestone, List<String> tags) {
+		DatiPolling result = new DatiPolling();
+
+		LOG.info("Parametri di ricerca: Semaforo " + descMilestone + " Tag " + tags);
+		// descMilestone = syntax.trimToUp(descMilestone);
+		Milestone milestone = new Milestone();
+		try {
+			milestone = managerMil.findByDesc(descMilestone);
+		} catch (Exception sqlError) {
+			LOG.error("ERROR: La Milestone: " + descMilestone
+					+ " non e' stata trovata, controllare la sintassi o la presenza effettiva sul database");
+			result.errorMessage = "ERROR: La Milestone: " + descMilestone
+					+ " non e' stata trovata, controllare la sintassi o la presenza effettiva sul database";
+			result.semaforoOk = false;
+		}
+		System.out.println(milestone.getMilestoneMilestone());
+		List<MilestoneMilestone> milestoneMilestones = milestone.getMilestoneMilestone();
+		result.expectedMilestones = milestoneMilestones.size();
+		System.out.println(milestoneMilestones.size());
+		System.out.println(milestoneMilestones);
+		for (int i = 0; i < milestoneMilestones.size(); i++) {
+			// non va in errore qui
+			MilestoneMilestone sc = milestoneMilestones.get(i);
+			// Milestone m = sc.getMilestone(); non deve piu' prendere la
+			// milestone "INSERITA" ma verificare se le child si sono
+			// verificate.
+			Milestone m = sc.getMilestoneChild();
+			// va in errore qui
+			String tag = "";
+			try {
+				tag = tags.get(i);
+				tag = syntax.trimToUp(tag);
+			} catch (Exception e) {
+				LOG.error("ERROR:non sono stati passati sufficienti tag");
+				result.errorMessage = "ERROR:il numero di tag in input (" + tags.size()
+						+ ") non corrisponde con il numero di Milestone da controllare (" + milestoneMilestones.size()
+						+ "), i tag mancanti verranno calcolati come vuoti";
+			}
+			Entita ent = m.getEntita();
+			TipoEvento tp = m.getTipoEvento();
+			List<Evento> tmp = null;
+			tmp = managerEvt.findPolling(tag, ent, tp);
+			System.out.println(tmp);
+			if (tmp.isEmpty()) {
+				result.semaforoOk = Boolean.FALSE;
+				result.NonVerificati.add(m.getDescrizione() + " - " + tag);
+			} else {
+				++result.okMilestones;
+			}
+			result.eventi.addAll(tmp);
+
+		}
+		/*
+		 * } catch (Exception e) {
+		 * 
+		 * }
+		 */
+		return result;
+	}
+
+	// classe di output per il polling
+	public static class DatiPolling {
+		public Boolean semaforoOk = Boolean.TRUE;
+		public Integer expectedMilestones = 0;
+		public Integer okMilestones = 0;
+		public List<Evento> eventi = new ArrayList<>();
+		public String errorMessage = null;
+		public List<String> NonVerificati = new ArrayList<>();
+	}
+
 }
