@@ -12,6 +12,8 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+
+import org.hibernate.annotations.SelectBeforeUpdate;
 import org.jboss.logging.Logger;
 
 import it.finsoft.entity.DettaglioEvento;
@@ -209,4 +211,31 @@ public class WSManager {
 		public String detailError = null;
 		public List<DettaglioEvento> listaDettagli = new ArrayList<>();
 	}
+
+	// ------------------------------------Polling0--------------------------------------//
+
+	public MilestoneConSemaforo getPolling0(Milestone milestone, String tag) {
+		MilestoneConSemaforo result = new MilestoneConSemaforo();
+		result.setIdMilestone(milestone.getIdMilestone());
+		result.setTipoEvento(milestone.getTipoEvento());
+		result.setEntita(milestone.getEntita());
+		result.setDescrizione(milestone.getDescrizione());
+		result.setAzione(milestone.getAzione());
+		result.getTags().add(tag);
+
+		LOG.info("Parametri di ricerca: Milestone " + milestone + " Tag " + tag);
+
+		List<Evento> tmp = null;
+		tmp = managerEvt.findPolling(tag, milestone.getEntita(), milestone.getTipoEvento());
+		System.out.println(tmp);
+		if (tmp.isEmpty()) {
+			result.setSemaforo(false);
+		} else {
+			result.setSemaforo(true);
+			result.getEventi().addAll(tmp);
+		}
+
+		return result;
+	}
+
 }

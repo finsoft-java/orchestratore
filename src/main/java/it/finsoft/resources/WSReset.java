@@ -15,39 +15,19 @@ import it.finsoft.manager.WSManager;
 @Path("reset")
 public class WSReset {
 
-	// public final static Logger LOG = Logger.getLogger(WSReset.class);
-
-	// @PersistenceContext(unitName = "persistenceUnit")
-	// EntityManager manager;
-
 	@Inject
 	WSManager wsManager;
 
 	/**
 	 * Questo e' un reset in GET quando si richiama la pagina, svuota le tabelle
-	 * indicate nello scriptsql.txt e le ripopola, e' da ottimizzare ma per il
+	 * indicate nello script.sql e le ripopola, e' da ottimizzare ma per il
 	 * momento funziona (ritorna un errore sulla prima istruzione)
+	 * 
+	 * Puo' essere sostituito da javax.persistence.sql-load-script-source
 	 **/
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
 	public String reset() throws FileNotFoundException, IOException {
-		/*
-		 * BufferedReader reader = new BufferedReader( new
-		 * InputStreamReader(getClass().getResourceAsStream("/script.sql")));
-		 * String sql = ""; String error = ""; while (reader.ready() == true) {
-		 * try { sql = reader.readLine().toString(); if (sql == null) continue;
-		 * sql = sql.trim(); if (sql.equals("") || sql.startsWith("--"))
-		 * continue; Query q = manager.createNativeQuery(sql);
-		 * q.executeUpdate(); } catch (Exception e) {
-		 * LOG.error("Error while executing SQL command", e); error +=
-		 * "Error while executing SQL command: " + sql + ";"; } }
-		 * reader.close(); // mettere un if, eventualmente considerare di
-		 * stampare la riga SQL che // ha restituito l'errore // TODO da
-		 * completare if (error == "") {
-		 * LOG.info("RESET effettuato con successo"); return
-		 * "RESET dati predefiniti DB effettuato"; } else { return
-		 * "RESET eseguito con errori: "; }
-		 */
 		return wsManager.resetDb();
 	}
 
