@@ -83,17 +83,17 @@
 				<section class="sidebar">
 	
 					<!-- sidebar menu: : style can be found in sidebar.less -->
-					<ul class="sidebar-menu">
-						<li class="active treeview">
+					<ul class="sidebar-menu treeview-menu">
+						<li>
 							<a href="index.jsp"> <i class="fa fa-calendar"></i><span>Monitor Calendario</span></a>
 						</li>
 	
-						<li>
-							<a href="gestioneCalendario.jsp"> <i class="fa fa-edit"></i><span>Gestione Calendario</span></a>
+         			 	<li>
+          					<a href="gestioneCalendario.jsp"> <i class="fa fa-edit"></i><span>Gestione Calendario</span></a>
 						</li>
 	
-						<li class="treeview"><a href="#"> 
-							<i class="fa fa-cogs"></i><span>Amministrazione</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i></span></a>
+						<li>
+							<a href="#"><i class="fa fa-cogs"></i><span>Amministrazione</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i></span></a>
 							<ul class="treeview-menu">
 								<li><a href="#"><i class="fa fa-edit"></i> Gestione Entità</a></li>
 								<li><a href="#"><i class="fa fa-edit"></i> Gestione Eventi</a></li>
@@ -176,53 +176,65 @@
 		
 		<!-- Page script -->
 		<script>
-		  $(function () {
-		    //Initialize Select2 Elements
-		    $(".select2").select2({
-		    	placeholder: "Seleziona",
-		        minimumResultsForSearch: 10,
-		    });
-		
-		    //Datemask dd/mm/yyyy
-		    $("#datemask").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
-		    
-		    //Money Euro
-		    $("[data-mask]").inputmask();
-		
-		    //Date picker
-		    $('.datepicker').datepicker({
-		   	  language: 'it',
-		   	  orientation: "auto",
-		      format: 'dd/mm/yyyy',
-		      todayHighlight: true,
-		      autoclose: true,
-		      todayBtn: "linked",
-		      toggleActive: true
-		    });
-		
-		    //iCheck for checkbox and radio inputs
-		    $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
-		      checkboxClass: 'icheckbox_minimal-blue',
-		      radioClass: 'iradio_minimal-blue'
-		    });
-		    
-		    //Timepicker
-		    $(".timepicker").timepicker({
-		      showInputs: false,
-		      showMeridian: false,
-		      defaultTime: false,
-		      minuteStep: 1,
-		      autoclose: true,
-		      //appendWidgetTo: '.table-responsive'
-		    });
-
-		    
-		    
-		  });
+			$(function () {
+			  //Initialize Select2 Elements
+			  $(".select2").select2({
+			  	placeholder: "Seleziona",
+			      minimumResultsForSearch: 10,
+			  });
+			
+			  //Datemask dd/mm/yyyy
+			  $("#datemask").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
+			  
+			  //Money Euro
+			  $("[data-mask]").inputmask();
+			
+			  //Date picker
+			  $('.datepicker').datepicker({
+			 	  language: 'it',
+			 	  orientation: "auto",
+			    format: 'dd/mm/yyyy',
+			    todayHighlight: true,
+			    autoclose: true,
+			    todayBtn: "linked",
+			    toggleActive: true
+			  });
+			
+			  //iCheck for checkbox and radio inputs
+			  $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+			    checkboxClass: 'icheckbox_minimal-blue',
+			    radioClass: 'iradio_minimal-blue'
+			  });
+			  
+			  //Timepicker
+			  $(".timepicker").timepicker({
+			    showInputs: false,
+			    showMeridian: false,
+			    defaultTime: false,
+			    minuteStep: 1,
+			    autoclose: true,
+			    //appendWidgetTo: '.table-responsive'
+			  });
+			
+			  
+			  
+			});
 		</script>
 
 		<!-- funzioni terze -->
 		<script src="dist/js/functions.js"></script>
+		
+		
+		
+		<script>
+			var url = location.pathname.substring(location.pathname.lastIndexOf("/") + 1);
+			$('.treeview-menu li a[href="' + url + '"]').parent().addClass('active');
+			$('.treeview-menu li a').filter(function() {
+			    return this.href === url;
+			}).parent().parent().parent().addClass('active');
+		</script>
+		
+		
 		
 	</body>
 </html>
