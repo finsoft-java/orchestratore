@@ -1,7 +1,6 @@
 package it.finsoft.manager;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -58,24 +57,22 @@ public class MilestoneManager {
 
 	}
 
-	//TODO ancora in fase di lavoro
+	// TODO ancora in fase di lavoro
 	public List<Milestone> getFoglie(Milestone milestone) {
 		List<Milestone> output = new ArrayList(); // da passare al metodo expand
 		List<MilestoneMilestone> ml = milestone.getMilestoneMilestone();
-		if(ml.isEmpty()){
+		System.out.println(ml);
+		if (ml.isEmpty()) {
 			output.add(milestone);
 		}
 		for (MilestoneMilestone milestoneMilestone : ml) {
-			List<Milestone> tmp = getHierarchy(milestoneMilestone.getMilestoneChild());
-			/*for (Milestone m : tmp) {
+			List<Milestone> tmp = getFoglie(milestoneMilestone.getMilestoneChild());
+			for (Milestone m : tmp) {
 				if (!output.contains(m)) {
 					output.add(m);
 				}
-			}*/
-
+			}
 		}
-
 		return output;
-
 	}
 }
