@@ -6,7 +6,6 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import it.finsoft.entity.Azione;
-import it.finsoft.entity.Calendario;
 
 @Stateless
 public class AzioneManager {
