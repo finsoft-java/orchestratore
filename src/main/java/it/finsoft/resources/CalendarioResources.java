@@ -17,7 +17,7 @@ import it.finsoft.entity.Calendario;
 import it.finsoft.manager.CalendarioManager;
 
 @Stateless
-@Path("resources/calendari")
+@Path("resources")
 @Produces({ MediaType.APPLICATION_JSON })
 public class CalendarioResources {
 
@@ -25,31 +25,34 @@ public class CalendarioResources {
 	CalendarioManager manager;
 
 	@GET
+	@Path("Calendari")
 	public List<Calendario> findAll() {
 		return manager.findAll();
 	}
 
 	@GET
-	@Path("{id}")
+	@Path("Calendari({id})")
 	public Calendario findById(@PathParam("id") Long id) {
 		return manager.findById(id);
 	}
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("Calendari({id})")
 	public Calendario create(Calendario cal) {
 		System.out.println("post resources, salvo entita " + cal);
 		return manager.save(cal);
 	}
 
 	@DELETE
-	@Path("{id}")
+	@Path("Calendari({id})")
 	public void delete(@PathParam("id") Long id) {
 		manager.remove(id);
 	}
 
 	@PUT
-	@Path("{id}") // richiede di inserire (in json) tutti i campi obbligatori
+	@Path("Calendari({id})") // richiede di inserire (in json) tutti i campi
+								// obbligatori
 	public void update(@PathParam("id") Long id, Calendario m) {
 		m.setIdCalendario(id);
 		manager.save(m);
@@ -57,7 +60,7 @@ public class CalendarioResources {
 
 	/* ---- TEST RESOURCES ---- */
 	@GET
-	@Path("test")
+	@Path("Calendari/Test")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String prova() {
 		System.out.println("ok calendari");
