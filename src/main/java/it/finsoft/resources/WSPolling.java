@@ -12,7 +12,6 @@ import javax.ws.rs.core.MediaType;
 import it.finsoft.entity.Milestone;
 import it.finsoft.manager.MilestoneManager;
 import it.finsoft.manager.WSManager;
-import it.finsoft.manager.WSManager.DatiPolling;
 
 @Stateless
 @Path("polling")
@@ -25,12 +24,24 @@ public class WSPolling {
 	@Inject
 	MilestoneManager managerMil;
 
+	// -------------------------Precedente-Metodo-polling------------------------//
+	/*
+	 * @GET public DatiPolling get(@QueryParam("milestone") String
+	 * descMilestone,
+	 * 
+	 * @QueryParam(value = "tag") List<String> tags) {
+	 * 
+	 * return wsManager.getPollingOld(descMilestone, tags);
+	 * 
+	 * }
+	 */
+
+	// -------------------------Polling-2(boolean+routine)----------------------//
+
 	@GET
-	public DatiPolling get(@QueryParam("milestone") String descMilestone,
-			@QueryParam(value = "tag") List<String> tags) {
-
+	@Produces(MediaType.TEXT_PLAIN)
+	public boolean get(@QueryParam("milestone") String descMilestone, @QueryParam(value = "tag") List<String> tags) {
 		return wsManager.getPolling(descMilestone, tags);
-
 	}
 
 	/* ---- TEST RESOURCES ---- */
@@ -43,7 +54,7 @@ public class WSPolling {
 	}
 	/* ---- TEST RESOURCES ---- */
 
-	//TEST per l'esplosione della gerarchia
+	// TEST per l'esplosione della gerarchia
 	@GET
 	@Path("testTree")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -51,8 +62,8 @@ public class WSPolling {
 		Milestone m = managerMil.findByDesc(descMilestone);
 		return managerMil.getHierarchy(m);
 	}
-	
-	//TEST per l'esplosione solo delle foglie
+
+	// TEST per l'esplosione solo delle foglie
 	@GET
 	@Path("testLeaf")
 	@Produces(MediaType.APPLICATION_JSON)

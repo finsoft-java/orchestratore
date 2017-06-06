@@ -77,7 +77,7 @@ public class WSManager {
 	}
 	// ------------------------------------WSPolling--------------------------------------//
 
-	public DatiPolling getPolling(String descMilestone, List<String> tags) {
+	public DatiPolling getPollingOld(String descMilestone, List<String> tags) {
 		DatiPolling result = new DatiPolling();
 
 		LOG.info("Parametri di ricerca: Milestone " + descMilestone + " Tag " + tags);
@@ -98,9 +98,8 @@ public class WSManager {
 		System.out.println(milestoneMilestones.size());
 		System.out.println(milestoneMilestones);
 		for (int i = 0; i < milestoneMilestones.size(); i++) {
-			// non va in errore qui
 			MilestoneMilestone sc = milestoneMilestones.get(i);
-			// Milestone m = sc.getMilestone(); non deve piu' prendere la
+			// non deve piu' prendere la
 			// milestone "INSERITA" ma verificare se le child si sono
 			// verificate.
 			Milestone m = sc.getMilestoneChild();
@@ -126,13 +125,7 @@ public class WSManager {
 				++result.okMilestones;
 			}
 			result.eventi.addAll(tmp);
-
 		}
-		/*
-		 * } catch (Exception e) {
-		 * 
-		 * }
-		 */
 		return result;
 	}
 
@@ -236,7 +229,6 @@ public class WSManager {
 		return result;
 	}
 
-
 	// ------------------------------------PollingFoglie--------------------------------------//
 
 	public boolean getPollingFoglie(Milestone milestone, List<String> tags) {
@@ -267,8 +259,14 @@ public class WSManager {
 			LOG.error("ERROR: La Milestone: " + descMilestone
 					+ " non e' stata trovata, controllare la sintassi o la presenza effettiva sul database");
 		}
-		
+
 		return getPollingFoglie(milestone, tags);
 	}
 
+	// ----------------------------------WSPolling2(boolean+routine)---------------------------------------//
+
+	public boolean getPolling(String descMilestone, List<String> tags){
+		boolean esito=getPollingFoglieByDescr(descMilestone, tags);
+		return esito;//TODO
+	}
 }
