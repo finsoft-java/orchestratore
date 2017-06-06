@@ -23,8 +23,8 @@
 			              <div class="box-body">
 			              	<div class="row">
 								<div class="col-md-10">
+           	                  		<label for="denomNuovoCal">Denominazione nuovo calendario:</label><br/>
 					                <div class="form-group">
-					                  <label for="denomNuovoCal">Denominazione nuovo calendario:</label><br/>
 									  <select id="select_elenco_calendari" class="form-control select2">
 									  	<option></option>
 									  </select>
@@ -102,7 +102,7 @@
 									                  	<div class="input-group-addon">
 									                    	<i class="fa fa-clock-o"></i>
 									                    </div>
-									                    <input id="oraNuovoCal0" onkeydown="return false" placeholder="Ora" type="text" class="form-control timepicker">
+									                    <input id="oraNuovoCal0" placeholder="Ora" type="text" class="form-control timepicker">
 									                  </div>
 									                </div>
 									            </div>
