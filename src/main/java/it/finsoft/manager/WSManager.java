@@ -237,8 +237,9 @@ public class WSManager {
 
 		for (int i = 0; i < foglie.size(); i++) {
 			MilestoneConSemaforo ms = getPolling0(foglie.get(i), tags.get(i));
-			if (ms.isSemaforo())
+			if (ms.isSemaforo()) 
 				foglieConSemaforo.add(ms);
+			
 		}
 
 		if (foglie.size() == foglieConSemaforo.size())
@@ -293,7 +294,7 @@ public class WSManager {
 
 	public boolean getPolling1L(Milestone milestone, List<String> tags) {
 		List<MilestoneMilestone> milestoneMilestones = milestone.getMilestoneMilestone();
-		List<Evento> eventiVerificati=new ArrayList<Evento>();
+		List<Evento> eventiVerificati = new ArrayList<Evento>();
 		for (int i = 0; i < milestoneMilestones.size(); i++) {
 			MilestoneMilestone sc = milestoneMilestones.get(i);
 			Milestone m = sc.getMilestoneChild();
