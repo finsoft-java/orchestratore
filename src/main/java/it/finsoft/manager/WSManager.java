@@ -13,7 +13,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import org.hibernate.annotations.SelectBeforeUpdate;
 import org.jboss.logging.Logger;
 
 import it.finsoft.entity.DettaglioEvento;
@@ -105,7 +104,6 @@ public class WSManager {
 			// milestone "INSERITA" ma verificare se le child si sono
 			// verificate.
 			Milestone m = sc.getMilestoneChild();
-			// va in errore qui
 			String tag = "";
 			try {
 				tag = tags.get(i);
@@ -238,4 +236,5 @@ public class WSManager {
 		return result;
 	}
 
+	// ------------------------------Polling-MilestoneConSemaforo-----------------------/
 }
