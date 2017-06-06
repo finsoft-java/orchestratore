@@ -9,7 +9,6 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<title>OrchestratoreRADAR</title>
-		<!-- Tell the browser to be responsive to screen width -->
 		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 		
 		<!-- Latest compiled and minified CSS -->
@@ -54,15 +53,11 @@
 		
 		<link rel="stylesheet" href="dist/css/orchestratoreStyleSheet.css">
 		
-		
     	<link rel="shortcut icon" type="image/png" href="dist/img/favicon.ico"/>
-		
 	
 	</head>
-	<body class="hold-transition skin-blue sidebar-mini">
-	
+	<body class="hold-transition skin-green sidebar-mini">
 		<div class="wrapper">
-		
 		
 			<header class="main-header">
 	
@@ -70,7 +65,6 @@
 			      <span class="logo-mini"><b>O</b>RD</span>
 			      <span class="logo-lg"><b>Orchestratore</b>RADAR</span>
 			    </a>
-			
 			    <nav class="navbar navbar-static-top">
 			      <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button"><span class="sr-only"></span></a>
 			    </nav>
@@ -78,12 +72,10 @@
 		
 	
 	
-			<!-- Left side column. contains the logo and sidebar -->
+			<!-- Left side column -->
 			<aside class="main-sidebar">
-				<!-- sidebar: style can be found in sidebar.less -->
 				<section class="sidebar">
-	
-					<!-- sidebar menu: : style can be found in sidebar.less -->
+
 					<ul class="sidebar-menu treeview-menu">
 						<li>
 							<a href="index.jsp"> <i class="fa fa-calendar"></i><span>Monitor Calendario</span></a>
@@ -108,12 +100,12 @@
 					</ul>
 	
 				</section>
-				<!-- /.sidebar -->
-	
 			</aside>
 	
 			<!-- Nel doBody ci andra il tag content-wrapper e il suo contenuto di ogni pagina -->
-			<jsp:doBody />
+			<div class="content-wrapper">
+				<jsp:doBody />
+			</div>
 	
 	
 			<footer class="main-footer">
@@ -126,13 +118,6 @@
 			</footer>
 	
 		</div>
-	
-	
-		<!-- /.control-sidebar -->
-		<!-- Add the sidebar's background. This div must be placed
-	       immediately after the control sidebar -->
-		<div class="control-sidebar-bg"></div>
-	
 	
 	
 	
@@ -173,10 +158,12 @@
 		<!-- bootstrap Datatable -->
 		<script src="plugins/datatables/jquery.dataTables.min.js"></script>
 		<script src="plugins/datatables/dataTables.bootstrap.min.js"></script>
-				
+		<!-- sidebar remember state -->
+		<script src="dist/js/sidebarState.js"></script>
+		
+		
 		<!-- funzioni terze -->
 		<script src="dist/js/functions.js"></script>
-		
 		
 		
 		<!-- Page script -->
