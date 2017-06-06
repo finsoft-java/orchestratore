@@ -246,7 +246,7 @@ public class WSManager {
 					// sufficienza
 				tag = tags.get(i);
 				tag = syntax.trimToUp(tag);
-			} catch (Exception e) {
+			} catch (IndexOutOfBoundsException e) {
 				LOG.error("ERROR:non sono stati passati sufficienti tag");
 			}
 			MilestoneConSemaforo ms = getPolling0(foglie.get(i), tag);
