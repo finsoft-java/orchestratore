@@ -15,18 +15,63 @@ function eliminaRiga(){
 }
 
 
+
+
+
 $(document).ready(function(){
-	 getDescCalendario();
+	getDescCalendario();
 })
 
+
 function getDescCalendario(){
- $.getJSON("ws/resources/calendari", function(dataSet){
-       for(i in dataSet){
-         var opt = "<option value='"+dataSet[i].idCalendario+"'>"+dataSet[i].descrizione+"</option>";
-         $("#select_elenco_calendari").append(opt);
-       }
- });
+	 $.getJSON("ws/resources/Calendari", function(dataSet){
+		 for(i in dataSet){
+			 var opt = "<option value='"+dataSet[i].idCalendario+"'>"+dataSet[i].descrizione+"</option>";
+			 $("#select_elenco_calendari").append(opt);
+	     }
+	 });
 }
+
+
+
+
+
+function selezionaCalendario(selectIndex){
+	var idx = selectIndex.selectedIndex;
+	var which = selectIndex.options[idx].value;
+	getDettaglioCalendarioMilestone(which);
+}
+
+
+function getDettaglioCalendarioMilestone(idCalendario){
+		$.ajax({
+		    type : "GET",
+			url : "ws/resources/CalendariMilestone("+idCalendario+")",
+			dataType : "json",
+			success : function(dataSet) {
+				
+			 $("#tableDettaglioCalendarioMilestone").DataTable({
+			  paging : false,
+		      lengthChange: false,
+		      searching: false,
+		      ordering: false,
+		      info: false,
+		      autoWidth: false,
+			  data : dataSet,
+			  autoWidth : false,
+			  destroy: true,
+			  columns : [ 
+				   { data : dataSet.milestone.descrizione}, 
+				   { data : dataSet.dataOraPreviste},
+				   { data : dataSet.dataOraPreviste},
+				   { data : null},
+				   { data : dataSet.tags},
+			       ]});
+			}
+		});
+}
+
+
 
 
 function attivaWidget(){
