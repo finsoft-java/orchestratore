@@ -57,18 +57,13 @@ public class MilestoneManager {
 		List<Milestone> output = new ArrayList<>();
 		List<MilestoneMilestone> ml = milestone.getMilestoneMilestone();
 		System.out.println(ml);
-		// Nel caso sono gia' una foglia al primo giro, resitituisco solo me
-		// stessa o lascio vuoto?
-		if (ml.isEmpty()) {
-			output.add(milestone);
-		}
-		for (MilestoneMilestone milestoneMilestone : ml) {
+		/*
+		 * // if (ml.isEmpty()){ output.add(milestone); } //
+		 */ for (MilestoneMilestone milestoneMilestone : ml) {
 			List<Milestone> tmp = getFoglie(milestoneMilestone.getMilestoneChild());
 			for (Milestone m : tmp) {
 				if (!output.contains(m)) {
-
 					output.add(m);
-
 				}
 			}
 		}

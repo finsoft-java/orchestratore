@@ -230,19 +230,29 @@ public class WSManager {
 	}
 
 	// ------------------------------------PollingFoglie--------------------------------------//
-    // controlla che si siano verificati tutti gli eventi presenti al livello più basso dell'albero
+	// controlla che si siano verificati tutti gli eventi presenti al livello
+	// più basso dell'albero
 	// a partire da una milestone e da tutti i vari tag
 	// ritorna un booleano, eventualmente si può modificare per sviluppi futuri
-	
+
 	public boolean getPollingFoglie(Milestone milestone, List<String> tags) {
 		List<MilestoneConSemaforo> foglieConSemaforo = new ArrayList<MilestoneConSemaforo>();
 		List<Milestone> foglie = managerMil.getFoglie(milestone);
 
 		for (int i = 0; i < foglie.size(); i++) {
-			MilestoneConSemaforo ms = getPolling0(foglie.get(i), tags.get(i));
-			if (ms.isSemaforo()) 
+			String tag = "";
+			try { // ho aggiunto solo questo try per evitare che vada in errore
+					// se non vengono passati i tag, o non ne vengono passati a
+					// sufficienza
+				tag = tags.get(i);
+				tag = syntax.trimToUp(tag);
+			} catch (Exception e) {
+				LOG.error("ERROR:non sono stati passati sufficienti tag");
+			}
+			MilestoneConSemaforo ms = getPolling0(foglie.get(i), tag);
+			if (ms.isSemaforo())
 				foglieConSemaforo.add(ms);
-			
+
 		}
 
 		if (foglie.size() == foglieConSemaforo.size())
