@@ -11,3 +11,5 @@ dependency-reduced-pom.xml
 buildNumber.properties
 .mvn/timing.properties
 /.dbeaver-data-sources.xml
+/dbOrchestratore/
+/derby.log
