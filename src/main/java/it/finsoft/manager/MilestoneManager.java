@@ -39,7 +39,7 @@ public class MilestoneManager {
 	}
 
 	public List<Milestone> getHierarchy(Milestone milestone) {
-		List<Milestone> output = new ArrayList<>(); // da passare al metodo expand
+		List<Milestone> output = new ArrayList<>();
 		List<MilestoneMilestone> ml = milestone.getMilestoneMilestone();
 		output.add(milestone);
 
@@ -50,16 +50,12 @@ public class MilestoneManager {
 					output.add(m);
 				}
 			}
-
 		}
-
 		return output;
-
 	}
 
-	// TODO ancora in fase di lavoro
 	public List<Milestone> getFoglie(Milestone milestone) {
-		List<Milestone> output = new ArrayList<>(); // da passare al metodo expand
+		List<Milestone> output = new ArrayList<>();
 		List<MilestoneMilestone> ml = milestone.getMilestoneMilestone();
 		System.out.println(ml);
 		if (ml.isEmpty()) {
