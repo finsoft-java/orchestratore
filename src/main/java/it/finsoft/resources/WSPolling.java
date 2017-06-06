@@ -36,12 +36,22 @@ public class WSPolling {
 	 * }
 	 */
 
-	// -------------------------Polling-2(boolean+routine)----------------------//
+	// -------------------------PollingFoglie----------------------//
 
+	/*
+	 * @GET
+	 * 
+	 * @Produces(MediaType.TEXT_PLAIN) public boolean
+	 * get(@QueryParam("milestone") String descMilestone, @QueryParam(value =
+	 * "tag") List<String> tags) { return wsManager.PollingFoglie(descMilestone,
+	 * tags); }
+	 */
+	// ---------------------------Polling1L------------------------------------------//
+	// Polling di 1' Livello con 2 routine
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
 	public boolean get(@QueryParam("milestone") String descMilestone, @QueryParam(value = "tag") List<String> tags) {
-		return wsManager.getPolling(descMilestone, tags);
+		return wsManager.Polling1L(descMilestone, tags);
 	}
 
 	/* ---- TEST RESOURCES ---- */

@@ -263,10 +263,54 @@ public class WSManager {
 		return getPollingFoglie(milestone, tags);
 	}
 
-	// ----------------------------------WSPolling2(boolean+routine)---------------------------------------//
+	// ----------------------------------WSPollingFoglie(boolean+routine)---------------------------------------//
 
-	public boolean getPolling(String descMilestone, List<String> tags){
-		boolean esito=getPollingFoglieByDescr(descMilestone, tags);
-		return esito;//TODO
+	public boolean PollingFoglie(String descMilestone, List<String> tags) {
+		boolean esito = getPollingFoglieByDescr(descMilestone, tags);
+		return esito;// TODO
+	}
+
+	// ------------------------------------WSPollingStandard1L(boolean)--------------------------------------------------//
+
+	public boolean Polling1L(String descMilestone, List<String> tags) {
+		boolean esito = getPolling1LByDescr(descMilestone, tags);
+		return esito;// TODO
+	}
+
+	public boolean getPolling1LByDescr(String descMilestone, List<String> tags) {
+
+		LOG.info("Parametri di ricerca: Milestone " + descMilestone + " Tag " + tags);
+		Milestone milestone = null;
+		try {
+			milestone = managerMil.findByDesc(descMilestone);
+		} catch (Exception sqlError) {
+			LOG.error("ERROR: La Milestone: " + descMilestone
+					+ " non e' stata trovata, controllare la sintassi o la presenza effettiva sul database");
+		}
+
+		return getPolling1L(milestone, tags);
+	}
+
+	public boolean getPolling1L(Milestone milestone, List<String> tags) {
+		List<MilestoneMilestone> milestoneMilestones = milestone.getMilestoneMilestone();
+		List<Evento> eventiVerificati=new ArrayList<Evento>();
+		for (int i = 0; i < milestoneMilestones.size(); i++) {
+			MilestoneMilestone sc = milestoneMilestones.get(i);
+			Milestone m = sc.getMilestoneChild();
+			String tag = "";
+			try {
+				tag = tags.get(i);
+				tag = syntax.trimToUp(tag);
+			} catch (Exception e) {
+				LOG.error("ERROR:non sono stati passati sufficienti tag");
+			}
+			Entita ent = m.getEntita();
+			TipoEvento tp = m.getTipoEvento();
+			eventiVerificati.addAll(managerEvt.findPolling(tag, ent, tp));
+		}
+		if (eventiVerificati.size() == milestoneMilestones.size())
+			return true;
+		else
+			return false;
 	}
 }
