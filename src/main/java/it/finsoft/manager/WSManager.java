@@ -13,7 +13,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import org.hibernate.annotations.SelectBeforeUpdate;
 import org.jboss.logging.Logger;
 
 import it.finsoft.entity.DettaglioEvento;
@@ -238,4 +237,37 @@ public class WSManager {
 		return result;
 	}
 
+	// ------------------------------------PollingFoglie--------------------------------------//
+
+	public boolean getPollingFoglie(Milestone milestone, List<String> tags) {
+		List<MilestoneConSemaforo> foglieConSemaforo = new ArrayList<MilestoneConSemaforo>();
+		List<Milestone> foglie = managerMil.getFoglie(milestone);
+
+		for (int i = 0; i < foglie.size(); i++) {
+			MilestoneConSemaforo ms = getPolling0(foglie.get(i), tags.get(i));
+			if (ms.isSemaforo())
+				foglieConSemaforo.add(ms);
+		}
+
+		if (foglie.size() == foglieConSemaforo.size())
+			return true;
+		else
+			return false;
+	}
+
+	// ------------------------------------PollingFoglieByDescr-----------------------------------//
+
+	public boolean getPollingFoglieByDescr(String descMilestone, List<String> tags) {
+
+		LOG.info("Parametri di ricerca: Milestone " + descMilestone + " Tag " + tags);
+		Milestone milestone = null;
+		try {
+			milestone = managerMil.findByDesc(descMilestone);
+		} catch (Exception sqlError) {
+			LOG.error("ERROR: La Milestone: " + descMilestone
+					+ " non e' stata trovata, controllare la sintassi o la presenza effettiva sul database");
+		}
+		
+		return getPollingFoglie(milestone, tags);
+	}
 }
