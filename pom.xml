@@ -56,6 +56,21 @@
 			<artifactId>commons-logging</artifactId>
 			<version>1.2</version>
 		</dependency>
+		
+		<!-- Da qui in avanti, sono le dipendenze per l'embedded glassfish -->
+		<dependency>
+		    <groupId>org.glassfish.extras</groupId>
+		    <artifactId>glassfish-embedded-all</artifactId>
+		    <version>3.1.1</version>
+		    <scope>provided</scope>
+		</dependency>
+<!-- 		<dependency>
+		    <groupId>org.apache.derby</groupId>
+		    <artifactId>derby</artifactId>
+		    <version>10.13.1.1</version>
+		    <scope>provided</scope>
+		</dependency>
+	 -->	 
 	</dependencies>
 	<build>
 		<finalName>orchestratoreRADAR</finalName>
@@ -64,6 +79,8 @@
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<failOnMissingWebXml>false</failOnMissingWebXml>
+		<!-- test per risoluzione warning "platform encoding Cp1252) -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	<packaging>war</packaging>
 </project>

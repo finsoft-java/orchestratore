@@ -63,15 +63,20 @@ Occorre copiare/sostituire alcune librerie di glassfish, che hanno una versione 
 **  JNDI name: jdbc/orchestratore 
 **  poolname: orchestratore
 
+--- AVVIO DELL'APPLICAZIONE ---
+Avviare da Eclipse con "Run on server..."
+L'applicazione gira all'indirizzo http://localhost:8080/orchestratoreRADAR
+
 --- CREAZIONE DELLE TABELLE ---
 Attualmente, le tabelle vengono cancellate e ricreate automaticamente a ogni avvio.
 Per evitarlo, rimuovere l'opzione "drop-and-create" nel file persistence.xml.
+N.B. in certi casi il processo puo' fallire, e occorre farlo manualmente usando dbeaver. 
 
 --- POPOLAMENTO DELLE TABELLE CON DATI DI DEFAULT ---
-L'applicazione gira all'indirizzo http://localhost:8080/orchestratoreRADAR
-Per popolare i dati visitare l'indirizzo:
+Attualmente viene eseguito il file script.sql ad ogni avvio.
+Per evitarlo, rimuovere l'opzione relativa nel file persistence.xml.
+In qualunque momento si può rieseguire questo script visitando l'indirizzo:
 http://localhost:8080/orchestratoreRADAR/ws/reset
-il servizio richiama il file "script.sql" (dati in continuo aggiornamento)
 
 --- SCRIPT COLLECTOR ---
 per utilizzare il WGET scaricare il file "vwget-2.4-wget-1.11.4-bin.zip" dal seguente url:

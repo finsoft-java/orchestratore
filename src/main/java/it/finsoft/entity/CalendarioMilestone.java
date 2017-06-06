@@ -22,8 +22,8 @@ public class CalendarioMilestone implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID_CALENDARIO_MILESTONE")
-	private Long idCalendarioSemaforo;
-
+	private Long idCalendarioMilestone;
+	
 	@JoinColumn(name = "ID_AZIONE", referencedColumnName = "ID_AZIONE")
 	@ManyToOne(optional = true)
 	private Azione azione;
@@ -47,21 +47,23 @@ public class CalendarioMilestone implements Serializable {
 
 	}
 
-	public CalendarioMilestone(Azione azione, Calendario calendario, String tags, Date dataOraPreviste) {
+	public CalendarioMilestone(Azione azione, Milestone milestone, Calendario calendario, String tags,
+			Date dataOraPreviste) {
 		this.azione = azione;
+		this.milestone = milestone;
 		this.calendario = calendario;
 		this.tags = tags;
 		this.dataOraPreviste = dataOraPreviste;
 	}
 
-	public Long getIdCalendarioSemaforo() {
-		return idCalendarioSemaforo;
+	public Long getIdCalendarioMilestone() {
+		return idCalendarioMilestone;
 	}
 
-	public void setIdCalendarioSemaforo(Long idCalendarioSemaforo) {
-		this.idCalendarioSemaforo = idCalendarioSemaforo;
+	public void setIdCalendarioMilestone(Long idCalendarioMilestone) {
+		this.idCalendarioMilestone = idCalendarioMilestone;
 	}
-
+	
 	public Azione getAzione() {
 		return azione;
 	}
@@ -107,7 +109,7 @@ public class CalendarioMilestone implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((idCalendarioSemaforo == null) ? 0 : idCalendarioSemaforo.hashCode());
+		result = prime * result + ((idCalendarioMilestone == null) ? 0 : idCalendarioMilestone.hashCode());
 		return result;
 	}
 
@@ -120,18 +122,18 @@ public class CalendarioMilestone implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		CalendarioMilestone other = (CalendarioMilestone) obj;
-		if (idCalendarioSemaforo == null) {
-			if (other.idCalendarioSemaforo != null)
+		if (idCalendarioMilestone == null) {
+			if (other.idCalendarioMilestone != null)
 				return false;
-		} else if (!idCalendarioSemaforo.equals(other.idCalendarioSemaforo))
+		} else if (!idCalendarioMilestone.equals(other.idCalendarioMilestone))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "CalendarioSemaforo [idCalendarioSemaforo=" + idCalendarioSemaforo + ", semaforo=" + azione
-				+ ", calendario=" + calendario + ", tags=" + tags + ", dataOraPreviste="
+		return "CalendarioMilestone [idCalendarioMilestone=" + idCalendarioMilestone + ", azione=" + azione
+				+ ", milestone=" + milestone + ", calendario=" + calendario + ", tags=" + tags + ", dataOraPreviste="
 				+ dataOraPreviste + "]";
 	}
 

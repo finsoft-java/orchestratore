@@ -23,19 +23,20 @@
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
 		<!-- jvectormap -->
 		<link rel="stylesheet" href="plugins/jvectormap/jquery-jvectormap-1.2.2.css">
-		
+		<!-- bootstrap data-range datepicker -->
 		<link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">
 		<!-- bootstrap datepicker -->
 		<link rel="stylesheet" href="plugins/datepicker/datepicker3.css">
 		<!-- iCheck for checkboxes and radio inputs -->
 		<link rel="stylesheet" href="plugins/iCheck/all.css">
-		<!-- Bootstrap Color Picker -->
-		<link rel="stylesheet" href="plugins/colorpicker/bootstrap-colorpicker.min.css">
 		<!-- Bootstrap time Picker -->
 		<link rel="stylesheet" href="plugins/timepicker/bootstrap-timepicker.min.css">
 		<!-- Select2 -->
 		<link rel="stylesheet" href="plugins/select2/select2.min.css">
-
+	    <!-- DataTables -->
+	    <link rel="stylesheet" href="plugins/datatables/dataTables.bootstrap.css">
+	    
+	    
 		<!-- Theme style -->
 		<link rel="stylesheet" href="dist/css/AdminLTE.min.css">
 		<!-- AdminLTE Skins. Choose a skin from the css/skins folder instead of downloading all of them to reduce the load. -->
@@ -83,17 +84,17 @@
 				<section class="sidebar">
 	
 					<!-- sidebar menu: : style can be found in sidebar.less -->
-					<ul class="sidebar-menu">
-						<li class="active treeview">
+					<ul class="sidebar-menu treeview-menu">
+						<li>
 							<a href="index.jsp"> <i class="fa fa-calendar"></i><span>Monitor Calendario</span></a>
 						</li>
 	
-						<li>
-							<a href="gestioneCalendario.jsp"> <i class="fa fa-edit"></i><span>Gestione Calendario</span></a>
+         			 	<li>
+          					<a href="gestioneCalendario.jsp"> <i class="fa fa-edit"></i><span>Gestione Calendario</span></a>
 						</li>
 	
-						<li class="treeview"><a href="#"> 
-							<i class="fa fa-cogs"></i><span>Amministrazione</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i></span></a>
+						<li>
+							<a href="#"><i class="fa fa-cogs"></i><span>Amministrazione</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i></span></a>
 							<ul class="treeview-menu">
 								<li><a href="#"><i class="fa fa-edit"></i> Gestione Entità</a></li>
 								<li><a href="#"><i class="fa fa-edit"></i> Gestione Eventi</a></li>
@@ -157,72 +158,84 @@
 		<script src="dist/js/demo.js"></script>
 		<!-- Select2 -->
 		<script src="plugins/select2/select2.full.min.js"></script>
+		<script src="plugins/select2/i18n/it.js"></script>
 		<!-- InputMask -->
 		<script src="plugins/input-mask/jquery.inputmask.js"></script>
 		<script src="plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
 		<script src="plugins/input-mask/jquery.inputmask.extensions.js"></script>
-		<!-- date-range-picker -->
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
-		<script src="plugins/daterangepicker/daterangepicker.js"></script>
 		<!-- bootstrap datepicker -->
 		<script src="plugins/datepicker/bootstrap-datepicker.js"></script>
 		<script src="plugins/datepicker/locales/bootstrap-datepicker.it.js"></script>
-		<!-- bootstrap color picker -->
-		<script src="plugins/colorpicker/bootstrap-colorpicker.min.js"></script>
 		<!-- bootstrap time picker -->
 		<script src="plugins/timepicker/bootstrap-timepicker.min.js"></script>
 		<!-- iCheck 1.0.1 -->
 		<script src="plugins/iCheck/icheck.min.js"></script>
+		<!-- bootstrap Datatable -->
+		<script src="plugins/datatables/jquery.dataTables.min.js"></script>
+		<script src="plugins/datatables/dataTables.bootstrap.min.js"></script>
+				
+		<!-- funzioni terze -->
+		<script src="dist/js/functions.js"></script>
+		
+		
 		
 		<!-- Page script -->
 		<script>
-		  $(function () {
-		    //Initialize Select2 Elements
-		    $(".select2").select2({
-		    	placeholder: "Seleziona",
-		        minimumResultsForSearch: 10,
-		    });
+			$(function () {
+			  //Initialize Select2 Elements
+			  $(".select2").select2({
+			  	placeholder: "Seleziona",
+			    minimumResultsForSearch: 10,
+			    language: 'it'
+			  });
+			
+			  //Datemask dd/mm/yyyy
+			  $("#datemask").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
+			  
+			  //Money Euro
+			  $("[data-mask]").inputmask();
+			
+			  //Date picker
+			  $('.datepicker').datepicker({
+			 	language: 'it',
+			    orientation: "auto",
+			    format: 'dd/mm/yyyy',
+			    todayHighlight: true,
+			    autoclose: true,
+			    todayBtn: "linked",
+			    toggleActive: true
+			  });
+			
+			  //iCheck for checkbox and radio inputs
+			  $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+			    checkboxClass: 'icheckbox_minimal-blue',
+			    radioClass: 'iradio_minimal-blue'
+			  });
+			  
+			  //Timepicker
+			  $(".timepicker").timepicker({
+			    showInputs: false,
+			    showMeridian: false,
+			    defaultTime: false,
+			    minuteStep: 1,
+			    autoclose: true,
+			    //appendWidgetTo: '.table-responsive'
+			  });
+							    			  
+			  
+			});
 		
-		    //Datemask dd/mm/yyyy
-		    $("#datemask").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
-		    
-		    //Money Euro
-		    $("[data-mask]").inputmask();
-		
-		    //Date picker
-		    $('.datepicker').datepicker({
-		   	  language: 'it',
-		   	  orientation: "auto",
-		      format: 'dd/mm/yyyy',
-		      todayHighlight: true,
-		      autoclose: true,
-		      todayBtn: "linked",
-		      toggleActive: true
-		    });
-		
-		    //iCheck for checkbox and radio inputs
-		    $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
-		      checkboxClass: 'icheckbox_minimal-blue',
-		      radioClass: 'iradio_minimal-blue'
-		    });
-		    
-		    //Timepicker
-		    $(".timepicker").timepicker({
-		      showInputs: false,
-		      showMeridian: false,
-		      defaultTime: false,
-		      minuteStep: 1,
-		      autoclose: true,
-		      //appendWidgetTo: '.table-responsive'
-		    });
+			
+			var url = location.pathname.substring(location.pathname.lastIndexOf("/") + 1);
+			$('.treeview-menu li a[href="' + url + '"]').parent().addClass('active');
+			$('.treeview-menu li a').filter(function() {
+			    return this.href === url;
+			}).parent().parent().parent().addClass('active');
+			
 
-		    
-		    
-		  });
 		</script>
-
-		<!-- funzioni terze -->
-		<script src="dist/js/functions.js"></script>
+		
+		
 		
 	</body>
 </html>
