@@ -10,11 +10,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import java.io.Serializable;
 import java.util.Date;
 @Entity
 @Table(name = "CALENDARI_MILESTONE")
+@XmlRootElement
 public class CalendarioMilestone implements Serializable {
 
 	private static final long serialVersionUID = -3328166212616139600L;

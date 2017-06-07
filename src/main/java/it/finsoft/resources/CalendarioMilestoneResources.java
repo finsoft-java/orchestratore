@@ -17,7 +17,7 @@ import it.finsoft.entity.CalendarioMilestone;
 import it.finsoft.manager.CalendarioMilestoneManager;
 
 @Stateless
-@Path("resources")
+@Path("resources/CalendariMilestone")
 @Produces({ MediaType.APPLICATION_JSON })
 public class CalendarioMilestoneResources {
 
@@ -25,7 +25,7 @@ public class CalendarioMilestoneResources {
 	CalendarioMilestoneManager manager;
 
 	@GET
-	@Path("CalendariMilestone")
+	//@Path("CalendariMilestone")
 	public List<CalendarioMilestone> findAll() {
 		return manager.findAll();
 	}

@@ -23,9 +23,31 @@
 					type="submit" />
 			</form>
 			<br />
-			<br /> FORM per recuperare lo stato di un semaforo:
+			<br /> FORM per recuperare lo stato di una milestone:
 			<form action="ws/polling" method="get">
-				Codice semaforo: <input name="semaforo" value="FLUSSI_G" /><br />
+				Codice milestone: <input name="milestone" value="milestone 5" /><br />
+				Tag1: <input name="tag" value="20170523U" /><br /> Tag2: <input
+					name="tag" value="20170523U" /><br /> Tag3: <input name="tag"
+					value="20170523U" /><br /> Tag4: <input name="tag"
+					value="20170523U" /><br /> Tag5: <input name="tag"
+					value="20170523U" /><br /> <input type="submit" />
+			</form>
+			
+			<br />
+			<br /> FORM per recuperare lo stato di una milestone (albero):
+			<form action="ws/polling/testTree" method="get">
+				Codice milestone: <input name="milestone" value="milestone 5" /><br />
+				Tag1: <input name="tag" value="20170523U" /><br /> Tag2: <input
+					name="tag" value="20170523U" /><br /> Tag3: <input name="tag"
+					value="20170523U" /><br /> Tag4: <input name="tag"
+					value="20170523U" /><br /> Tag5: <input name="tag"
+					value="20170523U" /><br /> <input type="submit" />
+			</form>
+			
+			<br />
+			<br /> FORM per recuperare lo stato di una milestone (foglie):
+			<form action="ws/polling/testLeaf" method="get">
+				Codice milestone: <input name="milestone" value="milestone 5" /><br />
 				Tag1: <input name="tag" value="20170523U" /><br /> Tag2: <input
 					name="tag" value="20170523U" /><br /> Tag3: <input name="tag"
 					value="20170523U" /><br /> Tag4: <input name="tag"

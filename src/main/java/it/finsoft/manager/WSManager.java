@@ -148,7 +148,6 @@ public class WSManager {
 	}
 
 	// ------------------------------------WSCollector--------------------------------------//
-
 	public DatiCollector getCollector(String codiceEnt, String codiceTipi, String tag, List<String> keys,
 			List<String> values) {
 		DatiCollector result = new DatiCollector();
@@ -238,9 +237,9 @@ public class WSManager {
 	}
 
 	// ------------------------------------PollingFoglie--------------------------------------//
-    // controlla che si siano verificati tutti gli eventi presenti al livello più basso dell'albero
+    // controlla che si siano verificati tutti gli eventi presenti al livello piï¿½ basso dell'albero
 	// a partire da una milestone e da tutti i vari tag
-	// ritorna un booleano, eventualmente si può modificare per sviluppi futuri
+	// ritorna un booleano, eventualmente si puï¿½ modificare per sviluppi futuri
 	
 	public boolean getPollingFoglie(Milestone milestone, List<String> tags) {
 		List<MilestoneConSemaforo> foglieConSemaforo = new ArrayList<MilestoneConSemaforo>();
