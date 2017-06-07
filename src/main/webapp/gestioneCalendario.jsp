@@ -2,18 +2,13 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags"%>
 
 <t:template>
-	<!-- Content Wrapper. Contains page content -->
-	<div class="content-wrapper">
-		<!-- Content Header (Page header) -->
-		<section class="content-header">
-			<h1>
-				Gestione Calendario
-				<!--<small>Version 2.0</small>-->
-			</h1>
-		</section>
-		<!-- Main content -->
-		<section class="content">
 
+	
+		<section class="content-header">
+			<h1>Gestione Calendario</h1>
+		</section>
+
+		<section class="content">
 			<div class="row">
 				<div class="col-md-12">
 					<div class="box box-warning">
@@ -42,13 +37,11 @@
 	        </div>
 
 			<div class="row">
-				<!-- TABLE: LATEST ORDERS -->
 				<div class="col-md-12">
 					<div class="box box-info">
 						<div class="box-header with-border">
 							<h3 class="box-title">Milestones</h3>
 						</div>
-						<!-- /.box-header -->
 						<div class="box-body">
 							<div class="table-responsive">
 								<table id="tableNuovoCalendario" class="table no-margin" style="margin-bottom: 110px !important">
@@ -118,20 +111,10 @@
 							</div>
 							<a id="id_button_inserisci_calendario" type="button" class="btn btn-success"><i class="fa fa-check"></i> Inserisci</a>							
 						</div>
-
-						
-						<!-- /.box-body -->
-						<%--                         <div class="box-footer clearfix">
-                                <a href="javascript:void(0)" class="btn btn-sm btn-info btn-flat pull-left">Place New Order</a>
-                                <a href="javascript:void(0)" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a>
-                            </div>--%>
-						<!-- /.box-footer -->
 					</div>
 				</div>
 			</div>
+			
 		</section>
-		<!-- /.content -->
-	</div>
-	<!-- /.content-wrapper -->
 
 </t:template>

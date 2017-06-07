@@ -40,6 +40,7 @@ function selezionaCalendario(selectIndex){
 	var idx = selectIndex.selectedIndex;
 	var which = selectIndex.options[idx].value;
 	getDettaglioCalendarioMilestone(which);
+	$("#divDettagliCalendarioMilestone").removeClass("hide");
 }
 
 
