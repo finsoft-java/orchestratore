@@ -18,7 +18,7 @@ import it.finsoft.manager.DettaglioEventoManager;
 
 @Stateless
 @Path("resources/dettaglievento")
-@Produces(MediaType.APPLICATION_JSON)
+@Produces({ MediaType.APPLICATION_JSON })
 public class DettaglioEventoResources {
 
 	@Inject

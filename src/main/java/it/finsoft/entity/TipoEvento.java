@@ -8,9 +8,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @Table(name = "TIPI_EVENTO")
+@XmlRootElement
 public class TipoEvento implements Serializable {
 
 	private static final long serialVersionUID = 314854374810280841L;
