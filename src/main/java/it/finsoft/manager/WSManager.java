@@ -138,6 +138,8 @@ public class WSManager {
 		public String errorMessage = null;
 		public List<String> NonVerificati = new ArrayList<>();
 	}
+	
+	
 
 	// ------------------------------------WSCollector--------------------------------------//
 
@@ -299,7 +301,7 @@ public class WSManager {
 		if (milestoneMilestones.isEmpty()){ 
 			String tag = "";
 			try {
-				tag = tags.get(1);
+				tag = tags.get(0);
 				tag = syntax.trimToUp(tag);
 			} catch (Exception e) {
 				LOG.error("ERROR:non sono stati passati sufficienti tag");
