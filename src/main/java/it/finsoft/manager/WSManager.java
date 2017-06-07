@@ -77,7 +77,7 @@ public class WSManager {
 	}
 	// ------------------------------------WSPolling--------------------------------------//
 
-	public DatiPolling getPolling(String descMilestone, List<String> tags) {
+	public DatiPolling getPollingOld(String descMilestone, List<String> tags) {
 		DatiPolling result = new DatiPolling();
 
 		LOG.info("Parametri di ricerca: Milestone " + descMilestone + " Tag " + tags);
@@ -98,13 +98,11 @@ public class WSManager {
 		System.out.println(milestoneMilestones.size());
 		System.out.println(milestoneMilestones);
 		for (int i = 0; i < milestoneMilestones.size(); i++) {
-			// non va in errore qui
 			MilestoneMilestone sc = milestoneMilestones.get(i);
-			// Milestone m = sc.getMilestone(); non deve piu' prendere la
+			// non deve piu' prendere la
 			// milestone "INSERITA" ma verificare se le child si sono
 			// verificate.
 			Milestone m = sc.getMilestoneChild();
-			// va in errore qui
 			String tag = "";
 			try {
 				tag = tags.get(i);
@@ -127,13 +125,7 @@ public class WSManager {
 				++result.okMilestones;
 			}
 			result.eventi.addAll(tmp);
-
 		}
-		/*
-		 * } catch (Exception e) {
-		 * 
-		 * }
-		 */
 		return result;
 	}
 
@@ -238,18 +230,29 @@ public class WSManager {
 	}
 
 	// ------------------------------------PollingFoglie--------------------------------------//
-    // controlla che si siano verificati tutti gli eventi presenti al livello più basso dell'albero
+	// controlla che si siano verificati tutti gli eventi presenti al livello
+	// piï¿½ basso dell'albero
 	// a partire da una milestone e da tutti i vari tag
-	// ritorna un booleano, eventualmente si può modificare per sviluppi futuri
-	
+	// ritorna un booleano, eventualmente si puï¿½ modificare per sviluppi futuri
+
 	public boolean getPollingFoglie(Milestone milestone, List<String> tags) {
 		List<MilestoneConSemaforo> foglieConSemaforo = new ArrayList<MilestoneConSemaforo>();
 		List<Milestone> foglie = managerMil.getFoglie(milestone);
 
 		for (int i = 0; i < foglie.size(); i++) {
-			MilestoneConSemaforo ms = getPolling0(foglie.get(i), tags.get(i));
+			String tag = "";
+			try { // ho aggiunto solo questo try per evitare che vada in errore
+					// se non vengono passati i tag, o non ne vengono passati a
+					// sufficienza
+				tag = tags.get(i);
+				tag = syntax.trimToUp(tag);
+			} catch (IndexOutOfBoundsException e) {
+				LOG.error("ERROR:non sono stati passati sufficienti tag");
+			}
+			MilestoneConSemaforo ms = getPolling0(foglie.get(i), tag);
 			if (ms.isSemaforo())
 				foglieConSemaforo.add(ms);
+
 		}
 
 		if (foglie.size() == foglieConSemaforo.size())
@@ -270,7 +273,56 @@ public class WSManager {
 			LOG.error("ERROR: La Milestone: " + descMilestone
 					+ " non e' stata trovata, controllare la sintassi o la presenza effettiva sul database");
 		}
-		
+
 		return getPollingFoglie(milestone, tags);
+	}
+
+	// ------------------------------------WSPollingStandard1L(boolean)--------------------------------------------------//
+
+	public boolean getPolling1LByDescr(String descMilestone, List<String> tags) {
+
+		LOG.info("Parametri di ricerca: Milestone " + descMilestone + " Tag " + tags);
+		Milestone milestone = null;
+		try {
+			milestone = managerMil.findByDesc(descMilestone);
+		} catch (Exception sqlError) {
+			LOG.error("ERROR: La Milestone: " + descMilestone
+					+ " non e' stata trovata, controllare la sintassi o la presenza effettiva sul database");
+		}
+
+		return getPolling1L(milestone, tags);
+	}
+
+	public boolean getPolling1L(Milestone milestone, List<String> tags) {
+		List<MilestoneMilestone> milestoneMilestones = milestone.getMilestoneMilestone();
+		List<Evento> eventiVerificati = new ArrayList<Evento>();
+		if (milestoneMilestones.isEmpty()){ 
+			String tag = "";
+			try {
+				tag = tags.get(1);
+				tag = syntax.trimToUp(tag);
+			} catch (Exception e) {
+				LOG.error("ERROR:non sono stati passati sufficienti tag");
+			}
+			eventiVerificati.addAll(managerEvt.findPolling(tag, milestone.getEntita(), milestone.getTipoEvento())); 
+			}
+		for (int i = 0; i < milestoneMilestones.size(); i++) {
+			MilestoneMilestone sc = milestoneMilestones.get(i);
+			Milestone m = sc.getMilestoneChild();
+			String tag = "";
+			try {
+				tag = tags.get(i);
+				tag = syntax.trimToUp(tag);
+			} catch (Exception e) {
+				LOG.error("ERROR:non sono stati passati sufficienti tag");
+			}
+			Entita ent = m.getEntita();
+			TipoEvento tp = m.getTipoEvento();
+			eventiVerificati.addAll(managerEvt.findPolling(tag, ent, tp));
+		}
+		if (eventiVerificati.size() == milestoneMilestones.size())
+			return true;
+		else
+			return false;
 	}
 }
