@@ -48,10 +48,9 @@ public class WSPolling {
 	// Polling di 1' Livello con 2 routine
 	/*
 	 * @GET
-	 * 
 	 * @Produces(MediaType.TEXT_PLAIN) public boolean
 	 * get(@QueryParam("milestone") String descMilestone, @QueryParam(value =
-	 * "tag") List<String> tags) { return wsManager.Polling1L(descMilestone,
+	 * "tag") List<String> tags) { return wsManager.getPolling1LByDescr(descMilestone,
 	 * tags); }
 	 */
 

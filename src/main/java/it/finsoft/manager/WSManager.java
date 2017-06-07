@@ -231,9 +231,9 @@ public class WSManager {
 
 	// ------------------------------------PollingFoglie--------------------------------------//
 	// controlla che si siano verificati tutti gli eventi presenti al livello
-	// più basso dell'albero
+	// piï¿½ basso dell'albero
 	// a partire da una milestone e da tutti i vari tag
-	// ritorna un booleano, eventualmente si può modificare per sviluppi futuri
+	// ritorna un booleano, eventualmente si puï¿½ modificare per sviluppi futuri
 
 	public boolean getPollingFoglie(Milestone milestone, List<String> tags) {
 		List<MilestoneConSemaforo> foglieConSemaforo = new ArrayList<MilestoneConSemaforo>();
@@ -279,11 +279,6 @@ public class WSManager {
 
 	// ------------------------------------WSPollingStandard1L(boolean)--------------------------------------------------//
 
-	public boolean Polling1L(String descMilestone, List<String> tags) {
-		boolean esito = getPolling1LByDescr(descMilestone, tags);
-		return esito;// TODO
-	}
-
 	public boolean getPolling1LByDescr(String descMilestone, List<String> tags) {
 
 		LOG.info("Parametri di ricerca: Milestone " + descMilestone + " Tag " + tags);
@@ -301,6 +296,16 @@ public class WSManager {
 	public boolean getPolling1L(Milestone milestone, List<String> tags) {
 		List<MilestoneMilestone> milestoneMilestones = milestone.getMilestoneMilestone();
 		List<Evento> eventiVerificati = new ArrayList<Evento>();
+		if (milestoneMilestones.isEmpty()){ 
+			String tag = "";
+			try {
+				tag = tags.get(1);
+				tag = syntax.trimToUp(tag);
+			} catch (Exception e) {
+				LOG.error("ERROR:non sono stati passati sufficienti tag");
+			}
+			eventiVerificati.addAll(managerEvt.findPolling(tag, milestone.getEntita(), milestone.getTipoEvento())); 
+			}
 		for (int i = 0; i < milestoneMilestones.size(); i++) {
 			MilestoneMilestone sc = milestoneMilestones.get(i);
 			Milestone m = sc.getMilestoneChild();
