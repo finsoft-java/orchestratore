@@ -277,13 +277,6 @@ public class WSManager {
 		return getPollingFoglie(milestone, tags);
 	}
 
-	// ----------------------------------WSPollingFoglie(boolean+routine)---------------------------------------//
-
-	public boolean PollingFoglie(String descMilestone, List<String> tags) {
-		boolean esito = getPollingFoglieByDescr(descMilestone, tags);
-		return esito;// TODO
-	}
-
 	// ------------------------------------WSPollingStandard1L(boolean)--------------------------------------------------//
 
 	public boolean Polling1L(String descMilestone, List<String> tags) {
