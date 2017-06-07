@@ -43,13 +43,11 @@
 			<artifactId>javax.inject</artifactId>
 			<version>1</version>
 		</dependency>
-	<!--  
 		<dependency> 
 			<groupId>com.airhacks</groupId> 
 			<artifactId>jaxrs-cors</artifactId> 
 			<version>0.0.2</version> 
 		</dependency>
-		-->
 		<dependency>
 			<groupId>javax.ejb</groupId>
 			<artifactId>javax.ejb-api</artifactId>
