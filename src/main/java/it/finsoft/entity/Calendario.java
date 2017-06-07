@@ -12,10 +12,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
 @Table(name = "CALENDARI")
+@XmlRootElement
 public class Calendario implements Serializable {
 
 	private static final long serialVersionUID = 6714115891652097006L;

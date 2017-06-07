@@ -10,9 +10,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @Table(name = "DETTAGLI_EVENTO")
+@XmlRootElement
 public class DettaglioEvento implements Serializable {
 
 	private static final long serialVersionUID = 3310069293232292518L;

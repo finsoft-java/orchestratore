@@ -18,7 +18,7 @@ public class EmbeddedGlassfish {
 	public static final String CONTEXT_ROOT = "orchestratoreRADAR";
 
 	/**
-	 * Avvia l'applicazione con l'embedded server. Vuol dire che non c'è bisogno
+	 * Avvia l'applicazione con l'embedded server. Vuol dire che non c'ï¿½ bisogno
 	 * di installare Glassfish, basta fare "run as application" da Eclipse.
 	 * 
 	 * @throws IOException
@@ -33,11 +33,13 @@ public class EmbeddedGlassfish {
 
 			// Start webserver
 
-			try {
+			try {				
 				GlassFishProperties properties = new GlassFishProperties();
 				properties.setConfigFileURI(CONFIG_FILE.toURI().toString());
 				glassfish = GlassFishRuntime.bootstrap().newGlassFish(properties);
 				glassfish.start();
+				
+			    
 			} catch (GlassFishException e) {
 				e.printStackTrace();
 				return;

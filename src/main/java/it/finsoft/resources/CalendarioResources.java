@@ -17,7 +17,9 @@ import it.finsoft.entity.Calendario;
 import it.finsoft.manager.CalendarioManager;
 
 @Stateless
-@Path("resources")
+@Path("resources/calendari") //aggiunto il suffisso /calendari per testare la risoluzione dell'errore:
+//Conflicting URI templates. The URI template /resources for root resource class it.finsoft.resources.CalendarioResources 
+//and the URI template /resources transform to the same regular expression /resources(/.*)?
 @Produces({ MediaType.APPLICATION_JSON })
 public class CalendarioResources {
 
@@ -25,7 +27,7 @@ public class CalendarioResources {
 	CalendarioManager manager;
 
 	@GET
-	@Path("Calendari")
+	//@Path("Calendari")
 	public List<Calendario> findAll() {
 		return manager.findAll();
 	}

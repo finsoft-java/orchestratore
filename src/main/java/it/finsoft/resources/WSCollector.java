@@ -33,5 +33,15 @@ public class WSCollector {
 		return wsManager.getCollector(codiceEnt, codiceTipi, tag, keys, values);
 
 	}
+	
+	/* ---- TEST RESOURCES ---- */
+	@GET
+	@Path("test")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String prova() {
+		System.out.println("ok collector");
+		return "ok collector";
+	}
+	/* ---- TEST RESOURCES ---- */
 
 }
