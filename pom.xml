@@ -14,17 +14,6 @@
 			<version>7.0</version>
 			<scope>provided</scope>
 		</dependency>
-<<<<<<< HEAD
-
-
-		<dependency>
-			<groupId>com.owlike</groupId>
-			<artifactId>genson</artifactId>
-			<version>1.4</version>
-		</dependency>
-
-
-=======
 		<dependency> 
 			<groupId>javax.ws.rs</groupId> 
 			<artifactId>javax.ws.rs-api</artifactId> 
@@ -48,7 +37,6 @@
    			<version>0.99</version>
 		</dependency>
 		<!--  -->
->>>>>>> branch 'master' of https://github.com/finsoft-java/orchestratore.git
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
@@ -97,10 +85,6 @@
 			<version>3.1.1</version>
 			<scope>provided</scope>
 		</dependency>
-<<<<<<< HEAD
-		<!-- <dependency> <groupId>org.apache.derby</groupId> <artifactId>derby</artifactId> 
-			<version>10.13.1.1</version> <scope>provided</scope> </dependency> -->
-=======
 		<!-- 
 		<dependency> 
 			<groupId>org.apache.derby</groupId> 
@@ -108,7 +92,6 @@
 			<version>10.13.1.1</version> 
 			<scope>provided</scope> 
 		</dependency> -->
->>>>>>> branch 'master' of https://github.com/finsoft-java/orchestratore.git
 	</dependencies>
 	<build>
 		<finalName>orchestratoreRADAR</finalName>
