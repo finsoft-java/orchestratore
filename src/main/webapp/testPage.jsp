@@ -7,7 +7,7 @@
 	<div class="content-wrapper">
 		<!-- Content Header (Page header) -->
 		<section class="content-header">
-			<h1>Test page</h1>
+			<h1>Test page</h1><br />
 
 			URL per ripopolare il database (DELETE+INSERT): <a href="ws/reset" target="_blank">click
 				here</a><br /> URL per visualizzare gli eventi (JSON): <a
@@ -18,12 +18,12 @@
 			inserire un evento:
 			<form action="ws/collector" target="_blank" method="get">
 				Codice evento: <input name="tipiEvento" value="LOAD" /><br />
-				Codice entit&agrave;: <input name="entita" value="U7RM0ESP" /><br />
+				Codice entit&agrave;: <input name="entita" value="U7SC0_BO" /><br />
 				Tag: <input name="tag" value="20170523U" /><br /> <input
 					type="submit" />
 			</form>
 			<br />
-			<br /> FORM per recuperare lo stato di una milestone:
+			<br /> FORM per recuperare lo stato di una milestone (Restituisce TRUE o FALSE):
 			<form action="ws/polling" target="_blank" method="get">
 				Codice milestone: <input name="milestone" value="milestone 5" /><br />
 				Tag1: <input name="tag" value="20170523U" /><br /> Tag2: <input
@@ -34,7 +34,7 @@
 			</form>
 			
 			<br />
-			<br /> FORM per recuperare lo stato di una milestone (albero):
+			<br /> FORM per recuperare lo stato di una milestone (Albero):
 			<form action="ws/polling/testTree" target="_blank" method="get">
 				Codice milestone: <input name="milestone" value="milestone 5" /><br />
 				Tag1: <input name="tag" value="20170523U" /><br /> Tag2: <input
@@ -45,7 +45,7 @@
 			</form>
 			
 			<br />
-			<br /> FORM per recuperare lo stato di una milestone (foglie):
+			<br /> FORM per recuperare lo stato di una milestone (Foglie):
 			<form action="ws/polling/testLeaf" target="_blank" method="get">
 				Codice milestone: <input name="milestone" value="milestone 5" /><br />
 				Tag1: <input name="tag" value="20170523U" /><br /> Tag2: <input
