@@ -70,7 +70,7 @@ public class WSPolling {
 	@Path("testTree")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Milestone> Hierarchy(@QueryParam("milestone") String descMilestone) {
-		Milestone m = managerMil.findByDesc(descMilestone);
+		Milestone m = managerMil.findByDesc(descMilestone.toUpperCase());
 		return managerMil.getHierarchy(m);
 	}
 
@@ -79,7 +79,7 @@ public class WSPolling {
 	@Path("testLeaf")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Milestone> Leaf(@QueryParam("milestone") String descMilestone) {
-		Milestone m = managerMil.findByDesc(descMilestone);
+		Milestone m = managerMil.findByDesc(descMilestone.toUpperCase());
 		return managerMil.getFoglie(m);
 	}
 }
