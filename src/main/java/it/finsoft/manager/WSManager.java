@@ -269,7 +269,7 @@ public class WSManager {
 		LOG.info("Parametri di ricerca: Milestone " + descMilestone + " Tag " + tags);
 		Milestone milestone = null;
 		try {
-			milestone = managerMil.findByDesc(descMilestone);
+			milestone = managerMil.findByDesc(descMilestone.toUpperCase());
 		} catch (Exception sqlError) {
 			LOG.error("ERROR: La Milestone: " + descMilestone
 					+ " non e' stata trovata, controllare la sintassi o la presenza effettiva sul database");
@@ -285,7 +285,7 @@ public class WSManager {
 		LOG.info("Parametri di ricerca: Milestone " + descMilestone + " Tag " + tags);
 		Milestone milestone = null;
 		try {
-			milestone = managerMil.findByDesc(descMilestone);
+			milestone = managerMil.findByDesc(descMilestone.toUpperCase());
 		} catch (Exception sqlError) {
 			LOG.error("ERROR: La Milestone: " + descMilestone
 					+ " non e' stata trovata, controllare la sintassi o la presenza effettiva sul database");

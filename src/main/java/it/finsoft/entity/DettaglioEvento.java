@@ -57,6 +57,7 @@ public class DettaglioEvento implements Serializable {
 	}
 
 	public void setChiave(String chiave) {
+		chiave = chiave.toUpperCase();
 		this.chiave = chiave;
 	}
 
@@ -65,6 +66,7 @@ public class DettaglioEvento implements Serializable {
 	}
 
 	public void setValore(String valore) {
+		valore = valore.toUpperCase();
 		this.valore = valore;
 	}
 
