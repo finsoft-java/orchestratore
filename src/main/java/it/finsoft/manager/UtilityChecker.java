@@ -1,6 +1,6 @@
 package it.finsoft.manager;
 
-public class UtilityChecker {
+public class UtilityChecker{
 
 	/*
 	 * Serve solamente a gestire eventuali errori di battitura semplici for ex:
@@ -12,4 +12,8 @@ public class UtilityChecker {
 		return s;
 	}
 
+	public String toUp(String s){
+		s=s.trim().toUpperCase().replaceAll("  ", " ");
+		return s;
+	}
 }

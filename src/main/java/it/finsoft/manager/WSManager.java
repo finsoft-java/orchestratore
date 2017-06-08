@@ -267,7 +267,7 @@ public class WSManager {
 	// ------------------------------------PollingFoglieByDescr-----------------------------------//
 
 	public boolean getPollingFoglieByDescr(String descMilestone, List<String> tags) {
-
+		descMilestone=syntax.toUp(descMilestone);
 		LOG.info("Parametri di ricerca: Milestone " + descMilestone + " Tag " + tags);
 		Milestone milestone = null;
 		try {
@@ -283,7 +283,7 @@ public class WSManager {
 	// ------------------------------------WSPollingStandard1L(boolean)--------------------------------------------------//
 
 	public boolean getPolling1LByDescr(String descMilestone, List<String> tags) {
-
+		descMilestone=syntax.toUp(descMilestone);
 		LOG.info("Parametri di ricerca: Milestone " + descMilestone + " Tag " + tags);
 		Milestone milestone = null;
 		try {
