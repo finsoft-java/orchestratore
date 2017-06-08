@@ -5,8 +5,9 @@
 	<artifactId>orchestratoreRADAR</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<dependencies>
-	<!-- Prova per risoluzione errore: java.lang.AbstractMethodError: javax.ws.rs.core.UriBuilder.uri(Ljava/lang/String;)Ljavax/ws/rs/core/UriBuilder; 
-			(non è bastato, risolve solo in parte (manca wsCollector)!!!)
+	<!-- Eliminazione di queste dipendenze per risoluzione errore: 
+	java.lang.AbstractMethodError: javax.ws.rs.core.UriBuilder.uri; 
+			
 		<dependency>
 			<groupId>javax</groupId>
 			<artifactId>javaee-api</artifactId>
@@ -19,14 +20,17 @@
 			<version>2.1-m07</version> 
 		</dependency>
 		-->	
-		<!-- aggiungendo questi jar per risoluzione errore: java.lang.AbstractMethodError: javax.ws.rs.core.UriBuilder.uri -->
+		<!-- aggiunta di queste dipendenze per risoluzione errore: 
+		java.lang.AbstractMethodError: javax.ws.rs.core.UriBuilder.uri -->
 		<dependency> 
     		<groupId>javax.ws.rs</groupId> 
    			<artifactId>jsr311-api</artifactId> 
     		<version>1.1.1</version> 
 		</dependency>
-		<!-- aggiungendo questi jar per risoluzione errore: A message body writer for Java class it.finsoft.manager.WSManager$DatiCollector,
-		 and Java type class it.finsoft.manager.WSManager$DatiCollector, and MIME media type application/json was not found -->
+		<!-- aggiunta di queste dipendenze per risoluzione errore: 
+		A message body writer for Java class it.finsoft.manager.WSManager$DatiCollector,
+		 and Java type class it.finsoft.manager.WSManager$DatiCollector, 
+		 and MIME media type application/json was not found -->
 		<dependency>
    			<groupId>com.owlike</groupId>
    			<artifactId>genson</artifactId>
