@@ -52,6 +52,7 @@ public class TipoEvento implements Serializable {
 	}
 
 	public void setCodice(String codice) {
+		codice = codice.toUpperCase();
 		this.codice = codice;
 	}
 
@@ -60,6 +61,7 @@ public class TipoEvento implements Serializable {
 	}
 
 	public void setDescrizione(String descrizione) {
+		descrizione = descrizione.toUpperCase();
 		this.descrizione = descrizione;
 	}
 

@@ -93,6 +93,7 @@ public class Milestone implements Serializable {
 	}
 
 	public void setDescrizione(String descrizione) {
+		descrizione = descrizione.toUpperCase();
 		this.descrizione = descrizione;
 	}
 

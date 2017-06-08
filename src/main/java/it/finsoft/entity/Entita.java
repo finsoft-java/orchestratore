@@ -56,6 +56,7 @@ public class Entita implements Serializable {
 	}
 
 	public void setCodice(String codice) {
+		codice = codice.toUpperCase();
 		this.codice = codice;
 	}
 
@@ -64,6 +65,7 @@ public class Entita implements Serializable {
 	}
 
 	public void setAcronimo(String acronimo) {
+		acronimo = acronimo.toUpperCase();
 		this.acronimo = acronimo;
 	}
 
@@ -72,6 +74,7 @@ public class Entita implements Serializable {
 	}
 
 	public void setDescrizione(String descrizione) {
+		descrizione = descrizione.toUpperCase();
 		this.descrizione = descrizione;
 	}
 
