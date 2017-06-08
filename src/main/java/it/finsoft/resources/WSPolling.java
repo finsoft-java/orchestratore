@@ -39,7 +39,7 @@ public class WSPolling {
 	// -------------------------PollingFoglie----------------------//
 
 	@GET
-	@Produces(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.APPLICATION_JSON)
 	public boolean get(@QueryParam("milestone") String descMilestone, @QueryParam(value = "tag") List<String> tags) {
 		return wsManager.getPollingFoglieByDescr(descMilestone, tags);
 	}
@@ -57,7 +57,7 @@ public class WSPolling {
 	/* ---- TEST RESOURCES ---- */
 	@GET
 	@Path("test")
-	@Produces(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.APPLICATION_JSON)
 	public String prova() {
 		System.out.println("ok polling");
 		return "ok polling";
