@@ -16,16 +16,38 @@
 				here</a><br /> URL per visualizzare le entità (JSON): <a
 				href="ws/resources/entita" target="_blank">click here</a><br /> <br /> FORM per
 			inserire un evento:
-			<form action="ws/collector" method="get">
+			<form action="ws/collector" target="_blank" method="get">
 				Codice evento: <input name="tipiEvento" value="LOAD" /><br />
 				Codice entit&agrave;: <input name="entita" value="U7RM0ESP" /><br />
 				Tag: <input name="tag" value="20170523U" /><br /> <input
 					type="submit" />
 			</form>
 			<br />
-			<br /> FORM per recuperare lo stato di un semaforo:
-			<form action="ws/polling" method="get">
-				Codice semaforo: <input name="semaforo" value="FLUSSI_G" /><br />
+			<br /> FORM per recuperare lo stato di una milestone:
+			<form action="ws/polling" target="_blank" method="get">
+				Codice milestone: <input name="milestone" value="milestone 5" /><br />
+				Tag1: <input name="tag" value="20170523U" /><br /> Tag2: <input
+					name="tag" value="20170523U" /><br /> Tag3: <input name="tag"
+					value="20170523U" /><br /> Tag4: <input name="tag"
+					value="20170523U" /><br /> Tag5: <input name="tag"
+					value="20170523U" /><br /> <input type="submit" />
+			</form>
+			
+			<br />
+			<br /> FORM per recuperare lo stato di una milestone (albero):
+			<form action="ws/polling/testTree" target="_blank" method="get">
+				Codice milestone: <input name="milestone" value="milestone 5" /><br />
+				Tag1: <input name="tag" value="20170523U" /><br /> Tag2: <input
+					name="tag" value="20170523U" /><br /> Tag3: <input name="tag"
+					value="20170523U" /><br /> Tag4: <input name="tag"
+					value="20170523U" /><br /> Tag5: <input name="tag"
+					value="20170523U" /><br /> <input type="submit" />
+			</form>
+			
+			<br />
+			<br /> FORM per recuperare lo stato di una milestone (foglie):
+			<form action="ws/polling/testLeaf" target="_blank" method="get">
+				Codice milestone: <input name="milestone" value="milestone 5" /><br />
 				Tag1: <input name="tag" value="20170523U" /><br /> Tag2: <input
 					name="tag" value="20170523U" /><br /> Tag3: <input name="tag"
 					value="20170523U" /><br /> Tag4: <input name="tag"

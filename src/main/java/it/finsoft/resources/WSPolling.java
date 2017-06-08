@@ -39,6 +39,10 @@ public class WSPolling {
 	// -------------------------PollingFoglie----------------------//
 
 	@GET
+<<<<<<< HEAD
+=======
+	//@Produces(MediaType.TEXT_PLAIN)
+>>>>>>> branch 'master' of https://github.com/finsoft-java/orchestratore.git
 	@Produces(MediaType.APPLICATION_JSON)
 	public boolean get(@QueryParam("milestone") String descMilestone, @QueryParam(value = "tag") List<String> tags) {
 		return wsManager.getPollingFoglieByDescr(descMilestone, tags);
