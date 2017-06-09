@@ -1,4 +1,4 @@
-#NOTE DI PROGETTO
+# NOTE DI PROGETTO
 
 * WAS: Glassfish
 * DB: derby, versione embedded, configurato in Glassfish come DataSource JTA
@@ -43,11 +43,11 @@ L'applicazione risponde all'indirizzo http://localhost:8080/orchestratoreRADAR
 * Tasto dx, new, server
 * Nella finestra "Define new server" selezionare Glassfish, lasciare "localhost" come hostname, immettere un server name (di solito si lascia quello di default),
 * cliccare su next.
-* Nella pagina seguente ci verra'� richiesto il path dell'installazione (esempio: C:\glassfish4\glassfish\domains\domain1), mettere la spunta su:
+* Nella pagina seguente ci verra' richiesto il path dell'installazione (esempio: C:\glassfish4\glassfish\domains\domain1), mettere la spunta su:
 * "use JAR archive for deployment" e cliccare su next.
 * Consigliato lasciare la password di admin vuota!!!
 * Nella pagina seguente cliccare su finish  (*non* deployare ancora nulla nel dominio). L'aggiunta del progetto in glassfish (per il deployment) 
-* la si fara'� successivamente alla configurazione dei Data source.
+* la si fara' successivamente alla configurazione dei Data source.
 
 ### Correzione versioni librerie
 Occorre copiare/sostituire alcune librerie di glassfish, che hanno una versione incompatibile con la nostra:
@@ -59,17 +59,17 @@ Occorre copiare/sostituire alcune librerie di glassfish, che hanno una versione 
 
 ### Configurazione datasource Derby
 * Avviare (o riavviare) il server glassfish da Eclipse 
-* Aprire un browser e inserire l'indirizzo "http://localhost:4848/" per accedere alla console di amministrazione
-* (1) menu' JDBC -> JDBC Connection Pool -> New:
-** Pool name: orchestratore
-** Resources type: javax.sql.DataSource
-** Database Driver Vendor: Embedded-Derby-30
-* cliccare su next e andare in fondo alla nuova pagina e nella tabella "Additional Properties" impostare il seguente parametro:
-** DatabaseName: inserire il percorso assoluto del db (es. c:\miopercorso\dbOrchestratore)
-** rimuovere tutte le altre voci
-* (2) menu JDBC -> JDBC Resources -> New
-**  JNDI name: jdbc/orchestratore 
-**  poolname: orchestratore
+* Aprire un browser e inserire l'indirizzo http://localhost:4848/ per accedere alla console di amministrazione
+* menu' JDBC -> JDBC Connection Pool -> New:
+  * Pool name: orchestratore
+  * Resources type: javax.sql.DataSource
+  * Database Driver Vendor: Embedded-Derby-30
+  * cliccare su "next" e andare in fondo alla nuova pagina e nella tabella "Additional Properties" impostare il seguente parametro:
+    * DatabaseName: inserire il percorso assoluto del db (es. c:\miopercorso\dbOrchestratore)
+    * rimuovere tutte le altre voci
+* menu' JDBC -> JDBC Resources -> New
+  *  JNDI name: jdbc/orchestratore 
+  *  poolname: orchestratore
 
 ###Avvio dell'applicazione
 Avviare da Eclipse con "Run on server..."
@@ -82,23 +82,26 @@ N.B. in certi casi il processo puo' fallire, e occorre farlo manualmente usando 
 ## Popolamento delle tabelle con dati default
 Attualmente viene eseguito il file script.sql ad ogni avvio.
 Per evitarlo, rimuovere l'opzione relativa nel file persistence.xml.
-In qualunque momento si pu� rieseguire questo script visitando l'indirizzo:
+In qualunque momento si puo' rieseguire questo script visitando l'indirizzo:
 http://localhost:8080/orchestratoreRADAR/ws/reset
 
-## Utilizzo degli script .BAT per richiamare i webservice
+## Utilizzo degli script .BAT/shell per richiamare i webservice
 Per utilizzare il WGET scaricare il file "vwget-2.4-wget-1.11.4-bin.zip" dal seguente url:
-https://sites.google.com/site/visualwget/a-download-manager-gui-based-on-wget-for-windows
+https://sites.google.com/site/visualwget/a-download-manager-gui-based-on-wget-for-windows.
 Estrarre il contenuto in una directory a piacere (esempio c:\Progetti\Wget)
+
 Editare lo script "WS_Collector.bat" inserendo nel set WGET= 
-il percorso in cui abbiamo scompattato il file precedente c:\Progetti\WGet\ aggiungendo wget.exe
-inserire anche l'url che si vuole raggiungere nel set ENDPOINT= (es: http://localhost:8080/orchestratoreRADAR/ws/collector)
+il percorso in cui abbiamo scompattato il file precedente c:\Progetti\WGet\ aggiungendo wget.exe.
+Inserire anche l'url che si vuole raggiungere nel set ENDPOINT= (es: http://localhost:8080/orchestratoreRADAR/ws/collector)
 Successivamente editare il file "WS_Collector_example_wget.bat" e modificare (se necessario) il percorso dopo "cd" con il 
 percorso della cartella dove risiede il file .bat che va eseguito (c:\Progetti\Script)
 editare la riga che inizia per "call" con i parametri corretti 
 es: call "WS_Collector.bat" U7SC0_BO VALIDAZIONE ParamWGetUltimoTest
+
 Linux: per ambiente Linux i file sono: wgetCollector.sh, wgetCollectorCALL.sh, wgetPolling.sh e wgetPollingCALL.sh
 i rispettivi file CALL vengono richiamati da quelli semplici passando i parametri (rimane la limitazione a 9 parametri),
 prima di usarli cambiare il path dell'ENDPOINT poiche' non e' localhost ma un indirizzo
-Se fosse necessario rendere gli script eseguibili da console linux chmod 755 *percorso/nomescript*.sh; chmod +x *percorso/nomescript*.sh
-tramite la riga 'source "percorso/nomescript.sh"' inserita all'inizio dello script 
+Se fosse necessario rendere gli script eseguibili da console linux
+	chmod 755 *percorso/nomescript*.sh; chmod +x *percorso/nomescript*.sh
+Tramite la riga 'source "percorso/nomescript.sh"' inserita all'inizio dello script 
 e' possibile dare un percorso fisso per lo scriptCALL
