@@ -22,6 +22,39 @@ Avviare il server con "Run as application" e scegliendo la classe principale it.
 
 L'applicazione risponde all'indirizzo http://localhost:8080/orchestratoreRADAR
 
+La vecchia versione dell'installazione (con Glassfish server) è ancora disponibile, al fondo di queste note.
+
+## Creazione delle tabelle
+Attualmente, le tabelle vengono cancellate e ricreate automaticamente a ogni avvio.
+Per evitarlo, rimuovere l'opzione "drop-and-create" nel file persistence.xml.
+N.B. in certi casi il processo puo' fallire, e occorre farlo manualmente usando dbeaver. 
+
+## Popolamento delle tabelle con dati default
+Attualmente viene eseguito il file script.sql ad ogni avvio.
+Per evitarlo, rimuovere l'opzione relativa nel file persistence.xml.
+In qualunque momento si puo' rieseguire questo script visitando l'indirizzo:
+http://localhost:8080/orchestratoreRADAR/ws/reset
+
+## Utilizzo degli script .BAT/shell per richiamare i webservice
+Per utilizzare il WGET scaricare il file "vwget-2.4-wget-1.11.4-bin.zip" dal seguente url:
+https://sites.google.com/site/visualwget/a-download-manager-gui-based-on-wget-for-windows.
+Estrarre il contenuto in una directory a piacere (esempio c:\Progetti\Wget)
+
+Editare lo script "WS_Collector.bat" inserendo nel set WGET= 
+il percorso in cui abbiamo scompattato il file precedente c:\Progetti\WGet\ aggiungendo wget.exe.
+Inserire anche l'url che si vuole raggiungere nel set ENDPOINT= (es: http://localhost:8080/orchestratoreRADAR/ws/collector)
+Successivamente editare il file "WS_Collector_example_wget.bat" e modificare (se necessario) il percorso dopo "cd" con il 
+percorso della cartella dove risiede il file .bat che va eseguito (c:\Progetti\Script)
+editare la riga che inizia per "call" con i parametri corretti 
+es: call "WS_Collector.bat" U7SC0_BO VALIDAZIONE ParamWGetUltimoTest
+
+Linux: per ambiente Linux i file sono: wgetCollector.sh, wgetCollectorCALL.sh, wgetPolling.sh e wgetPollingCALL.sh
+i rispettivi file CALL vengono richiamati da quelli semplici passando i parametri (rimane la limitazione a 9 parametri),
+prima di usarli cambiare il path dell'ENDPOINT poiche' non e' localhost ma un indirizzo
+Se fosse necessario rendere gli script eseguibili da console linux
+	chmod 755 *percorso/nomescript*.sh; chmod +x *percorso/nomescript*.sh
+Tramite la riga 'source "percorso/nomescript.sh"' inserita all'inizio dello script 
+e' possibile dare un percorso fisso per lo scriptCALL
 
 ## Installazione: vecchia versione (con Glassfish server)
 
@@ -73,35 +106,3 @@ Occorre copiare/sostituire alcune librerie di glassfish, che hanno una versione 
 
 ###Avvio dell'applicazione
 Avviare da Eclipse con "Run on server..."
-
-## Creazione delle tabelle
-Attualmente, le tabelle vengono cancellate e ricreate automaticamente a ogni avvio.
-Per evitarlo, rimuovere l'opzione "drop-and-create" nel file persistence.xml.
-N.B. in certi casi il processo puo' fallire, e occorre farlo manualmente usando dbeaver. 
-
-## Popolamento delle tabelle con dati default
-Attualmente viene eseguito il file script.sql ad ogni avvio.
-Per evitarlo, rimuovere l'opzione relativa nel file persistence.xml.
-In qualunque momento si puo' rieseguire questo script visitando l'indirizzo:
-http://localhost:8080/orchestratoreRADAR/ws/reset
-
-## Utilizzo degli script .BAT/shell per richiamare i webservice
-Per utilizzare il WGET scaricare il file "vwget-2.4-wget-1.11.4-bin.zip" dal seguente url:
-https://sites.google.com/site/visualwget/a-download-manager-gui-based-on-wget-for-windows.
-Estrarre il contenuto in una directory a piacere (esempio c:\Progetti\Wget)
-
-Editare lo script "WS_Collector.bat" inserendo nel set WGET= 
-il percorso in cui abbiamo scompattato il file precedente c:\Progetti\WGet\ aggiungendo wget.exe.
-Inserire anche l'url che si vuole raggiungere nel set ENDPOINT= (es: http://localhost:8080/orchestratoreRADAR/ws/collector)
-Successivamente editare il file "WS_Collector_example_wget.bat" e modificare (se necessario) il percorso dopo "cd" con il 
-percorso della cartella dove risiede il file .bat che va eseguito (c:\Progetti\Script)
-editare la riga che inizia per "call" con i parametri corretti 
-es: call "WS_Collector.bat" U7SC0_BO VALIDAZIONE ParamWGetUltimoTest
-
-Linux: per ambiente Linux i file sono: wgetCollector.sh, wgetCollectorCALL.sh, wgetPolling.sh e wgetPollingCALL.sh
-i rispettivi file CALL vengono richiamati da quelli semplici passando i parametri (rimane la limitazione a 9 parametri),
-prima di usarli cambiare il path dell'ENDPOINT poiche' non e' localhost ma un indirizzo
-Se fosse necessario rendere gli script eseguibili da console linux
-	chmod 755 *percorso/nomescript*.sh; chmod +x *percorso/nomescript*.sh
-Tramite la riga 'source "percorso/nomescript.sh"' inserita all'inizio dello script 
-e' possibile dare un percorso fisso per lo scriptCALL
