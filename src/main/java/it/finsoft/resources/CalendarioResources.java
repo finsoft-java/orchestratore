@@ -25,18 +25,18 @@ import it.finsoft.manager.CalendarioManager;
 public class CalendarioResources {
 
 	@Inject
-	CalendarioManager manager;
+	CalendarioManager calendarioManager;
 
 	@GET
 	@Path("Calendari")
 	public List<Calendario> findAll() {
-		return manager.findAll();
+		return calendarioManager.findAll();
 	}
 
 	@GET
 	@Path("Calendari({id})")
 	public Calendario findById(@PathParam("id") Long id) {
-		return manager.findById(id);
+		return calendarioManager.findById(id);
 	}
 
 	@POST
@@ -44,13 +44,13 @@ public class CalendarioResources {
 	@Path("Calendari({id})")
 	public Calendario create(Calendario cal) {
 		System.out.println("post resources, salvo entita " + cal);
-		return manager.save(cal);
+		return calendarioManager.save(cal);
 	}
 
 	@DELETE
 	@Path("Calendari({id})")
 	public void delete(@PathParam("id") Long id) {
-		manager.remove(id);
+		calendarioManager.remove(id);
 	}
 
 	@PUT
@@ -58,7 +58,7 @@ public class CalendarioResources {
 								// obbligatori
 	public void update(@PathParam("id") Long id, Calendario m) {
 		m.setIdCalendario(id);
-		manager.save(m);
+		calendarioManager.save(m);
 	}
 
 	/* ---- TEST RESOURCES ---- */

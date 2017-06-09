@@ -28,17 +28,15 @@ public class WSManager {
 	@PersistenceContext
 	EntityManager em;
 	@Inject
-	EntitaManager managerEnt;
+	EntitaManager entitaManager;
 	@Inject
-	EventoManager managerEvn;
+	EventoManager eventoManager;
 	@Inject
-	MilestoneManager managerMil;
+	MilestoneManager milestoneManager;
 	@Inject
-	EventoManager managerEvt;
+	TipoEventoManager tipoEventoManager;
 	@Inject
-	TipoEventoManager managerTp;
-	@Inject
-	UtilityChecker syntax;
+	UtilityCheck utiliyCheck;
 
 	// ---------------------------------WSReset----------------------------------------//
 
@@ -84,7 +82,7 @@ public class WSManager {
 		// descMilestone = syntax.trimToUp(descMilestone);
 		Milestone milestone = null;
 		try {
-			milestone = managerMil.findByDesc(descMilestone);
+			milestone = milestoneManager.findByDesc(descMilestone);
 		} catch (Exception sqlError) {
 			LOG.error("ERROR: La Milestone: " + descMilestone
 					+ " non e' stata trovata, controllare la sintassi o la presenza effettiva sul database");
@@ -106,7 +104,7 @@ public class WSManager {
 			String tag = "";
 			try {
 				tag = tags.get(i);
-				tag = syntax.trimToUp(tag);
+				tag = utiliyCheck.trimToUp(tag);
 			} catch (Exception e) {
 				LOG.error("ERROR:non sono stati passati sufficienti tag");
 				result.errorMessage = "ERROR:il numero di tag in input (" + tags.size()
@@ -116,7 +114,7 @@ public class WSManager {
 			Entita ent = m.getEntita();
 			TipoEvento tp = m.getTipoEvento();
 			List<Evento> tmp = null;
-			tmp = managerEvt.findPolling(tag, ent, tp);
+			tmp = eventoManager.findPolling(tag, ent, tp);
 			System.out.println(tmp);
 			if (tmp.isEmpty()) {
 				result.semaforoOk = Boolean.FALSE;
@@ -145,10 +143,10 @@ public class WSManager {
 		DatiCollector result = new DatiCollector();
 		try {
 			Evento e = new Evento();
-			codiceEnt = syntax.trimToUp(codiceEnt);
-			codiceTipi = syntax.trimToUp(codiceTipi);
-			e.setEntita(managerEnt.findByCod(codiceEnt));
-			e.setTipoEvento(managerTp.findByCod(codiceTipi));
+			codiceEnt = utiliyCheck.trimToUp(codiceEnt);
+			codiceTipi = utiliyCheck.trimToUp(codiceTipi);
+			e.setEntita(entitaManager.findByCod(codiceEnt));
+			e.setTipoEvento(tipoEventoManager.findByCod(codiceTipi));
 			e.setTag(tag);
 			List<DettaglioEvento> listaDettagliEvento = e.getDettagliEvento();
 			// TODO controllare che keys e values abbiano lo stesso numero di
@@ -177,7 +175,7 @@ public class WSManager {
 			}
 			// per ogni chiave, inserire un record chiave/valore nella tabella
 			// dettagli
-			managerEvn.save(e);
+			eventoManager.save(e);
 			result.evento = e;
 			result.listaDettagli.addAll(listaDettagliEvento);
 
@@ -216,7 +214,7 @@ public class WSManager {
 		LOG.info("Parametri di ricerca: Milestone " + milestone + " Tag " + tag);
 
 		List<Evento> tmp = null;
-		tmp = managerEvt.findPolling(tag, milestone.getEntita(), milestone.getTipoEvento());
+		tmp = eventoManager.findPolling(tag, milestone.getEntita(), milestone.getTipoEvento());
 		System.out.println(tmp);
 		if (tmp.isEmpty()) {
 			result.setSemaforo(false);
@@ -238,7 +236,7 @@ public class WSManager {
 
 	public boolean getPollingFoglie(Milestone milestone, List<String> tags) {
 		List<MilestoneConSemaforo> foglieConSemaforo = new ArrayList<MilestoneConSemaforo>();
-		List<Milestone> foglie = managerMil.getFoglie(milestone);
+		List<Milestone> foglie = milestoneManager.getFoglie(milestone);
 
 		for (int i = 0; i < foglie.size(); i++) {
 			String tag = "";
@@ -246,7 +244,7 @@ public class WSManager {
 					// se non vengono passati i tag, o non ne vengono passati a
 					// sufficienza
 				tag = tags.get(i);
-				tag = syntax.trimToUp(tag);
+				tag = utiliyCheck.trimToUp(tag);
 			} catch (IndexOutOfBoundsException e) {
 				LOG.error("ERROR:non sono stati passati sufficienti tag");
 			}
@@ -269,7 +267,7 @@ public class WSManager {
 		LOG.info("Parametri di ricerca: Milestone " + descMilestone + " Tag " + tags);
 		Milestone milestone = null;
 		try {
-			milestone = managerMil.findByDesc(descMilestone.toUpperCase());
+			milestone = milestoneManager.findByDesc(descMilestone.toUpperCase());
 		} catch (Exception sqlError) {
 			LOG.error("ERROR: La Milestone: " + descMilestone
 					+ " non e' stata trovata, controllare la sintassi o la presenza effettiva sul database");
@@ -285,7 +283,7 @@ public class WSManager {
 		LOG.info("Parametri di ricerca: Milestone " + descMilestone + " Tag " + tags);
 		Milestone milestone = null;
 		try {
-			milestone = managerMil.findByDesc(descMilestone.toUpperCase());
+			milestone = milestoneManager.findByDesc(descMilestone.toUpperCase());
 		} catch (Exception sqlError) {
 			LOG.error("ERROR: La Milestone: " + descMilestone
 					+ " non e' stata trovata, controllare la sintassi o la presenza effettiva sul database");
@@ -301,11 +299,11 @@ public class WSManager {
 			String tag = "";
 			try {
 				tag = tags.get(1);
-				tag = syntax.trimToUp(tag);
+				tag = utiliyCheck.trimToUp(tag);
 			} catch (Exception e) {
 				LOG.error("ERROR:non sono stati passati sufficienti tag");
 			}
-			eventiVerificati.addAll(managerEvt.findPolling(tag, milestone.getEntita(), milestone.getTipoEvento())); 
+			eventiVerificati.addAll(eventoManager.findPolling(tag, milestone.getEntita(), milestone.getTipoEvento())); 
 			}
 		for (int i = 0; i < milestoneMilestones.size(); i++) {
 			MilestoneMilestone sc = milestoneMilestones.get(i);
@@ -313,13 +311,13 @@ public class WSManager {
 			String tag = "";
 			try {
 				tag = tags.get(i);
-				tag = syntax.trimToUp(tag);
+				tag = utiliyCheck.trimToUp(tag);
 			} catch (Exception e) {
 				LOG.error("ERROR:non sono stati passati sufficienti tag");
 			}
 			Entita ent = m.getEntita();
 			TipoEvento tp = m.getTipoEvento();
-			eventiVerificati.addAll(managerEvt.findPolling(tag, ent, tp));
+			eventiVerificati.addAll(eventoManager.findPolling(tag, ent, tp));
 		}
 		if (eventiVerificati.size() == milestoneMilestones.size())
 			return true;

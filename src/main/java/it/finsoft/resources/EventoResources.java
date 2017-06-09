@@ -21,18 +21,18 @@ import it.finsoft.manager.EventoManager;
 public class EventoResources {
 
 	@Inject
-	EventoManager manager;
+	EventoManager eventoManager;
 
 	@GET
 	@Path("Eventi")
 	public List<Evento> findAll() {
-		return manager.findAll();
+		return eventoManager.findAll();
 	}
 
 	@GET
 	@Path("Eventi({id})")
 	public Evento findById(@PathParam("id") Long id) {
-		return manager.findById(id);
+		return eventoManager.findById(id);
 	}
 
 	@POST
@@ -40,20 +40,20 @@ public class EventoResources {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Evento create(Evento cal) {
 		System.out.println("post resources, salvo entita " + cal);
-		return manager.save(cal);
+		return eventoManager.save(cal);
 	}
 
 	@DELETE
 	@Path("Eventi({id})")
 	public void delete(@PathParam("id") Long id) {
-		manager.remove(id);
+		eventoManager.remove(id);
 	}
 
 	@PUT
 	@Path("Eventi({id})") // richiede di inserire (in json) tutti i campi obbligatori
 	public void update(@PathParam("id") Long id, Evento m) {
 		m.setIdEvento(id);
-		manager.save(m);
+		eventoManager.save(m);
 	}
 
 	/* ---- TEST RESOURCES ---- */

@@ -22,18 +22,18 @@ import it.finsoft.manager.AzioneManager;
 public class AzioneResources {
 
 	@Inject
-	AzioneManager manager;
+	AzioneManager azioneManager;
 	
 	@GET
 	@Path("Azioni")
 	public List<Azione> findAll() {
-		return manager.findAll();
+		return azioneManager.findAll();
 	}
 
 	@GET
 	@Path("Azioni({id})")
 	public Azione findById(@PathParam("id") Long id) {
-		return manager.findById(id);
+		return azioneManager.findById(id);
 	}
 	
 	@POST
@@ -41,20 +41,20 @@ public class AzioneResources {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Azione create(Azione cal) {
 		System.out.println("post resources, salvo azione " + cal);
-		return manager.save(cal);
+		return azioneManager.save(cal);
 	}
 
 	@DELETE
 	@Path("Azioni({id})")
 	public void delete(@PathParam("id") Long id) {
-		manager.remove(id);
+		azioneManager.remove(id);
 	}
 
 	@PUT
 	@Path("Azioni({id})")//richiede di inserire (in json) tutti i campi obbligatori
 	public void update(@PathParam("id") Long id, Azione m) {
 		m.setIdAzione(id);
-		manager.save(m);
+		azioneManager.save(m);
 	}
 
 	/* ---- TEST RESOURCES ---- */

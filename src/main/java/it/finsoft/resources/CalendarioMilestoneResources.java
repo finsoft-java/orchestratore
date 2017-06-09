@@ -22,18 +22,18 @@ import it.finsoft.manager.CalendarioMilestoneManager;
 public class CalendarioMilestoneResources {
 
 	@Inject
-	CalendarioMilestoneManager manager;
+	CalendarioMilestoneManager calendarioMilestoneManager;
 
 	@GET
 	@Path("CalendarioMilestones")
 	public List<CalendarioMilestone> findAll() {
-		return manager.findAll();
+		return calendarioMilestoneManager.findAll();
 	}
 
 	@GET
 	@Path("CalendarioMilestones({id})")
 	public CalendarioMilestone findById(@PathParam("id") Long id) {
-		return manager.findById(id);
+		return calendarioMilestoneManager.findById(id);
 	}
 
 	@POST
@@ -41,13 +41,13 @@ public class CalendarioMilestoneResources {
 	@Path("CalendarioMilestones")
 	public CalendarioMilestone create(CalendarioMilestone cal) {
 		System.out.println("post resources, salvo entita " + cal);
-		return manager.save(cal);
+		return calendarioMilestoneManager.save(cal);
 	}
 
 	@DELETE
 	@Path("CalendarioMilestones({id})")
 	public void delete(@PathParam("id") Long id) {
-		manager.remove(id);
+		calendarioMilestoneManager.remove(id);
 	}
 
 	@PUT
@@ -55,7 +55,7 @@ public class CalendarioMilestoneResources {
 										// campi obbligatori
 	public void update(@PathParam("id") Long id, CalendarioMilestone m) {
 		m.setIdCalendarioMilestone(id);
-		manager.save(m);
+		calendarioMilestoneManager.save(m);
 	}
 	/*
 	 * { "milestone" : { "idMilestone" : 1 }, "calendario" : { "idCalendario" :
@@ -67,14 +67,14 @@ public class CalendarioMilestoneResources {
 	@GET
 	@Path("Calendari({idc})/Milestone")
 	public List<CalendarioMilestone> findByIdCalendario(@PathParam("idc") Long idCalendario) {
-		return manager.findByIdCalendario(idCalendario);
+		return calendarioMilestoneManager.findByIdCalendario(idCalendario);
 	}
 	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("Calendari({idc})/Milestone")
 	public CalendarioMilestone create(@PathParam("idc") Long idCalendario, CalendarioMilestone cal) {
-		return manager.save(idCalendario, cal);
+		return calendarioMilestoneManager.save(idCalendario, cal);
 	}
 
 	/* ---- TEST RESOURCES ---- */
