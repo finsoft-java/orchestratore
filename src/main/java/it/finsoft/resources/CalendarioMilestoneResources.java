@@ -25,33 +25,33 @@ public class CalendarioMilestoneResources {
 	CalendarioMilestoneManager manager;
 
 	@GET
-	@Path("CalendariMilestone")
+	@Path("CalendarioMilestones")
 	public List<CalendarioMilestone> findAll() {
 		return manager.findAll();
 	}
 
 	@GET
-	@Path("CalendariMilestone({id})")
+	@Path("CalendarioMilestones({id})")
 	public CalendarioMilestone findById(@PathParam("id") Long id) {
 		return manager.findById(id);
 	}
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	@Path("CalendariMilestone")
+	@Path("CalendarioMilestones")
 	public CalendarioMilestone create(CalendarioMilestone cal) {
 		System.out.println("post resources, salvo entita " + cal);
 		return manager.save(cal);
 	}
 
 	@DELETE
-	@Path("CalendariMilestone({id})")
+	@Path("CalendarioMilestones({id})")
 	public void delete(@PathParam("id") Long id) {
 		manager.remove(id);
 	}
 
 	@PUT
-	@Path("CalendariMilestone({id})") // richiede di inserire (in json) tutti i
+	@Path("CalendarioMilestones({id})") // richiede di inserire (in json) tutti i
 										// campi obbligatori
 	public void update(@PathParam("id") Long id, CalendarioMilestone m) {
 		m.setIdCalendarioMilestone(id);
@@ -79,7 +79,7 @@ public class CalendarioMilestoneResources {
 
 	/* ---- TEST RESOURCES ---- */
 	@GET
-	@Path("calendarimilestone/test")
+	@Path("CalendarioMilestones/test")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String prova() {
 		System.out.println("ok calendarisemafori");
