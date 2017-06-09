@@ -14,7 +14,7 @@ import it.finsoft.manager.WSManager;
 import it.finsoft.manager.WSManager.DatiCollector;
 
 @Stateless
-@Path("collector")
+@Path("Collector")
 @Produces({ MediaType.APPLICATION_JSON })
 public class WSCollector {
 
@@ -36,7 +36,7 @@ public class WSCollector {
 	
 	/* ---- TEST RESOURCES ---- */
 	@GET
-	@Path("test")
+	@Path("Collector/test")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String prova() {
 		System.out.println("ok collector");

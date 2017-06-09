@@ -17,7 +17,7 @@ import it.finsoft.entity.MilestoneMilestone;
 import it.finsoft.manager.MilestoneMilestoneManager;
 
 @Stateless
-@Path("resources/milestoneMilestones")
+@Path("resources")
 @Produces({ MediaType.APPLICATION_JSON })
 public class MilestoneMilestoneResources {
 	
@@ -25,31 +25,33 @@ public class MilestoneMilestoneResources {
 	MilestoneMilestoneManager manager;
 	
 	@GET
+	@Path("MilestoneMilestones")
 	public List<MilestoneMilestone> findAll() {
 		return manager.findAll();
 	}
 	
 	@GET
-	@Path("{id}")
+	@Path("MilestoneMilestones({id})")
 	public MilestoneMilestone findById(@PathParam("id") Long id) {
 		return manager.findById(id);
 	}
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("MilestoneMilestones({id})")
 	public MilestoneMilestone create(MilestoneMilestone cal) {
 		System.out.println("post resources, salvo semaforomilestone " + cal);
 		return manager.save(cal);
 	}
 
 	@DELETE
-	@Path("{id}")
+	@Path("MilestoneMilestones({id})")
 	public void delete(@PathParam("id") Long id) {
 		manager.remove(id);
 	}
 
 	@PUT
-	@Path("{id}")//richiede di inserire (in json) tutti i campi obbligatori
+	@Path("MilestoneMilestones({id})")//richiede di inserire (in json) tutti i campi obbligatori
 	public void update(@PathParam("id") Long id, MilestoneMilestone m) {
 		m.setIdSemaforoMilestone(id);
 		manager.save(m);
@@ -57,7 +59,7 @@ public class MilestoneMilestoneResources {
 
 	/* ---- TEST RESOURCES ---- */
 	@GET
-	@Path("test")
+	@Path("MilestoneMilestones/test")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String prova() {
 		System.out.println("ok semaforimilestone");

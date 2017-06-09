@@ -12,7 +12,7 @@ import javax.ws.rs.core.MediaType;
 import it.finsoft.manager.WSManager;
 
 @Stateless
-@Path("reset")
+@Path("Reset")
 public class WSReset {
 
 	@Inject

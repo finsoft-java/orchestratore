@@ -14,7 +14,7 @@ import it.finsoft.manager.MilestoneManager;
 import it.finsoft.manager.WSManager;
 
 @Stateless
-@Path("polling")
+@Path("Polling")
 @Produces({ MediaType.APPLICATION_JSON })
 public class WSPolling {
 
@@ -39,8 +39,8 @@ public class WSPolling {
 	// -------------------------PollingFoglie----------------------//
 
 	@GET
-	//@Produces(MediaType.TEXT_PLAIN)
-	@Produces(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.TEXT_PLAIN)
+	//@Produces(MediaType.APPLICATION_JSON)
 	public boolean get(@QueryParam("milestone") String descMilestone, @QueryParam(value = "tag") List<String> tags) {
 		return wsManager.getPollingFoglieByDescr(descMilestone, tags);
 	}
@@ -57,7 +57,7 @@ public class WSPolling {
 
 	/* ---- TEST RESOURCES ---- */
 	@GET
-	@Path("test")
+	@Path("Polling/test")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String prova() {
 		System.out.println("ok polling");

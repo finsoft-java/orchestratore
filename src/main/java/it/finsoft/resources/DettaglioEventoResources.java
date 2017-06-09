@@ -17,7 +17,7 @@ import it.finsoft.entity.DettaglioEvento;
 import it.finsoft.manager.DettaglioEventoManager;
 
 @Stateless
-@Path("resources/dettagliEvento")
+@Path("resources")
 @Produces({ MediaType.APPLICATION_JSON })
 public class DettaglioEventoResources {
 
@@ -25,31 +25,33 @@ public class DettaglioEventoResources {
 	DettaglioEventoManager manager;
 
 	@GET
+	@Path("DettagliEvento")
 	public List<DettaglioEvento> findAll() {
 		return manager.findAll();
 	}
 
 	@GET
-	@Path("{id}")
+	@Path("DettagliEvento({id})")
 	public DettaglioEvento findById(@PathParam("id") Long id) {
 		return manager.findById(id);
 	}
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("DettagliEvento({id})")
 	public DettaglioEvento create(DettaglioEvento cal) {
 		System.out.println("post resources, salvo entita " + cal);
 		return manager.save(cal);
 	}
 
 	@DELETE
-	@Path("{id}")
+	@Path("DettagliEvento({id})")
 	public void delete(@PathParam("id") Long id) {
 		manager.remove(id);
 	}
 
 	@PUT
-	@Path("{id}") // richiede di inserire (in json) tutti i campi obbligatori
+	@Path("DettagliEvento({id})") // richiede di inserire (in json) tutti i campi obbligatori
 	public void update(@PathParam("id") Long id, DettaglioEvento m) {
 		m.setIdDettaglioEvento(id);
 		manager.save(m);
@@ -57,7 +59,7 @@ public class DettaglioEventoResources {
 
 	/* ---- TEST RESOURCES ---- */
 	@GET
-	@Path("test")
+	@Path("DettagliEvento/test")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String prova() {
 		System.out.println("ok calendarimilestones");

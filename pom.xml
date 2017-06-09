@@ -5,38 +5,12 @@
 	<artifactId>orchestratoreRADAR</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<dependencies>
-	
-		<!-- 000 	
-		<dependency>
-			<groupId>javax</groupId>
-			<artifactId>javaee-api</artifactId>
-			<version>7.0</version>
-			<scope>provided</scope>
-		</dependency>
 		<dependency> 
 			<groupId>javax.ws.rs</groupId> 
 			<artifactId>javax.ws.rs-api</artifactId> 
 			<version>2.1-m07</version> 
 		</dependency>
-		-->
 		
-		<!-- aggiunta di queste dipendenze per risoluzione errore: 
-		java.lang.AbstractMethodError: javax.ws.rs.core.UriBuilder.uri-->
-		<dependency> 
-    		<groupId>javax.ws.rs</groupId> 
-   			<artifactId>jsr311-api</artifactId> 
-    		<version>1.1.1</version>
-		</dependency> 
-		<!-- aggiunta di queste dipendenze per risoluzione errore: 
-		A message body writer for Java class it.finsoft.manager.WSManager$DatiCollector,
-		 and Java type class it.finsoft.manager.WSManager$DatiCollector, 
-		 and MIME media type application/json was not found-->
-		<dependency>
-   			<groupId>com.owlike</groupId>
-   			<artifactId>genson</artifactId>
-   			<version>0.99</version>
-		</dependency>
-		  
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
@@ -80,9 +54,9 @@
 
 		<!-- Da qui in avanti, sono le dipendenze per l'embedded glassfish -->
 		<dependency>
-			<groupId>org.glassfish.extras</groupId>
-			<artifactId>glassfish-embedded-all</artifactId>
-			<version>3.1.1</version>
+    		<groupId>org.glassfish.main.extras</groupId>
+    		<artifactId>glassfish-embedded-all</artifactId>
+    		<version>4.1.2</version>
 			<scope>provided</scope>
 		</dependency>
 		<!-- 
