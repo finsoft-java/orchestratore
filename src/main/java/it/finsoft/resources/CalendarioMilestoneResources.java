@@ -82,8 +82,8 @@ public class CalendarioMilestoneResources {
 	@Path("CalendarioMilestones/test")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String prova() {
-		System.out.println("ok calendarisemafori");
-		return "ok calendarimilestones";
+		System.out.println("ok CalendarioMilestones");
+		return "ok CalendarioMilestones";
 	}
 	/* ---- TEST RESOURCES ---- */
 

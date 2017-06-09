@@ -62,8 +62,8 @@ public class MilestoneResources {
 	@Path("Milestones/test")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String prova() {
-		System.out.println("ok milestones");
-		return "ok milestones";
+		System.out.println("ok Milestones");
+		return "ok Milestones";
 	}
 	/* ---- TEST RESOURCES ---- */
 

@@ -62,8 +62,8 @@ public class TipoEventoResources {
 	@Path("TipiEvento/test")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String prova() {
-		System.out.println("ok tipievento");
-		return "ok tipievento";
+		System.out.println("ok TipiEvento");
+		return "ok TipiEvento";
 	}
 	/* ---- TEST RESOURCES ---- */
 
