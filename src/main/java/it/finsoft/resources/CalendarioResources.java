@@ -66,8 +66,8 @@ public class CalendarioResources {
 	@Path("Calendari/Test")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String prova() {
-		System.out.println("ok calendari");
-		return "ok calendari";
+		System.out.println("ok Calendari");
+		return "ok Calendari";
 	}
 	/* ---- TEST RESOURCES ---- */
 

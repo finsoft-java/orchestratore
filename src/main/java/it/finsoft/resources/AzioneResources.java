@@ -62,8 +62,8 @@ public class AzioneResources {
 	@Path("Azioni/test")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String prova() {
-		System.out.println("ok semafori");
-		return "ok semafori";
+		System.out.println("ok Azioni");
+		return "ok Azioni";
 	}
 	/* ---- TEST RESOURCES ---- */
 

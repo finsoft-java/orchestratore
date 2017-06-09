@@ -62,8 +62,8 @@ public class DettaglioEventoResources {
 	@Path("DettagliEvento/test")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String prova() {
-		System.out.println("ok calendarimilestones");
-		return "ok calendarimilestones";
+		System.out.println("ok DettagliEvento");
+		return "ok DettagliEvento";
 	}
 	/* ---- TEST RESOURCES ---- */
 

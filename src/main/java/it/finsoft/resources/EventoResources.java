@@ -61,8 +61,8 @@ public class EventoResources {
 	@Path("Eventi/test")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String prova() {
-		System.out.println("ok eventi");
-		return "ok eventi";
+		System.out.println("ok Eventi");
+		return "ok Eventi";
 	}
 	/* ---- TEST RESOURCES ---- */
 }

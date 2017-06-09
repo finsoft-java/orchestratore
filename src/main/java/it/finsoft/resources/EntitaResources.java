@@ -61,8 +61,8 @@ public class EntitaResources {
 	@Path("Entita/test")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String prova() {
-		System.out.println("ok entita");
-		return "ok entita";
+		System.out.println("ok Entita");
+		return "ok Entita";
 	}
 	/* ---- TEST RESOURCES ---- */
 
