@@ -105,5 +105,5 @@ Occorre copiare/sostituire alcune librerie di glassfish, che hanno una versione 
   *  JNDI name: jdbc/orchestratore 
   *  poolname: orchestratore
 
-###Avvio dell'applicazione
+### Avvio dell'applicazione
 Avviare da Eclipse con "Run on server..."
