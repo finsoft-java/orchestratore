@@ -22,7 +22,7 @@ public class WSPolling {
 	WSManager wsManager;
 
 	@Inject
-	MilestoneManager managerMil;
+	MilestoneManager milestoneManager;
 
 	// -------------------------Precedente-Metodo-polling------------------------//
 	/*
@@ -60,8 +60,8 @@ public class WSPolling {
 	@Path("Polling/test")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String prova() {
-		System.out.println("ok polling");
-		return "ok polling";
+		System.out.println("ok Polling");
+		return "ok Polling";
 	}
 	/* ---- TEST RESOURCES ---- */
 
@@ -70,8 +70,8 @@ public class WSPolling {
 	@Path("testTree")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Milestone> Hierarchy(@QueryParam("milestone") String descMilestone) {
-		Milestone m = managerMil.findByDesc(descMilestone.toUpperCase());
-		return managerMil.getHierarchy(m);
+		Milestone m = milestoneManager.findByDesc(descMilestone.toUpperCase());
+		return milestoneManager.getHierarchy(m);
 	}
 
 	// TEST per l'esplosione solo delle foglie
@@ -79,7 +79,7 @@ public class WSPolling {
 	@Path("testLeaf")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Milestone> Leaf(@QueryParam("milestone") String descMilestone) {
-		Milestone m = managerMil.findByDesc(descMilestone.toUpperCase());
-		return managerMil.getFoglie(m);
+		Milestone m = milestoneManager.findByDesc(descMilestone.toUpperCase());
+		return milestoneManager.getFoglie(m);
 	}
 }

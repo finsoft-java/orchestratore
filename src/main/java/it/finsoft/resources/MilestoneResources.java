@@ -22,18 +22,18 @@ import it.finsoft.manager.MilestoneManager;
 public class MilestoneResources {
 
 	@Inject
-	MilestoneManager manager;
+	MilestoneManager milestoneManager;
 
 	@GET
 	@Path("Milestones")
 	public List<Milestone> findAll() {
-		return manager.findAll();
+		return milestoneManager.findAll();
 	}
 
 	@GET
 	@Path("Milestones({id})")
 	public Milestone findById(@PathParam("id") Long id) {
-		return manager.findById(id);
+		return milestoneManager.findById(id);
 	}
 
 	@POST
@@ -41,20 +41,20 @@ public class MilestoneResources {
 	@Path("Milestones({id})")
 	public Milestone create(Milestone cal) {
 		System.out.println("post resources, salvo entita " + cal);
-		return manager.save(cal);
+		return milestoneManager.save(cal);
 	}
 
 	@DELETE
 	@Path("Milestones({id})")
 	public void delete(@PathParam("id") Long id) {
-		manager.remove(id);
+		milestoneManager.remove(id);
 	}
 
 	@PUT
 	@Path("Milestones({id})") // richiede di inserire (in json) tutti i campi obbligatori
 	public void update(@PathParam("id") Long id, Milestone m) {
 		m.setIdMilestone(id);
-		manager.save(m);
+		milestoneManager.save(m);
 	}
 
 	/* ---- TEST RESOURCES ---- */
@@ -62,8 +62,8 @@ public class MilestoneResources {
 	@Path("Milestones/test")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String prova() {
-		System.out.println("ok milestones");
-		return "ok milestones";
+		System.out.println("ok Milestones");
+		return "ok Milestones";
 	}
 	/* ---- TEST RESOURCES ---- */
 

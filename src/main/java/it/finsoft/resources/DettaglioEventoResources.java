@@ -22,18 +22,18 @@ import it.finsoft.manager.DettaglioEventoManager;
 public class DettaglioEventoResources {
 
 	@Inject
-	DettaglioEventoManager manager;
+	DettaglioEventoManager dettaglioEventoManager;
 
 	@GET
 	@Path("DettagliEvento")
 	public List<DettaglioEvento> findAll() {
-		return manager.findAll();
+		return dettaglioEventoManager.findAll();
 	}
 
 	@GET
 	@Path("DettagliEvento({id})")
 	public DettaglioEvento findById(@PathParam("id") Long id) {
-		return manager.findById(id);
+		return dettaglioEventoManager.findById(id);
 	}
 
 	@POST
@@ -41,20 +41,20 @@ public class DettaglioEventoResources {
 	@Path("DettagliEvento({id})")
 	public DettaglioEvento create(DettaglioEvento cal) {
 		System.out.println("post resources, salvo entita " + cal);
-		return manager.save(cal);
+		return dettaglioEventoManager.save(cal);
 	}
 
 	@DELETE
 	@Path("DettagliEvento({id})")
 	public void delete(@PathParam("id") Long id) {
-		manager.remove(id);
+		dettaglioEventoManager.remove(id);
 	}
 
 	@PUT
 	@Path("DettagliEvento({id})") // richiede di inserire (in json) tutti i campi obbligatori
 	public void update(@PathParam("id") Long id, DettaglioEvento m) {
 		m.setIdDettaglioEvento(id);
-		manager.save(m);
+		dettaglioEventoManager.save(m);
 	}
 
 	/* ---- TEST RESOURCES ---- */
@@ -62,8 +62,8 @@ public class DettaglioEventoResources {
 	@Path("DettagliEvento/test")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String prova() {
-		System.out.println("ok calendarimilestones");
-		return "ok calendarimilestones";
+		System.out.println("ok DettagliEvento");
+		return "ok DettagliEvento";
 	}
 	/* ---- TEST RESOURCES ---- */
 

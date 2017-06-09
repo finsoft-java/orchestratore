@@ -1,6 +1,6 @@
 package it.finsoft.manager;
 
-public class UtilityChecker {
+public class UtilityCheck {
 
 	/*
 	 * Serve solamente a gestire eventuali errori di battitura semplici for ex:

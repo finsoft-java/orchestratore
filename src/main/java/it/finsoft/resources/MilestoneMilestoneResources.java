@@ -22,18 +22,18 @@ import it.finsoft.manager.MilestoneMilestoneManager;
 public class MilestoneMilestoneResources {
 	
 	@Inject
-	MilestoneMilestoneManager manager;
+	MilestoneMilestoneManager milestoneMilestonesManager;
 	
 	@GET
 	@Path("MilestoneMilestones")
 	public List<MilestoneMilestone> findAll() {
-		return manager.findAll();
+		return milestoneMilestonesManager.findAll();
 	}
 	
 	@GET
 	@Path("MilestoneMilestones({id})")
 	public MilestoneMilestone findById(@PathParam("id") Long id) {
-		return manager.findById(id);
+		return milestoneMilestonesManager.findById(id);
 	}
 
 	@POST
@@ -41,20 +41,20 @@ public class MilestoneMilestoneResources {
 	@Path("MilestoneMilestones({id})")
 	public MilestoneMilestone create(MilestoneMilestone cal) {
 		System.out.println("post resources, salvo semaforomilestone " + cal);
-		return manager.save(cal);
+		return milestoneMilestonesManager.save(cal);
 	}
 
 	@DELETE
 	@Path("MilestoneMilestones({id})")
 	public void delete(@PathParam("id") Long id) {
-		manager.remove(id);
+		milestoneMilestonesManager.remove(id);
 	}
 
 	@PUT
 	@Path("MilestoneMilestones({id})")//richiede di inserire (in json) tutti i campi obbligatori
 	public void update(@PathParam("id") Long id, MilestoneMilestone m) {
 		m.setIdSemaforoMilestone(id);
-		manager.save(m);
+		milestoneMilestonesManager.save(m);
 	}
 
 	/* ---- TEST RESOURCES ---- */
@@ -62,8 +62,8 @@ public class MilestoneMilestoneResources {
 	@Path("MilestoneMilestones/test")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String prova() {
-		System.out.println("ok semaforimilestone");
-		return "ok semaforimilestone";
+		System.out.println("ok MilestoneMilestones");
+		return "ok MilestoneMilestones";
 	}
 	/* ---- TEST RESOURCES ---- */
 
