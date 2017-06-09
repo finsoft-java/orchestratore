@@ -22,7 +22,8 @@ Avviare il server con "Run as application" e scegliendo la classe principale it.
 
 L'applicazione risponde all'indirizzo http://localhost:8080/orchestratoreRADAR
 
-La vecchia versione dell'installazione (con Glassfish server) è ancora disponibile, al fondo di queste note.
+Se invece si vuole avviare con Glassfish server *non* embedded, si vedano le vecchie istruzioni riportate
+al fondo di queste note.
 
 ## Creazione delle tabelle
 Attualmente, le tabelle vengono cancellate e ricreate automaticamente a ogni avvio.
