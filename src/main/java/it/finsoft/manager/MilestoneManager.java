@@ -57,7 +57,9 @@ public class MilestoneManager {
 		List<Milestone> output = new ArrayList<>();
 		List<MilestoneMilestone> ml = milestone.getMilestoneMilestone();
 		System.out.println(ml);
-		if (ml.isEmpty()){ output.add(milestone); }
+		if (ml.isEmpty()) {
+			output.add(milestone);
+		}
 		for (MilestoneMilestone milestoneMilestone : ml) {
 			List<Milestone> tmp = getFoglie(milestoneMilestone.getMilestoneChild());
 			for (Milestone m : tmp) {
@@ -68,4 +70,5 @@ public class MilestoneManager {
 		}
 		return output;
 	}
+
 }
