@@ -33,13 +33,12 @@ public class EmbeddedGlassfish {
 
 			// Start webserver
 
-			try {				
+			try {
 				GlassFishProperties properties = new GlassFishProperties();
 				properties.setConfigFileURI(CONFIG_FILE.toURI().toString());
 				glassfish = GlassFishRuntime.bootstrap().newGlassFish(properties);
 				glassfish.start();
-				
-			    
+
 			} catch (GlassFishException e) {
 				e.printStackTrace();
 				return;
@@ -100,7 +99,6 @@ public class EmbeddedGlassfish {
 				}
 			}
 		}
-
 	}
 
 	public static ScatteredArchive getScatteredArchive() throws IOException {
