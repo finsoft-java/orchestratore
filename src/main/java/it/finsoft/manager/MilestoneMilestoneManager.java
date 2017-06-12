@@ -38,8 +38,17 @@ public class MilestoneMilestoneManager {
 	}
 
 	// CONTROLLO PER EVITARE CONFLITTI E LOOP NELLE MILESTONEMILESTONE IN FASE
-	// DI CREAZIONE
-	public MilestoneMilestone preCreate(MilestoneMilestone mMilestone) {
+	// DI CREAZIONE E UPDATE
+	// IMPORTANTE: NON VALIDA L'UPDATE SE VIENE CAMBIATO SOLO IL CAMPO
+	// ORDINAMENTO
+	// ES:
+	/*
+	 * { "milestone":{ "idMilestone":1 }, "milestoneChild":{ "idMilestone":4 },
+	 * "ordinamento":1 } AGGIORNATO CON { "milestone":{ "idMilestone":1 },
+	 * "milestoneChild":{ "idMilestone":4 }, "ordinamento":2 } per il momento
+	 * non la ritiene una modifica valida
+	 */
+	public MilestoneMilestone preCheck(MilestoneMilestone mMilestone) {
 		long idMil = mMilestone.getMilestone().getIdMilestone();
 		long idMilCh = mMilestone.getMilestoneChild().getIdMilestone();
 		Milestone master = em.find(Milestone.class, idMil);

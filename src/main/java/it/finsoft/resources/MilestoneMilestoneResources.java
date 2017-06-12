@@ -41,7 +41,7 @@ public class MilestoneMilestoneResources {
 	@Path("MilestoneMilestones({id})")
 	public MilestoneMilestone create(MilestoneMilestone cal) {
 		System.out.println("post resources, salvo semaforomilestone " + cal);
-		return milestoneMilestonesManager.preCreate(cal);
+		return milestoneMilestonesManager.preCheck(cal);
 	}
 
 	@DELETE
@@ -54,7 +54,7 @@ public class MilestoneMilestoneResources {
 	@Path("MilestoneMilestones({id})")//richiede di inserire (in json) tutti i campi obbligatori
 	public void update(@PathParam("id") Long id, MilestoneMilestone m) {
 		m.setIdSemaforoMilestone(id);
-		milestoneMilestonesManager.save(m);
+		milestoneMilestonesManager.preCheck(m);
 	}
 
 	/* ---- TEST RESOURCES ---- */
