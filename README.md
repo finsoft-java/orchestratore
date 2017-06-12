@@ -10,10 +10,10 @@
 plugin eclipse consigliati:
 * egit (per github)
 * dbeaver (per accederere al DB)
+* FileSync (per aggiornare le risorse statiche senza dover fare redeploy)
 
 Se si usa il server Glassfish *non* embedded: 
 * glassfish tools (connettore al server glassfish)
-* FileSync (per aggiornare le risorse statiche senza dover fare redeploy)
 
 ## Installazione: nuova versione (con Glassfish embedded)
 Non serve installazione.
