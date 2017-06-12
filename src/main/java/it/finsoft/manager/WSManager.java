@@ -38,7 +38,7 @@ public class WSManager {
 	@Inject
 	TipoEventoManager managerTp;
 	@Inject
-	UtilityChecker syntax;
+	UtilityCheck utilityCheck;
 
 	// ---------------------------------WSReset----------------------------------------//
 
@@ -106,7 +106,7 @@ public class WSManager {
 			String tag = "";
 			try {
 				tag = tags.get(i);
-				tag = syntax.trimToUp(tag);
+				tag = utilityCheck.trimToUp(tag);
 			} catch (Exception e) {
 				LOG.error("ERROR:non sono stati passati sufficienti tag");
 				result.errorMessage = "ERROR:il numero di tag in input (" + tags.size()
@@ -147,8 +147,8 @@ public class WSManager {
 		DatiCollector result = new DatiCollector();
 		try {
 			Evento e = new Evento();
-			codiceEnt = syntax.trimToUp(codiceEnt);
-			codiceTipi = syntax.trimToUp(codiceTipi);
+			codiceEnt = utilityCheck.trimToUp(codiceEnt);
+			codiceTipi = utilityCheck.trimToUp(codiceTipi);
 			e.setEntita(managerEnt.findByCod(codiceEnt));
 			e.setTipoEvento(managerTp.findByCod(codiceTipi));
 			e.setTag(tag);
@@ -248,7 +248,7 @@ public class WSManager {
 					// se non vengono passati i tag, o non ne vengono passati a
 					// sufficienza
 				tag = tags.get(i);
-				tag = syntax.trimToUp(tag);
+				tag = utilityCheck.trimToUp(tag);
 			} catch (IndexOutOfBoundsException e) {
 				LOG.error("ERROR:non sono stati passati sufficienti tag");
 			}
@@ -267,7 +267,7 @@ public class WSManager {
 	// ------------------------------------PollingFoglieByDescr-----------------------------------//
 
 	public boolean getPollingFoglieByDescr(String descMilestone, List<String> tags) {
-		descMilestone=syntax.toUp(descMilestone);
+		descMilestone=utilityCheck.toUp(descMilestone);
 		LOG.info("Parametri di ricerca: Milestone " + descMilestone + " Tag " + tags);
 		Milestone milestone = null;
 		try {
@@ -283,7 +283,7 @@ public class WSManager {
 	// ------------------------------------WSPollingStandard1L(boolean)--------------------------------------------------//
 
 	public boolean getPolling1LByDescr(String descMilestone, List<String> tags) {
-		descMilestone=syntax.toUp(descMilestone);
+		descMilestone=utilityCheck.toUp(descMilestone);
 		LOG.info("Parametri di ricerca: Milestone " + descMilestone + " Tag " + tags);
 		Milestone milestone = null;
 		try {
@@ -303,7 +303,7 @@ public class WSManager {
 			String tag = "";
 			try {
 				tag = tags.get(0);
-				tag = syntax.trimToUp(tag);
+				tag = utilityCheck.trimToUp(tag);
 			} catch (Exception e) {
 				LOG.error("ERROR:non sono stati passati sufficienti tag");
 			}
@@ -315,7 +315,7 @@ public class WSManager {
 			String tag = "";
 			try {
 				tag = tags.get(i);
-				tag = syntax.trimToUp(tag);
+				tag = utilityCheck.trimToUp(tag);
 			} catch (Exception e) {
 				LOG.error("ERROR:non sono stati passati sufficienti tag");
 			}
