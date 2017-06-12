@@ -14,7 +14,7 @@ import it.finsoft.manager.MilestoneManager;
 import it.finsoft.manager.WSManager;
 
 @Stateless
-@Path("polling")
+@Path("Polling")
 @Produces({ MediaType.APPLICATION_JSON })
 public class WSPolling {
 
@@ -22,7 +22,7 @@ public class WSPolling {
 	WSManager wsManager;
 
 	@Inject
-	MilestoneManager managerMil;
+	MilestoneManager milestoneManager;
 
 	// -------------------------Precedente-Metodo-polling------------------------//
 	/*
@@ -39,8 +39,8 @@ public class WSPolling {
 	// -------------------------PollingFoglie----------------------//
 
 	@GET
-	//@Produces(MediaType.TEXT_PLAIN)
-	@Produces(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.TEXT_PLAIN)
+	// @Produces(MediaType.APPLICATION_JSON)
 	public boolean get(@QueryParam("milestone") String descMilestone, @QueryParam(value = "tag") List<String> tags) {
 		return wsManager.getPollingFoglieByDescr(descMilestone, tags);
 	}
@@ -49,19 +49,19 @@ public class WSPolling {
 	// Polling di 1' Livello con 2 routine
 	/*
 	 * @GET
+	 * 
 	 * @Produces(MediaType.TEXT_PLAIN) public boolean
 	 * get(@QueryParam("milestone") String descMilestone, @QueryParam(value =
-	 * "tag") List<String> tags) { return wsManager.getPolling1LByDescr(descMilestone,
-	 * tags); }
+	 * "tag") List<String> tags) { return
+	 * wsManager.getPolling1LByDescr(descMilestone, tags); }
 	 */
 
 	/* ---- TEST RESOURCES ---- */
-	@GET
-	@Path("test")
-	@Produces(MediaType.APPLICATION_JSON)
+	@Path("Polling/test")
+	@Produces(MediaType.TEXT_PLAIN)
 	public String prova() {
-		System.out.println("ok polling");
-		return "ok polling";
+		System.out.println("ok Polling");
+		return "ok Polling";
 	}
 	/* ---- TEST RESOURCES ---- */
 
@@ -70,8 +70,8 @@ public class WSPolling {
 	@Path("testTree")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Milestone> Hierarchy(@QueryParam("milestone") String descMilestone) {
-		Milestone m = managerMil.findByDesc(descMilestone.toUpperCase());
-		return managerMil.getHierarchy(m);
+		Milestone m = milestoneManager.findByDesc(descMilestone.toUpperCase());
+		return milestoneManager.getHierarchy(m);
 	}
 
 	// TEST per l'esplosione solo delle foglie
@@ -79,7 +79,7 @@ public class WSPolling {
 	@Path("testLeaf")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Milestone> Leaf(@QueryParam("milestone") String descMilestone) {
-		Milestone m = managerMil.findByDesc(descMilestone.toUpperCase());
-		return managerMil.getFoglie(m);
+		Milestone m = milestoneManager.findByDesc(descMilestone.toUpperCase());
+		return milestoneManager.getFoglie(m);
 	}
 }

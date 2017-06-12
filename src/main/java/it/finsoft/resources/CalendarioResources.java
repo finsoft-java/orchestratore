@@ -17,25 +17,26 @@ import it.finsoft.entity.Calendario;
 import it.finsoft.manager.CalendarioManager;
 
 @Stateless
-@Path("resources/calendari") //aggiunto il suffisso /calendari per testare la risoluzione dell'errore:
+@Path("resources") //aggiunto il suffisso /calendari per testare la risoluzione dell'errore:
 //Conflicting URI templates. The URI template /resources for root resource class it.finsoft.resources.CalendarioResources 
 //and the URI template /resources transform to the same regular expression /resources(/.*)?
+//causato dal fatto che non gli piace trovare due @Path identici (es: "resources")
 @Produces({ MediaType.APPLICATION_JSON })
 public class CalendarioResources {
 
 	@Inject
-	CalendarioManager manager;
+	CalendarioManager calendarioManager;
 
 	@GET
-	//@Path("Calendari")
+	@Path("Calendari")
 	public List<Calendario> findAll() {
-		return manager.findAll();
+		return calendarioManager.findAll();
 	}
 
 	@GET
 	@Path("Calendari({id})")
 	public Calendario findById(@PathParam("id") Long id) {
-		return manager.findById(id);
+		return calendarioManager.findById(id);
 	}
 
 	@POST
@@ -43,13 +44,13 @@ public class CalendarioResources {
 	@Path("Calendari({id})")
 	public Calendario create(Calendario cal) {
 		System.out.println("post resources, salvo entita " + cal);
-		return manager.save(cal);
+		return calendarioManager.save(cal);
 	}
 
 	@DELETE
 	@Path("Calendari({id})")
 	public void delete(@PathParam("id") Long id) {
-		manager.remove(id);
+		calendarioManager.remove(id);
 	}
 
 	@PUT
@@ -57,7 +58,7 @@ public class CalendarioResources {
 								// obbligatori
 	public void update(@PathParam("id") Long id, Calendario m) {
 		m.setIdCalendario(id);
-		manager.save(m);
+		calendarioManager.save(m);
 	}
 
 	/* ---- TEST RESOURCES ---- */
@@ -65,8 +66,8 @@ public class CalendarioResources {
 	@Path("Calendari/Test")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String prova() {
-		System.out.println("ok calendari");
-		return "ok calendari";
+		System.out.println("ok Calendari");
+		return "ok Calendari";
 	}
 	/* ---- TEST RESOURCES ---- */
 

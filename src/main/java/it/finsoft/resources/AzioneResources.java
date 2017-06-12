@@ -17,51 +17,53 @@ import it.finsoft.manager.AzioneManager;
 
 
 @Stateless
-@Path("resources/azioni")
+@Path("resources")
 @Produces({ MediaType.APPLICATION_JSON })
 public class AzioneResources {
 
 	@Inject
-	AzioneManager manager;
-
-	@GET
-	@Path("{id}")
-	public Azione findById(@PathParam("id") Long id) {
-		return manager.findById(id);
-	}
+	AzioneManager azioneManager;
 	
 	@GET
+	@Path("Azioni")
 	public List<Azione> findAll() {
-		return manager.findAll();
+		return azioneManager.findAll();
+	}
+
+	@GET
+	@Path("Azioni({id})")
+	public Azione findById(@PathParam("id") Long id) {
+		return azioneManager.findById(id);
 	}
 	
 	@POST
+	@Path("Azioni({id})")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Azione create(Azione cal) {
 		System.out.println("post resources, salvo azione " + cal);
-		return manager.save(cal);
+		return azioneManager.save(cal);
 	}
 
 	@DELETE
-	@Path("{id}")
+	@Path("Azioni({id})")
 	public void delete(@PathParam("id") Long id) {
-		manager.remove(id);
+		azioneManager.remove(id);
 	}
 
 	@PUT
-	@Path("{id}")//richiede di inserire (in json) tutti i campi obbligatori
+	@Path("Azioni({id})")//richiede di inserire (in json) tutti i campi obbligatori
 	public void update(@PathParam("id") Long id, Azione m) {
 		m.setIdAzione(id);
-		manager.save(m);
+		azioneManager.save(m);
 	}
 
 	/* ---- TEST RESOURCES ---- */
 	@GET
-	@Path("test")
+	@Path("Azioni/test")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String prova() {
-		System.out.println("ok semafori");
-		return "ok semafori";
+		System.out.println("ok Azioni");
+		return "ok Azioni";
 	}
 	/* ---- TEST RESOURCES ---- */
 

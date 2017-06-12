@@ -16,51 +16,53 @@ import it.finsoft.entity.Entita;
 import it.finsoft.manager.EntitaManager;
 
 @Stateless
-@Path("resources/entita")
+@Path("resources")
 @Produces({ MediaType.APPLICATION_JSON })
 public class EntitaResources {
 
 	@Inject
-	EntitaManager manager;
+	EntitaManager entitaManager;
 
 	@GET
+	@Path("Entita")
 	public List<Entita> findAll() {
-		return manager.findAll();
+		return entitaManager.findAll();
 	}
 
 	@GET
-	@Path("{id}")
+	@Path("Entita({id})")
 	public Entita findById(@PathParam("id") Long id) {
-		return manager.findById(id);
+		return entitaManager.findById(id);
 	}
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("Entita({id})")
 	public Entita create(Entita cal) {
 		System.out.println("post resources, salvo entita " + cal);
-		return manager.save(cal);
+		return entitaManager.save(cal);
 	}
 
 	@DELETE
-	@Path("{id}")
+	@Path("Entita({id})")
 	public void delete(@PathParam("id") Long id) {
-		manager.remove(id);
+		entitaManager.remove(id);
 	}
 
 	@PUT
-	@Path("{id}") // richiede di inserire (in json) tutti i campi obbligatori
+	@Path("Entita({id})") // richiede di inserire (in json) tutti i campi obbligatori
 	public void update(@PathParam("id") Long id, Entita m) {
 		m.setIdEntita(id);
-		manager.save(m);
+		entitaManager.save(m);
 	}
 
 	/* ---- TEST RESOURCES ---- */
 	@GET
-	@Path("test")
+	@Path("Entita/test")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String prova() {
-		System.out.println("ok entita");
-		return "ok entita";
+		System.out.println("ok Entita");
+		return "ok Entita";
 	}
 	/* ---- TEST RESOURCES ---- */
 

@@ -17,45 +17,45 @@ import it.finsoft.entity.CalendarioMilestone;
 import it.finsoft.manager.CalendarioMilestoneManager;
 
 @Stateless
-@Path("resources/calendariMilestone")
+@Path("resources")
 @Produces({ MediaType.APPLICATION_JSON })
 public class CalendarioMilestoneResources {
 
 	@Inject
-	CalendarioMilestoneManager manager;
+	CalendarioMilestoneManager calendarioMilestoneManager;
 
 	@GET
-	//@Path("CalendariMilestone")
+	@Path("CalendarioMilestones")
 	public List<CalendarioMilestone> findAll() {
-		return manager.findAll();
+		return calendarioMilestoneManager.findAll();
 	}
 
 	@GET
-	@Path("CalendariMilestone({id})")
+	@Path("CalendarioMilestones({id})")
 	public CalendarioMilestone findById(@PathParam("id") Long id) {
-		return manager.findById(id);
+		return calendarioMilestoneManager.findById(id);
 	}
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	@Path("CalendariMilestone")
+	@Path("CalendarioMilestones")
 	public CalendarioMilestone create(CalendarioMilestone cal) {
 		System.out.println("post resources, salvo entita " + cal);
-		return manager.save(cal);
+		return calendarioMilestoneManager.save(cal);
 	}
 
 	@DELETE
-	@Path("CalendariMilestone({id})")
+	@Path("CalendarioMilestones({id})")
 	public void delete(@PathParam("id") Long id) {
-		manager.remove(id);
+		calendarioMilestoneManager.remove(id);
 	}
 
 	@PUT
-	@Path("CalendariMilestone({id})") // richiede di inserire (in json) tutti i
+	@Path("CalendarioMilestones({id})") // richiede di inserire (in json) tutti i
 										// campi obbligatori
 	public void update(@PathParam("id") Long id, CalendarioMilestone m) {
 		m.setIdCalendarioMilestone(id);
-		manager.save(m);
+		calendarioMilestoneManager.save(m);
 	}
 	/*
 	 * { "milestone" : { "idMilestone" : 1 }, "calendario" : { "idCalendario" :
@@ -67,23 +67,23 @@ public class CalendarioMilestoneResources {
 	@GET
 	@Path("Calendari({idc})/Milestone")
 	public List<CalendarioMilestone> findByIdCalendario(@PathParam("idc") Long idCalendario) {
-		return manager.findByIdCalendario(idCalendario);
+		return calendarioMilestoneManager.findByIdCalendario(idCalendario);
 	}
 	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("Calendari({idc})/Milestone")
 	public CalendarioMilestone create(@PathParam("idc") Long idCalendario, CalendarioMilestone cal) {
-		return manager.save(idCalendario, cal);
+		return calendarioMilestoneManager.save(idCalendario, cal);
 	}
 
 	/* ---- TEST RESOURCES ---- */
 	@GET
-	@Path("calendarimilestone/test")
+	@Path("CalendarioMilestones/test")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String prova() {
-		System.out.println("ok calendarisemafori");
-		return "ok calendarimilestones";
+		System.out.println("ok CalendarioMilestones");
+		return "ok CalendarioMilestones";
 	}
 	/* ---- TEST RESOURCES ---- */
 
