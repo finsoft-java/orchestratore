@@ -1,6 +1,13 @@
 <!-- Glassfish domain configuration -->
-<domain application-root="${com.sun.aas.instanceRoot}/applications"
-	version="1" log-root="${com.sun.aas.instanceRoot}/logs">
+<!-- 
+Esistono due configurazioni possibili: con indirizzo statico o dinamico.
+Il vantaggio di un percorso statico è che si può configurare FileSync in Eclipse
+Il vantaggio di un percorso dinamico è che viene salvato in una cartella temporanea, 
+in maniera indipendente dalla macchina locale.
+Per usare un percorso dinamico sostituire C:/applicationserver/domains/domain1 con ${com.sun.aas.instanceRoot}.
+ -->
+<domain application-root="C:/applicationserver/domains/domain1/applications"
+	version="1" log-root="C:/applicationserver/domains/domain1/logs">
 	<security-configurations>
 		<authentication-service default="true" name="adminAuth"
 			use-password-credential="true">
@@ -36,7 +43,7 @@
 	<system-applications>
 		<application context-root="" object-type="system-admin"
 			directory-deployed="true" name="__admingui"
-			location="${com.sun.aas.installRootURI}/lib/install/applications/__admingui">
+			location="C:/applicationserver/domains/domain1/lib/install/applications/__admingui">
 			<module name="__admingui">
 				<engine sniffer="web"></engine>
 				<engine sniffer="security"></engine>
@@ -51,7 +58,7 @@
 		<jdbc-connection-pool datasource-classname="org.apache.derby.jdbc.EmbeddedXADataSource"
 			name="__TimerPool" res-type="javax.sql.XADataSource">
 			<property name="databaseName"
-				value="${com.sun.aas.instanceRoot}/lib/databases/ejbtimer"></property>
+				value="C:/applicationserver/domains/domain1/lib/databases/ejbtimer"></property>
 			<property name="connectionAttributes" value=";create=true"></property>
 		</jdbc-connection-pool>
 		<jdbc-connection-pool
@@ -103,7 +110,9 @@
 		</server>
 	</servers>
 	<nodes>
-		<node name="localhost-domain1" install-dir="${com.sun.aas.productRoot}"
+<!-- 		<node name="localhost-domain1" install-dir="${com.sun.aas.productRoot}"
+			type="CONFIG" node-host="localhost"></node> -->
+			<node name="localhost-domain1" install-dir="C:/applicationserver/domains/domain1"
 			type="CONFIG" node-host="localhost"></node>
 	</nodes>
 	<configs>
@@ -140,7 +149,7 @@
 				<property name="adminConsoleContextRoot" value="/admin"></property>
 				<property name="adminConsoleDownloadLocation"
 					value="${com.sun.aas.installRoot}/lib/install/applications/admingui.war"></property>
-				<property name="ipsRoot" value="${com.sun.aas.installRoot}/.."></property>
+				<property name="ipsRoot" value="C:/applicationserver/domains/domain1/.."></property>
 				<das-config></das-config>
 			</admin-service>
 			<connector-service></connector-service>
@@ -169,13 +178,13 @@
 				<auth-realm classname="com.sun.enterprise.security.auth.realm.file.FileRealm"
 					name="admin-realm">
 					<property name="file"
-						value="${com.sun.aas.instanceRoot}/config/admin-keyfile"></property>
+						value="C:/applicationserver/domains/domain1/config/admin-keyfile"></property>
 					<property name="jaas-context" value="fileRealm"></property>
 				</auth-realm>
 				<auth-realm classname="com.sun.enterprise.security.auth.realm.file.FileRealm"
 					name="file">
 					<property name="file"
-						value="${com.sun.aas.instanceRoot}/config/keyfile"></property>
+						value="C:/applicationserver/domains/domain1/config/keyfile"></property>
 					<property name="jaas-context" value="fileRealm"></property>
 				</auth-realm>
 				<auth-realm
@@ -185,7 +194,7 @@
 					name="default"
 					policy-configuration-factory-provider="com.sun.enterprise.security.provider.PolicyConfigurationFactoryImpl">
 					<property name="repository"
-						value="${com.sun.aas.instanceRoot}/generated/policy"></property>
+						value="C:/applicationserver/domains/domain1/generated/policy"></property>
 				</jacc-provider>
 				<jacc-provider
 					policy-provider="com.sun.enterprise.security.jacc.provider.SimplePolicyProvider"
@@ -214,7 +223,7 @@
 						<property name="dynamic.username.password" value="false"></property>
 						<property name="debug" value="false"></property>
 						<property name="security.config"
-							value="${com.sun.aas.instanceRoot}/config/wss-server-config-1.0.xml"></property>
+							value="C:/applicationserver/domains/domain1/config/wss-server-config-1.0.xml"></property>
 					</provider-config>
 					<provider-config provider-type="server"
 						provider-id="XWS_ServerProvider" class-name="com.sun.xml.wss.provider.ServerSecurityAuthModule">
@@ -232,7 +241,7 @@
 						<property name="signature.key.alias" value="s1as"></property>
 						<property name="debug" value="false"></property>
 						<property name="security.config"
-							value="${com.sun.aas.instanceRoot}/config/wss-server-config-1.0.xml"></property>
+							value="C:/applicationserver/domains/domain1/config/wss-server-config-1.0.xml"></property>
 					</provider-config>
 				</message-security-config>
 				<message-security-config auth-layer="HttpServlet">
@@ -352,7 +361,7 @@
 				<virtual-server network-listeners="http-listener-1, http-listener-2"
 					id="server">
 					<property name="default-web-xml"
-						value="${com.sun.aas.instanceRoot}/config/default-web.xml"></property>
+						value="C:/applicationserver/domains/domain1/config/default-web.xml"></property>
 				</virtual-server>
 				<virtual-server network-listeners="admin-listener"
 					id="__asadmin"></virtual-server>
@@ -376,7 +385,7 @@
 				<jmx-connector address="0.0.0.0" port="${JMX_SYSTEM_CONNECTOR_PORT}"
 					name="system" auth-realm-name="admin-realm" security-enabled="false"></jmx-connector>
 				<property name="adminConsoleDownloadLocation"
-					value="${com.sun.aas.installRoot}/lib/install/applications/admingui.war"></property>
+					value="C:/applicationserver/domains/domain1/lib/install/applications/admingui.war"></property>
 				<das-config></das-config>
 			</admin-service>
 			<web-container>
@@ -397,7 +406,7 @@
 				<jms-host port="${JMS_PROVIDER_PORT}" host="localhost"
 					name="default_JMS_host"></jms-host>
 			</jms-service>
-			<log-service file="${com.sun.aas.instanceRoot}/logs/server.log"
+			<log-service file="C:/applicationserver/domains/domain1/logs/server.log"
 				log-rotation-limit-in-bytes="2000000">
 				<module-log-levels></module-log-levels>
 			</log-service>
@@ -405,13 +414,13 @@
 				<auth-realm classname="com.sun.enterprise.security.auth.realm.file.FileRealm"
 					name="admin-realm">
 					<property name="file"
-						value="${com.sun.aas.instanceRoot}/config/admin-keyfile"></property>
+						value="C:/applicationserver/domains/domain1/config/admin-keyfile"></property>
 					<property name="jaas-context" value="fileRealm"></property>
 				</auth-realm>
 				<auth-realm classname="com.sun.enterprise.security.auth.realm.file.FileRealm"
 					name="file">
 					<property name="file"
-						value="${com.sun.aas.instanceRoot}/config/keyfile"></property>
+						value="C:/applicationserver/domains/domain1/config/keyfile"></property>
 					<property name="jaas-context" value="fileRealm"></property>
 				</auth-realm>
 				<auth-realm
@@ -421,7 +430,7 @@
 					name="default"
 					policy-configuration-factory-provider="com.sun.enterprise.security.provider.PolicyConfigurationFactoryImpl">
 					<property name="repository"
-						value="${com.sun.aas.instanceRoot}/generated/policy"></property>
+						value="C:/applicationserver/domains/domain1/generated/policy"></property>
 				</jacc-provider>
 				<jacc-provider
 					policy-provider="com.sun.enterprise.security.jacc.provider.SimplePolicyProvider"
@@ -450,7 +459,7 @@
 						<property name="dynamic.username.password" value="false"></property>
 						<property name="debug" value="false"></property>
 						<property name="security.config"
-							value="${com.sun.aas.instanceRoot}/config/wss-server-config-1.0.xml"></property>
+							value="C:/applicationserver/domains/domain1/config/wss-server-config-1.0.xml"></property>
 					</provider-config>
 					<provider-config provider-type="server"
 						provider-id="XWS_ServerProvider" class-name="com.sun.xml.wss.provider.ServerSecurityAuthModule">
@@ -468,12 +477,12 @@
 						<property name="signature.key.alias" value="s1as"></property>
 						<property name="debug" value="false"></property>
 						<property name="security.config"
-							value="${com.sun.aas.instanceRoot}/config/wss-server-config-1.0.xml"></property>
+							value="C:/applicationserver/domains/domain1/config/wss-server-config-1.0.xml"></property>
 					</provider-config>
 				</message-security-config>
 			</security-service>
 			<transaction-service automatic-recovery="true"
-				tx-log-dir="${com.sun.aas.instanceRoot}/logs"></transaction-service>
+				tx-log-dir="C:/applicationserver/domains/domain1/logs"></transaction-service>
 			<diagnostic-service></diagnostic-service>
 			<java-config classpath-suffix=""
 				debug-options="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=${JAVA_DEBUGGER_PORT}"
