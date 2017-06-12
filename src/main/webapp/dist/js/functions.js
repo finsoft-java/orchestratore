@@ -105,11 +105,13 @@ function getDettaglioCalendarioMilestone(idCalendario) {
 				}, {
 					data : 'dataOraPreviste'
 				}, {
-					data : null, defaultContent: ''
+					data : 'semaforo', defaultContent: ''
 				}, {
 					data : 'tags'
 				}, ]
 			});
+			
+			richiamaPolling($("#tableDettaglioCalendarioMilestone").DataTable());
 		}
 	});
 }
@@ -138,5 +140,33 @@ function attivaWidget() {
 		defaultTime : false,
 		minuteStep : 1,
 		autoclose : true
+	});
+}
+
+// Richiama il servizio di polling su tutte le righe di una datatable data
+function richiamaPolling(dataTable) {
+	for (var rowNum = 0; rowNum < dataTable.rows().length; ++rowNum) {
+		richiamaPolling0(dataTable, dataTable.row(rowNum));
+	}
+}
+
+// Richiama il servizio di polling relativo a una specifica riga di tabella
+// ATTENZIONE, il servizio Polling richiede tanti parametri tutti di tipo tag.
+function richiamaPolling0(dataTable, row) {
+	
+	var milestone = row.data().milestone.descrizione;
+	var tags = row.data().tags;
+	var endpoint = "ws/Polling?milestone=" + milestone + "&tag=" + tags.split(",").join("&tag=");
+	
+	alert(endpoint);
+	
+	$.ajax({
+		type : "GET",
+		url : endpoint,
+		dataType : "json",
+		success : function(dataSet) {
+			alert(dataSet);
+			row.data().semaforo = dataSet;
+		}
 	});
 }
