@@ -20,15 +20,15 @@ import it.finsoft.manager.MilestoneMilestoneManager;
 @Path("resources/milestoneMilestones")
 @Produces({ MediaType.APPLICATION_JSON })
 public class MilestoneMilestoneResources {
-	
+
 	@Inject
 	MilestoneMilestoneManager manager;
-	
+
 	@GET
 	public List<MilestoneMilestone> findAll() {
 		return manager.findAll();
 	}
-	
+
 	@GET
 	@Path("{id}")
 	public MilestoneMilestone findById(@PathParam("id") Long id) {
@@ -39,7 +39,7 @@ public class MilestoneMilestoneResources {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public MilestoneMilestone create(MilestoneMilestone cal) {
 		System.out.println("post resources, salvo semaforomilestone " + cal);
-		return manager.save(cal);
+		return manager.preCreate(cal);
 	}
 
 	@DELETE
@@ -49,10 +49,10 @@ public class MilestoneMilestoneResources {
 	}
 
 	@PUT
-	@Path("{id}")//richiede di inserire (in json) tutti i campi obbligatori
+	@Path("{id}") // richiede di inserire (in json) tutti i campi obbligatori
 	public void update(@PathParam("id") Long id, MilestoneMilestone m) {
 		m.setIdSemaforoMilestone(id);
-		manager.save(m);
+		manager.preCreate(m);
 	}
 
 	/* ---- TEST RESOURCES ---- */
@@ -64,6 +64,5 @@ public class MilestoneMilestoneResources {
 		return "ok semaforimilestone";
 	}
 	/* ---- TEST RESOURCES ---- */
-
 
 }
