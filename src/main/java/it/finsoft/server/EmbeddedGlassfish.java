@@ -14,7 +14,7 @@ import org.glassfish.embeddable.archive.ScatteredArchive;
 
 public class EmbeddedGlassfish {
 
-	public static final File CONFIG_FILE = new File("config", "domain.xml");
+	public static final File CONFIG_FILE = new File("config", "domainNew.xml");
 	public static final String CONTEXT_ROOT = "orchestratoreRADAR";
 
 	/**

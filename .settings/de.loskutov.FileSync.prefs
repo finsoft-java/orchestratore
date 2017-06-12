@@ -1,5 +1,5 @@
 WARNING=DO NOT MODIFY THIS FILE IF YOU DON'T UNDERSTAND
-defaultDestination=C\:/glassfish-4.1.1/glassfish/domains/domain1/applications/orchestratore
+defaultDestination=C\:/applicationserver/domains/domain1/applications/Orchestratore
 defaultVariables=
 eclipse.preferences.version=1
 includeTeamPrivateFiles=false
