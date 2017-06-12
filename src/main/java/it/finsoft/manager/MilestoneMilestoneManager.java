@@ -81,7 +81,7 @@ public class MilestoneMilestoneManager {
 		 * MilestoneMilestone fatta cosi' System.out.println("gia' presente");
 		 * ok = false; }
 		 * 
-		 * // GET HIERARCHY NON VA BENE
+		 * // FATTO COSI NON FUNZIONA CORRETTAMENTE
 		 * 
 		 * List<Milestone> mListA = milestoneManager.getHierarchy(milestoneA);
 		 * List<Milestone> mListB = milestoneManager.getHierarchy(milestoneB);
