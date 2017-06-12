@@ -30,11 +30,11 @@ public class Milestone implements Serializable {
 	@Column(name = "ID_MILESTONE")
 	private Long idMilestone;
 
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = true)
 	@JoinColumn(name = "ID_TIPO_EVENTO", referencedColumnName = "ID_TIPO_EVENTO")
 	private TipoEvento tipoEvento; // foreign key tabella tipo_evento
 
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = true)
 	@JoinColumn(name = "ID_ENTITA", referencedColumnName = "ID_ENTITA")
 	private Entita entita; // foreign key tabella entita
 

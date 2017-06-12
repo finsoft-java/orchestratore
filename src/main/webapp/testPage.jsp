@@ -19,40 +19,40 @@
 			<form action="ws/Collector" target="_blank" method="get">
 				Codice evento: <input name="tipiEvento" value="LOAD" /><br />
 				Codice entit&agrave;: <input name="entita" value="U7SC0_BO" /><br />
-				Tag: <input name="tag" value="20170523U" /><br /> <input
+				Tag: <input name="tag" value="20170623ABC" /><br /> <input
 					type="submit" />
 			</form>
 			<br />
 			<br /> FORM per recuperare lo stato di una milestone (Restituisce TRUE o FALSE):
 			<form action="ws/Polling" target="_blank" method="get">
 				Codice milestone: <input name="milestone" value="milestone 5" /><br />
-				Tag1: <input name="tag" value="20170523U" /><br /> Tag2: <input
-					name="tag" value="20170523U" /><br /> Tag3: <input name="tag"
-					value="20170523U" /><br /> Tag4: <input name="tag"
-					value="20170523U" /><br /> Tag5: <input name="tag"
-					value="20170523U" /><br /> <input type="submit" />
+				Tag1: <input name="tag" value="20170623ABC" /><br /> Tag2: <input
+					name="tag" value="20170623ABC" /><br /> Tag3: <input name="tag"
+					value="20170623ABC" /><br /> Tag4: <input name="tag"
+					value="20170623ABC" /><br /> Tag5: <input name="tag"
+					value="20170623ABC" /><br /> <input type="submit" />
 			</form>
 			
 			<br />
 			<br /> FORM per recuperare lo stato di una milestone (Albero):
 			<form action="ws/Polling/testTree" target="_blank" method="get">
 				Codice milestone: <input name="milestone" value="milestone 5" /><br />
-				Tag1: <input name="tag" value="20170523U" /><br /> Tag2: <input
-					name="tag" value="20170523U" /><br /> Tag3: <input name="tag"
-					value="20170523U" /><br /> Tag4: <input name="tag"
-					value="20170523U" /><br /> Tag5: <input name="tag"
-					value="20170523U" /><br /> <input type="submit" />
+				Tag1: <input name="tag" value="20170623ABC" /><br /> Tag2: <input
+					name="tag" value="20170623ABC" /><br /> Tag3: <input name="tag"
+					value="20170623ABC" /><br /> Tag4: <input name="tag"
+					value="20170623ABC" /><br /> Tag5: <input name="tag"
+					value="20170623ABC" /><br /> <input type="submit" />
 			</form>
 			
 			<br />
 			<br /> FORM per recuperare lo stato di una milestone (Foglie):
 			<form action="ws/Polling/testLeaf" target="_blank" method="get">
 				Codice milestone: <input name="milestone" value="milestone 5" /><br />
-				Tag1: <input name="tag" value="20170523U" /><br /> Tag2: <input
-					name="tag" value="20170523U" /><br /> Tag3: <input name="tag"
-					value="20170523U" /><br /> Tag4: <input name="tag"
-					value="20170523U" /><br /> Tag5: <input name="tag"
-					value="20170523U" /><br /> <input type="submit" />
+				Tag1: <input name="tag" value="20170623ABC" /><br /> Tag2: <input
+					name="tag" value="20170623ABC" /><br /> Tag3: <input name="tag"
+					value="20170623ABC" /><br /> Tag4: <input name="tag"
+					value="20170623ABC" /><br /> Tag5: <input name="tag"
+					value="20170623ABC" /><br /> <input type="submit" />
 			</form>
 		</section>
 		<!-- /.content -->
