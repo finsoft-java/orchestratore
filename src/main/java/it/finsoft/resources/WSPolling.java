@@ -40,7 +40,7 @@ public class WSPolling {
 
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
-	//@Produces(MediaType.APPLICATION_JSON)
+	// @Produces(MediaType.APPLICATION_JSON)
 	public boolean get(@QueryParam("milestone") String descMilestone, @QueryParam(value = "tag") List<String> tags) {
 		return wsManager.getPollingFoglieByDescr(descMilestone, tags);
 	}
@@ -49,14 +49,14 @@ public class WSPolling {
 	// Polling di 1' Livello con 2 routine
 	/*
 	 * @GET
+	 * 
 	 * @Produces(MediaType.TEXT_PLAIN) public boolean
 	 * get(@QueryParam("milestone") String descMilestone, @QueryParam(value =
-	 * "tag") List<String> tags) { return wsManager.getPolling1LByDescr(descMilestone,
-	 * tags); }
+	 * "tag") List<String> tags) { return
+	 * wsManager.getPolling1LByDescr(descMilestone, tags); }
 	 */
 
 	/* ---- TEST RESOURCES ---- */
-	@GET
 	@Path("Polling/test")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String prova() {
