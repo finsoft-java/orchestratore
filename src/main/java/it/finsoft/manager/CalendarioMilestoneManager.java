@@ -65,12 +65,12 @@ public class CalendarioMilestoneManager {
 		return em.createQuery("FROM CalendarioMilestone", CalendarioMilestone.class).getResultList();
 	}
 	
-	public List<String> findDescFoglieByIdMilestone(Long idMilestone){
+	public String findDescFoglieByIdMilestone(Long idMilestone){
 		List<Milestone> foglie = milestoneManager.getFoglie(milestoneManager.findById(idMilestone));
-		List<String> listDescFoglie = new ArrayList<>();
+		String listDescFoglie = "";
 		
 		for (int i = 0; i < foglie.size(); i++) {		
-			listDescFoglie.add("< " + foglie.get(i).getDescrizione() + " >");
+			listDescFoglie += ("< " + foglie.get(i).getDescrizione() + " >,");
 		}
 		return listDescFoglie;
 	}
