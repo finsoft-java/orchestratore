@@ -3,7 +3,7 @@
  */
 $(document).ready(function(){
 	getListaCalendari();
-	getListaMilestone(rowCounter-1);
+//	getListaMilestone(rowCounter-1);
 })
 
 
@@ -45,11 +45,8 @@ $(document).ready(function(){
  * a un determinato calendario
  * @returns
  */
-function removeInputForm(rowIndex) {
-	if(rowIndex === 'null') return;
-	$("#tr_row_table"+(rowIndex)).remove();
-//	document.getElementById("buttonToAddRiga"+(rowCounter-1)).className = "";
-//	document.getElementById("buttonToDeleteRiga"+(rowCounter-1)).className = "";
+function removeInputForm(row) {
+	$(row).parent().parent().remove();
 	rowCounter = rowCounter - 1;
 	$('body>.tooltip').remove();
 }
@@ -79,14 +76,20 @@ function getListaCalendari(){
  * 
  * @returns
  */
-function getListaMilestone(j){
-	$.getJSON("ws/resources/Milestones", function(dataSet){
-		 for(i in dataSet){
-			 var opt = "<option value='"+dataSet[i].idMilestone+"'>"+dataSet[i].descrizione+"</option>";
-			 $("#milestoneNuovoCal"+(j)).append(opt);
-	     }
-	 });
-}
+//function getListaMilestone(selectedOption){
+//	
+//			
+//	$.getJSON("ws/resources/Milestones", function(dataSet){
+//		 var opt = "<div class='form-group'><select class='form-control select2' id='milestoneNuovoCal'>";
+//		 for(i in dataSet){
+//			 if(selectedOption === dataSet[i].descrizione) opt += "<option class='form-control select2' selected value='"+dataSet[i].idMilestone+"'>"+dataSet[i].descrizione+"</option>";
+//		     else opt += "<option class='form-control select2' value='"+dataSet[i].idMilestone+"'>"+dataSet[i].descrizione+"</option>";
+//	     }
+//		 opt += "</select></div>";
+//		 return opt;
+//	 });
+//	
+//}
 
 
 /**
@@ -102,8 +105,24 @@ function selezionaCalendario(selectIndex){
 }
 
 
-
-
+/**
+ * Funzione che al richiamo effettua l'eliminazione dal DB di uno specifico calendario, ovvero quello
+ * selezionato attravero la comboBox in 'gestioneCalendario.jsp'
+ * @returns
+ */
+function deleteCalendar(){
+	var idSelect = $("#select_elenco_calendari").val();
+	if(idSelect !== '') {
+		$.ajax({
+			type : "DELETE",
+			url : "ws/resources/CalendarioMilestones(" + idSelect + ")",
+			dataType : "json",
+			success : function(dataSet) {		
+				alert("Calendario eliminato con successo");
+			}
+		});
+	} else alert("Selezionare un calendario per poterlo eliminare");
+}
 
 
 
@@ -124,52 +143,56 @@ function selezionaCalendario(selectIndex){
 
 var rowCounter = 0
 function getDettaglioCalendarioMilestoneEditabile(idCalendario){
-	
-	var selectMilestons = '<select>';
-	
-	$.ajax({
-		type : "GET",
-		url : "ws/resources/Calendari(" + idCalendario + ")/Milestone",
-		dataType : "json",
-		success : function(dataSet) {		
-			
-			for (i in dataSet){
-				dataSet[i].milestone.descrizione = '<option selected>'+dataSet[i].milestone.descrizione+'</option>';
+	$.getJSON("ws/resources/Milestones", function(dataSet2){
+		$.ajax({
+			type : "GET",
+			url : "ws/resources/Calendari(" + idCalendario + ")/Milestone",
+			dataType : "json",
+			success : function(dataSet) {		
 				
-				dataSet[i].deleteRowButton = '<a href="#" onclick="removeInputForm('+i+')" id="buttonToDeleteRiga'+i+'" data-toggle="tooltip" title="Elimina" data-placement="left"><i style="color:red" class="fa fa-trash-o"></i></a>';
-            
-            
-				dataSet[i].dataOraPreviste1 = '<div class="form-group"><div class="input-group"><div class="input-group-addon"><i class="fa fa-calendar"></i></div><input id="dataCalEdit'+i+'" value="'+convertData(dataSet[i].dataOraPreviste)+'" onkeydown="return false" type="text" placeholder="Data" class="form-control pull-right datepicker"></div></div>';
-				dataSet[i].dataOraPreviste2 = '<div class="bootstrap-timepicker"><div class="form-group"><div class="input-group"><div class="input-group-addon"><i class="fa fa-clock-o"></i></div><input onkeydown="return false" id="oraCalEdit'+i+'" value="'+convertTime(dataSet[i].dataOraPreviste)+'" placeholder="Ora" type="text" class="form-control timepicker"/></div></div></div>';
-				dataSet[i].tags = '<input type="text" class="form-control" value="'+dataSet[i].tags+'"/>';
-				rowCounter++;
+				for (i in dataSet){
+					dataSet[i].deleteRowButton = '<a href="#" onclick="removeInputForm(this)" id="buttonToDeleteRiga'+i+'" data-toggle="tooltip" title="Elimina" data-placement="left"><i style="color:red" class="fa fa-trash-o"></i></a>';
+	
+					 var opt = "<div class='form-group'><select class='form-control select2' id='milestoneNuovoCal'>";
+					 for(j in dataSet2){
+						 if(dataSet[i].milestone.descrizione === dataSet2[j].descrizione) opt += "<option class='form-control select2' selected value='"+dataSet2[j].idMilestone+"'>"+dataSet2[j].descrizione+"</option>";
+					     else opt += "<option class='form-control select2' value='"+dataSet2[j].idMilestone+"'>"+dataSet2[j].descrizione+"</option>";
+				     }
+					 opt += "</select></div>";
+					
+					dataSet[i].selectMilestones = opt;
+					
+	            
+	            
+					dataSet[i].dataOraPreviste1 = '<div class="form-group"><div class="input-group"><div class="input-group-addon"><i class="fa fa-calendar"></i></div><input id="dataCalEdit'+i+'" value="'+convertData(dataSet[i].dataOraPreviste)+'" onkeydown="return false" type="text" placeholder="Data" class="form-control pull-right datepicker"></div></div>';
+					dataSet[i].dataOraPreviste2 = '<div class="bootstrap-timepicker"><div class="form-group"><div class="input-group"><div class="input-group-addon"><i class="fa fa-clock-o"></i></div><input onkeydown="return false" id="oraCalEdit'+i+'" value="'+convertTime(dataSet[i].dataOraPreviste)+'" placeholder="Ora" type="text" class="form-control timepicker"/></div></div></div>';
+					dataSet[i].tags = '<input type="text" class="form-control" value="'+dataSet[i].tags+'"/>';
+					rowCounter++;
+				}
+				$("#div_tabella_milestone_editabile").removeClass("hide");
+				$("#tableCalendarioEditabile").DataTable({
+					paging : false,
+					lengthChange : false,
+					searching : false,
+					ordering : false,
+					info : false,
+					autoWidth : false,
+					data : dataSet,
+					autoWidth : false,
+					destroy : true,
+					columns : [ 
+						{data : 'deleteRowButton', className : 'tdCenter'},
+						{data : 'selectMilestones', className : 'tdCenter'}, 
+						{data : 'dataOraPreviste1', className : 'tdCenter'}, 
+						{data : 'dataOraPreviste2', className : 'tdCenter'}, 
+						{data : 'tags', className : 'tdCenter'}, 
+						]
+				});
+
+				attivaWidget();
 			}
-			
-			selectMilestons += '</select>';
-			
-			$("#div_tabella_milestone_editabile").removeClass("hide");
-			$("#tableCalendarioEditabile").DataTable({
-				paging : false,
-				lengthChange : false,
-				searching : false,
-				ordering : false,
-				info : false,
-				autoWidth : false,
-				data : dataSet,
-				autoWidth : false,
-				destroy : true,
-				columns : [ 
-					{data : 'deleteRowButton', className : 'tdCenter'},
-					{data : 'milestone.descrizione'}, 
-					{data : 'dataOraPreviste1'}, 
-					{data : 'dataOraPreviste2'}, 
-					{data : 'tags'}, 
-					]
-			});
-			
-			attivaWidget();
-		}
-	});
+		});	
+	 });
 }
 
 
@@ -181,20 +204,36 @@ function getDettaglioCalendarioMilestoneEditabile(idCalendario){
 
 
 
-
+/**
+ * Funzione che splitta e converte la data passata come parametro, dal formato timeStamp a quello dd/MM/yyyy.
+ * In più viene anche eliminata l'ora dal parametro così da restituire solamente la data
+ * @param data
+ * @returns
+ */
 function convertData(data){
 	var firstSplit = data.split("T");
 	var secondSplit = firstSplit[0].split("-");
 	return secondSplit[2]+"/"+secondSplit[1]+"/"+secondSplit[0];
 }
 
+/**
+ * Funzione che splitta e converte l'ora passata come parametro, dal formato timeStamp a quello hh:mm.
+ * In più viene anche eliminata la data dal parametro così da restituire solamente l'ora
+ * @param data
+ * @returns
+ */
 function convertTime(ora){
 	var firstSplit = ora.split("T");
 	var secondSplit = firstSplit[1].split("+");
 	return secondSplit[0];
 }
 
-
+/**
+ * Funzione che effettua una chiamata ajax al relativo ws per ottenere tutti i dati di un determinato calendario (passato come parametro)
+ * sotto forma di chiave. I dati restituiti popolano una relativa tabella in 'index.jsp'
+ * @param idCalendario
+ * @returns
+ */
 function getDettaglioCalendarioMilestone(idCalendario) {
 	$.ajax({
 		type : "GET",
@@ -231,29 +270,46 @@ function getDettaglioCalendarioMilestone(idCalendario) {
  * @returns
  */
 function attivaWidget(){
-	$(".select2").select2({
-    	placeholder: "Seleziona",
-        minimumResultsForSearch: 10,
-    });
-    
-    //Date picker
-    $('.datepicker').datepicker({
-   	  language: 'it',
-   	  orientation: "auto",
-      format: 'dd/mm/yyyy',
-      todayHighlight: true,
-      autoclose: true,
-      todayBtn: "linked",
-      toggleActive: true
-    });
-    
-    //Timepicker
-    $(".timepicker").timepicker({
-      showInputs: false,
-      showMeridian: false,
-      defaultTime: false,
-      minuteStep: 1,
-      autoclose: true
-    });
+	$(function () {
+		  //Initialize Select2 Elements
+		  $(".select2").select2({
+		  	placeholder: "Seleziona",
+		    minimumResultsForSearch: 10,
+		    language: 'it'
+		  });
+		
+		  //Datemask dd/mm/yyyy
+		  $("#datemask").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
+		  
+		  //Money Euro
+		  $("[data-mask]").inputmask();
+		
+		  //Date picker
+		  $('.datepicker').datepicker({
+		 	language: 'it',
+		    orientation: "auto",
+		    format: 'dd/mm/yyyy',
+		    todayHighlight: true,
+		    autoclose: true,
+		    todayBtn: "linked",
+		    toggleActive: true
+		  });
+		
+		  //iCheck for checkbox and radio inputs
+		  $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+		    checkboxClass: 'icheckbox_minimal-blue',
+		    radioClass: 'iradio_minimal-blue'
+		  });
+		  
+		  //Timepicker
+		  $(".timepicker").timepicker({
+		    showInputs: false,
+		    showMeridian: false,
+		    defaultTime: false,
+		    minuteStep: 1,
+		    autoclose: true,
+		    //appendWidgetTo: '.table-responsive'
+		  });		  
+		});
 }
 
