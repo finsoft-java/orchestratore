@@ -13,8 +13,10 @@ $evento = @{
     tag=$tag
 }
 
-$endpoint = 'http://localhost:8080/orchestratoreRADAR/ws/collector'
+$endpoint = 'http://localhost:8080/orchestratoreRADAR/ws/Collector'
 
 $response = Invoke-RestMethod $endpoint -Body $evento 
+
+PAUSE
 
 
