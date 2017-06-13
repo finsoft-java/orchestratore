@@ -20,7 +20,7 @@
 								<div class="col-md-10">
            	                  		<label for="denomNuovoCal">Denominazione nuovo calendario:</label><br/>
 					                <div class="form-group">
-									  <select id="select_elenco_calendari" onchange="selezionaCalendario(this)" class="form-control select2">
+									  <select id="select_elenco_calendari" onchange="selezionaCalendario_gestCal(this)" class="form-control select2">
 									  	<option></option>
 									  </select>
 									</div>

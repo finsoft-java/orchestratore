@@ -2,7 +2,7 @@
  * Funzione document.ready di jQuery
  */
 $(document).ready(function(){
-	getListaCalendari();
+	getListaCalendari_gestCal();
 //	getListaMilestone(rowCounter-1);
 })
 
@@ -61,7 +61,7 @@ function removeInputForm(row) {
  * 
  * @returns
  */
-function getListaCalendari(){
+function getListaCalendari_gestCal(){
 	 $.getJSON("ws/resources/Calendari", function(dataSet){
 		 for(i in dataSet){
 			 var opt = "<option value='"+dataSet[i].idCalendario+"'>"+dataSet[i].descrizione+"</option>";
@@ -97,7 +97,7 @@ function getListaCalendari(){
  * @param selectIndex
  * @returns
  */
-function selezionaCalendario(selectIndex){
+function selezionaCalendario_gestCal(selectIndex){
 	var idx = selectIndex.selectedIndex;
 	var idCalendario = selectIndex.options[idx].value;
 	getDettaglioCalendarioMilestone(idCalendario);
@@ -126,21 +126,6 @@ function deleteCalendar(){
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 var rowCounter = 0
 function getDettaglioCalendarioMilestoneEditabile(idCalendario){
 	$.getJSON("ws/resources/Milestones", function(dataSet2){
@@ -152,15 +137,13 @@ function getDettaglioCalendarioMilestoneEditabile(idCalendario){
 				
 				for (i in dataSet){
 					dataSet[i].deleteRowButton = '<a href="#" onclick="removeInputForm(this)" id="buttonToDeleteRiga'+i+'" data-toggle="tooltip" title="Elimina" data-placement="left"><i style="color:red" class="fa fa-trash-o"></i></a>';
-	
 					 var opt = "<div class='form-group'><select class='form-control select2' id='milestoneNuovoCal'>";
 					 for(j in dataSet2){
 						 if(dataSet[i].milestone.descrizione === dataSet2[j].descrizione) opt += "<option class='form-control select2' selected value='"+dataSet2[j].idMilestone+"'>"+dataSet2[j].descrizione+"</option>";
 					     else opt += "<option class='form-control select2' value='"+dataSet2[j].idMilestone+"'>"+dataSet2[j].descrizione+"</option>";
 				     }
 					 opt += "</select></div>";
-					
-					dataSet[i].selectMilestones = opt;
+					 dataSet[i].selectMilestones = opt;
 					
 	            
 	            
@@ -186,6 +169,7 @@ function getDettaglioCalendarioMilestoneEditabile(idCalendario){
 						{data : 'dataOraPreviste1', className : 'tdCenter'}, 
 						{data : 'dataOraPreviste2', className : 'tdCenter'}, 
 						{data : 'tags', className : 'tdCenter'}, 
+						{data : null, className : 'tdCenter', defaultContent : ''}, 
 						]
 				});
 
@@ -194,12 +178,6 @@ function getDettaglioCalendarioMilestoneEditabile(idCalendario){
 		});	
 	 });
 }
-
-
-
-
-
-
 
 
 
@@ -226,41 +204,6 @@ function convertTime(ora){
 	var firstSplit = ora.split("T");
 	var secondSplit = firstSplit[1].split("+");
 	return secondSplit[0];
-}
-
-/**
- * Funzione che effettua una chiamata ajax al relativo ws per ottenere tutti i dati di un determinato calendario (passato come parametro)
- * sotto forma di chiave. I dati restituiti popolano una relativa tabella in 'index.jsp'
- * @param idCalendario
- * @returns
- */
-function getDettaglioCalendarioMilestone(idCalendario) {
-	$.ajax({
-		type : "GET",
-		url : "ws/resources/Calendari(" + idCalendario + ")/Milestone",
-		dataType : "json",
-		success : function(dataSet) {			
-			$("#divDettagliCalendarioMilestone").removeClass("hide");
-			$("#tableDettaglioCalendarioMilestone").DataTable({
-				paging : false,
-				lengthChange : false,
-				searching : false,
-				ordering : false,
-				info : false,
-				autoWidth : false,
-				data : dataSet,
-				autoWidth : false,
-				destroy : true,
-				columns : [ 
-					{data : 'milestone.descrizione'}, 
-					{data : 'dataOraPreviste'}, 
-					{data : 'dataOraPreviste'}, 
-					{data : null, defaultContent: ''}, 
-					{data : 'tags'}, 
-					]
-			});
-		}
-	});
 }
 
 

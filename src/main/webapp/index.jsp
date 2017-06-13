@@ -17,7 +17,7 @@
 	          <div class="row">
 	            <div class="col-md-12">
 	              <div class="form-group">
-	                <select id="select_elenco_calendari" class="form-control select2" style="width: 100%;" onchange="selezionaCalendario(this)">
+	                <select id="select_elenco_calendari" class="form-control select2" style="width: 100%;" onchange="selezionaCalendarioMonitor(this)">
 				  		<option></option>
 				  	</select>
 	              </div>
