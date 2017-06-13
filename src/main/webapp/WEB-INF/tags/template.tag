@@ -112,9 +112,7 @@
 				<div class="pull-right hidden-xs">
 					<b>Versione</b> Beta 0.1
 				</div>
-				<strong>Copyright &copy; 2017 <a
-					href="http://www.finsoft.it">Finsoft S.r.l. </a>.
-				</strong> Tutti i diritti sono riservati.
+				<strong>Copyright &copy; 2017 <a href="http://www.finsoft.it">Finsoft S.r.l. </a></strong> Tutti i diritti sono riservati.
 			</footer>
 	
 		</div>
