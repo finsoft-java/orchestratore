@@ -80,6 +80,8 @@ INSERT INTO APP.CALENDARI (DESCRIZIONE) VALUES('CRMS MAGGIO 2017 Ver A (Foglie)'
 INSERT INTO APP.EVENTI (TSTAMP_EVENTO, TAG, ID_ENTITA, ID_TIPO_EVENTO) VALUES(current timestamp, '201703', 1, 2),(current timestamp, '201703', 2, 2)
 INSERT INTO APP.EVENTI (TSTAMP_EVENTO, TAG, ID_ENTITA, ID_TIPO_EVENTO) VALUES(current timestamp, 'TEST', 3, 3),(current timestamp, 'TAGEVENTI1', 4, 2)
 INSERT INTO APP.EVENTI (TSTAMP_EVENTO, TAG, ID_ENTITA, ID_TIPO_EVENTO) VALUES(current timestamp, 'TEST', 5, 5),(current timestamp, 'TAGEVENTI1', 6, 1)
+--aggiunta nuovi eventi elaborazione dati HERMIONE
+INSERT INTO APP.EVENTI (TSTAMP_EVENTO, TAG, ID_ENTITA, ID_TIPO_EVENTO) VALUES(current timestamp, '201705', 8, 8)
 --aggiunta nuovi eventi acquisizione dati MACS1
 INSERT INTO APP.EVENTI (TSTAMP_EVENTO, TAG, ID_ENTITA, ID_TIPO_EVENTO) VALUES(current timestamp, '201705', 3, 1),(current timestamp, '201705', 3, 10)
 
