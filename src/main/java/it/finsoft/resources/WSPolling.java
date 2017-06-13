@@ -40,9 +40,8 @@ public class WSPolling {
 
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
-	// @Produces(MediaType.APPLICATION_JSON)
-	public boolean get(@QueryParam("milestone") String descMilestone, @QueryParam(value = "tag") List<String> tags) {
-		return wsManager.getPollingFoglieByDescr(descMilestone, tags);
+	public String get(@QueryParam("milestone") String descMilestone, @QueryParam(value = "tag") List<String> tags) {
+		return wsManager.getPollingFoglieByDescr(descMilestone, tags) ? "1" : "0";
 	}
 
 	// ---------------------------Polling1L------------------------------------------//
@@ -63,8 +62,7 @@ public class WSPolling {
 		System.out.println("ok Polling");
 		return "ok Polling";
 	}
-	/* ---- TEST RESOURCES ---- */
-
+	
 	// TEST per l'esplosione della gerarchia
 	@GET
 	@Path("testTree")
