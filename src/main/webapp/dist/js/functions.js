@@ -146,13 +146,13 @@ function attivaWidget() {
 // Richiama il servizio di polling su tutte le righe di una datatable data
 function richiamaPolling(dataTable) {
 	for (var rowNum = 0; rowNum < dataTable.rows().length; ++rowNum) {
-		richiamaPolling0(dataTable, dataTable.row(rowNum));
+		richiamaPollingRiga(dataTable, dataTable.row(rowNum));
 	}
 }
 
 // Richiama il servizio di polling relativo a una specifica riga di tabella
-// ATTENZIONE, il servizio Polling richiede tanti parametri tutti di tipo tag.
-function richiamaPolling0(dataTable, row) {
+// ATTENZIONE, il servizio Polling richiede tanti parametri tutti con chiave 'tag'.
+function richiamaPollingRiga(dataTable, row) {
 	
 	var milestone = row.data().milestone.descrizione;
 	var tags = row.data().tags;
@@ -165,7 +165,7 @@ function richiamaPolling0(dataTable, row) {
 		url : endpoint,
 		dataType : "json",
 		success : function(dataSet) {
-			alert(dataSet);
+			//alert(dataSet);
 			row.data().semaforo = dataSet;
 		}
 	});
