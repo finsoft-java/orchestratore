@@ -1,11 +1,9 @@
 <!-- Glassfish domain configuration -->
-<!-- 
-Esistono due configurazioni possibili: con indirizzo statico o dinamico.
-Il vantaggio di un percorso statico è che si può configurare FileSync in Eclipse
-Il vantaggio di un percorso dinamico è che viene salvato in una cartella temporanea, 
-in maniera indipendente dalla macchina locale.
-Per usare un percorso dinamico sostituire C:/applicationserver/domains/domain1 con ${com.sun.aas.instanceRoot}.
- -->
+<!-- Esistono due configurazioni possibili: con indirizzo statico o dinamico. 
+	Il vantaggio di un percorso statico è che si può configurare FileSync in 
+	Eclipse Il vantaggio di un percorso dinamico è che viene salvato in una cartella 
+	temporanea, in maniera indipendente dalla macchina locale. Per usare un percorso 
+	dinamico sostituire C:/applicationserver/domains/domain1 con ${com.sun.aas.instanceRoot}. -->
 <domain application-root="C:/applicationserver/domains/domain1/applications"
 	version="1" log-root="C:/applicationserver/domains/domain1/logs">
 	<security-configurations>
@@ -110,9 +108,9 @@ Per usare un percorso dinamico sostituire C:/applicationserver/domains/domain1 c
 		</server>
 	</servers>
 	<nodes>
-<!-- 		<node name="localhost-domain1" install-dir="${com.sun.aas.productRoot}"
+		<!-- <node name="localhost-domain1" install-dir="${com.sun.aas.productRoot}" 
 			type="CONFIG" node-host="localhost"></node> -->
-			<node name="localhost-domain1" install-dir="C:/applicationserver/domains/domain1"
+		<node name="localhost-domain1" install-dir="C:/applicationserver/domains/domain1"
 			type="CONFIG" node-host="localhost"></node>
 	</nodes>
 	<configs>
@@ -175,7 +173,7 @@ Per usare un percorso dinamico sostituire C:/applicationserver/domains/domain1 c
 			<cdi-service></cdi-service>
 			<diagnostic-service></diagnostic-service>
 			<security-service>
-				<auth-realm classname="com.sun.enterprise.security.auth.realm.file.FileRealm"
+				<!-- <auth-realm classname="com.sun.enterprise.security.auth.realm.file.FileRealm"
 					name="admin-realm">
 					<property name="file"
 						value="C:/applicationserver/domains/domain1/config/admin-keyfile"></property>
@@ -189,7 +187,7 @@ Per usare un percorso dinamico sostituire C:/applicationserver/domains/domain1 c
 				</auth-realm>
 				<auth-realm
 					classname="com.sun.enterprise.security.auth.realm.certificate.CertificateRealm"
-					name="certificate"></auth-realm>
+					name="certificate"></auth-realm> -->
 				<jacc-provider policy-provider="com.sun.enterprise.security.provider.PolicyWrapper"
 					name="default"
 					policy-configuration-factory-provider="com.sun.enterprise.security.provider.PolicyConfigurationFactoryImpl">
