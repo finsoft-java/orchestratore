@@ -35,16 +35,17 @@
 						<div class="box-body">
 							<div class="table-responsive">
 								<table id="tableDettaglioCalendarioMilestone" class="table no-margin">
-									<thead>
-										<tr role="row">
-											<th class="col-md-2">Milestones</th>
-											<th class="col-md-2" style="text-align: center">Data cut-off</th>
-											<th class="col-md-2" style="text-align: center">Ora cut-off</th>
-											<th class="col-md-1" style="text-align: center">Stato</th>
-											<th class="col-md-5">TAG</th>
-										</tr>
-									</thead>										
-								</table>
+						        	<thead>
+							          <tr role="row">
+							           <th class="col-md-2">Milestones</th>
+							           <th class="col-md-2 tdCenter">Data cut-off</th>
+							           <th class="col-md-2 tdCenter">Ora cut-off</th>
+							           <th class="col-md-1 tdCenter">Stato</th>
+							           <th class="col-md-3">TAGs</th>
+							           <th class="col-md-2">Tags attese</th>
+							          </tr>
+							        </thead>          
+						        </table>
 							</div>
 						</div>
 					</div>

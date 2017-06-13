@@ -3,42 +3,11 @@
  */
 $(document).ready(function(){
 	getListaCalendari_gestCal();
-//	getListaMilestone(rowCounter-1);
+	//getListaMilestone_gestCal(rowCounter);
 })
 
 
-/**
- * Funzione che aggiunge una nuova riga alla tabella 'Milestone' presente in gestioneCalendario.jsp per aggiungere una nuova milestone
- * a un determinato calendario
- * @returns
- */
-//function addInputForm(){
-//	var row = '<tr id="tr_row_table'
-//			+ rowCounter
-//			+ '"><td style="text-align: center"><a style="cursor: pointer;" onclick="removeInputForm('
-//			+ rowCounter
-//			+ ')" id="buttonToDeleteRiga'
-//			+ rowCounter
-//			+ '" data-toggle="tooltip" title="Elimina" data-placement="left"><i style="color:red" class="fa fa-trash-o"></i></a>&nbsp;&nbsp;&nbsp;<a style="margin-left: 15px; cursor: pointer;" onclick="addInputForm()" id="buttonToAddRiga'
-//			+ rowCounter
-//			+ '" data-toggle="tooltip" title="Aggiungi" data-placement="bottom"><i style="color:green" class="fa fa-plus-circle"></i></a></td><td><div class="form-group"><select id="milestoneNuovoCal'
-//			+ rowCounter
-//			+ '" class="form-control select2" style="width: 100%;"><option></option></select></div></td><td><div class="form-group"><div class="input-group"><div class="input-group-addon"><i class="fa fa-calendar"></i></div><input onkeydown="return><td><div class="bootstrap-timepicker"><div class="form-group"><div class="input-group"><div class="input-group-addon"><i class="fa fa-clock-o"></i></div><input onkeydown="return false" id="oraNuovoCal'
-//			+ rowCounter
-//			+ '" placeholder="Ora" type="text" class="form-control timepicker"></div></div></div></td><td><input type="text" class="form-control" id="tagNuovoCal'
-//			+ rowCounter + '" placeholder="TAG"></td></tr>';
-//	$('#tableNuovoCalendario').append(row);
-//	
-//	attivaWidget();
-//		
-////	document.getElementById("buttonToAddRiga"+(rowCounter-1)).className = "disabled";
-////	document.getElementById("buttonToDeleteRiga"+(rowCounter-1)).className = "disabled";
-//	
-//	
-//	
-//	rowCounter++;
-//	getListaMilestone(rowCounter-1);
-//}
+
 
 /**
  * Funzione che elimina la riga selezionata dalla tabella 'Milestone' presente in gestioneCalendario.jsp per aggiungere una nuova milestone
@@ -46,8 +15,19 @@ $(document).ready(function(){
  * @returns
  */
 function removeInputForm(row) {
-	$(row).parent().parent().remove();
-	rowCounter = rowCounter - 1;
+	var idSelectMilestoneCal = $(row).parent().parent().find("#selectMilestoneCal").val();
+	if(confirm("Sicuro di voler eliminare questa milestone da questo calendario?")){
+		$.ajax({
+			type : "DELETE",
+			url : "ws/resources/Milestones(" + idSelectMilestoneCal + ")",
+			dataType : "json",
+			success : function(dataSet) {		
+				$(row).parent().parent().remove();
+				rowCounter = rowCounter - 1;
+				alert("Milestone eliminata correttamente");
+			}
+		});
+	}
 	$('body>.tooltip').remove();
 }
 
@@ -76,20 +56,16 @@ function getListaCalendari_gestCal(){
  * 
  * @returns
  */
-//function getListaMilestone(selectedOption){
-//	
-//			
-//	$.getJSON("ws/resources/Milestones", function(dataSet){
-//		 var opt = "<div class='form-group'><select class='form-control select2' id='milestoneNuovoCal'>";
-//		 for(i in dataSet){
-//			 if(selectedOption === dataSet[i].descrizione) opt += "<option class='form-control select2' selected value='"+dataSet[i].idMilestone+"'>"+dataSet[i].descrizione+"</option>";
-//		     else opt += "<option class='form-control select2' value='"+dataSet[i].idMilestone+"'>"+dataSet[i].descrizione+"</option>";
-//	     }
-//		 opt += "</select></div>";
-//		 return opt;
-//	 });
-//	
-//}
+function getListaMilestone_gestCal(j){
+	 $.getJSON("ws/resources/Milestones", function(dataSet){
+	   for(i in dataSet){
+	    var opt = "<option value='"+dataSet[i].idMilestone+"'>"+dataSet[i].descrizione+"</option>";
+	    $("#milestoneNuovoCal"+(j)).append(opt);
+	      }
+	  });
+}
+
+
 
 
 /**
@@ -137,10 +113,10 @@ function getDettaglioCalendarioMilestoneEditabile(idCalendario){
 				
 				for (i in dataSet){
 					dataSet[i].deleteRowButton = '<a href="#" onclick="removeInputForm(this)" id="buttonToDeleteRiga'+i+'" data-toggle="tooltip" title="Elimina" data-placement="left"><i style="color:red" class="fa fa-trash-o"></i></a>';
-					 var opt = "<div class='form-group'><select class='form-control select2' id='milestoneNuovoCal'>";
+					 var opt = "<div class='form-group'><select class='form-control select2' id='selectMilestoneCal'>";
 					 for(j in dataSet2){
-						 if(dataSet[i].milestone.descrizione === dataSet2[j].descrizione) opt += "<option class='form-control select2' selected value='"+dataSet2[j].idMilestone+"'>"+dataSet2[j].descrizione+"</option>";
-					     else opt += "<option class='form-control select2' value='"+dataSet2[j].idMilestone+"'>"+dataSet2[j].descrizione+"</option>";
+						 if(dataSet[i].milestone.descrizione === dataSet2[j].descrizione) opt += "<option selected value='"+dataSet2[j].idMilestone+"'>"+dataSet2[j].descrizione+"</option>";
+					     else opt += "<option select2' value='"+dataSet2[j].idMilestone+"'>"+dataSet2[j].descrizione+"</option>";
 				     }
 					 opt += "</select></div>";
 					 dataSet[i].selectMilestones = opt;
@@ -173,11 +149,28 @@ function getDettaglioCalendarioMilestoneEditabile(idCalendario){
 						]
 				});
 
+				addInputForm();
 				attivaWidget();
 			}
 		});	
 	 });
 }
+
+
+/**
+ * Funzione che aggiunge una nuova riga alla tabella 'Milestone' presente in gestioneCalendario.jsp per aggiungere una nuova milestone
+ * a un determinato calendario
+ * @returns
+ */
+function addInputForm(){	
+	var row = '<tr role="row"><td class="tdCenter"><a style="cursor: pointer;" onclick="addInputForm()" data-toggle="tooltip" title="Aggiungi" data-placement="bottom"><i style="color:green" class="fa fa-plus-circle"></i></a></td><td class="tdCenter"><div class="form-group" style="width:100%;"><select style="width:100%;" id="milestoneNuovoCal'+rowCounter+'" class="form-control select2"><option></option></select></div></td><td class="tdCenter"><div class="form-group"><div class="input-group"><div class="input-group-addon"><i class="fa fa-calendar"></i></div><input onkeydown="return false" type="text" placeholder="Data" class="form-control pull-right datepicker"></div></div></td><td class="tdCenter"><div class="bootstrap-timepicker"><div class="form-group"><div class="input-group"><div class="input-group-addon"><i class="fa fa-clock-o"></i></div><input onkeydown="return false" id="oraCalEdit'+i+'" placeholder="Ora" type="text" class="form-control timepicker"/></div></div></div></td><td class="tdCenter"><input type="text" class="form-control" placeholder="TAGs"/></td><td class="tdCenter"></td></tr>';
+	
+	getListaMilestone_gestCal(rowCounter);
+	$('#tableCalendarioEditabile').append(row);
+	attivaWidget();
+	rowCounter++;
+}
+
 
 
 

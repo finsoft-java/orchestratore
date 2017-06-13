@@ -44,30 +44,57 @@ function selezionaCalendarioMonitor(selectIndex){
  * @returns
  */
 function getDettaglioCalendarioMilestone(idCalendario) {
-	$.ajax({
-		type : "GET",
-		url : "ws/resources/Calendari(" + idCalendario + ")/Milestone",
-		dataType : "json",
-		success : function(dataSet) {			
-			$("#divDettagliCalendarioMilestone").removeClass("hide");
-			$("#tableDettaglioCalendarioMilestone").DataTable({
-				paging : false,
-				lengthChange : false,
-				searching : false,
-				ordering : false,
-				info : false,
-				autoWidth : false,
-				data : dataSet,
-				autoWidth : false,
-				destroy : true,
-				columns : [ 
-					{data : 'milestone.descrizione'}, 
-					{data : 'dataOraPreviste'}, 
-					{data : 'dataOraPreviste'}, 
-					{data : null, defaultContent: ''}, 
-					{data : 'tags'}, 
-					]
-			});
-		}
-	});
+	 $.ajax({
+	    type : "GET",
+	    url : "ws/resources/Calendari(" + idCalendario + ")/Milestone",
+	    dataType : "json",
+	    success : function(dataSet) {
+
+	     for (i in dataSet) {
+	      var milestone = dataSet[i].milestone.descrizione;
+	      var tags = dataSet[i].tags;
+	      var endpoint = "ws/Polling?milestone=" + milestone
+	        + "&tag=" + tags.split(",").join("&tag=");
+
+	       $.ajax({
+	         type : "GET",
+	         url : endpoint,
+	         dataType : "json",
+	         success : function(dataSet2) {
+
+	          dataSet[i].semaforo = dataSet2;
+	          dataSet[i].data = convertData(dataSet[i].dataOraPreviste);
+	          dataSet[i].ora = convertTime(dataSet[i].dataOraPreviste);
+	          
+
+	          if (dataSet[i].count == dataSet.lenght) {
+	           //alert("ciao");
+	           $("#divDettagliCalendarioMilestone").removeClass("hide");
+	           $("#tableDettaglioCalendarioMilestone").DataTable({
+	             paging : false,
+	             lengthChange : false,
+	             searching : false,
+	             ordering : false,
+	             info : false,
+	             autoWidth : false,
+	             data : dataSet,
+	             autoWidth : false,
+	             destroy : true,
+	             columns : [
+	               { data : 'milestone.descrizione' },
+	               { data : 'data', className: 'tdCenter' },
+	               { data : 'ora', className: 'tdCenter' },
+	               { data : 'semaforo', className: 'tdCenter', defaultContent:'' },
+	               { data : 'tags' },
+	               { data : null, defaultContent : 'TODO' } 
+	              ]
+	           });
+	          }
+
+	         }
+
+	        });
+	     }
+	    }
+	   });
 }

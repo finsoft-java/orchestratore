@@ -55,6 +55,10 @@
 											<th style="text-align: center">TAGs attese</th>
 										</tr>
 									</thead>
+									
+										
+										
+									
 								</table>
 							</div>
 							<br/>
