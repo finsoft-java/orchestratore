@@ -1,5 +1,6 @@
 package it.finsoft.manager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -8,6 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import it.finsoft.entity.CalendarioMilestone;
+import it.finsoft.entity.Milestone;
 
 @Stateless
 public class CalendarioMilestoneManager {
@@ -16,6 +18,8 @@ public class CalendarioMilestoneManager {
 	private EntityManager em;
 	@Inject
 	CalendarioManager calendarioManager;
+	@Inject
+	MilestoneManager milestoneManager;
 	
 	public CalendarioMilestone save(CalendarioMilestone tosave) {
 		return em.merge(tosave);
@@ -36,7 +40,7 @@ public class CalendarioMilestoneManager {
 	}
 
 	/**
-	 * A rigore, potrebbe esisterne più di uno, nel caso restituiamo il primo.
+	 * A rigore, potrebbe esisterne piï¿½ di uno, nel caso restituiamo il primo.
 	 */
 	public CalendarioMilestone findByIdCalendarioIdMilestone(Long idCalendario, Long idMilestone) {
 		List<CalendarioMilestone> list = em.createQuery(
@@ -59,6 +63,16 @@ public class CalendarioMilestoneManager {
 
 	public List<CalendarioMilestone> findAll() {
 		return em.createQuery("FROM CalendarioMilestone", CalendarioMilestone.class).getResultList();
+	}
+	
+	public List<String> findDescFoglieByIdMilestone(Long idMilestone){
+		List<Milestone> foglie = milestoneManager.getFoglie(milestoneManager.findById(idMilestone));
+		List<String> listDescFoglie = new ArrayList<>();
+		
+		for (int i = 0; i < foglie.size(); i++) {		
+			listDescFoglie.add("< " + foglie.get(i).getDescrizione() + " >");
+		}
+		return listDescFoglie;
 	}
 
 }
