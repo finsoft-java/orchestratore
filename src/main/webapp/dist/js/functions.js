@@ -104,6 +104,34 @@ function selezionaCalendario(selectIndex){
 
 
 
+//Richiama il servizio di polling su tutte le righe di una datatable data
+function richiamaPolling(dataTable) {
+	for (var rowNum = 0; rowNum < dataTable.rows().length; ++rowNum) {
+		richiamaPollingRiga(dataTable, dataTable.row(rowNum));
+	}
+}
+
+//Richiama il servizio di polling relativo a una specifica riga di tabella
+//ATTENZIONE, il servizio Polling richiede tanti parametri tutti con chiave 'tag'.
+function richiamaPollingRiga(dataTable, row) {
+	
+	var milestone = row.data().milestone.descrizione;
+	var tags = row.data().tags;
+	var endpoint = "ws/Polling?milestone=" + milestone + "&tag=" + tags.split(",").join("&tag=");
+	
+	//alert(endpoint);
+	
+	$.ajax({
+		type : "GET",
+		url : endpoint,
+		dataType : "json",
+		success : function(dataSet) {
+			//alert(dataSet);
+			row.data().semaforo = dataSet;
+		}
+	});
+}
+
 
 
 
@@ -166,8 +194,9 @@ function getDettaglioCalendarioMilestoneEditabile(idCalendario){
 					{data : 'tags'}, 
 					]
 			});
-			
 			attivaWidget();
+			
+			richiamaPolling($("#tableCalendarioEditabile").DataTable());
 		}
 	});
 }
@@ -200,7 +229,34 @@ function getDettaglioCalendarioMilestone(idCalendario) {
 		type : "GET",
 		url : "ws/resources/Calendari(" + idCalendario + ")/Milestone",
 		dataType : "json",
-		success : function(dataSet) {			
+		success : function(dataSet) {
+			
+			
+			
+			for (i in dataSet){
+
+				
+				var milestone = dataSet[i].milestone.descrizione;
+				var tags = dataSet[i].tags;
+				var endpoint = "ws/Polling?milestone=" + milestone + "&tag=" + tags.split(",").join("&tag=");
+				
+				//alert(endpoint);
+				
+
+				$.ajax({
+					type : "GET",
+					url : endpoint,
+					dataType : "json",
+					success : function(dataSet2) {
+						//alert(dataSet);
+						dataSet[i].semaforo = dataSet2;
+					}
+				});
+				
+				dataSet[i].data = convertData(dataSet[i].dataOraPreviste);
+				dataSet[i].ora= convertTime(dataSet[i].dataOraPreviste);
+			}
+			
 			$("#divDettagliCalendarioMilestone").removeClass("hide");
 			$("#tableDettaglioCalendarioMilestone").DataTable({
 				paging : false,
@@ -216,7 +272,7 @@ function getDettaglioCalendarioMilestone(idCalendario) {
 					{data : 'milestone.descrizione'}, 
 					{data : 'dataOraPreviste'}, 
 					{data : 'dataOraPreviste'}, 
-					{data : null, defaultContent: ''}, 
+					{data : 'semaforo'}, 
 					{data : 'tags'}, 
 					]
 			});
