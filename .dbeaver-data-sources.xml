@@ -4,6 +4,6 @@
 		<connection server="" database="C:\Orchestratore\dbOrchestratore" url="jdbc:derby:C:\Orchestratore\dbOrchestratore" type="dev"/>
 	</data-source>
 	<data-source id="derby-15c81afe932-40d59766737002a7" provider="generic" driver="derby" name="GlassfishEmbedded - dbOrchestratore" save-password="true" show-system-objects="true" read-only="false">
-		<connection server="" database="C:\Users\Finsoft-PC\git\orchestratore\dbOrchestratore" url="jdbc:derby:C:\Users\Finsoft-PC\git\orchestratore\dbOrchestratore" type="dev"/>
+		<connection server="" database="C:\ProgettoStage\orchestratore\dbOrchestratore" url="jdbc:derby:C:\ProgettoStage\orchestratore\dbOrchestratore" type="dev"/>
 	</data-source>
 </data-sources>
