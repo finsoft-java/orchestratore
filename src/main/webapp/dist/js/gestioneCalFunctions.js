@@ -112,22 +112,47 @@ function deleteCalendar(){
 
 
 function saveEditedCalendar(){
+	var idSelect = $("#select_elenco_calendari").val();
 	var dataList = [];
-	for(rowCounterFromDBData; rowCounterFromDBData<rowCounter; rowCounterFromDBData++){
-		
-		dataList.push([$("#selectMilestoneCalNew"+rowCounterFromDBData).val(), convertDataOraToTimestamp($("#dataCalNew"+rowCounterFromDBData).val(), $("#oraCalNew"+rowCounterFromDBData).val()), $("#tagsCalNew"+rowCounterFromDBData).val()]);
-		
-		
-		console.log(dataList);
-	}	
+	for(var i = rowCounterFromDBData; i<rowCounter; i++){
+		dataList.push([$("#selectMilestoneCalNew"+i).val(), convertDataOraToTimestamp($("#dataCalNew"+i).val(), $("#oraCalNew"+i).val()), $("#tagsCalNew"+i).val()]);
+	}
+	for(var i = 0; i<dataList.length; i++){
+		var data = dataList[i];
+		var request = {            
+			_milestone:data[0],
+			_dataOrePreviste:data[1],
+			_tag:data[2]
+		};
+	    request = JSON.stringify(request); 
+		console.log(request);
+//	    insertMilestonInCalendar(idSelect, request);
+	}
 }
 
+function insertMilestonInCalendar(idCalendario, jsonMileston) {
+	 $.ajax({
+	  type: "POST",
+	  url: "Calendari("+idCalendario+")/Milestone",
+	  data: jsonMileston,////////////////////////////////////////////////////
+	  contentType: "application/json; charset=utf-8",
+	  dataType: "json",
+	  success: function(res) {
+		  alert("Inserimento milestone avvenuto correttamente");
+//		  location.reload(true);
+	  }
+	 });
+	}
 
 
 
 
-
-
+/**
+ * Funzione che popola la tabella presente nella pagina 'gestioneCalendario.jsp' visualizzando le milestone del relativo
+ * calendario selezionato
+ * @param idCalendario
+ * @returns
+ */
 var rowCounter = 0
 var rowCounterFromDBData = 0;
 function getDettaglioCalendarioMilestoneEditabile(idCalendario){
