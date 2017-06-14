@@ -14,7 +14,7 @@ $(document).ready(function(){
  * a un determinato calendario
  * @returns
  */
-function removeInputForm(row) {
+function removeMilestone(row) {
 	var idSelectMilestoneCal = $(row).parent().parent().find("#selectMilestoneCal").val();
 	if(confirm("Sicuro di voler eliminare questa milestone da questo calendario?")){
 		$.ajax({
@@ -30,7 +30,18 @@ function removeInputForm(row) {
 	$('body>.tooltip').remove();
 }
 
-
+/**
+ * Funzione che rimuove le row inserite dall'utente attraverso il bottone verde '+' a fondo tabella, il quale serve per inserire
+ * una nuova riga vuota per inserire una nuova milestone all'interno del calendario. Questo row viene eliminata solo dalla
+ * tabella vista sulla pagina, poichè non è ancora stata inserita nel DB
+ * @param row
+ * @returns
+ */
+function removeInputForm(row) {
+	$(row).parent().parent().remove();
+	rowCounter = rowCounter - 1;
+	$('body>.tooltip').remove();
+}
 
 
 
@@ -126,7 +137,7 @@ function getDettaglioCalendarioMilestoneEditabile(idCalendario){
 			success : function(dataSet) {		
 				
 				for (i in dataSet){
-					dataSet[i].deleteRowButton = '<a href="#" onclick="removeInputForm(this)" id="buttonToDeleteRiga'+i+'" data-toggle="tooltip" title="Elimina" data-placement="left"><i style="color:red" class="fa fa-trash-o"></i></a>';
+					dataSet[i].deleteRowButton = '<a href="#" onclick="removeMilestone(this)" id="buttonToDeleteRiga'+i+'" data-toggle="tooltip" title="Elimina" data-placement="left"><i style="color:red" class="fa fa-trash-o"></i></a>';
 					 var opt = "<div class='form-group'><select class='form-control select2' id='selectMilestoneCal'>";
 					 for(j in dataSet2){
 						 if(dataSet[i].milestone.descrizione === dataSet2[j].descrizione) opt += "<option selected value='"+dataSet2[j].idMilestone+"'>"+dataSet2[j].descrizione+"</option>";
@@ -152,16 +163,16 @@ function getDettaglioCalendarioMilestoneEditabile(idCalendario){
 					autoWidth : false,
 					destroy : true,
 					columns : [ 
-						{data : 'deleteRowButton', className : 'tdCenter'},
-						{data : 'selectMilestones', className : 'tdCenter'}, 
-						{data : 'dataOraPreviste1', className : 'tdCenter'}, 
-						{data : 'dataOraPreviste2', className : 'tdCenter'}, 
-						{data : 'tags', className : 'tdCenter'}, 
-						{data : null, className : 'tdCenter', defaultContent : ''}, 
+						{data : 'deleteRowButton', className : 'tdCenter class="col-md-1'},
+						{data : 'selectMilestones', className : 'tdCenter class="col-md-3'}, 
+						{data : 'dataOraPreviste1', className : 'tdCenter class="col-md-2'}, 
+						{data : 'dataOraPreviste2', className : 'tdCenter class="col-md-2'}, 
+						{data : 'tags', className : 'tdCenter class="col-md-2'}, 
+						{data : null, className : 'tdCenter class="col-md-2', defaultContent : ''}, 
 						]
 				});
 
-				addInputForm();
+				addButtonInputForm();
 				attivaWidget();
 			}
 		});	
@@ -175,14 +186,26 @@ function getDettaglioCalendarioMilestoneEditabile(idCalendario){
  * @returns
  */
 function addInputForm(){	
-	var row = '<tr role="row"><td class="tdCenter"><a style="cursor: pointer;" onclick="addInputForm()" data-toggle="tooltip" title="Aggiungi" data-placement="bottom"><i style="color:green" class="fa fa-plus-circle"></i></a></td><td class="tdCenter"><div class="form-group" style="width:100%;"><select style="width:100%;" id="milestoneNuovoCal'+rowCounter+'" class="form-control select2"><option></option></select></div></td><td class="tdCenter"><div class="form-group"><div class="input-group"><div class="input-group-addon"><i class="fa fa-calendar"></i></div><input onkeydown="return false" type="text" placeholder="Data" class="form-control pull-right datepicker"></div></div></td><td class="tdCenter"><div class="bootstrap-timepicker"><div class="form-group"><div class="input-group"><div class="input-group-addon"><i class="fa fa-clock-o"></i></div><input id="oraCalEdit'+i+'" placeholder="Ora" type="text" class="form-control timepicker"/></div></div></div></td><td class="tdCenter"><input type="text" class="form-control" placeholder="TAGs"/></td><td class="tdCenter"></td></tr>';
+	var row = '<tr role="row"><td class="tdCenter col-md-1 class="col-md-1"><a style="cursor: pointer;" onclick="removeInputForm(this)" data-toggle="tooltip" title="Elimina" data-placement="bottom"><i style="color:red" class="fa fa-trash-o"></i></a></td><td class="tdCenter col-md-3"><div class="form-group" style="width:100%;"><select style="width:100%;" id="milestoneNuovoCal'+rowCounter+'" class="form-control select2"><option></option></select></div></td><td class="tdCenter col-md-2"><div class="form-group"><div class="input-group"><div class="input-group-addon"><i class="fa fa-calendar"></i></div><input onkeydown="return false" type="text" placeholder="Data" class="form-control pull-right datepicker"></div></div></td><td class="tdCenter col-md-2"><div class="bootstrap-timepicker"><div class="form-group"><div class="input-group"><div class="input-group-addon"><i class="fa fa-clock-o"></i></div><input id="oraCalEdit'+i+'" placeholder="Ora" type="text" class="form-control timepicker"/></div></div></div></td><td class="tdCenter col-md-2"><input type="text" class="form-control" placeholder="TAGs"/></td><td class="tdCenter col-md-2"></td></tr>';
 	
 	getListaMilestone_gestCal(rowCounter);
 	$('#tableCalendarioEditabile').append(row);
+	addButtonInputForm();
 	attivaWidget();
 	rowCounter++;
 }
 
+/**
+ * Funzione che aggiunge una nuova riga alla tabella 'Milestone' presente in gestioneCalendario.jsp per aggiungere una nuova milestone
+ * a un determinato calendario
+ * @returns
+ */
+function addButtonInputForm(){	
+	$("#aggiungiButtonRow").remove();
+	var row = '<tr id="aggiungiButtonRow" role="row"><td class="tdCenter col-md-1"><a style="cursor: pointer;" onclick="addInputForm()" data-toggle="tooltip" title="Aggiungi" data-placement="bottom"><i style="color:green" class="fa fa-plus-circle"></i></a></td><td class="tdCenter col-md-3"></td><td class="tdCenter col-md-2"></td><td class="tdCenter col-md-2"></td><td class="tdCenter col-md-2"></td><td class="tdCenter col-md-2"></td></tr>';
+	$('#tableCalendarioEditabile').append(row);
+	$('body>.tooltip').remove();
+}
 
 
 
