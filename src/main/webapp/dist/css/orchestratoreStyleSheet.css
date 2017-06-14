@@ -16,5 +16,6 @@
 
 /*serve per evitare la scroll-bar sotto la tabella collegati*/
 .dataTables_wrapper.form-inline.dt-bootstrap.no-footer {
- width: 98%
+	width: 98%;
 }
+

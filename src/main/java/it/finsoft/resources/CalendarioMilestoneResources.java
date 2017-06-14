@@ -79,7 +79,7 @@ public class CalendarioMilestoneResources {
 
 	@GET
 	@Path("CalendarioMilestones({id})/tags")
-	public List<String> getTags(@PathParam("id") Long id) {
+	public String getTags(@PathParam("id") Long id) {
 		return calendarioMilestoneManager.findDescFoglieByIdMilestone(id);
 	}
 	

@@ -17,16 +17,16 @@
 				href="ws/resources/Entita" target="_blank">click here</a><br /> <br /> FORM per
 			inserire un evento:
 			<form action="ws/Collector" target="_blank" method="get">
-				Codice evento: <input name="tipiEvento" value="LOAD" /><br />
-				Codice entit&agrave;: <input name="entita" value="U7SC0_BO" /><br />
-				Tag: <input name="tag" value="20170623ABC" /><br /> <input
+				Codice evento: <input name="tipiEvento" value="DISDATI" /><br />
+				Codice entit&agrave;: <input name="entita" value="U7SC0_HER" /><br />
+				Tag: <input name="tag" value="201705" /><br /> <input
 					type="submit" />
 			</form>
 			<br />
 			<br /> FORM per recuperare lo stato di una milestone (Restituisce TRUE o FALSE):
 			<form action="ws/Polling" target="_blank" method="get">
-				Codice milestone: <input name="milestone" value="milestone 5" /><br />
-				Tag1: <input name="tag" value="20170623ABC" /><br /> Tag2: <input
+				Codice milestone: <input name="milestone" value="ELABORAZIONE ACQUISIZIONE CRM FV" /><br />
+				Tag1: <input name="tag" value="201705" /><br /> Tag2: <input
 					name="tag" value="20170623ABC" /><br /> Tag3: <input name="tag"
 					value="20170623ABC" /><br /> Tag4: <input name="tag"
 					value="20170623ABC" /><br /> Tag5: <input name="tag"
@@ -36,7 +36,7 @@
 			<br />
 			<br /> FORM per recuperare lo stato di una milestone (Albero):
 			<form action="ws/Polling/testTree" target="_blank" method="get">
-				Codice milestone: <input name="milestone" value="milestone 5" /><br />
+				Codice milestone: <input name="milestone" value="ELABORAZIONE ACQUISIZIONE CRM FV" /><br />
 				Tag1: <input name="tag" value="20170623ABC" /><br /> Tag2: <input
 					name="tag" value="20170623ABC" /><br /> Tag3: <input name="tag"
 					value="20170623ABC" /><br /> Tag4: <input name="tag"
@@ -47,7 +47,7 @@
 			<br />
 			<br /> FORM per recuperare lo stato di una milestone (Foglie):
 			<form action="ws/Polling/testLeaf" target="_blank" method="get">
-				Codice milestone: <input name="milestone" value="milestone 5" /><br />
+				Codice milestone: <input name="milestone" value="ELABORAZIONE ACQUISIZIONE CRM FV" /><br />
 				Tag1: <input name="tag" value="20170623ABC" /><br /> Tag2: <input
 					name="tag" value="20170623ABC" /><br /> Tag3: <input name="tag"
 					value="20170623ABC" /><br /> Tag4: <input name="tag"

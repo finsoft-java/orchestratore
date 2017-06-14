@@ -161,7 +161,8 @@
 		
 		
 		<!-- funzioni terze -->
-		<script src="dist/js/functions.js"></script>
+		<script src="dist/js/monitorFunctions.js"></script>
+		<script src="dist/js/gestioneCalFunctions.js"></script>
 		
 		
 		<!-- Page script -->
