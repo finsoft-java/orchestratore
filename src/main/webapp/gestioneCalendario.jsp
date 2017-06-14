@@ -47,22 +47,18 @@
 								<table id="tableCalendarioEditabile" class="table no-margin" style="margin-bottom: 120px !important">
 									<thead>
 										<tr role="row">
-											<th style="text-align: center">Opz.</th>
-											<th style="text-align: center">Milestones</th>
-											<th style="text-align: center">Data cut-off</th>
-											<th style="text-align: center">Ora cut-off</th>
-											<th style="text-align: center">TAGs</th>
-											<th style="text-align: center">TAGs attese</th>
+											<th class="col-md-1 tdCenter">Opz.</th>
+											<th class="col-md-3 tdCenter">Milestones</th>
+											<th class="col-md-2 tdCenter">Data cut-off</th>
+											<th class="col-md-2 tdCenter">Ora cut-off</th>
+											<th class="col-md-2 tdCenter">TAGs</th>
+											<th class="col-md-2 tdCenter">TAGs attese</th>
 										</tr>
 									</thead>
-									
-										
-										
-									
 								</table>
 							</div>
 							<br/>
-							<a id="id_button_inserisci_calendario" type="button" class="btn btn-success"><i class="fa fa-save"></i> &nbsp;Salva</a>							
+							<a id="id_button_inserisci_calendario" onclick="saveEditedCalendar()" type="button" class="btn btn-success"><i class="fa fa-save"></i> &nbsp;Salva</a>							
 						</div>
 					</div>
 				</div>
