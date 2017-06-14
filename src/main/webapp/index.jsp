@@ -55,7 +55,8 @@
 						<div class="box-header with-border">
 							<h3 class="box-title">Dettagli Evento</h3>
 						</div>							
-						<div class="box-body">
+						<div class="box-body detailMilestone">
+						
 							<p>Lorem ipsum dolor sit amet, consectetuer adipism.</p>
 						</div>
 					</div>
