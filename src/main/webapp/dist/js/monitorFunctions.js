@@ -74,6 +74,7 @@ function getDettaglioCalendarioMilestone(idCalendario) {
 	             searching : false,
 	             ordering : false,
 	             info : false,
+	             data: dataSet,
 	             autoWidth : false,
 	             destroy : true,
 	             columns : [
@@ -85,7 +86,6 @@ function getDettaglioCalendarioMilestone(idCalendario) {
 	               { data : null, defaultContent : 'TODO' } 
 	              ]
 	           });
-	    	 
 	    	 
 		     for (j in dataSet) {
 		    	 polling(dataTable, j, dataSet[j]);
