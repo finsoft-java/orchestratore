@@ -3,8 +3,7 @@
  * Funzione document.ready di jQuery
  */
 $(document).ready(function(){
-	getListaCalendariMonitor();
-//	getListaMilestone(rowCounter-1);
+	getListaCalendari();
 })
 
 
