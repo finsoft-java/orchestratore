@@ -40,6 +40,9 @@ public class Milestone implements Serializable {
 
 	@Column(name = "DESCRIZIONE", unique = true)
 	private String descrizione;
+	
+	@Column(name = "DESCRIZIONE_TAG", unique = false, nullable = true)
+	private String descrizioneTag;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "milestone")
 	@OrderBy("ordinamento") // possibile soluzione
@@ -56,11 +59,12 @@ public class Milestone implements Serializable {
 
 	}
 
-	public Milestone(Long idMilestone, TipoEvento tipoEvento, Entita entita, String descrizione, Azione azione) {
+	public Milestone(Long idMilestone, TipoEvento tipoEvento, Entita entita, String descrizione, String descrizioneTag, Azione azione) {
 		this.idMilestone = idMilestone;
 		this.tipoEvento = tipoEvento;
 		this.entita = entita;
 		this.descrizione = descrizione;
+		this.descrizioneTag = descrizioneTag;
 		this.azione = azione;
 	}
 
@@ -95,6 +99,15 @@ public class Milestone implements Serializable {
 	public void setDescrizione(String descrizione) {
 		descrizione = descrizione.toUpperCase();
 		this.descrizione = descrizione;
+	}
+	
+	public String getDescrizioneTag() {
+		return descrizioneTag;
+	}
+
+	public void setDescrizioneTag(String descrizioneTag) {
+		descrizioneTag = descrizioneTag.toUpperCase();
+		this.descrizioneTag = descrizioneTag;
 	}
 
 	@XmlTransient
