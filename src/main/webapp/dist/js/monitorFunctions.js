@@ -107,6 +107,14 @@ function polling(datatable, numRiga, data) {
        url : endpoint,
        dataType : "json",
        success : function(dataSet) {
+    	   
+           if (dataSet != null) {
+               if (dataSet == 0) {
+            	   dataSet = '<span class="btn btn-danger btn-circle btn-sm btn-semaforo" style="width:15px; height: 15px; font-size:0%">0 rosso</span>';
+               } else if (dataSet == 1) {
+                   row.semaforo = '<span class="btn btn-success btn-circle btn-sm btn-semaforo" style="width:15px; height: 15px; font-size:0%">1 verde</span>';
+               }
+           }
     	   datatable.cell(numRiga, 3).data(dataSet).draw();
        }
      })
