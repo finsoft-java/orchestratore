@@ -2,7 +2,7 @@
  * Funzione document.ready di jQuery
  */
 $(document).ready(function(){
-	getListaCalendari_gestCal();
+	//getListaCalendari_gestCal();
 	//getListaMilestone_gestCal(rowCounter);
 })
 
