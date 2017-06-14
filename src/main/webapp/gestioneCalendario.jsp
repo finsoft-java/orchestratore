@@ -65,5 +65,7 @@
 			</div>
 			
 		</section>
-
+		
+		<script src="dist/js/gestioneCalFunctions.js"></script>
+		
 </t:template>

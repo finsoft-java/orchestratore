@@ -3,10 +3,8 @@
  * Funzione document.ready di jQuery
  */
 $(document).ready(function(){
-	getListaCalendariMonitor();
-//	getListaMilestone(rowCounter-1);
+	getListaCalendari();
 })
-
 
 /**
  * Funzione che effettua una chiamata AJAX all'apposito ws, il quale restituisce una lista
@@ -14,7 +12,7 @@ $(document).ready(function(){
  * 
  * @returns
  */
-function getListaCalendariMonitor(){
+function getListaCalendari(){
 	 $.getJSON("ws/resources/Calendari", function(dataSet){
 		 for(i in dataSet){
 			 var opt = "<option value='"+dataSet[i].idCalendario+"'>"+dataSet[i].descrizione+"</option>";
@@ -33,7 +31,22 @@ function selezionaCalendarioMonitor(selectIndex){
 	var idx = selectIndex.selectedIndex;
 	var idCalendario = selectIndex.options[idx].value;
 	getDettaglioCalendarioMilestone(idCalendario);
-	getDettaglioCalendarioMilestoneEditabile(idCalendario);
+}
+
+
+/**
+ * Funzione che effettua una chiamata AJAX all'apposito ws, il quale restituisce una lista
+ * contenente tutti i calendari e i relativi id
+ * 
+ * @returns
+ */
+function getListaCalendariMonitor(){
+  $.getJSON("ws/resources/Calendari", function(dataSet){
+   for(i in dataSet){
+    var opt = "<option value='"+dataSet[i].idCalendario+"'>"+dataSet[i].descrizione+"</option>";
+    $("#select_elenco_calendari").append(opt);
+      }
+  });
 }
 
 
@@ -44,57 +57,67 @@ function selezionaCalendarioMonitor(selectIndex){
  * @returns
  */
 function getDettaglioCalendarioMilestone(idCalendario) {
-	 $.ajax({
-	    type : "GET",
-	    url : "ws/resources/Calendari(" + idCalendario + ")/Milestone",
-	    dataType : "json",
-	    success : function(dataSet) {
+  $.ajax({
+     type : "GET",
+     url : "ws/resources/Calendari(" + idCalendario + ")/Milestone",
+     dataType : "json",
+     success : function(dataSet) {
 
-	     for (i in dataSet) {
-	      var milestone = dataSet[i].milestone.descrizione;
-	      var tags = dataSet[i].tags;
-	      var endpoint = "ws/Polling?milestone=" + milestone
-	        + "&tag=" + tags.split(",").join("&tag=");
+      for (i in dataSet) {
+       var milestone = dataSet[i].milestone.descrizione;
+       var tags = dataSet[i].tags;
+       var endpoint = "ws/Polling?milestone=" + milestone + "&tag=" + tags.split(",").join("&tag=");
 
-	       $.ajax({
-	         type : "GET",
-	         url : endpoint,
-	         dataType : "json",
-	         success : function(dataSet2) {
+        $.ajax({
+          type : "GET",
+          url : endpoint,
+          dataType : "json",
+          success : function(dataSet2) {
+           
+           console.log("dataSet2: "+dataSet2);
+           
+           if(dataSet2 != null){
+            dataSet[i].semaforo = dataSet2; 
+           } else {
+            dataSet[i].semaforo = 0
+           }
+          dataSet[i].data = convertTimestampToData(dataSet[i].dataOraPreviste);
+          dataSet[i].ora = convertTimestampToTime(dataSet[i].dataOraPreviste);
+           
+           console.log("dataSet["+i+"].semaforo: "+dataSet2);
 
-	          dataSet[i].semaforo = dataSet2;
-	          dataSet[i].data = convertData(dataSet[i].dataOraPreviste);
-	          dataSet[i].ora = convertTime(dataSet[i].dataOraPreviste);
-	          
+           
+          }
 
-	          if (dataSet[i].count == dataSet.lenght) {
-	           //alert("ciao");
-	           $("#divDettagliCalendarioMilestone").removeClass("hide");
-	           $("#tableDettaglioCalendarioMilestone").DataTable({
-	             paging : false,
-	             lengthChange : false,
-	             searching : false,
-	             ordering : false,
-	             info : false,
-	             autoWidth : false,
-	             data : dataSet,
-	             autoWidth : false,
-	             destroy : true,
-	             columns : [
-	               { data : 'milestone.descrizione' },
-	               { data : 'data', className: 'tdCenter' },
-	               { data : 'ora', className: 'tdCenter' },
-	               { data : 'semaforo', className: 'tdCenter', defaultContent:'' },
-	               { data : 'tags' },
-	               { data : null, defaultContent : 'TODO' } 
-	              ]
-	           });
-	          }
+         });
+      }
+           
+           
+           //if (dataSet[i].count == dataSet.lenght) {
+            //alert("ciao");
+            $("#divDettagliCalendarioMilestone").removeClass("hide");
+            $("#tableDettaglioCalendarioMilestone").DataTable({
+              paging : false,
+              lengthChange : false,
+              searching : false,
+              ordering : false,
+              info : false,
+              autoWidth : false,
+              data : dataSet,
+              autoWidth : false,
+              destroy : true,
+              columns : [
+                { data : 'milestone.descrizione' },
+                { data : 'data', className: 'tdCenter' },
+                { data : 'ora', className: 'tdCenter' },
+                { data : 'semaforo', className: 'tdCenter', defaultContent:'' },
+                { data : 'tags' },
+                { data : null, defaultContent : 'TODO' } 
+               ]
+            });
+          // }
 
-	         }
 
-	        });
-	     }
-	    }
-	   });
+     }
+    });
 }
