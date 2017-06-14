@@ -62,10 +62,15 @@ function getDettaglioCalendarioMilestone(idCalendario) {
 	         dataType : "json",
 	         success : function(dataSet2) {
 
-	          dataSet[i].semaforo = dataSet2;
+	          if(dataSet2 != null){
+	        	  dataSet[i].semaforo = dataSet2 
+	          } else {
+	        	  dataSet[i].semaforo = 0
+	          }
 	          dataSet[i].data = convertData(dataSet[i].dataOraPreviste);
 	          dataSet[i].ora = convertTime(dataSet[i].dataOraPreviste);
 	          
+	          console.log("dataSet[i].semaforo: "+dataSet2);
 
 	          if (dataSet[i].count == dataSet.lenght) {
 	           //alert("ciao");
