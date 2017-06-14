@@ -1,6 +1,5 @@
 
 
-
 /**
  * Funzione che splitta e converte la data passata come parametro, dal formato timeStamp a quello dd/MM/yyyy.
  * In più viene anche eliminata l'ora dal parametro così da restituire solamente la data
@@ -86,8 +85,7 @@ function attivaWidget(){
 		    autoclose: true,
 		    //appendWidgetTo: '.table-responsive'
 		  });
-						    			  
-		});
+	});
 }
 
 /**

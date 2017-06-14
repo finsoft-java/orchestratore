@@ -57,67 +57,57 @@ function getListaCalendariMonitor(){
  * @returns
  */
 function getDettaglioCalendarioMilestone(idCalendario) {
-  $.ajax({
-     type : "GET",
-     url : "ws/resources/Calendari(" + idCalendario + ")/Milestone",
-     dataType : "json",
-     success : function(dataSet) {
+	 $.ajax({
+	    type : "GET",
+	    url : "ws/resources/Calendari(" + idCalendario + ")/Milestone",
+	    dataType : "json",
+	    success : function(dataSet) {
 
-      for (i in dataSet) {
-       var milestone = dataSet[i].milestone.descrizione;
-       var tags = dataSet[i].tags;
-       var endpoint = "ws/Polling?milestone=" + milestone + "&tag=" + tags.split(",").join("&tag=");
+	    	for (var i in dataSet){
+	    		dataSet[i].data = convertTimestampToData(dataSet[i].dataOraPreviste);
+		        dataSet[i].ora = convertTimestampToTime(dataSet[i].dataOraPreviste);
+	    	}
+	    	
+	    	var dataTable = $("#tableDettaglioCalendarioMilestone").DataTable({
+	             paging : false,
+	             lengthChange : false,
+	             searching : false,
+	             ordering : false,
+	             info : false,
+	             autoWidth : false,
+	             destroy : true,
+	             columns : [
+	               { data : 'milestone.descrizione' },
+	               { data : 'data', className: 'tdCenter' },
+	               { data : 'ora', className: 'tdCenter' },
+	               { data : 'semaforo', className: 'tdCenter', defaultContent:'' },
+	               { data : 'tags' },
+	               { data : null, defaultContent : 'TODO' } 
+	              ]
+	           });
+	    	 
+	    	 
+		     for (j in dataSet) {
+		    	 polling(dataTable, j, dataSet[j]);
+		     }
+		     
+		     $("#divDettagliCalendarioMilestone").removeClass("hide");
+	     
+	     }
+	   });
+}
 
-        $.ajax({
-          type : "GET",
-          url : endpoint,
-          dataType : "json",
-          success : function(dataSet2) {
-           
-           console.log("dataSet2: "+dataSet2);
-           
-           if(dataSet2 != null){
-            dataSet[i].semaforo = dataSet2; 
-           } else {
-            dataSet[i].semaforo = 0
-           }
-          dataSet[i].data = convertTimestampToData(dataSet[i].dataOraPreviste);
-          dataSet[i].ora = convertTimestampToTime(dataSet[i].dataOraPreviste);
-           
-           console.log("dataSet["+i+"].semaforo: "+dataSet2);
-
-           
-          }
-
-         });
-      }
-           
-           
-           //if (dataSet[i].count == dataSet.lenght) {
-            //alert("ciao");
-            $("#divDettagliCalendarioMilestone").removeClass("hide");
-            $("#tableDettaglioCalendarioMilestone").DataTable({
-              paging : false,
-              lengthChange : false,
-              searching : false,
-              ordering : false,
-              info : false,
-              autoWidth : false,
-              data : dataSet,
-              autoWidth : false,
-              destroy : true,
-              columns : [
-                { data : 'milestone.descrizione' },
-                { data : 'data', className: 'tdCenter' },
-                { data : 'ora', className: 'tdCenter' },
-                { data : 'semaforo', className: 'tdCenter', defaultContent:'' },
-                { data : 'tags' },
-                { data : null, defaultContent : 'TODO' } 
-               ]
-            });
-          // }
-
-
-     }
-    });
+function polling(datatable, numRiga, data) {
+    var milestone = data.milestone.descrizione;
+    var tags = data.tags;
+    var endpoint = "ws/Polling?milestone=" + milestone
+      + "&tag=" + tags.split(",").join("&tag=");
+     $.ajax({
+       type : "GET",
+       url : endpoint,
+       dataType : "json",
+       success : function(dataSet) {
+        data.semaforo = dataSet;
+       }
+     })
 }

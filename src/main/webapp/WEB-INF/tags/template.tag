@@ -97,9 +97,11 @@
 		<script src="plugins/datatables/dataTables.bootstrap.min.js"></script>
 		<!-- sidebar remember state -->
 		<script src="dist/js/sidebarState.js"></script>
-	
-		<div class="wrapper">
 		
+
+		
+		<div class="wrapper">
+
 			<header class="main-header">
 	
 			    <a href="index.jsp" class="logo">
@@ -157,14 +159,15 @@
 			</footer>
 	
 		</div>
-			
-		
-		<!-- funzioni terze comuni -->
+	
+	
+		<!-- funzioni terze -->
 		<script src="dist/js/sharedFunctions.js"></script>
+		
 		
 		<!-- Page script -->
 		<script>
-			attivaWidget();
+			attivaWidget();			
 			activeDeactiveNavBarTab();
 		</script>
 		
