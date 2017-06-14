@@ -91,7 +91,7 @@ function getDettaglioCalendarioMilestone(idCalendario) {
 	    	 polling(dataTable, j, dataSet[j]);
 	     }
 	     
-	    }
+	     }
 	   });
 }
 

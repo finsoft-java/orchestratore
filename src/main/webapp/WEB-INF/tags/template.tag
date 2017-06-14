@@ -57,47 +57,6 @@
 	
 	</head>
 	<body class="hold-transition skin-green sidebar-mini">
-	
-		<!-- jQuery 3.1.1 -->
-		<script src="plugins/jQuery/jquery-3.1.1.min.js"></script>
-		<!-- Bootstrap 3.3.6 -->
-		<script src="bootstrap/js/bootstrap.min.js"></script>
-		<!-- FastClick -->
-		<script src="plugins/fastclick/fastclick.js"></script>
-		<!-- AdminLTE App -->
-		<script src="dist/js/app.min.js"></script>
-		<script type="text/javascript" src="dist/js/adminlte.min.js"></script>		
-		<!-- Sparkline -->
-		<script src="plugins/sparkline/jquery.sparkline.min.js"></script>
-		<!-- jvectormap -->
-		<script src="plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
-		<script src="plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
-		<!-- SlimScroll 1.3.0 -->
-		<script src="plugins/slimScroll/jquery.slimscroll.min.js"></script>
-		<!-- ChartJS 1.0.1 -->
-		<script src="plugins/chartjs/Chart.min.js"></script>
-		<!-- AdminLTE for demo purposes -->
-		<script src="dist/js/demo.js"></script>
-		<!-- Select2 -->
-		<script src="plugins/select2/select2.full.min.js"></script>
-		<script src="plugins/select2/i18n/it.js"></script>
-		<!-- InputMask -->
-		<script src="plugins/input-mask/jquery.inputmask.js"></script>
-		<script src="plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
-		<script src="plugins/input-mask/jquery.inputmask.extensions.js"></script>
-		<!-- bootstrap datepicker -->
-		<script src="plugins/datepicker/bootstrap-datepicker.js"></script>
-		<script src="plugins/datepicker/locales/bootstrap-datepicker.it.js"></script>
-		<!-- bootstrap time picker -->
-		<script src="plugins/timepicker/bootstrap-timepicker.min.js"></script>
-		<!-- iCheck 1.0.1 -->
-		<script src="plugins/iCheck/icheck.min.js"></script>
-		<!-- bootstrap Datatable -->
-		<script src="plugins/datatables/jquery.dataTables.min.js"></script>
-		<script src="plugins/datatables/dataTables.bootstrap.min.js"></script>
-		<!-- sidebar remember state -->
-		<script src="dist/js/sidebarState.js"></script>
-	
 		<div class="wrapper">
 		
 			<header class="main-header">
@@ -157,15 +116,109 @@
 			</footer>
 	
 		</div>
-			
+	
+	
+	
+		<!-- jQuery 3.1.1 -->
+		<script src="plugins/jQuery/jquery-3.1.1.min.js"></script>
+		<!-- Bootstrap 3.3.6 -->
+		<script src="bootstrap/js/bootstrap.min.js"></script>
+		<!-- FastClick -->
+		<script src="plugins/fastclick/fastclick.js"></script>
+		<!-- AdminLTE App -->
+		<script src="dist/js/app.min.js"></script>
+		<script type="text/javascript" src="dist/js/adminlte.min.js"></script>		
+		<!-- Sparkline -->
+		<script src="plugins/sparkline/jquery.sparkline.min.js"></script>
+		<!-- jvectormap -->
+		<script src="plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+		<script src="plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+		<!-- SlimScroll 1.3.0 -->
+		<script src="plugins/slimScroll/jquery.slimscroll.min.js"></script>
+		<!-- ChartJS 1.0.1 -->
+		<script src="plugins/chartjs/Chart.min.js"></script>
+		<!-- AdminLTE for demo purposes -->
+		<script src="dist/js/demo.js"></script>
+		<!-- Select2 -->
+		<script src="plugins/select2/select2.full.min.js"></script>
+		<script src="plugins/select2/i18n/it.js"></script>
+		<!-- InputMask -->
+		<script src="plugins/input-mask/jquery.inputmask.js"></script>
+		<script src="plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+		<script src="plugins/input-mask/jquery.inputmask.extensions.js"></script>
+		<!-- bootstrap datepicker -->
+		<script src="plugins/datepicker/bootstrap-datepicker.js"></script>
+		<script src="plugins/datepicker/locales/bootstrap-datepicker.it.js"></script>
+		<!-- bootstrap time picker -->
+		<script src="plugins/timepicker/bootstrap-timepicker.min.js"></script>
+		<!-- iCheck 1.0.1 -->
+		<script src="plugins/iCheck/icheck.min.js"></script>
+		<!-- bootstrap Datatable -->
+		<script src="plugins/datatables/jquery.dataTables.min.js"></script>
+		<script src="plugins/datatables/dataTables.bootstrap.min.js"></script>
+		<!-- sidebar remember state -->
+		<script src="dist/js/sidebarState.js"></script>
 		
-		<!-- funzioni terze comuni -->
-		<script src="dist/js/sharedFunctions.js"></script>
+		
+		<!-- funzioni terze -->
+		<script src="dist/js/monitorFunctions.js"></script>
+		<script src="dist/js/gestioneCalFunctions.js"></script>
+		
 		
 		<!-- Page script -->
 		<script>
-			attivaWidget();
-			activeDeactiveNavBarTab();
+			$(function () {
+			  //Initialize Select2 Elements
+			  $(".select2").select2({
+			  	placeholder: "Seleziona",
+			    minimumResultsForSearch: 10,
+			    language: 'it'
+			  });
+			
+			  //Datemask dd/mm/yyyy
+			  $("#datemask").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
+			  
+			  //Money Euro
+			  $("[data-mask]").inputmask();
+			
+			  //Date picker
+			  $('.datepicker').datepicker({
+			 	language: 'it',
+			    orientation: "auto",
+			    format: 'dd/mm/yyyy',
+			    todayHighlight: true,
+			    autoclose: true,
+			    todayBtn: "linked",
+			    toggleActive: true
+			  });
+			
+			  //iCheck for checkbox and radio inputs
+			  $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+			    checkboxClass: 'icheckbox_minimal-blue',
+			    radioClass: 'iradio_minimal-blue'
+			  });
+			  
+			  //Timepicker
+			  $(".timepicker").timepicker({
+			    showInputs: false,
+			    showMeridian: false,
+			    defaultTime: false,
+			    minuteStep: 1,
+			    autoclose: true,
+			    //appendWidgetTo: '.table-responsive'
+			  });
+							    			  
+			  
+			});
+		
+			
+			var url = location.pathname.substring(location.pathname.lastIndexOf("/") + 1);
+			$('.treeview-menu li a[href="' + url + '"]').parent().addClass('active');
+			$('.treeview-menu li a').filter(function() {
+			    return this.href === url;
+			}).parent().parent().parent().addClass('active');
+			
+
 		</script>
 		
 		

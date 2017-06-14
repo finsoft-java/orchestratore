@@ -63,7 +63,5 @@
 			</div>
 			
 		</section>
-		
-		<script src="dist/js/monitorFunctions.js"></script>
 
 </t:template>
