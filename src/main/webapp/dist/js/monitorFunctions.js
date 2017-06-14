@@ -107,12 +107,7 @@ function polling(datatable, numRiga, data) {
        url : endpoint,
        dataType : "json",
        success : function(dataSet) {
-    	   $("#tableDettaglioCalendarioMilestone").DataTable({
-    		   "columnDefs": [ {
-    			   targets: 3,
-    			   data : dataSet
-    		   }]
-    	   });
+    	   datatable.cell(numRiga, 3).data(dataSet).draw();
        }
      })
 }
