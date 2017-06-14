@@ -83,7 +83,7 @@ function getDettaglioCalendarioMilestone(idCalendario) {
 	               { data : 'ora', className: 'tdCenter' },
 	               { data : 'semaforo', className: 'tdCenter', defaultContent:'' },
 	               { data : 'tags' },
-	               { data : null, defaultContent : 'TODO' } 
+	               { data : null, defaultContent : '' } 
 	              ]
 	           });
 	    	 
@@ -107,7 +107,16 @@ function polling(datatable, numRiga, data) {
        url : endpoint,
        dataType : "json",
        success : function(dataSet) {
-        data.semaforo = dataSet;
+    	   $("#tableDettaglioCalendarioMilestone").DataTable({
+    		   "columnDefs": [ {
+    			   targets: 3,
+    			   data : dataSet
+    		   }]
+    	   });
        }
      })
 }
+     
+     
+     
+     
