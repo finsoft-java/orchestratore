@@ -27,6 +27,20 @@ function convertTimestampToTime(ora){
 
 
 /**
+ * Funzione che passata data e ora in formato dd/MM/yyyy e hh:mm rispettivamente, li unisce e li converte in una stringa
+ * in formato compatibile con timestamp
+ * @param data
+ * @param ora
+ * @returns
+ */
+function convertDataOraToTimestamp(data, ora){
+	var splitDate = data.split("/");
+	var sqlDate = splitDate[2] +"-"+ splitDate[1] +"-"+ splitDate[0];
+	return sqlDate +"T"+ ora + ":00+02:00"; 
+}
+
+
+/**
  * Funzione che richiama i widget riattivandoli sulle righe nuove create a runtine, attraverso
  * il tasto 'aggiungi riga'
  * @returns

@@ -52,7 +52,7 @@ function getListaMilestone_gestCal(j){
 	 $.getJSON("ws/resources/Milestones", function(dataSet){
 	   for(i in dataSet){
 	    var opt = "<option value='"+dataSet[i].idMilestone+"'>"+dataSet[i].descrizione+"</option>";
-	    $("#milestoneNuovoCal"+(j)).append(opt);
+	    $("#selectMilestoneCalNew"+(j)).append(opt);
 	      }
 	  });
 }
@@ -115,17 +115,11 @@ function saveEditedCalendar(){
 	var dataList = [];
 	for(rowCounterFromDBData; rowCounterFromDBData<rowCounter; rowCounterFromDBData++){
 		
-		dataList.push([$("#selectMilestoneCalNew"+rowCounterFromDBData).val(), $("#dataCalNew"+rowCounterFromDBData).val(), $("#oraCalNew"+rowCounterFromDBData).val(), $("#tagsCalNew"+rowCounterFromDBData).val()]);
+		dataList.push([$("#selectMilestoneCalNew"+rowCounterFromDBData).val(), convertDataOraToTimestamp($("#dataCalNew"+rowCounterFromDBData).val(), $("#oraCalNew"+rowCounterFromDBData).val()), $("#tagsCalNew"+rowCounterFromDBData).val()]);
 		
 		
-		
-		
-		//alert("ciao");
-		selectMilestoneCalEdit6 = $("#selectMilestoneCalEdit"+rowCounterFromDBData).val();
-		//location.reload(true);
-	}
-	
-	
+		console.log(dataList);
+	}	
 }
 
 
@@ -154,6 +148,7 @@ function getDettaglioCalendarioMilestoneEditabile(idCalendario){
 					 opt += "</select></div>";
 					 dataSet[i].selectMilestones = opt;
 					
+					 
 					dataSet[i].dataOraPreviste1 = '<div class="form-group"><div class="input-group"><div class="input-group-addon"><i class="fa fa-calendar"></i></div><input id="dataCalEdit'+rowCounter+'" value="'+convertTimestampToData(dataSet[i].dataOraPreviste)+'" onkeydown="return false" type="text" placeholder="Data" class="form-control pull-right datepicker"></div></div>';
 					dataSet[i].dataOraPreviste2 = '<div class="bootstrap-timepicker"><div class="form-group"><div class="input-group"><div class="input-group-addon"><i class="fa fa-clock-o"></i></div><input id="oraCalEdit'+rowCounter+'" value="'+convertTimestampToTime(dataSet[i].dataOraPreviste)+'" placeholder="Ora" type="text" class="form-control timepicker"/></div></div></div>';
 					dataSet[i].tags = '<input id="tagsCalEdit'+rowCounter+'" type="text" class="form-control" value="'+dataSet[i].tags+'"/>';
@@ -194,7 +189,7 @@ function getDettaglioCalendarioMilestoneEditabile(idCalendario){
  * @returns
  */
 function addInputForm(){	
-	var row = '<tr role="row"><td class="tdCenter col-md-1 class="col-md-1"><a id="buttonToDeleteRigaNew'+rowCounter+'" style="cursor: pointer;" onclick="removeInputForm(this)" data-toggle="tooltip" title="Elimina" data-placement="bottom"><i style="color:red" class="fa fa-trash-o"></i></a></td><td class="tdCenter col-md-3"><div class="form-group" style="width:100%;"><select style="width:100%;" id="selectMilestoneCalNew'+rowCounter+'" class="form-control select2"><option></option></select></div></td><td class="tdCenter col-md-2"><div class="form-group"><div class="input-group"><div class="input-group-addon"><i class="fa fa-calendar"></i></div><input id="dataCalNew'+rowCounter+'" onkeydown="return false" type="text" placeholder="Data" class="form-control pull-right datepicker"></div></div></td><td class="tdCenter col-md-2"><div class="bootstrap-timepicker"><div class="form-group"><div class="input-group"><div class="input-group-addon"><i class="fa fa-clock-o"></i></div><input id="oraCalNew'+rowCounter+'" placeholder="Ora" type="text" class="form-control timepicker"/></div></div></div></td><td class="tdCenter col-md-2"><input id="tagsCalNew'+rowCounter+'" type="text" class="form-control" placeholder="TAGs"/></td><td class="tdCenter col-md-2"></td></tr>';
+	var row = '<tr role="row"><td class="tdCenter col-md-1 class="col-md-1"><a id="buttonToDeleteRigaNew'+rowCounter+'" style="cursor: pointer;" onclick="removeInputForm(this)" data-toggle="tooltip" title="Elimina" data-placement="left"><i style="color:red" class="fa fa-trash-o"></i></a></td><td class="tdCenter col-md-3"><div class="form-group" style="width:100%;"><select style="width:100%;" id="selectMilestoneCalNew'+rowCounter+'" class="form-control select2"><option></option></select></div></td><td class="tdCenter col-md-2"><div class="form-group"><div class="input-group"><div class="input-group-addon"><i class="fa fa-calendar"></i></div><input id="dataCalNew'+rowCounter+'" onkeydown="return false" type="text" placeholder="Data" class="form-control pull-right datepicker"></div></div></td><td class="tdCenter col-md-2"><div class="bootstrap-timepicker"><div class="form-group"><div class="input-group"><div class="input-group-addon"><i class="fa fa-clock-o"></i></div><input id="oraCalNew'+rowCounter+'" placeholder="Ora" type="text" class="form-control timepicker"/></div></div></div></td><td class="tdCenter col-md-2"><input id="tagsCalNew'+rowCounter+'" type="text" class="form-control" placeholder="TAGs"/></td><td class="tdCenter col-md-2"></td></tr>';
 	
 	getListaMilestone_gestCal(rowCounter);
 	$('#tableCalendarioEditabile').append(row);
