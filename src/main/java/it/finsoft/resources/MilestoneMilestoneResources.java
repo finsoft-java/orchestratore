@@ -50,12 +50,15 @@ public class MilestoneMilestoneResources {
 		milestoneMilestonesManager.remove(id);
 	}
 
-	@PUT
-	@Path("MilestoneMilestones({id})")//richiede di inserire (in json) tutti i campi obbligatori
-	public void update(@PathParam("id") Long id, MilestoneMilestone m) {
-		m.setIdSemaforoMilestone(id);
-		milestoneMilestonesManager.preCheck(m);
-	}
+	// Non piu' utilizzabile fatto cosi'
+	/*
+	 * @PUT
+	 * 
+	 * @Path("MilestoneMilestones({id})")//richiede di inserire (in json) tutti
+	 * i campi obbligatori public void update(@PathParam("id") Long id,
+	 * MilestoneMilestone m) { m.setIdSemaforoMilestone(id);
+	 * milestoneMilestonesManager.preCheck(m); }
+	 */
 
 	/* ---- TEST RESOURCES ---- */
 	@GET

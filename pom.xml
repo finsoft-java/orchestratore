@@ -5,12 +5,12 @@
 	<artifactId>orchestratoreRADAR</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<dependencies>
-		<dependency> 
-			<groupId>javax.ws.rs</groupId> 
-			<artifactId>javax.ws.rs-api</artifactId> 
-			<version>2.1-m07</version> 
+		<dependency>
+			<groupId>javax.ws.rs</groupId>
+			<artifactId>javax.ws.rs-api</artifactId>
+			<version>2.1-m07</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
@@ -21,10 +21,10 @@
 			<artifactId>javax.inject</artifactId>
 			<version>1</version>
 		</dependency>
-		<dependency> 
-			<groupId>com.airhacks</groupId> 
-			<artifactId>jaxrs-cors</artifactId> 
-			<version>0.0.2</version> 
+		<dependency>
+			<groupId>com.airhacks</groupId>
+			<artifactId>jaxrs-cors</artifactId>
+			<version>0.0.2</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.ejb</groupId>
@@ -54,18 +54,13 @@
 
 		<!-- Da qui in avanti, sono le dipendenze per l'embedded glassfish -->
 		<dependency>
-    		<groupId>org.glassfish.main.extras</groupId>
-    		<artifactId>glassfish-embedded-all</artifactId>
-    		<version>4.1.2</version>
+			<groupId>org.glassfish.main.extras</groupId>
+			<artifactId>glassfish-embedded-all</artifactId>
+			<version>4.1.2</version>
 			<scope>provided</scope>
 		</dependency>
-		<!-- 
-		<dependency> 
-			<groupId>org.apache.derby</groupId> 
-			<artifactId>derby</artifactId> 
-			<version>10.13.1.1</version> 
-			<scope>provided</scope> 
-		</dependency> -->
+		<!-- <dependency> <groupId>org.apache.derby</groupId> <artifactId>derby</artifactId> 
+			<version>10.13.1.1</version> <scope>provided</scope> </dependency> -->
 	</dependencies>
 	<build>
 		<finalName>orchestratoreRADAR</finalName>
