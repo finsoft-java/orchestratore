@@ -14,6 +14,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import it.finsoft.entity.MilestoneMilestone;
+import it.finsoft.manager.MilestoneManager;
 import it.finsoft.manager.MilestoneMilestoneManager;
 
 @Stateless
@@ -24,6 +25,9 @@ public class MilestoneMilestoneResources {
 	@Inject
 	MilestoneMilestoneManager milestoneMilestonesManager;
 
+	@Inject
+	MilestoneManager milestoneManager;
+
 	@GET
 	@Path("MilestoneMilestones")
 	public List<MilestoneMilestone> findAll() {
@@ -31,34 +35,34 @@ public class MilestoneMilestoneResources {
 	}
 
 	@GET
-	@Path("MilestoneMilestones({id})")
-	public MilestoneMilestone findById(@PathParam("id") Long id) {
-		return milestoneMilestonesManager.findById(id);
+	@Path("MilestoneMilestones({idM},{idCh})")
+	public MilestoneMilestone findById(@PathParam("idM") Long id, @PathParam("idCh") Long idCh) {
+		return milestoneMilestonesManager.findById(id, idCh);
 	}
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	@Path("MilestoneMilestones({id})")
+	@Path("MilestoneMilestones")
 	public MilestoneMilestone create(MilestoneMilestone cal) {
 		System.out.println("post resources, salvo semaforomilestone " + cal);
 		return milestoneMilestonesManager.preCheck(cal);
 	}
 
 	@DELETE
-	@Path("MilestoneMilestones({id})")
-	public void delete(@PathParam("id") Long id) {
-		milestoneMilestonesManager.remove(id);
+	@Path("MilestoneMilestones({idM},{idCh})")
+	public void delete(@PathParam("idM") Long id, @PathParam("idCh") Long idCh) {
+		milestoneMilestonesManager.remove(id, idCh);
 	}
 
-	// Non piu' utilizzabile fatto cosi'
-	/*
-	 * @PUT
-	 * 
-	 * @Path("MilestoneMilestones({id})")//richiede di inserire (in json) tutti
-	 * i campi obbligatori public void update(@PathParam("id") Long id,
-	 * MilestoneMilestone m) { m.setIdSemaforoMilestone(id);
-	 * milestoneMilestonesManager.preCheck(m); }
-	 */
+	@PUT
+	@Path("MilestoneMilestones({id},{idCh})")
+	// richiede di inserire (in json) tutti i campi obbligatori
+	// Bisogna vedere se va bene per l'update via interfaccia
+	public void update(@PathParam("id") Long id, @PathParam("idCh") Long idCh, MilestoneMilestone m) {
+		m.setMilestone(milestoneManager.findById(id));
+		m.setMilestoneChild(milestoneManager.findById(idCh));
+		milestoneMilestonesManager.save(m);
+	}
 
 	/* ---- TEST RESOURCES ---- */
 	@GET
