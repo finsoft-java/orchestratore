@@ -4,15 +4,15 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
+@IdClass(MilestoneMilestonePK.class)
 @Table(name = "MILESTONE_MILESTONES")
 @XmlRootElement
 public class MilestoneMilestone implements Serializable {
@@ -20,14 +20,11 @@ public class MilestoneMilestone implements Serializable {
 	private static final long serialVersionUID = 1501385652586677633L;
 
 	@Id
-	@Column(name = "ID_MILESTONE_MILESTONE")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long idMilestoneMilestone;
-
 	@ManyToOne
 	@JoinColumn(name = "ID_MILESTONE", referencedColumnName = "ID_MILESTONE")
 	private Milestone milestone;
 
+	@Id
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "ID_MILESTONE_CHILD", referencedColumnName = "ID_MILESTONE")
 	private Milestone milestoneChild;
@@ -38,19 +35,11 @@ public class MilestoneMilestone implements Serializable {
 	public MilestoneMilestone() {
 	}
 
-	public MilestoneMilestone(long id, Milestone milestone, Milestone milestoneChild, int ordinamento) {
-		this.idMilestoneMilestone = id;
+	public MilestoneMilestone(Milestone milestone, Milestone milestoneChild, Integer ordinamento) {
+
 		this.milestone = milestone;
 		this.milestoneChild = milestoneChild;
 		this.ordinamento = ordinamento;
-	}
-
-	public Long getIdMilestoneMilestone() {
-		return idMilestoneMilestone;
-	}
-
-	public void setIdSemaforoMilestone(long idSemaforoMilestone) {
-		this.idMilestoneMilestone = idSemaforoMilestone;
 	}
 
 	public Milestone getMilestone() {
@@ -73,7 +62,7 @@ public class MilestoneMilestone implements Serializable {
 		return ordinamento;
 	}
 
-	public void setOrdinamento(int ordinamento) {
+	public void setOrdinamento(Integer ordinamento) {
 		this.ordinamento = ordinamento;
 	}
 
@@ -81,10 +70,9 @@ public class MilestoneMilestone implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + (int) (idMilestoneMilestone ^ (idMilestoneMilestone >>> 32));
 		result = prime * result + ((milestone == null) ? 0 : milestone.hashCode());
-		result = prime * result + ordinamento;
 		result = prime * result + ((milestoneChild == null) ? 0 : milestoneChild.hashCode());
+		result = prime * result + ((ordinamento == null) ? 0 : ordinamento.hashCode());
 		return result;
 	}
 
@@ -97,27 +85,22 @@ public class MilestoneMilestone implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		MilestoneMilestone other = (MilestoneMilestone) obj;
-		if (idMilestoneMilestone != other.idMilestoneMilestone)
-			return false;
 		if (milestone == null) {
 			if (other.milestone != null)
 				return false;
 		} else if (!milestone.equals(other.milestone))
-			return false;
-		if (ordinamento != other.ordinamento)
 			return false;
 		if (milestoneChild == null) {
 			if (other.milestoneChild != null)
 				return false;
 		} else if (!milestoneChild.equals(other.milestoneChild))
 			return false;
+		if (ordinamento == null) {
+			if (other.ordinamento != null)
+				return false;
+		} else if (!ordinamento.equals(other.ordinamento))
+			return false;
 		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "SemaforoMilestone [idMilestoneMilestone=" + idMilestoneMilestone + ", milestone=" + milestone
-				+ ", semaforo=" + milestoneChild + ", ordinamento=" + ordinamento + "]";
 	}
 
 }
