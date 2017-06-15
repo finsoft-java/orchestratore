@@ -82,7 +82,7 @@ function getDettaglioCalendarioMilestone(idCalendario) {
 	               { data : 'data', className: 'tdCenter' },
 	               { data : 'ora', className: 'tdCenter' },
 	               { data : 'semaforo', className: 'tdCenter', defaultContent:'' },
-	               { data : 'tags' },
+	               { data : 'tag' },
 	               { data : null, defaultContent : '' } 
 	              ]
 	           });
@@ -102,7 +102,7 @@ function pad(numb) {
 function polling(datatable, numRiga, data) {
     
 	var milestone = data.milestone.descrizione;
-    var tags = data.tags;    
+    var tags = data.tag;    
     var endpoint = "ws/Polling?milestone=" + milestone + "&tag=" + tags.split(",").join("&tag=");
 
     var _ora = data.ora;
