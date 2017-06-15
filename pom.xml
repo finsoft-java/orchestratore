@@ -72,6 +72,5 @@
 		<!-- test per risoluzione warning "platform encoding Cp1252) -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
-
 	<packaging>war</packaging>
 </project>

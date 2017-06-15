@@ -114,4 +114,59 @@ public class Milestone implements Serializable {
 		this.azione = azione;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((azione == null) ? 0 : azione.hashCode());
+		result = prime * result + ((descrizione == null) ? 0 : descrizione.hashCode());
+		result = prime * result + ((entita == null) ? 0 : entita.hashCode());
+		result = prime * result + ((idMilestone == null) ? 0 : idMilestone.hashCode());
+		result = prime * result + ((milestoneMilestone == null) ? 0 : milestoneMilestone.hashCode());
+		result = prime * result + ((tipoEvento == null) ? 0 : tipoEvento.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Milestone other = (Milestone) obj;
+		if (azione == null) {
+			if (other.azione != null)
+				return false;
+		} else if (!azione.equals(other.azione))
+			return false;
+		if (descrizione == null) {
+			if (other.descrizione != null)
+				return false;
+		} else if (!descrizione.equals(other.descrizione))
+			return false;
+		if (entita == null) {
+			if (other.entita != null)
+				return false;
+		} else if (!entita.equals(other.entita))
+			return false;
+		if (idMilestone == null) {
+			if (other.idMilestone != null)
+				return false;
+		} else if (!idMilestone.equals(other.idMilestone))
+			return false;
+		if (milestoneMilestone == null) {
+			if (other.milestoneMilestone != null)
+				return false;
+		} else if (!milestoneMilestone.equals(other.milestoneMilestone))
+			return false;
+		if (tipoEvento == null) {
+			if (other.tipoEvento != null)
+				return false;
+		} else if (!tipoEvento.equals(other.tipoEvento))
+			return false;
+		return true;
+	}
+
 }
