@@ -24,13 +24,19 @@ public class MilestoneMilestoneManager {
 		return em.merge(tosave);
 	}
 
-	public void remove(Long id) {
-		MilestoneMilestone c = em.find(MilestoneMilestone.class, id);
+	public void remove(Long id, Long idCh) {
+		MilestoneMilestone c = findById(id, idCh);
 		em.remove(c);
 	}
 
-	public MilestoneMilestone findById(Long id) {
-		return em.find(MilestoneMilestone.class, id);
+	public MilestoneMilestone findById(Long id, Long idCh) {
+		try {
+			return em.createQuery(
+					"FROM MilestoneMilestone WHERE milestone.idMilestone= :m AND milestoneChild.idMilestone= :ch",
+					MilestoneMilestone.class).setParameter("m", id).setParameter("ch", idCh).getSingleResult();
+		} catch (Exception sqlError) {
+			return null;
+		}
 	}
 
 	public List<MilestoneMilestone> findAll() {
