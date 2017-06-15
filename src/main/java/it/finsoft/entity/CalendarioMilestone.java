@@ -38,8 +38,8 @@ public class CalendarioMilestone implements Serializable {
 	@ManyToOne(optional = false)
 	private Calendario calendario;
 
-	@Column(name = "TAGS")
-	private String tags;
+	@Column(name = "TAG")
+	private String tag;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DATA_ORA_PREVISTE")
@@ -49,12 +49,12 @@ public class CalendarioMilestone implements Serializable {
 
 	}
 
-	public CalendarioMilestone(Azione azione, Milestone milestone, Calendario calendario, String tags,
+	public CalendarioMilestone(Azione azione, Milestone milestone, Calendario calendario, String tag,
 			Date dataOraPreviste) {
 		this.azione = azione;
 		this.milestone = milestone;
 		this.calendario = calendario;
-		this.tags = tags;
+		this.tag = tag;
 		this.dataOraPreviste = dataOraPreviste;
 	}
 
@@ -90,13 +90,14 @@ public class CalendarioMilestone implements Serializable {
 		this.calendario = calendario;
 	}
 
-	public String getTags() {
-		return tags;
+	public String getTag() {
+		return tag;
 	}
 
-	public void setTags(String tags) {
-		tags = tags.replaceAll(" ", "").toUpperCase();
-		this.tags = tags;
+	public void setTag(String tag) {
+		tag = tag.replaceAll(",", "");
+		tag = tag.replaceAll(" ", "").toUpperCase();
+		this.tag = tag;
 	}
 		
 	public Date getDataOraPreviste() {
@@ -135,7 +136,7 @@ public class CalendarioMilestone implements Serializable {
 	@Override
 	public String toString() {
 		return "CalendarioMilestone [idCalendarioMilestone=" + idCalendarioMilestone + ", azione=" + azione
-				+ ", milestone=" + milestone + ", calendario=" + calendario + ", tags=" + tags + ", dataOraPreviste="
+				+ ", milestone=" + milestone + ", calendario=" + calendario + ", tag=" + tag + ", dataOraPreviste="
 				+ dataOraPreviste + "]";
 	}
 
