@@ -83,7 +83,7 @@ public class CalendarioMilestoneManager {
 				listDescFoglie += ("< " + milestone.getDescrizioneTag() + " >,");
 				System.out.println("if interno al nuovo foreach" + listDescFoglie);
 			} else {
-				listDescFoglie += milestone.getDescrizione();
+				listDescFoglie += ("< " + milestone.getDescrizione() + " >,");
 			}
 		}
 		return listDescFoglie;
