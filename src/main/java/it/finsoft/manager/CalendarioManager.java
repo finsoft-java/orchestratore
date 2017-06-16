@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import it.finsoft.entity.Calendario;
+import it.finsoft.entity.Milestone;
 
 @Stateless
 public class CalendarioManager {
