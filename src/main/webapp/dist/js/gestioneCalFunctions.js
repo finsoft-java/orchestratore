@@ -126,15 +126,15 @@ function saveEditedCalendar(){
 		};
 	    request = JSON.stringify(request); 
 		console.log(request);
-//	    insertMilestonInCalendar(idSelect, request);
+//	    insertMilestoneInCalendar(idSelect, request);
 	}
 }
 
-function insertMilestonInCalendar(idCalendario, jsonMileston) {
+function insertMilestoneInCalendar(idCalendario, jsonMilestone) {
 	 $.ajax({
 	  type: "POST",
 	  url: "Calendari("+idCalendario+")/Milestone",
-	  data: jsonMileston,////////////////////////////////////////////////////
+	  data: jsonMilestone,////////////////////////////////////////////////////
 	  contentType: "application/json; charset=utf-8",
 	  dataType: "json",
 	  success: function(res) {
