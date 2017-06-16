@@ -81,7 +81,6 @@ public class CalendarioMilestoneManager {
 		for (Milestone milestone : foglie) {
 			if (milestone.getDescrizioneTag() != null){
 				listDescFoglie += ("< " + milestone.getDescrizioneTag() + " >,");
-				System.out.println("if interno al nuovo foreach" + listDescFoglie);
 			} else {
 				listDescFoglie += ("< " + milestone.getDescrizione() + " >,");
 			}
