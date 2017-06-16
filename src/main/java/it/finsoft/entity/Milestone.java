@@ -37,8 +37,11 @@ public class Milestone implements Serializable {
 	@ManyToOne(optional = true)
 	@JoinColumn(name = "ID_ENTITA", referencedColumnName = "ID_ENTITA")
 	private Entita entita; // foreign key tabella entita
+	
+	@Column(name = "CODICE", unique = true)
+	private String codice;
 
-	@Column(name = "DESCRIZIONE", unique = true)
+	@Column(name = "DESCRIZIONE", unique = false, nullable = true)
 	private String descrizione;
 	
 	@Column(name = "DESCRIZIONE_TAG", unique = false, nullable = true)
@@ -59,10 +62,12 @@ public class Milestone implements Serializable {
 
 	}
 
-	public Milestone(Long idMilestone, TipoEvento tipoEvento, Entita entita, String descrizione, String descrizioneTag, Azione azione) {
+	public Milestone(Long idMilestone, TipoEvento tipoEvento, Entita entita, String codice, String descrizione, 
+			String descrizioneTag, Azione azione) {
 		this.idMilestone = idMilestone;
 		this.tipoEvento = tipoEvento;
 		this.entita = entita;
+		this.codice = codice;
 		this.descrizione = descrizione;
 		this.descrizioneTag = descrizioneTag;
 		this.azione = azione;
@@ -90,6 +95,14 @@ public class Milestone implements Serializable {
 
 	public void setEntita(Entita entita) {
 		this.entita = entita;
+	}
+	
+	public String getCodice() {
+		return codice;
+	}
+
+	public void setCodice(String codice) {
+		this.codice = codice;
 	}
 
 	public String getDescrizione() {
