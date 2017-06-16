@@ -1,5 +1,6 @@
 package it.finsoft.manager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -10,11 +11,12 @@ import it.finsoft.entity.Calendario;
 import it.finsoft.entity.CalendarioMilestone;
 import it.finsoft.entity.Evento;
 import it.finsoft.entity.Milestone;
+import it.finsoft.entity.MilestoneMilestone;
 
-public class WSNewPolling {
+public class WSNewPollingPredeccesoriDiretti {
+
 	@PersistenceContext(unitName = "persistenceUnit")
 	private EntityManager em;
-
 	@Inject
 	MilestoneManager milestoneManager;
 
@@ -36,9 +38,16 @@ public class WSNewPolling {
 			return false;
 		}
 		Calendario cal = findInCalendario(milestone, tag);
-		List<Milestone> milestoneFoglie = milestoneManager.getFoglie(milestone);
-		List<String> tags = calendarioMilestoneManager.findTags(milestoneFoglie, cal);
-		boolean go = newPolling(milestoneFoglie, tags);
+		List<MilestoneMilestone> milestoneMilestones = milestone.getMilestoneMilestone();
+		System.out.println(milestoneMilestones.size());
+		System.out.println(milestoneMilestones);
+		List<Milestone> milestonePred = new ArrayList<Milestone>();
+		for (MilestoneMilestone single : milestoneMilestones) {
+			Milestone milestoneAdd = milestoneManager.findById(single.getMilestoneChild().getIdMilestone());
+			milestonePred.add(milestoneAdd);
+		}
+		List<String> tags = calendarioMilestoneManager.findTags(milestonePred, cal);
+		boolean go = newPolling(milestonePred, tags);
 		if (go == true) {
 			return true;
 		} else {
@@ -52,23 +61,24 @@ public class WSNewPolling {
 		return cal;
 	}
 
-	private boolean newPolling(List<Milestone> milestoneFoglie, List<String> tags) {
+	private boolean newPolling(List<Milestone> milestonePred, List<String> tags) {
 		int verified = 0;
-		for (int i = 0; i < milestoneFoglie.size(); i++) {
+		for (int i = 0; i < milestonePred.size(); i++) {
+			Evento e = null;
 			try {
-				Evento e = null;
+				//FIXME, eventuali eventi con lo stesso tipoEvento e entita e tag? come si gestiscono?
 				e = em.createQuery("FROM Evento WHERE tipoEvento=:tipoEvento AND entita=:entita AND tag=:tag",
-						Evento.class).setParameter("tipoEvento", milestoneFoglie.get(i).getTipoEvento())
-						.setParameter("entita", milestoneFoglie.get(i).getEntita()).setParameter("tag", tags.get(i))
+						Evento.class).setParameter("tipoEvento", milestonePred.get(i).getTipoEvento())
+						.setParameter("entita", milestonePred.get(i).getEntita()).setParameter("tag", tags.get(i))
 						.getSingleResult();
-				if (e != null) {
-					verified += 1;
-				}
-			} catch (Exception e) {
+			} catch (Exception sqlError) {
 				// TODO: handle exception
 			}
+			if (e != null) {
+				verified += 1;
+			}
 		}
-		if (verified == milestoneFoglie.size()) {
+		if (verified == milestonePred.size()) {
 			return true;
 		} else {
 			return false;
