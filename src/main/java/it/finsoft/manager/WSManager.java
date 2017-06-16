@@ -15,6 +15,7 @@ import javax.persistence.Query;
 
 import org.jboss.logging.Logger;
 
+import it.finsoft.entity.CalendarioMilestone;
 import it.finsoft.entity.DettaglioEvento;
 import it.finsoft.entity.Entita;
 import it.finsoft.entity.Evento;
@@ -37,7 +38,6 @@ public class WSManager {
 	TipoEventoManager tipoEventoManager;
 	@Inject
 	UtilityCheck utilityCheck;
-
 
 	// ---------------------------------WSReset----------------------------------------//
 
@@ -137,8 +137,6 @@ public class WSManager {
 		public String errorMessage = null;
 		public List<String> NonVerificati = new ArrayList<>();
 	}
-	
-	
 
 	// ------------------------------------WSCollector--------------------------------------//
 	public DatiCollector getCollector(String codiceEnt, String codiceTipi, String tag, List<String> keys,
@@ -230,12 +228,12 @@ public class WSManager {
 	}
 
 	// ------------------------------------PollingFoglie--------------------------------------//
-    // controlla che si siano verificati tutti gli eventi presenti al livello pi� basso dell'albero
+	// controlla che si siano verificati tutti gli eventi presenti al livello
+	// pi� basso dell'albero
 	// controlla che si siano verificati tutti gli eventi presenti al livello
 	// pi� basso dell'albero
 	// a partire da una milestone e da tutti i vari tag
 	// ritorna un booleano, eventualmente si pu� modificare per sviluppi futuri
-
 
 	public boolean getPollingFoglie(Milestone milestone, List<String> tags) {
 		List<MilestoneConSemaforo> foglieConSemaforo = new ArrayList<MilestoneConSemaforo>();
@@ -266,7 +264,7 @@ public class WSManager {
 	// ------------------------------------PollingFoglieByDescr-----------------------------------//
 
 	public boolean getPollingFoglieByDescr(String descMilestone, List<String> tags) {
-		descMilestone=utilityCheck.toUp(descMilestone);
+		descMilestone = utilityCheck.toUp(descMilestone);
 		LOG.info("Parametri di ricerca: Milestone " + descMilestone + " Tag " + tags);
 		Milestone milestone = null;
 		try {
@@ -282,7 +280,7 @@ public class WSManager {
 	// ------------------------------------WSPollingStandard1L(boolean)--------------------------------------------------//
 
 	public boolean getPolling1LByDescr(String descMilestone, List<String> tags) {
-		descMilestone=utilityCheck.toUp(descMilestone);
+		descMilestone = utilityCheck.toUp(descMilestone);
 		LOG.info("Parametri di ricerca: Milestone " + descMilestone + " Tag " + tags);
 		Milestone milestone = null;
 		try {
@@ -298,7 +296,7 @@ public class WSManager {
 	public boolean getPolling1L(Milestone milestone, List<String> tags) {
 		List<MilestoneMilestone> milestoneMilestones = milestone.getMilestoneMilestone();
 		List<Evento> eventiVerificati = new ArrayList<Evento>();
-		if (milestoneMilestones.isEmpty()){ 
+		if (milestoneMilestones.isEmpty()) {
 			String tag = "";
 			try {
 				tag = tags.get(0);
@@ -306,8 +304,8 @@ public class WSManager {
 			} catch (Exception e) {
 				LOG.error("ERROR:non sono stati passati sufficienti tag");
 			}
-			eventiVerificati.addAll(eventoManager.findPolling(tag, milestone.getEntita(), milestone.getTipoEvento())); 
-			}
+			eventiVerificati.addAll(eventoManager.findPolling(tag, milestone.getEntita(), milestone.getTipoEvento()));
+		}
 		for (int i = 0; i < milestoneMilestones.size(); i++) {
 			MilestoneMilestone sc = milestoneMilestones.get(i);
 			Milestone m = sc.getMilestoneChild();
@@ -326,5 +324,44 @@ public class WSManager {
 			return true;
 		else
 			return false;
+	}
+
+	// ----------Funzione Semaforo sul monitor Calendario-----------//
+	// TODO da suddividere in piu' routine
+	public boolean getLight(CalendarioMilestone calendarioMilestone) {
+		// long
+		// idCalendario=calendarioMilestone.getCalendario().getIdCalendario();
+		long idMilestone = calendarioMilestone.getMilestone().getIdMilestone();// prendo
+																				// la
+																				// milestone
+		Milestone milestone = milestoneManager.findById(idMilestone);
+		String tag = calendarioMilestone.getTag();// prendo il tag
+		TipoEvento tp = milestone.getTipoEvento();// prendo il tipo evento
+		Entita ent = milestone.getEntita();// prendo l'entita
+		boolean ok = false;
+		if (ent != null & tp != null) {// se tipo evento e entita non sono vuoti
+										// (milestone effettiva)
+			List<Evento> evList = eventoManager.findPolling(tag, ent, tp); // cerco
+																			// l'evento
+			if (!evList.isEmpty())
+				ok = true;
+		} else { // se tipo evento e entita sono null (milestone aggregata)
+			List<MilestoneMilestone> milestoneMilestone = milestone.getMilestoneMilestone();// tiro
+																							// su
+																							// le
+																							// dipendenze
+																							// dell'aggregato
+			int counter = 0;
+			for (int i = 0; i < milestoneMilestone.size(); i++) {
+				milestone = milestoneMilestone.get(i).getMilestoneChild();
+				List<Evento> evList = eventoManager.findPolling(tag, ent, tp);
+				if (!evList.isEmpty())
+					counter += 1;
+			}
+			if (counter == milestoneMilestone.size()) {
+				ok = true;
+			}
+		}
+		return ok;
 	}
 }
