@@ -12,6 +12,8 @@ import javax.ws.rs.core.MediaType;
 import it.finsoft.entity.Milestone;
 import it.finsoft.manager.MilestoneManager;
 import it.finsoft.manager.WSManager;
+import it.finsoft.manager.WSNewPollingFoglie;
+import it.finsoft.manager.WSNewPollingPredeccesoriDiretti;
 
 @Stateless
 @Path("Polling")
@@ -23,6 +25,12 @@ public class WSPolling {
 
 	@Inject
 	MilestoneManager milestoneManager;
+
+	@Inject
+	WSNewPollingFoglie wsPollingFoglie;
+
+	@Inject
+	WSNewPollingPredeccesoriDiretti wsPollingPred;
 
 	// -------------------------Precedente-Metodo-polling------------------------//
 	/*
@@ -38,12 +46,27 @@ public class WSPolling {
 
 	// -------------------------PollingFoglie----------------------//
 
+	/*
+	 * @GET
+	 * 
+	 * @Produces(MediaType.TEXT_PLAIN) public String
+	 * get(@QueryParam("milestone") String descMilestone, @QueryParam(value =
+	 * "tag") List<String> tags) { return
+	 * wsManager.getPollingFoglieByDescr(descMilestone, tags) ? "1" : "0"; }
+	 */
+
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
-	public String get(@QueryParam("milestone") String descMilestone, @QueryParam(value = "tag") List<String> tags) {
-		return wsManager.getPollingFoglieByDescr(descMilestone, tags) ? "1" : "0";
+	public String get(@QueryParam("milestone") String descMilestone, @QueryParam("tag") String tag) {
+		return wsPollingFoglie.getPollingByDesc(descMilestone, tag) ? "1" : "0";
 	}
 
+	@GET
+	@Produces(MediaType.TEXT_PLAIN)
+	@Path("Polling2")
+	public String getV2(@QueryParam("milestone") String descMilestone, @QueryParam("tag") String tag) {
+		return wsPollingPred.getPollingByDesc(descMilestone, tag) ? "1" : "0";
+	}
 	// ---------------------------Polling1L------------------------------------------//
 	// Polling di 1' Livello con 2 routine
 	/*
@@ -62,7 +85,7 @@ public class WSPolling {
 		System.out.println("ok Polling");
 		return "ok Polling";
 	}
-	
+
 	// TEST per l'esplosione della gerarchia
 	@GET
 	@Path("testTree")
