@@ -91,7 +91,7 @@ public class WSPolling {
 	@Path("testTree")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Milestone> Hierarchy(@QueryParam("milestone") String descMilestone) {
-		Milestone m = milestoneManager.findByDesc(descMilestone.toUpperCase());
+		Milestone m = milestoneManager.findByCod(descMilestone.toUpperCase());
 		return milestoneManager.getHierarchy(m);
 	}
 
@@ -100,7 +100,7 @@ public class WSPolling {
 	@Path("testLeaf")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Milestone> Leaf(@QueryParam("milestone") String descMilestone) {
-		Milestone m = milestoneManager.findByDesc(descMilestone.toUpperCase());
+		Milestone m = milestoneManager.findByCod(descMilestone.toUpperCase());
 		return milestoneManager.getFoglie(m);
 	}
 }

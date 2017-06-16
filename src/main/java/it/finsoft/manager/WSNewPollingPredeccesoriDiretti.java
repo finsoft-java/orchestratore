@@ -33,7 +33,7 @@ public class WSNewPollingPredeccesoriDiretti {
 		descMilestone = utilityCheck.toUp(descMilestone);
 		Milestone milestone = null;
 		try {
-			milestone = milestoneManager.findByDesc(descMilestone);
+			milestone = milestoneManager.findByCod(descMilestone);
 		} catch (Exception sqlError) {
 			return false;
 		}
