@@ -61,15 +61,14 @@ public class WSNewPollingPredeccesoriDiretti {
 		return cal;
 	}
 
-	private boolean newPolling(List<Milestone> milestonePred, List<String> tags) {
+	private boolean newPolling(List<Milestone> milestoneFoglie, List<String> tags) {
 		int verified = 0;
-		for (int i = 0; i < milestonePred.size(); i++) {
+		for (int i = 0; i < milestoneFoglie.size(); i++) {
 			Evento e = null;
 			try {
-				//FIXME, eventuali eventi con lo stesso tipoEvento e entita e tag? come si gestiscono?
 				e = em.createQuery("FROM Evento WHERE tipoEvento=:tipoEvento AND entita=:entita AND tag=:tag",
-						Evento.class).setParameter("tipoEvento", milestonePred.get(i).getTipoEvento())
-						.setParameter("entita", milestonePred.get(i).getEntita()).setParameter("tag", tags.get(i))
+						Evento.class).setParameter("tipoEvento", milestoneFoglie.get(i).getTipoEvento())
+						.setParameter("entita", milestoneFoglie.get(i).getEntita()).setParameter("tag", tags.get(i))
 						.getSingleResult();
 			} catch (Exception sqlError) {
 				// TODO: handle exception
@@ -78,7 +77,7 @@ public class WSNewPollingPredeccesoriDiretti {
 				verified += 1;
 			}
 		}
-		if (verified == milestonePred.size()) {
+		if (verified == milestoneFoglie.size()) {
 			return true;
 		} else {
 			return false;
