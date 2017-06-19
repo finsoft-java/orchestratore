@@ -4,13 +4,14 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
-import it.finsoft.entity.CalendarioMilestone;
-import it.finsoft.manager.CalendarioMilestoneManager;
+import org.jboss.logging.Logger;
+
 import it.finsoft.manager.WSManager;
+import it.finsoft.manager.WSPollingManager;
 
 @Stateless
 @Path("Semaforo")
@@ -18,16 +19,24 @@ import it.finsoft.manager.WSManager;
 public class WSSemaforo {
 
 	@Inject
-	WSManager wsManager;
-	
-	@Inject
-	CalendarioMilestoneManager calendarioMilestoneManager;
+	WSPollingManager wsManager;
 
+	public final static Logger LOG = Logger.getLogger(WSManager.class);
+
+	/**
+	 * Questo è il servizio web del Semaforo: dato un codice milestone e una
+	 * relativa tag, dice se il programma in questione è già stato eseguito
+	 * oppure no.
+	 * 
+	 * @param codiceMilestone
+	 * @param tag
+	 * @return 2 se è stato eseguito, 0 se non è stato eseguito, 1 se è una
+	 *         milestone aggregata che è stata eseguita parzialmente.
+	 */
 	@GET
-	@Path("{id}")
 	@Produces(MediaType.TEXT_PLAIN)
-	public String Light(@PathParam("id") long idCalM) {
-		CalendarioMilestone calendarioMilestone=calendarioMilestoneManager.findById(idCalM);
-		return wsManager.getLight(calendarioMilestone) ? "1" : "0";
+	public int get(@QueryParam("milestone") String codiceMilestone, @QueryParam("tag") String tag) {
+		return wsManager.calcolaSemaforo(codiceMilestone, tag);
 	}
+
 }

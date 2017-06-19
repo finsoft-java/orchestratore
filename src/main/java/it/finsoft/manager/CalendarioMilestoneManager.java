@@ -1,7 +1,8 @@
 package it.finsoft.manager;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -41,7 +42,7 @@ public class CalendarioMilestoneManager {
 	}
 
 	/**
-	 * A rigore, potrebbe esisterne pi� di uno, nel caso restituiamo il primo.
+	 * A rigore, potrebbe esisterne piu' di uno, nel caso restituiamo il primo.
 	 */
 	public CalendarioMilestone findByIdCalendarioIdMilestone(Long idCalendario, Long idMilestone) {
 		List<CalendarioMilestone> list = em
@@ -63,6 +64,7 @@ public class CalendarioMilestoneManager {
 		return em.createQuery("FROM CalendarioMilestone", CalendarioMilestone.class).getResultList();
 	}
 
+	// FIXME obsoleto
 	public String findDescFoglieByIdMilestone(Long idMilestone) {
 		List<Milestone> foglie = milestoneManager.getFoglie(milestoneManager.findById(idMilestone));
 		String listDescFoglie = "";
@@ -89,23 +91,35 @@ public class CalendarioMilestoneManager {
 		return listDescFoglie;
 	}
 
-	public CalendarioMilestone findCalPolling(Milestone milestone, String tag) {
-		return em
-				.createQuery("FROM CalendarioMilestone WHERE milestone=:milestone AND tag=:tag",
+	/**
+	 * Cerca una milestone/tag all'interno di tutti i calendari; ci aspettiamo
+	 * che ne trovi solamente uno, ad ogni modo se ce ne fossero di più
+	 * restituiamo sempre solo l'ultimo per dataOraPreviste
+	 * 
+	 * @param milestone
+	 * @param tag
+	 * @return
+	 */
+	public Calendario findUltimoCalendario(Milestone milestone, String tag) {
+		List<CalendarioMilestone> list = em
+				.createQuery(
+						"FROM CalendarioMilestone WHERE milestone = :milestone AND tag = :tag order by dataOraPreviste desc",
 						CalendarioMilestone.class)
-				.setParameter("milestone", milestone).setParameter("tag", tag).getSingleResult();
+				.setParameter("milestone", milestone).setParameter("tag", tag).getResultList();
+		return (list.isEmpty()) ? null : list.get(0).getCalendario();
 	}
 
-	public List<String> findTags(List<Milestone> milestoneFoglie, Calendario cal) {
-		List<String> result = new ArrayList<>();
-		for (Milestone milestone : milestoneFoglie) {
-			CalendarioMilestone calM = em
-					.createQuery("FROM CalendarioMilestone WHERE milestone=:milestone AND calendario=:calendario",
-							CalendarioMilestone.class)
-					.setParameter("milestone", milestone).setParameter("calendario", cal).getSingleResult();
-			result.add(calM.getTag());
+	/**
+	 * Crea una mappa codice milestone / tag di tutte le milestone in
+	 * calendario. In particolare, se la stessa milestone dovesse apparire più
+	 * volte, ne verrà presa una a caso.
+	 */
+	public Map<String, String> getMapMilestonesTags(Calendario calendario) {
+		Map<String, String> map = new HashMap<String, String>();
+		for (CalendarioMilestone calMil : calendario.getCalendarioMilestone()) {
+			map.put(calMil.getMilestone().getCodice(), calMil.getTag());
 		}
-		return result;
+		return map;
 	}
 
 }
