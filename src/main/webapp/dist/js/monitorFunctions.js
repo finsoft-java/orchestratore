@@ -148,7 +148,7 @@ function getSemaforo(datatable, numRiga, data) {
             	   dataSet = '';
                }
            }
-    	   datatable.cell(numRiga, 3).data(dataSet).draw();
+    	   datatable.cell(numRiga, 4).data(dataSet).draw();
        }
      })
 }
