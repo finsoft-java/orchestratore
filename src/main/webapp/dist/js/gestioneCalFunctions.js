@@ -176,7 +176,12 @@ function getDettaglioCalendarioMilestoneEditabile(idCalendario){
 					 
 					dataSet[i].dataOraPreviste1 = '<div class="form-group"><div class="input-group"><div class="input-group-addon"><i class="fa fa-calendar"></i></div><input id="dataCalEdit'+rowCounter+'" value="'+convertTimestampToData(dataSet[i].dataOraPreviste)+'" onkeydown="return false" type="text" placeholder="Data" class="form-control pull-right datepicker"></div></div>';
 					dataSet[i].dataOraPreviste2 = '<div class="bootstrap-timepicker"><div class="form-group"><div class="input-group"><div class="input-group-addon"><i class="fa fa-clock-o"></i></div><input id="oraCalEdit'+rowCounter+'" value="'+convertTimestampToTime(dataSet[i].dataOraPreviste)+'" placeholder="Ora" type="text" class="form-control timepicker"/></div></div></div>';
-					dataSet[i].tags = '<input id="tagsCalEdit'+rowCounter+'" type="text" class="form-control" value="'+dataSet[i].tags+'"/>';
+					dataSet[i].tag = '<input id="tagsCalEdit'+rowCounter+'" type="text" class="form-control" value="'+dataSet[i].tag+'"/>';
+					if(dataSet[i].milestone.descrizioneTag != null){
+						dataSet[i].milestone.descrizioneTag = '<input id="descTagsCalEdit'+rowCounter+'" type="text" class="form-control" value="'+dataSet[i].milestone.descrizioneTag+'"/>';
+					}else{
+						dataSet[i].milestone.descrizioneTag = '<input id="descTagsCalEdit'+rowCounter+'" type="text" class="form-control" value=""/>';
+					} 
 					rowCounter++;
 				}
 				$("#div_tabella_milestone_editabile").removeClass("hide");
@@ -191,12 +196,12 @@ function getDettaglioCalendarioMilestoneEditabile(idCalendario){
 					autoWidth : false,
 					destroy : true,
 					columns : [ 
-						{data : 'deleteRowButton', className : 'tdCenter class="col-md-1'},
-						{data : 'selectMilestones', className : 'tdCenter class="col-md-3'}, 
-						{data : 'dataOraPreviste1', className : 'tdCenter class="col-md-2'}, 
-						{data : 'dataOraPreviste2', className : 'tdCenter class="col-md-2'}, 
-						{data : 'tags', className : 'tdCenter class="col-md-2'}, 
-						{data : null, className : 'tdCenter class="col-md-2', defaultContent : ''}, 
+						{data : 'deleteRowButton', className : 'tdCenter col-md-1'},
+						{data : 'selectMilestones', className : 'tdCenter col-md-2'}, 
+						{data : 'dataOraPreviste1', className : 'tdCenter col-md-2'}, 
+						{data : 'dataOraPreviste2', className : 'tdCenter col-md-2'}, 
+						{data : 'tag', className : 'tdCenter col-md-1'}, 
+						{data : 'milestone.descrizioneTag', className : 'tdCenter col-md-4', defaultContent : ''}, 
 						]
 				});
 				rowCounterFromDBData = rowCounter;

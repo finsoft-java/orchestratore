@@ -44,11 +44,11 @@
 									<thead>
 										<tr role="row">
 											<th class="col-md-1 tdCenter">Opz.</th>
-											<th class="col-md-3 tdCenter">Milestones</th>
+											<th class="col-md-2 tdCenter">Milestones</th>
 											<th class="col-md-2 tdCenter">Data cut-off</th>
 											<th class="col-md-2 tdCenter">Ora cut-off</th>
-											<th class="col-md-2 tdCenter">TAGs</th>
-											<th class="col-md-2 tdCenter">TAGs attese</th>
+											<th class="col-md-1 tdCenter">TAG</th>
+											<th class="col-md-4 tdCenter">Descrizione TAG</th>
 										</tr>
 									</thead>
 								</table>

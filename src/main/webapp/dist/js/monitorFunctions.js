@@ -83,7 +83,7 @@ function getDettaglioCalendarioMilestone(idCalendario) {
 	               { data : 'ora', className: 'tdCenter' },
 	               { data : 'semaforo', className: 'tdCenter', defaultContent:'' },
 	               { data : 'tag' },
-	               { data : null, defaultContent : '' } 
+	               { data : 'milestone.descrizioneTag', defaultContent : '' } 
 	              ]
 	           });
 	    	 

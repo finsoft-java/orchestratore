@@ -41,8 +41,8 @@
 							           <th class="col-md-2 tdCenter">Data cut-off</th>
 							           <th class="col-md-2 tdCenter">Ora cut-off</th>
 							           <th class="col-md-1 tdCenter">Stato</th>
-							           <th class="col-md-3">TAGs</th>
-							           <th class="col-md-2">Tags attese</th>
+							           <th class="col-md-1">TAG</th>
+							           <th class="col-md-4">Descrizione TAG</th>
 							          </tr>
 							        </thead>          
 						        </table>
