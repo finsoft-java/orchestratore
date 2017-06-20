@@ -12,6 +12,7 @@ import javax.ws.rs.core.MediaType;
 import it.finsoft.entity.Milestone;
 import it.finsoft.manager.MilestoneManager;
 import it.finsoft.manager.WSManager;
+import it.finsoft.manager.WSPollingManager;
 
 @Stateless
 @Path("Polling")
@@ -24,36 +25,22 @@ public class WSPolling {
 	@Inject
 	MilestoneManager milestoneManager;
 
-	// -------------------------Precedente-Metodo-polling------------------------//
-	/*
-	 * @GET public DatiPolling get(@QueryParam("milestone") String
-	 * descMilestone,
+	@Inject
+	WSPollingManager wsPolling;
+
+	/**
+	 * Questo è il servizio web del Polling: dato un codice milestone e una
+	 * relativa tag, dice se il programma in questione può partire oppure no.
 	 * 
-	 * @QueryParam(value = "tag") List<String> tags) {
-	 * 
-	 * return wsManager.getPollingOld(descMilestone, tags);
-	 * 
-	 * }
+	 * @param codiceMilestone
+	 * @param tag
+	 * @return 1 se può partire, 0 in caso contrario
 	 */
-
-	// -------------------------PollingFoglie----------------------//
-
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
-	public String get(@QueryParam("milestone") String descMilestone, @QueryParam(value = "tag") List<String> tags) {
-		return wsManager.getPollingFoglieByDescr(descMilestone, tags) ? "1" : "0";
+	public String get(@QueryParam("milestone") String codiceMilestone, @QueryParam("tag") String tag) {
+		return wsPolling.calcolaPolling(codiceMilestone, tag) ? "1" : "0";
 	}
-
-	// ---------------------------Polling1L------------------------------------------//
-	// Polling di 1' Livello con 2 routine
-	/*
-	 * @GET
-	 * 
-	 * @Produces(MediaType.TEXT_PLAIN) public boolean
-	 * get(@QueryParam("milestone") String descMilestone, @QueryParam(value =
-	 * "tag") List<String> tags) { return
-	 * wsManager.getPolling1LByDescr(descMilestone, tags); }
-	 */
 
 	/* ---- TEST RESOURCES ---- */
 	@Path("Polling/test")
@@ -62,13 +49,13 @@ public class WSPolling {
 		System.out.println("ok Polling");
 		return "ok Polling";
 	}
-	
+
 	// TEST per l'esplosione della gerarchia
 	@GET
 	@Path("testTree")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Milestone> Hierarchy(@QueryParam("milestone") String descMilestone) {
-		Milestone m = milestoneManager.findByDesc(descMilestone.toUpperCase());
+		Milestone m = milestoneManager.findByCod(descMilestone.toUpperCase());
 		return milestoneManager.getHierarchy(m);
 	}
 
@@ -77,7 +64,7 @@ public class WSPolling {
 	@Path("testLeaf")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Milestone> Leaf(@QueryParam("milestone") String descMilestone) {
-		Milestone m = milestoneManager.findByDesc(descMilestone.toUpperCase());
+		Milestone m = milestoneManager.findByCod(descMilestone.toUpperCase());
 		return milestoneManager.getFoglie(m);
 	}
 }

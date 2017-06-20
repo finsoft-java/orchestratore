@@ -78,7 +78,8 @@ function getDettaglioCalendarioMilestone(idCalendario) {
 	             autoWidth : false,
 	             destroy : true,
 	             columns : [
-	               { data : 'milestone.descrizione' },
+		           { data : 'milestone.codice' },
+		           { data : 'milestone.descrizione' },
 	               { data : 'data', className: 'tdCenter' },
 	               { data : 'ora', className: 'tdCenter' },
 	               { data : 'semaforo', className: 'tdCenter', defaultContent:'' },
@@ -88,7 +89,7 @@ function getDettaglioCalendarioMilestone(idCalendario) {
 	           });
 	    	 
 		     for (j in dataSet) {
-		    	 polling(dataTable, j, dataSet[j]);
+		    	 getSemaforo(dataTable, j, dataSet[j]);
 		     }
 		     
 		     $("#divDettagliCalendarioMilestone").removeClass("hide");
@@ -99,12 +100,10 @@ function getDettaglioCalendarioMilestone(idCalendario) {
 function pad(numb) {
     return (numb < 10 ? '0' : '') + numb;
 }
-function polling(datatable, numRiga, data) {
+function getSemaforo(datatable, numRiga, data) {
     
-	var milestone = data.milestone.descrizione;
-    var tags = data.tag;    
-    var endpoint = "ws/Polling?milestone=" + milestone + "&tag=" + tags.split(",").join("&tag=");
-
+    var endpoint = "ws/Semaforo?milestone=" + data.milestone.codice + "&tag=" + data.tag;
+    
     var _ora = data.ora;
     
     var _now = new Date($.now());
@@ -142,7 +141,9 @@ function polling(datatable, numRiga, data) {
                } else if (dataSet == 0) {
             	   dataSet = '<span class="btn btn-danger btn-circle btn-sm btn-semaforo" style="width:15px; height: 15px; font-size:0%; cursor: default;">0 rosso</span>';
                } else if (dataSet == 1) {
-            	   dataSet = '<span class="btn btn-success btn-circle btn-sm btn-semaforo" style="width:15px; height: 15px; font-size:0%; cursor: default;">1 verde</span>';
+            	   dataSet = '<span class="btn btn-warning btn-circle btn-sm btn-semaforo" style="width:15px; height: 15px; font-size:0%; cursor: default;">1 giallo</span>';
+               } else if (dataSet == 2) {
+            	   dataSet = '<span class="btn btn-success btn-circle btn-sm btn-semaforo" style="width:15px; height: 15px; font-size:0%; cursor: default;">2 verde</span>';
                } else {
             	   dataSet = '';
                }

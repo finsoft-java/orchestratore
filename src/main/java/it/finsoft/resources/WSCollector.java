@@ -26,11 +26,11 @@ public class WSCollector {
 	 * codiceEnt a Entita e da codiceTipi a TipoEvento
 	 */
 	@GET
-	public DatiCollector create(@QueryParam("entita") String codiceEnt, @QueryParam("tipiEvento") String codiceTipi,
+	public DatiCollector insertEvent(@QueryParam("entita") String codiceEnt, @QueryParam("tipiEvento") String codiceTipi,
 			@QueryParam("tag") String tag, @QueryParam("key") List<String> keys,
 			@QueryParam("valore") List<String> values) {
 		
-		return wsManager.getCollector(codiceEnt, codiceTipi, tag, keys, values);
+		return wsManager.insertEvent(codiceEnt, codiceTipi, tag, keys, values);
 
 	}
 	

@@ -29,8 +29,8 @@ public class MilestoneManager {
 		return em.find(Milestone.class, id);
 	}
 
-	public Milestone findByDesc(String desc) {
-		return em.createQuery("FROM Milestone WHERE descrizione= :desc", Milestone.class).setParameter("desc", desc)
+	public Milestone findByCod(String cod) {
+		return em.createQuery("FROM Milestone WHERE codice= :cod", Milestone.class).setParameter("cod", cod)
 				.getSingleResult();
 	}
 

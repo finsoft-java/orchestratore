@@ -1,13 +1,7 @@
-package it.finsoft.manager;
+package it.finsoft.entity;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import it.finsoft.entity.Azione;
-import it.finsoft.entity.Entita;
-import it.finsoft.entity.Evento;
-import it.finsoft.entity.Milestone;
-import it.finsoft.entity.TipoEvento;
 
 public class MilestoneConSemaforo extends Milestone {
 

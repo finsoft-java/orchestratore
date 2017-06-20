@@ -35,11 +35,6 @@ public class EventoManager {
 		return em.find(Evento.class, id);
 	}
 
-	/*
-	 * DA inserire un metodo che esegua il "find by tag"
-	 * 
-	 */
-
 	public List<Evento> findAll() {
 		return em.createQuery("FROM Evento", Evento.class).getResultList();
 	}
@@ -50,13 +45,25 @@ public class EventoManager {
 		return em.createQuery("FROM Evento WHERE tag= :tag", Evento.class).setParameter("tag", tag).getResultList();
 	}
 
-	public List<Evento> findPolling(String tag, Entita ent, TipoEvento tp) {
-		System.out.println(tag + " " + ent.getIdEntita() + " " + tp.getidTipoEvento());
-		List<Evento> e = em
-				.createQuery("FROM Evento WHERE tag= :tag AND entita = :ent AND tipoEvento = :tp", Evento.class)
+	/**
+	 * Ricerca contemporaneamente per tag, entità e tipo evento. In teoria ci
+	 * aspettiamo che trovi un unico evento, ma se ce ne fossero di più li
+	 * restituisce comunque tutti ordinati per timestamp decrescente.
+	 * 
+	 * @param tag
+	 * @param ent
+	 * @param tp
+	 * @return
+	 */
+	public List<Evento> findBy(String tag, Entita ent, TipoEvento tp) {
+		LOG.info("Searching: " + tag + " " + ent.getIdEntita() + " " + tp.getidTipoEvento());
+		List<Evento> list = em
+				.createQuery(
+						"FROM Evento WHERE tag= :tag AND entita = :ent AND tipoEvento = :tp ORDER BY tStampEvento DESC",
+						Evento.class)
 				.setParameter("tag", tag).setParameter("ent", ent).setParameter("tp", tp).getResultList();
 
-		return e;
+		return list;
 	}
 
 }

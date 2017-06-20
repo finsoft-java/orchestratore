@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -31,6 +32,7 @@ public class Calendario implements Serializable {
 	private String descrizione;
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "calendario")
+	@OrderBy("dataOraPreviste asc")
 	private List<CalendarioMilestone> calendarioMilestone = new ArrayList<>();
 
 	public Calendario() {
