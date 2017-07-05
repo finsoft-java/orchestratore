@@ -25,7 +25,7 @@
 			            </div>
 						<div class="col-md-2">
 		                	<div class="form-group">
-						  		<a id="id_button_elimina_calendario" onclick="deleteCalendar()" type="button" class="btn btn-danger" style="margin-top: 25px;"><i class="fa fa-trash-o"></i> Elimina</a>
+						  		<a id="id_button_elimina_calendario" onclick="deleteCalendar()" type="button" class="btn btn-danger"><i class="fa fa-trash-o"></i> Elimina</a>
 						  	</div>
 						</div>
 					</div>					

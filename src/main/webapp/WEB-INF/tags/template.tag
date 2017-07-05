@@ -127,12 +127,16 @@
          			 	<li>
           					<a href="gestioneCalendario.jsp"> <i class="fa fa-edit"></i><span>Gestione Calendario</span></a>
 						</li>
-	
+						
+						<li>
+          					<a href="#"> <i class="fa fa-list-alt"></i><span>Eventi</span></a>
+						</li>
+						
 						<li>
 							<a href="#"><i class="fa fa-cogs"></i><span>Amministrazione</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i></span></a>
 							<ul class="treeview-menu">
 								<li><a href="#"><i class="fa fa-edit"></i> Gestione Entità</a></li>
-								<li><a href="#"><i class="fa fa-edit"></i> Gestione Eventi</a></li>
+								<li><a href="#"><i class="fa fa-edit"></i> Gestione Tipi Eventi</a></li>
 								<li><a href="#"><i class="fa fa-edit"></i> Gestione Milestone</a></li>
 							</ul>
 						</li>
