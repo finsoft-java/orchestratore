@@ -14,16 +14,20 @@ $(document).ready(function(){
  * @returns
  */
 function removeMilestone(row) {
-	var idSelectMilestoneCal = $(row).parent().parent().find("#selectMilestoneCalEdit").val();
+	var idSelectMilestoneCal = $("#idCalendarioMilestone"+row).text();
+	console.log(idSelectMilestoneCal);
 	if(confirm("Sicuro di voler eliminare questa milestone da questo calendario?")){
 		$.ajax({
 			type : "DELETE",
 			url : "ws/resources/CalendarioMilestones(" + idSelectMilestoneCal + ")",
 			dataType : "json",
 			success : function(dataSet) {		
-				$(row).parent().parent().remove();
+				$("#idCalendarioMilestone"+row).parent().parent().remove();
 				rowCounter = rowCounter - 1;
-				if(rowCounter === -1) location.reload(true);
+				if(rowCounter === 0) {
+					if(confirm("Il calendario ora non contiene nessuna milestone, si desidera eliminare anch'esso?")) deleteCalendar();
+					else location.reload(true);
+				}
 			}
 		});
 	}
@@ -109,41 +113,89 @@ function deleteCalendar(){
 }
 
 
-
-
-
-function saveEditedCalendar(){
-	var idSelect = $("#select_elenco_calendari").val();
-	var dataList = [];
-	for(var i = rowCounterFromDBData; i<rowCounter; i++){
-		dataList.push([$("#selectMilestoneCalNew"+i).val(), convertDataOraToTimestamp($("#dataCalNew"+i).val(), $("#oraCalNew"+i).val()), $("#tagsCalNew"+i).val()]);
+var counterRicorsione = 0;
+function salva(){
+	updateCalendarData();
+	if(counterRicorsione === 0) {
+		alert("fine ricorsione funzione di aggiornamento");
+		console.log("FINE AGGIORNAMENTO DATI");
+		insertMilestoneInCalendar();
+		if(counterRicorsione === 0) {
+			alert("fine ricorsione funzione di inserimento");
+			console.log("FINE INSERIMENTO DATI");
+//			location.reload(true);
+			counterRicorsione = 0;
+		}
 	}
+}
+
+
+function updateCalendarData(){
+	if(counterRicorsione === rowCounterFromDBData) return;
+	var idCalendarioMilestone = $("#idCalendarioMilestone"+counterRicorsione).text();
+	var dataList = [];
+	dataList.push([$("#selectMilestoneCalEdit"+counterRicorsione).val(), convertDataOraToTimestamp($("#dataCalEdit"+counterRicorsione).val(), $("#oraCalEdit"+counterRicorsione).val()), $("#tagsCalEdit"+counterRicorsione).val(), $("#descTagsCalEdit"+counterRicorsione).val()]);
+	
 	for(var i = 0; i<dataList.length; i++){
 		var data = dataList[i];
 		var request = {            
 			_milestone:data[0],
 			_dataOrePreviste:data[1],
-			_tag:data[2]
+			_tag:data[2],
+			_descrizione:data[3]
 		};
-	    request = JSON.stringify(request); 
-		console.log(request);
-//	    insertMilestoneInCalendar(idSelect, request);
 	}
+	request = JSON.stringify(request); 
+	console.log("idCalendarioMilestone: "+idCalendarioMilestone);
+	console.log(request);
+	//recupero dati prima riga
+//	 $.ajax({
+//		  type: "PUT",
+//		  url: "CalendarioMilestones("+idCalendarioMilestone+")",
+//		  data: request,
+//		  contentType: "application/json; charset=utf-8",
+//		  dataType: "json",
+//		  success: function(res) {
+		  counterRicorsione++;
+		  updateCalendarData();			  
+//		  }
+//		 });
+	  counterRicorsione--;
 }
 
-function insertMilestoneInCalendar(idCalendario, jsonMilestone) {
-	 $.ajax({
-	  type: "POST",
-	  url: "Calendari("+idCalendario+")/Milestone",
-	  data: jsonMilestone,////////////////////////////////////////////////////
-	  contentType: "application/json; charset=utf-8",
-	  dataType: "json",
-	  success: function(res) {
-		  alert("Inserimento milestone avvenuto correttamente");
-//		  location.reload(true);
-	  }
-	 });
+function insertMilestoneInCalendar() {
+    var temp = rowCounterFromDBData+counterRicorsione;
+	if(counterRicorsione === (rowCounter - rowCounterFromDBData)) return;
+	var dataList = [];
+	dataList.push([$("#selectMilestoneCalNew"+temp).val(), convertDataOraToTimestamp($("#dataCalNew"+temp).val(), $("#oraCalNew"+temp).val()), $("#tagsCalNew"+temp).val(), $("#descrizioneCalNew"+temp).val()]);
+	
+	for(var i = 0; i<dataList.length; i++){
+		var data = dataList[i];
+		var request = {            
+			_milestone:data[0],
+			_dataOrePreviste:data[1],
+			_tag:data[2],
+			_descrizione:data[3]
+		};
+	}
+	request = JSON.stringify(request); 
+	console.log(request);
+	//recupero dati prima riga
+	// $.ajax({
+	//	  type: "POST",
+	//	  url: "CalendarioMilestones",
+	//	  data: request,
+	//	  contentType: "application/json; charset=utf-8",
+	//	  dataType: "json",
+	//	  success: function(res) {
+		  counterRicorsione++;
+		  insertMilestoneInCalendar();			  
+	//	  }
+	//	 });
+	  counterRicorsione--;
 }
+
+
 
 
 
@@ -165,24 +217,28 @@ function getDettaglioCalendarioMilestoneEditabile(idCalendario){
 			success : function(dataSet) {		
 				
 				for (i in dataSet){
-					dataSet[i].deleteRowButton = '<a href="#" onclick="removeMilestone(this)" id="buttonToDeleteRigaEdit'+rowCounter+'" data-toggle="tooltip" title="Elimina" data-placement="left"><i style="color:red" class="fa fa-trash-o"></i></a>';
-					 var opt = "<div style='width:100%' class='form-group'><select class='form-control select2' id='selectMilestoneCalEdit'>";
+					dataSet[i].deleteRowButton = '<a href="#" onclick="removeMilestone('+rowCounter+')" id="buttonToDeleteRigaEdit'+rowCounter+'" data-toggle="tooltip" title="Elimina" data-placement="left"><i style="color:red" class="fa fa-trash-o"></i></a>';
+					 var opt = "<div style='width:100%' class='form-group'><select class='form-control select2' id='selectMilestoneCalEdit"+rowCounter+"'>";
 					 for(j in dataSet2){
 						 if(dataSet[i].milestone.descrizione === dataSet2[j].descrizione) opt += "<option selected value='"+dataSet2[j].idMilestone+"'>"+dataSet2[j].descrizione+"</option>";
 					     else opt += "<option select2' value='"+dataSet2[j].idMilestone+"'>"+dataSet2[j].descrizione+"</option>";
 				     }
-					 opt += "</select></div>";
-					 dataSet[i].selectMilestones = opt;
+					opt += "</select></div>";
 					
+					dataSet[i].selectMilestones = opt;
+					dataSet[i].idCalendarioMilestone = '<div id="idCalendarioMilestone'+rowCounter+'">'+dataSet[i].idCalendarioMilestone+'</div>';
 					 
 					dataSet[i].dataOraPreviste1 = '<div style="width:100%" class="form-group"><div class="input-group"><div class="input-group-addon"><i class="fa fa-calendar"></i></div><input id="dataCalEdit'+rowCounter+'" value="'+convertTimestampToData(dataSet[i].dataOraPreviste)+'" onkeydown="return false" type="text" placeholder="Data" class="form-control pull-right datepicker"></div></div>';
 					dataSet[i].dataOraPreviste2 = '<div style="width:100%" class="bootstrap-timepicker"><div class="form-group"><div class="input-group"><div class="input-group-addon"><i class="fa fa-clock-o"></i></div><input id="oraCalEdit'+rowCounter+'" value="'+convertTimestampToTime(dataSet[i].dataOraPreviste)+'" placeholder="Ora" type="text" class="form-control timepicker"/></div></div></div>';
+					
 					dataSet[i].tag = '<input style="width:100%" placeholder="Tag" id="tagsCalEdit'+rowCounter+'" type="text" class="form-control" value="'+dataSet[i].tag+'"/>';
+					
 					if(dataSet[i].milestone.descrizioneTag != null){
 						dataSet[i].milestone.descrizioneTag = '<input style="width:100%" placeholder="Descrizione" id="descTagsCalEdit'+rowCounter+'" type="text" class="form-control" value="'+dataSet[i].milestone.descrizioneTag+'"/>';
 					}else{
 						dataSet[i].milestone.descrizioneTag = '<input style="width:100%" placeholder="Descrizione" id="descTagsCalEdit'+rowCounter+'" type="text" class="form-control"/>';
-					} 
+					}
+					
 					rowCounter++;
 				}
 				$("#div_tabella_milestone_editabile").removeClass("hide");
@@ -198,6 +254,7 @@ function getDettaglioCalendarioMilestoneEditabile(idCalendario){
 					destroy : true,
 					columns : [ 
 						{data : 'deleteRowButton', className : 'tdCenter col-md-1'},
+						{data : 'idCalendarioMilestone', className : 'hide'},
 						{data : 'selectMilestones', className : 'tdCenter col-md-2'}, 
 						{data : 'dataOraPreviste1', className : 'tdCenter col-md-2'}, 
 						{data : 'dataOraPreviste2', className : 'tdCenter col-md-2'}, 
