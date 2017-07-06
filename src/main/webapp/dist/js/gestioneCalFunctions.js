@@ -114,7 +114,7 @@ function deleteCalendar(){
 
 
 var counterRicorsione = 0;
-function salva(){
+function saveEditedCalendar(){
 	updateCalendarData();
 	if(counterRicorsione === 0) {
 		alert("fine ricorsione funzione di aggiornamento");

@@ -55,7 +55,7 @@
 								</table>
 							</div>
 							<br/>
-							<a id="id_button_inserisci_calendario" onclick="salva()" type="button" class="btn btn-success"><i class="fa fa-save"></i> &nbsp;Salva</a>							
+							<a id="id_button_inserisci_calendario" onclick="saveEditedCalendar()" type="button" class="btn btn-success"><i class="fa fa-save"></i> Salva</a>							
 						</div>
 					</div>
 				</div>
