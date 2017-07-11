@@ -9,28 +9,11 @@
 		
 		<section class="content">
 		
-	      <div class="box box-warning">
-	        <div class="box-header with-border">
-	          <h3 class="box-title">Seleziona calendario</h3>
-	        </div>
-	        <div class="box-body">
-	          <div class="row">
-	            <div class="col-md-12">
-	              <div class="form-group">
-	                <select id="select_elenco_calendari" class="form-control select2" style="width: 100%;" onchange="selezionaCalendarioMonitor(this)">
-				  		<option></option>
-				  	</select>
-	              </div>
-	             </div>
-	            </div>
-	          </div>
-	        </div>
-
 			<div id="divDettagliCalendarioMilestone" class="row hide">
 				<div class="col-md-12">
 					<div class="box box-info">
 						<div class="box-header with-border">
-							<h3 class="box-title">Milestones</h3>
+							<h3 class="box-title">Tipi evento</h3>
 						</div>
 						<div class="box-body">
 							<div class="table-responsive">
