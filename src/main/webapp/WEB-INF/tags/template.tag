@@ -93,8 +93,8 @@
 		<!-- iCheck 1.0.1 -->
 		<script src="plugins/iCheck/icheck.min.js"></script>
 		<!-- bootstrap Datatable -->
-		<script src="plugins/datatables/jquery.dataTables.min.js"></script>
-		<script src="plugins/datatables/dataTables.bootstrap.min.js"></script>
+		<script src="plugins/datatables/jquery.dataTables.js"></script>
+		<script src="plugins/datatables/dataTables.bootstrap.js"></script>
 		<!-- sidebar remember state -->
 		<script src="dist/js/sidebarState.js"></script>
 		
