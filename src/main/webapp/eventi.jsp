@@ -24,8 +24,7 @@
 							           <th class="col-md-2">Codice tipo evento</th>
 							           <th class="col-md-2">Codice entità</th>
 							           <th class="col-md-2">Acronimo</th>
-							           <th class="col-md-2">Tag</th>
-							           <th class="col-md-2">Descrizione Tag</th>
+							           <th class="col-md-3">Tag</th>
 							          </tr>
 							        </thead>          
 						        </table>

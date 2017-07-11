@@ -26,7 +26,7 @@ function caricaEventi() {
 			{data : 'tipoEvento.codice', className : 'col-md-2', defaultContent : '' },
 			{data : 'entita.codice', className : 'col-md-2', defaultContent : ''}, 
 			{data : 'entita.acronimo', className : 'col-md-2', defaultContent : ''},
-			{data : 'tag', className : 'col-md-2', defaultContent : ''}
+			{data : 'tag', className : 'col-md-3', defaultContent : ''}
 			//La 'descrizione tag' non esiste se non esiste la milestone
 			]
 	});
