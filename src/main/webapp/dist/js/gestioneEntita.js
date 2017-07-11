@@ -83,12 +83,12 @@ function getListaCalendari(){
  * @param selectIndex
  * @returns
  */
-function selezionaCalendario_gestEntita(selectIndex){
-	var idx = selectIndex.selectedIndex;
-	var idCalendario = selectIndex.options[idx].value;
-	getDettaglioCalendarioEntitaEditabile(idCalendario);
-	rowCounter = 0;
-}
+//function selezionaCalendario_gestEntita(selectIndex){
+//	var idx = selectIndex.selectedIndex;
+//	var idCalendario = selectIndex.options[idx].value;
+//	getDettaglioCalendarioEntitaEditabile(idCalendario);
+//	rowCounter = 0;
+//}
 
 
 /**
@@ -195,7 +195,7 @@ function insertMilestoneInCalendar() {
 	  counterRicorsione--;
 }
 
-//$(document).ready(function(){getDettaglioCalendarioEntitaEditabile(5)});
+$(document).ready(function(){getListaEntita()});
 
 
 
@@ -207,31 +207,22 @@ function insertMilestoneInCalendar() {
  */
 var rowCounter = 0
 var rowCounterFromDBData = 0;
-function getDettaglioCalendarioEntitaEditabile(idCalendario){
-	$.getJSON("ws/resources/Milestones", function(dataSet2){
-		$.ajax({
-			type : "GET",
-			url : "ws/resources/Calendari(" + idCalendario + ")/Milestone",
-			dataType : "json",
-			success : function(dataSet) {	
-
+function getListaEntita(){
+	$.getJSON("ws/resources/Entita", function(dataSet){
 				for (i in dataSet){
-					
-					if (dataSet[i].milestone.entita != undefined){
 
 					dataSet[i].deleteRowButton = '<a href="#" onclick="removeMilestone('+rowCounter+')" id="buttonToDeleteRigaEdit'+rowCounter+'" data-toggle="tooltip" title="Elimina" data-placement="left"><i style="color:red" class="fa fa-trash-o"></i></a>';
 						
-					if (dataSet[i].milestone.entita.descrizione != null)
-						dataSet[i].milestone.entita.descrizione = '<input style="width:100%" placeholder="idEntita" id="descrizioneEntita_rowNumber_'+rowCounter+'" type="text" class="form-control" value="'+dataSet[i].milestone.entita.descrizione+'"/>'; 
+					if (dataSet[i].descrizione != null)
+						dataSet[i].descrizione = '<input style="width:100%" placeholder="idEntita" id="descrizioneEntita_rowNumber_'+rowCounter+'" type="text" class="form-control" value="'+dataSet[i].descrizione+'"/>'; 
 
-					if (dataSet[i].milestone.entita.acronimo != null)
-						dataSet[i].milestone.entita.acronimo = '<input style="width:100%" placeholder="idEntita" id="acronimoEntita_rowNumber_'+rowCounter+'" type="text" class="form-control" value="'+dataSet[i].milestone.entita.acronimo+'"/>'; 
+					if (dataSet[i].acronimo != null)
+						dataSet[i].acronimo = '<input style="width:100%" placeholder="idEntita" id="acronimoEntita_rowNumber_'+rowCounter+'" type="text" class="form-control" value="'+dataSet[i].acronimo+'"/>'; 
 					
 					rowCounter++;
-					}
 					
 				}
-				$("#div_tabella_entita_editabile").removeClass("hide");
+				//$("#div_tabella_entita_editabile").removeClass("hide");
 				
 				$("#tableGestioneEntita").DataTable({
 					paging : false,
@@ -245,10 +236,10 @@ function getDettaglioCalendarioEntitaEditabile(idCalendario){
 					destroy : true,
 					columns : [
 						{data : 'deleteRowButton', className : 'col-md-1 tdCenter', defaultContent : '' },
-						{data : 'milestone.entita.idEntita', className : 'col-md-1 idEntita', defaultContent : '' },
-						{data : 'milestone.entita.codice', className : 'col-md-2', defaultContent : ''}, 
-						{data : 'milestone.entita.descrizione', className : 'col-md-4', defaultContent : ''},
-						{data : 'milestone.entita.acronimo', className : 'col-md-2', defaultContent : ''}
+						{data : 'idEntita', className : 'col-md-1 idEntita', defaultContent : '' },
+						{data : 'codice', className : 'col-md-2', defaultContent : ''}, 
+						{data : 'descrizione', className : 'col-md-4', defaultContent : ''},
+						{data : 'acronimo', className : 'col-md-2', defaultContent : ''}
 						]
 				});
 				
@@ -261,8 +252,6 @@ function getDettaglioCalendarioEntitaEditabile(idCalendario){
 				rowCounterFromDBData = rowCounter;
 				addButtonInputForm();
 				attivaWidget();
-			}
-		});	
 	 });
 }
 
