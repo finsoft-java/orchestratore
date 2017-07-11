@@ -129,15 +129,15 @@
 						</li>
 						
 						<li>
-          					<a href="#"> <i class="fa fa-list-alt"></i><span>Eventi</span></a>
+          					<a href="eventi.jsp"> <i class="fa fa-list-alt"></i><span>Eventi</span></a>
 						</li>
 						
 						<li>
 							<a href="#"><i class="fa fa-cogs"></i><span>Amministrazione</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i></span></a>
 							<ul class="treeview-menu">
-								<li><a href="#"><i class="fa fa-edit"></i> Gestione Entità</a></li>
-								<li><a href="#"><i class="fa fa-edit"></i> Gestione Tipi Eventi</a></li>
-								<li><a href="#"><i class="fa fa-edit"></i> Gestione Milestone</a></li>
+								<li><a href="gestioneEntita.jsp"><i class="fa fa-edit"></i> Gestione Entità</a></li>
+								<li><a href="gestioneTipiEventi.jsp"><i class="fa fa-edit"></i> Gestione Tipi Eventi</a></li>
+								<li><a href="gestioneMilestone.jsp"><i class="fa fa-edit"></i> Gestione Milestone</a></li>
 							</ul>
 						</li>
 	
