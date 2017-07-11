@@ -93,8 +93,8 @@
 		<!-- iCheck 1.0.1 -->
 		<script src="plugins/iCheck/icheck.min.js"></script>
 		<!-- bootstrap Datatable -->
-		<script src="plugins/datatables/jquery.dataTables.min.js"></script>
-		<script src="plugins/datatables/dataTables.bootstrap.min.js"></script>
+		<script src="plugins/datatables/jquery.dataTables.js"></script>
+		<script src="plugins/datatables/dataTables.bootstrap.js"></script>
 		<!-- sidebar remember state -->
 		<script src="dist/js/sidebarState.js"></script>
 		
@@ -136,14 +136,11 @@
 							<a href="#"><i class="fa fa-cogs"></i><span>Amministrazione</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i></span></a>
 							<ul class="treeview-menu">
 								<li><a href="gestioneEntita.jsp"><i class="fa fa-edit"></i> Gestione Entità</a></li>
-								<li><a href="gestioneTipiEventi.jsp"><i class="fa fa-edit"></i> Gestione Tipi Eventi</a></li>
+								<li><a href="gestioneTipiEvento.jsp"><i class="fa fa-edit"></i> Gestione Tipi Evento</a></li>
 								<li><a href="gestioneMilestone.jsp"><i class="fa fa-edit"></i> Gestione Milestone</a></li>
 							</ul>
 						</li>
 	
-						<li>
-							<a href="#"> <i class="fa fa-search"></i><span>Ricerca</span></a>
-						</li>
 					</ul>
 	
 				</section>
