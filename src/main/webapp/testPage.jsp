@@ -1,4 +1,4 @@
-<%@page contentType="text/html"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags"%>
 
 <t:template>
@@ -13,7 +13,7 @@
 				here</a><br /> URL per visualizzare gli eventi (JSON): <a
 				href="ws/resources/Eventi" target="_blank">click here</a><br /> URL per visualizzare
 			i tipi di evento (JSON): <a href="ws/resources/TipiEvento" target="_blank">click
-				here</a><br /> URL per visualizzare le entit‡ (JSON): <a
+				here</a><br /> URL per visualizzare le entit√† (JSON): <a
 				href="ws/resources/Entita" target="_blank">click here</a><br /> 
 				
 				<br /> 
