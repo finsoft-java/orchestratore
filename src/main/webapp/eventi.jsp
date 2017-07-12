@@ -1,4 +1,4 @@
-<%@page contentType="text/html"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags"%>
 
 <t:template>
@@ -22,7 +22,7 @@
 							          <tr role="row">
 							           <th class="col-md-2">Data e ora</th>
 							           <th class="col-md-2">Codice tipo evento</th>
-							           <th class="col-md-2">Codice entit‡</th>
+							           <th class="col-md-2">Codice entit√†</th>
 							           <th class="col-md-2">Acronimo</th>
 							           <th class="col-md-3">Tag</th>
 							          </tr>

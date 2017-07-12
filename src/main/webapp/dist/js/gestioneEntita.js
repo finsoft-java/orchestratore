@@ -13,21 +13,20 @@ $(document).ready(function(){
  * a un determinato calendario
  * @returns
  */
-function removeMilestone(row) {
-	var idSelectMilestoneCal = $("#idCalendarioMilestone"+row).text();
-	console.log(idSelectMilestoneCal);
-	if(confirm("Sicuro di voler eliminare questa milestone da questo calendario?")){
+function removeEntita(row) {
+	idEntita = $("#idEntita"+row).text();
+	console.log(idEntita);
+	if(confirm("Sicuro di voler eliminare questa entità?")){
 		$.ajax({
 			type : "DELETE",
-			url : "ws/resources/CalendarioMilestones(" + idSelectMilestoneCal + ")",
+			url : "ws/resources/Entita(" + idEntita + ")",
 			dataType : "json",
 			success : function(dataSet) {		
-				$("#idCalendarioMilestone"+row).parent().parent().remove();
+				$("#Entita"+row).parent().parent().remove();
 				rowCounter = rowCounter - 1;
-				if(rowCounter === 0) {
-					if(confirm("Il calendario ora non contiene nessuna milestone, si desidera eliminare anch'esso?")) deleteCalendar();
-					else location.reload(true);
-				}
+			},
+			error : function(errore) {
+				alert("Errore: probabile utilizzo di questa entità");
 			}
 		});
 	}
@@ -243,7 +242,7 @@ function back(row){
 	  success: function(res) {
 		descrizione = '<div id="descrizioneEntita_rowNumber_'+row+'">'+res.descrizione+'</div>';
 		acronimo = '<div id="acronimoEntita_rowNumber_'+row+'">'+ res.acronimo +'</div>';
-		check = '<a href="#" onclick="removeMilestone('+row+')" id="buttonToDeleteRigaEdit'+row+'" data-toggle="tooltip" title="Elimina" data-placement="left"><i style="color:red" class="fa fa-trash-o"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" onclick="updateMilestone('+row+')" id="buttonToUpdateRigaEdit'+row+'" data-toggle="tooltip" title="Modifica" data-placement="right"><i class="fa fa-pencil"></i></a>';
+		check = '<a href="#" onclick="removeEntita('+row+')" id="buttonToDeleteRigaEdit'+row+'" data-toggle="tooltip" title="Elimina" data-placement="left"><i style="color:red" class="fa fa-trash-o"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" onclick="updateMilestone('+row+')" id="buttonToUpdateRigaEdit'+row+'" data-toggle="tooltip" title="Modifica" data-placement="right"><i class="fa fa-pencil"></i></a>';
 		
 		$("#descrizioneEntita_rowNumber_"+row).parent().html(descrizione);
 		$("#acronimoEntita_rowNumber_"+row).parent().html(acronimo);
@@ -281,7 +280,7 @@ function update(row){
 //			console.log(res);
 			descrizione = '<div id="descrizioneEntita_rowNumber_'+row+'">'+$("#descrizioneEntita_rowNumber_"+row).val()+'</div>';
 			acronimo = '<div id="acronimoEntita_rowNumber_'+row+'">'+ $("#acronimoEntita_rowNumber_"+row).val()+'</div>';
-			check = '<a href="#" onclick="removeMilestone('+row+')" id="buttonToDeleteRigaEdit'+row+'" data-toggle="tooltip" title="Elimina" data-placement="left"><i style="color:red" class="fa fa-trash-o"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" onclick="updateMilestone('+row+')" id="buttonToUpdateRigaEdit'+row+'" data-toggle="tooltip" title="Modifica" data-placement="right"><i class="fa fa-pencil"></i></a>';
+			check = '<a href="#" onclick="removeEntita('+row+')" id="buttonToDeleteRigaEdit'+row+'" data-toggle="tooltip" title="Elimina" data-placement="left"><i style="color:red" class="fa fa-trash-o"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" onclick="updateMilestone('+row+')" id="buttonToUpdateRigaEdit'+row+'" data-toggle="tooltip" title="Modifica" data-placement="right"><i class="fa fa-pencil"></i></a>';
 			
 			$("#descrizioneEntita_rowNumber_"+row).parent().html(descrizione);
 			$("#acronimoEntita_rowNumber_"+row).parent().html(acronimo);
@@ -307,7 +306,7 @@ function getListaEntita(){
 	$.getJSON("ws/resources/Entita", function(dataSet){
 				for (i in dataSet){
 
-					dataSet[i].deleteRowButton = '<a href="#" onclick="removeMilestone('+rowCounter+')" id="buttonToDeleteRigaEdit'+rowCounter+'" data-toggle="tooltip" title="Elimina" data-placement="left"><i style="color:red" class="fa fa-trash-o"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" onclick="updateMilestone('+rowCounter+')" id="buttonToUpdateRigaEdit'+rowCounter+'" data-toggle="tooltip" title="Modifica" data-placement="right"><i class="fa fa-pencil"></i></a>';
+					dataSet[i].deleteRowButton = '<a href="#" onclick="removeEntita('+rowCounter+')" id="buttonToDeleteRigaEdit'+rowCounter+'" data-toggle="tooltip" title="Elimina" data-placement="left"><i style="color:red" class="fa fa-trash-o"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" onclick="updateMilestone('+rowCounter+')" id="buttonToUpdateRigaEdit'+rowCounter+'" data-toggle="tooltip" title="Modifica" data-placement="right"><i class="fa fa-pencil"></i></a>';
 					dataSet[i].idEntita = '<div id="idEntita'+rowCounter+'">'+dataSet[i].idEntita+'</div>';
 					dataSet[i].codice = '<div id="idCodice'+rowCounter+'">'+dataSet[i].codice+'</div>';
 					

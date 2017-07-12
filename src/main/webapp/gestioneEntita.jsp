@@ -1,10 +1,11 @@
-<%@page contentType="text/html"%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags"%>
 
 <t:template>
 
 		<section class="content-header">
-			<h1>Gestione Entit‡</h1>
+			<h1>Gestione Entit√†</h1>
 		</section>
 		
 		<section class="content">
@@ -30,7 +31,7 @@
 				<div class="col-md-12">
 					<div class="box box-info">
 						<div class="box-header with-border">
-							<h3 class="box-title">Entit‡</h3>
+							<h3 class="box-title">Entit√†</h3>
 						</div>
 						<div class="box-body">
 							<div class="table-responsive">
