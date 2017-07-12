@@ -22,7 +22,7 @@ function removeEntita(row) {
 			url : "ws/resources/Entita(" + idEntita + ")",
 			dataType : "json",
 			success : function(dataSet) {		
-				$("#Entita"+row).parent().parent().remove();
+				$("#idEntita"+row).parent().parent().remove();
 				rowCounter = rowCounter - 1;
 			},
 			error : function(errore) {
@@ -82,13 +82,14 @@ function back(row){
 function update(row){
 	var idEntita = $("#idEntita"+row).text();
 	var dataList = [];
-	dataList.push([$("#descrizioneEntita_rowNumber_"+row).val(), $("#acronimoEntita_rowNumber_"+row).val()]);
+	dataList.push([$("#descrizioneEntita_rowNumber_"+row).val(), $("#acronimoEntita_rowNumber_"+row).val(),  $("#idCodice"+row).text()]);
 	
 	for(var i = 0; i<dataList.length; i++){
 		var data = dataList[i];
 		var request = {            
-			descrizione:data[0],
-			acronimo:data[1]
+			acronimo:data[1],
+			codice:data[2],
+			descrizione:data[0]
 		};
 	}
 	
@@ -111,7 +112,7 @@ function update(row){
 			$("#buttonToUpdateRigaEdit"+row).parent().html(check);
 			$('body>.tooltip').remove();
 			
-			alert("Aggiornamento dati avvenuto correttamente!");
+			//alert("Aggiornamento dati avvenuto correttamente!");
 		  }
 		 });
 }
@@ -145,7 +146,9 @@ function insert(row){
 			acronimo = '<div id="acronimoEntita_rowNumber_'+row+'">'+ res.acronimo +'</div>';
 			check = '<a href="#" onclick="removeEntita('+row+')" id="buttonToDeleteRigaEdit'+row+'" data-toggle="tooltip" title="Elimina" data-placement="left"><i style="color:red" class="fa fa-trash-o"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" onclick="updateEntita('+row+')" id="buttonToUpdateRigaEdit'+row+'" data-toggle="tooltip" title="Modifica" data-placement="right"><i class="fa fa-pencil"></i></a>';
 			
-			$("#.idEntita").html(idEntita);
+			//$("#tableGestioneEntita").DataTable().cell(row-1, 1).data(check).draw();
+			
+			$("#codiceEntita_New"+row).parent().parent().find(".idEntita").html(idEntita);
 			
 			$("#codiceEntita_New"+row).parent().html(codice);
 			$("#descrizioneEntita_New"+row).parent().html(descrizione);
@@ -154,7 +157,7 @@ function insert(row){
 			$("#buttonToDeleteRigaNew"+row).parent().html(check);
 			$('body>.tooltip').remove();
 			
-			alert("Inserimento dati avvenuto correttamente!");
+			//alert("Inserimento dati avvenuto correttamente!");
 		  }
 		 });
 }
@@ -219,7 +222,7 @@ function getListaEntita(){
  */
 function addInputForm(){	
 	var row = '<tr role="row">'
-	+'	<td class="tdCenter col-md-1"><a id="buttonToDeleteRigaNew'+rowCounter+'" style="cursor: pointer;" onclick="removeInputForm(this)" data-toggle="tooltip" title="Elimina" data-placement="left"><i style="color:red" class="fa fa-trash-o"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" onclick="insert('+row+')" id="buttonToUpdateRigaEdit'+row+'" data-toggle="tooltip" title="Inserisci dati" data-placement="right"><i style="color:green" class="fa fa-check"></i></a></td>'
+	+'	<td class="tdCenter col-md-1"><a id="buttonToDeleteRigaNew'+rowCounter+'" style="cursor: pointer;" onclick="removeInputForm(this)" data-toggle="tooltip" title="Elimina" data-placement="left"><i style="color:red" class="fa fa-trash-o"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" onclick="insert('+rowCounter+')" id="buttonToUpdateRigaEdit'+rowCounter+'" data-toggle="tooltip" title="Inserisci dati" data-placement="right"><i style="color:green" class="fa fa-check"></i></a></td>'
 	+'	<td class="idEntita col-md-1"></td>'
 	+'	<td class="col-md-2"><input style="width:100%" placeholder="Codice" id="codiceEntita_New'+rowCounter+'" type="text" class="form-control"/></td>'
 	+'	<td class="col-md-4"><input style="width:100%" placeholder="Descrizione" id="descrizioneEntita_New'+rowCounter+'" type="text" class="form-control"/></td>'
