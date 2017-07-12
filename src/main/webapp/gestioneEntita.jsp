@@ -41,13 +41,13 @@
 							           <th class="col-md-1">Id</th>
 							           <th class="col-md-2">Codice</th>
 							           <th class="col-md-4">Descrizione</th>
-							           <th class="col-md-2">Acronimo</th>
+							           <th class="col-md-4">Acronimo</th>
 							          </tr>
 							        </thead>          
 						        </table>
 							</div>
 							<br/>
-							<a id="id_button_inserisci_calendario" onclick="saveEditedCalendar()" type="button" class="btn btn-success"><i class="fa fa-save"></i> Salva</a>							
+							<a id="id_button_inserisci_calendario" onclick="saveEditedEntita()" type="button" class="btn btn-success"><i class="fa fa-save"></i> Salva</a>							
 						</div>
 					</div>
 				</div>
