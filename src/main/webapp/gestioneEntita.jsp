@@ -47,8 +47,6 @@
 							        </thead>          
 						        </table>
 							</div>
-							<br/>
-							<a id="id_button_inserisci_calendario" onclick="saveEditedEntita()" type="button" class="btn btn-success"><i class="fa fa-save"></i> Salva</a>							
 						</div>
 					</div>
 				</div>
