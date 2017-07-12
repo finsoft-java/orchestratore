@@ -37,7 +37,7 @@ public class EntitaResources {
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	@Path("Entita({id})")
+	@Path("Entita")
 	public Entita create(Entita cal) {
 		System.out.println("post resources, salvo entita " + cal);
 		return entitaManager.save(cal);

@@ -41,7 +41,7 @@ public class CalendarioResources {
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	@Path("Calendari({id})")
+	@Path("Calendari")
 	public Calendario create(Calendario cal) {
 		System.out.println("post resources, salvo entita " + cal);
 		return calendarioManager.save(cal);

@@ -38,7 +38,7 @@ public class MilestoneResources {
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	@Path("Milestones({id})")
+	@Path("Milestones")
 	public Milestone create(Milestone cal) {
 		System.out.println("post resources, salvo entita " + cal);
 		return milestoneManager.save(cal);

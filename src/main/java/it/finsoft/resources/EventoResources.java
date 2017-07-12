@@ -36,7 +36,7 @@ public class EventoResources {
 	}
 
 	@POST
-	@Path("Eventi({id})")
+	@Path("Eventi")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Evento create(Evento cal) {
 		System.out.println("post resources, salvo entita " + cal);

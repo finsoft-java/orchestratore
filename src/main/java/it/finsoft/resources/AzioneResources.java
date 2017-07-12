@@ -37,7 +37,7 @@ public class AzioneResources {
 	}
 	
 	@POST
-	@Path("Azioni({id})")
+	@Path("Azioni")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Azione create(Azione cal) {
 		System.out.println("post resources, salvo azione " + cal);
