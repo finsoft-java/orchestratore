@@ -114,12 +114,12 @@ function deleteCalendar(){
 
 
 var counterRicorsione = 0;
-function saveEditedCalendar(){
-	updateCalendarData();
+function saveEditedEntita(){
+	updateEntityData();
 	if(counterRicorsione === 0) {
 		alert("fine ricorsione funzione di aggiornamento");
 		console.log("FINE AGGIORNAMENTO DATI");
-		insertMilestoneInCalendar();
+		insertEntity();
 		if(counterRicorsione === 0) {
 			alert("fine ricorsione funzione di inserimento");
 			console.log("FINE INSERIMENTO DATI");
@@ -130,52 +130,49 @@ function saveEditedCalendar(){
 }
 
 
-function updateCalendarData(){
+function updateEntityData(){
 	if(counterRicorsione === rowCounterFromDBData) return;
-	var idCalendarioMilestone = $("#idCalendarioMilestone"+counterRicorsione).text();
+	var idCalendarioMilestone = $("#idEntita"+counterRicorsione).text();
 	var dataList = [];
-	dataList.push([$("#selectMilestoneCalEdit"+counterRicorsione).val(), convertDataOraToTimestamp($("#dataCalEdit"+counterRicorsione).val(), $("#oraCalEdit"+counterRicorsione).val()), $("#tagsCalEdit"+counterRicorsione).val(), $("#descTagsCalEdit"+counterRicorsione).val()]);
+	dataList.push([/*$("#idCodice"+counterRicorsione).text(),*/ $("#descrizioneEntita_rowNumber_"+counterRicorsione).val(), $("#acronimoEntita_rowNumber_"+counterRicorsione).val()]);
 	
 	for(var i = 0; i<dataList.length; i++){
 		var data = dataList[i];
 		var request = {            
-			_milestone:data[0],
-			_dataOrePreviste:data[1],
-			_tag:data[2],
-			_descrizione:data[3]
+			//_idCodice:data[0],
+			_descrizioneEntita:data[0],
+			_acronimoEntita:data[1],
 		};
 	}
 	request = JSON.stringify(request); 
-	console.log("idCalendarioMilestone: "+idCalendarioMilestone);
+	console.log("idEntita: "+idCalendarioMilestone);
 	console.log(request);
 	//recupero dati prima riga
 //	 $.ajax({
 //		  type: "PUT",
-//		  url: "CalendarioMilestones("+idCalendarioMilestone+")",
+//		  url: "CalendarioMilestones("+idEntita+")",
 //		  data: request,
 //		  contentType: "application/json; charset=utf-8",
 //		  dataType: "json",
 //		  success: function(res) {
 		  counterRicorsione++;
-		  updateCalendarData();			  
+		  updateEntityData();			  
 //		  }
 //		 });
 	  counterRicorsione--;
 }
 
-function insertMilestoneInCalendar() {
+function insertEntity() {
     var temp = rowCounterFromDBData+counterRicorsione;
 	if(counterRicorsione === (rowCounter - rowCounterFromDBData)) return;
 	var dataList = [];
-	dataList.push([$("#selectMilestoneCalNew"+temp).val(), convertDataOraToTimestamp($("#dataCalNew"+temp).val(), $("#oraCalNew"+temp).val()), $("#tagsCalNew"+temp).val(), $("#descrizioneCalNew"+temp).val()]);
-	
+	dataList.push([$("#codiceEntita_New"+counterRicorsione).text(), $("#descrizioneEntita_New"+counterRicorsione).val(), $("#acronimoEntita_New"+counterRicorsione).val()]);	
 	for(var i = 0; i<dataList.length; i++){
 		var data = dataList[i];
 		var request = {            
-			_milestone:data[0],
-			_dataOrePreviste:data[1],
-			_tag:data[2],
-			_descrizione:data[3]
+			_idCodice:data[0],
+			_descrizioneEntita:data[1],
+			_acronimoEntita:data[2],
 		};
 	}
 	request = JSON.stringify(request); 
@@ -189,13 +186,112 @@ function insertMilestoneInCalendar() {
 	//	  dataType: "json",
 	//	  success: function(res) {
 		  counterRicorsione++;
-		  insertMilestoneInCalendar();			  
+		  insertEntity();			  
 	//	  }
 	//	 });
 	  counterRicorsione--;
 }
 
 $(document).ready(function(){getListaEntita()});
+
+
+function updateMilestone(row) {
+//	$("#descrizioneEntita_New"+counterRicorsione).removeClass("disabled");
+//	$("#acronimoEntita_New"+counterRicorsione).removeClass("disabled");
+//	setTimeout(
+//		function(){ 
+//			alert("Hello"); 
+//		}, 3000);
+	
+	
+	descrizione = '<input style="width:100%" placeholder="Descrizione" id="descrizioneEntita_rowNumber_'+row+'" type="text" class="form-control" value="'+$("#descrizioneEntita_rowNumber_"+row).text()+'"/>'; 
+	acronimo = '<input style="width:100%" placeholder="Acronimo" id="acronimoEntita_rowNumber_'+row+'" type="text" class="form-control" value="'+$("#acronimoEntita_rowNumber_"+row).text()+'"/>'; 
+	check = '<a href="#" onclick="back('+row+')" id="buttonToDeleteRigaEdit'+row+'" data-toggle="tooltip" title="Annulla" data-placement="left"><i style="color:black" class="fa fa-times"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" onclick="update('+row+')" id="buttonToUpdateRigaEdit'+row+'" data-toggle="tooltip" title="Segnala fine modifiche" data-placement="right"><i style="color:green" class="fa fa-check"></i></a>';	
+	$("#descrizioneEntita_rowNumber_"+row).parent().html(descrizione);
+	$("#acronimoEntita_rowNumber_"+row).parent().html(acronimo);
+	$("#buttonToUpdateRigaEdit"+row).parent().html(check);
+	
+	
+//	
+//	
+//	var idSelectMilestoneCal = $("#idCalendarioMilestone"+row).text();
+//	console.log(idSelectMilestoneCal);
+//	if(confirm("Sicuro di voler eliminare questa milestone da questo calendario?")){
+//		$.ajax({
+//			type : "DELETE",
+//			url : "ws/resources/CalendarioMilestones(" + idSelectMilestoneCal + ")",
+//			dataType : "json",
+//			success : function(dataSet) {		
+//				$("#idCalendarioMilestone"+row).parent().parent().remove();
+//				rowCounter = rowCounter - 1;
+//				if(rowCounter === 0) {
+//					if(confirm("Il calendario ora non contiene nessuna milestone, si desidera eliminare anch'esso?")) deleteCalendar();
+//					else location.reload(true);
+//				}
+//			}
+//		});
+//	}
+	$('body>.tooltip').remove();
+}
+
+
+function back(row){
+	idEntita = $("#idEntita"+row).text();
+	$.ajax({
+	  type: "GET",
+	  url: "ws/resources/Entita("+idEntita+")",
+	  success: function(res) {
+		descrizione = '<div id="descrizioneEntita_rowNumber_'+row+'">'+res.descrizione+'</div>';
+		acronimo = '<div id="acronimoEntita_rowNumber_'+row+'">'+ res.acronimo +'</div>';
+		check = '<a href="#" onclick="removeMilestone('+row+')" id="buttonToDeleteRigaEdit'+row+'" data-toggle="tooltip" title="Elimina" data-placement="left"><i style="color:red" class="fa fa-trash-o"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" onclick="updateMilestone('+row+')" id="buttonToUpdateRigaEdit'+row+'" data-toggle="tooltip" title="Modifica" data-placement="right"><i class="fa fa-pencil"></i></a>';
+		
+		$("#descrizioneEntita_rowNumber_"+row).parent().html(descrizione);
+		$("#acronimoEntita_rowNumber_"+row).parent().html(acronimo);
+		$("#buttonToUpdateRigaEdit"+row).parent().html(check);
+		$('body>.tooltip').remove();
+	  }
+	 });
+}
+
+
+
+function update(row){
+	var idEntita = $("#idEntita"+row).text();
+	var dataList = [];
+	dataList.push([$("#descrizioneEntita_rowNumber_"+row).val(), $("#acronimoEntita_rowNumber_"+row).val()]);
+	
+	for(var i = 0; i<dataList.length; i++){
+		var data = dataList[i];
+		var request = {            
+			descrizione:data[0],
+			acronimo:data[1],
+		};
+	}
+	
+	request = JSON.stringify(request); 
+	console.log("idEntita: "+idEntita);
+	console.log(request);
+	 $.ajax({
+		  type: "PUT",
+		  url: "ws/resources/Entita("+idEntita+")",
+		  data: request,
+		  contentType: "application/json; charset=utf-8",
+		  dataType: "json",
+		  success: function(res) {
+//			console.log(res);
+			descrizione = '<div id="descrizioneEntita_rowNumber_'+row+'">'+$("#descrizioneEntita_rowNumber_"+row).val()+'</div>';
+			acronimo = '<div id="acronimoEntita_rowNumber_'+row+'">'+ $("#acronimoEntita_rowNumber_"+row).val()+'</div>';
+			check = '<a href="#" onclick="removeMilestone('+row+')" id="buttonToDeleteRigaEdit'+row+'" data-toggle="tooltip" title="Elimina" data-placement="left"><i style="color:red" class="fa fa-trash-o"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" onclick="updateMilestone('+row+')" id="buttonToUpdateRigaEdit'+row+'" data-toggle="tooltip" title="Modifica" data-placement="right"><i class="fa fa-pencil"></i></a>';
+			
+			$("#descrizioneEntita_rowNumber_"+row).parent().html(descrizione);
+			$("#acronimoEntita_rowNumber_"+row).parent().html(acronimo);
+			$("#buttonToUpdateRigaEdit"+row).parent().html(check);
+			$('body>.tooltip').remove();
+			
+			alert("Aggiornamento informazioni avvenuto correttamente!");
+		  }
+		 });
+}
 
 
 
@@ -211,13 +307,16 @@ function getListaEntita(){
 	$.getJSON("ws/resources/Entita", function(dataSet){
 				for (i in dataSet){
 
-					dataSet[i].deleteRowButton = '<a href="#" onclick="removeMilestone('+rowCounter+')" id="buttonToDeleteRigaEdit'+rowCounter+'" data-toggle="tooltip" title="Elimina" data-placement="left"><i style="color:red" class="fa fa-trash-o"></i></a>';
-						
-					if (dataSet[i].descrizione != null)
-						dataSet[i].descrizione = '<input style="width:100%" placeholder="idEntita" id="descrizioneEntita_rowNumber_'+rowCounter+'" type="text" class="form-control" value="'+dataSet[i].descrizione+'"/>'; 
-
-					if (dataSet[i].acronimo != null)
-						dataSet[i].acronimo = '<input style="width:100%" placeholder="idEntita" id="acronimoEntita_rowNumber_'+rowCounter+'" type="text" class="form-control" value="'+dataSet[i].acronimo+'"/>'; 
+					dataSet[i].deleteRowButton = '<a href="#" onclick="removeMilestone('+rowCounter+')" id="buttonToDeleteRigaEdit'+rowCounter+'" data-toggle="tooltip" title="Elimina" data-placement="left"><i style="color:red" class="fa fa-trash-o"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" onclick="updateMilestone('+rowCounter+')" id="buttonToUpdateRigaEdit'+rowCounter+'" data-toggle="tooltip" title="Modifica" data-placement="right"><i class="fa fa-pencil"></i></a>';
+					dataSet[i].idEntita = '<div id="idEntita'+rowCounter+'">'+dataSet[i].idEntita+'</div>';
+					dataSet[i].codice = '<div id="idCodice'+rowCounter+'">'+dataSet[i].codice+'</div>';
+					
+					dataSet[i].descrizione = '<div id="descrizioneEntita_rowNumber_'+rowCounter+'">'+dataSet[i].descrizione+'</div>';
+					dataSet[i].acronimo = '<div id="acronimoEntita_rowNumber_'+rowCounter+'">'+dataSet[i].acronimo+'</div>';
+					
+//					if (dataSet[i].descrizione != null) dataSet[i].descrizione = '<input style="width:100%" placeholder="idEntita" id="descrizioneEntita_rowNumber_'+rowCounter+'" type="text" class="form-control" value="'+dataSet[i].descrizione+'"/>'; 
+//
+//					if (dataSet[i].acronimo != null) dataSet[i].acronimo = '<input style="width:100%" placeholder="idEntita" id="acronimoEntita_rowNumber_'+rowCounter+'" type="text" class="form-control" value="'+dataSet[i].acronimo+'"/>'; 
 					
 					rowCounter++;
 					
@@ -239,7 +338,7 @@ function getListaEntita(){
 						{data : 'idEntita', className : 'col-md-1 idEntita', defaultContent : '' },
 						{data : 'codice', className : 'col-md-2', defaultContent : ''}, 
 						{data : 'descrizione', className : 'col-md-4', defaultContent : ''},
-						{data : 'acronimo', className : 'col-md-2', defaultContent : ''}
+						{data : 'acronimo', className : 'col-md-4', defaultContent : ''}
 						]
 				});
 				
@@ -265,9 +364,9 @@ function addInputForm(){
 	var row = '<tr role="row">'
 	+'	<td class="tdCenter col-md-1"><a id="buttonToDeleteRigaNew'+rowCounter+'" style="cursor: pointer;" onclick="removeInputForm(this)" data-toggle="tooltip" title="Elimina" data-placement="left"><i style="color:red" class="fa fa-trash-o"></i></a></td>'
 	+'	<td class="idEntita col-md-1"></td>'
-	+'	<td class="col-md-2"><input style="width:100%" placeholder="Codice" id="codiceEntita'+rowCounter+'" type="text" class="form-control"/></td>'
-	+'	<td class="col-md-4"><input style="width:100%" placeholder="Descrizione" id="descrizioneEntita'+rowCounter+'" type="text" class="form-control"/></td>'
-	+'	<td class="col-md-2"><input style="width:100%" placeholder="Acronimo" id="acronimoEntita'+rowCounter+'" type="text" class="form-control"/></td>'
+	+'	<td class="col-md-2"><input style="width:100%" placeholder="Codice" id="codiceEntita_New'+rowCounter+'" type="text" class="form-control"/></td>'
+	+'	<td class="col-md-4"><input style="width:100%" placeholder="Descrizione" id="descrizioneEntita_New'+rowCounter+'" type="text" class="form-control"/></td>'
+	+'	<td class="col-md-4"><input style="width:100%" placeholder="Acronimo" id="acronimoEntita_New'+rowCounter+'" type="text" class="form-control"/></td>'
 	+'</tr>';
 	
 	//getListaMilestone_gestCal(rowCounter);
