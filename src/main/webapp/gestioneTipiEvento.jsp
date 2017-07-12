@@ -17,14 +17,13 @@
 						</div>
 						<div class="box-body">
 							<div class="table-responsive">
-								<table id="tableGestioneEntita" class="table no-margin">
+								<table id="tableTipiEventi" class="table no-margin">
 						        	<thead>
 							          <tr role="row">
-							           <th class="col-md-1"></th>
-							           <th class="col-md-1">Id</th>
-							           <th class="col-md-2">Codice</th>
-							           <th class="col-md-4">Descrizione</th>
-							           <th class="col-md-4">Acronimo</th>
+							           <th class="col-md-1">Opz.</th>
+							           <th class="hide">Id</th>
+							           <th class="col-md-3">Codice</th>
+							           <th class="col-md-8">Descrizione</th>
 							          </tr>
 							        </thead>          
 						        </table>
@@ -33,9 +32,8 @@
 					</div>
 				</div>
 			</div>
-			
 		</section>
 
-		<script src="dist/js/gestioneEntita.js"></script>
+		<script src="dist/js/gestioneTipiEvento.js"></script>
 
 </t:template>
