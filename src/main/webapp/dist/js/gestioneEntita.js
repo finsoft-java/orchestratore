@@ -49,7 +49,7 @@ function removeInputForm(row) {
 function updateEntita(row) {	
 	descrizione = '<input style="width:100%" placeholder="Descrizione" id="descrizioneEntita_rowNumber_'+row+'" type="text" class="form-control" value="'+$("#descrizioneEntita_rowNumber_"+row).text()+'"/>'; 
 	acronimo = '<input style="width:100%" placeholder="Acronimo" id="acronimoEntita_rowNumber_'+row+'" type="text" class="form-control" value="'+$("#acronimoEntita_rowNumber_"+row).text()+'"/>'; 
-	check = '<a href="#" onclick="back('+row+')" id="buttonToDeleteRigaEdit'+row+'" data-toggle="tooltip" title="Annulla" data-placement="left"><i style="color:black" class="fa fa-times"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" onclick="update('+row+')" id="buttonToUpdateRigaEdit'+row+'" data-toggle="tooltip" title="Segnala fine modifiche" data-placement="right"><i style="color:green" class="fa fa-check"></i></a>';	
+	check = '<a style="cursor:pointer"="#" onclick="back('+row+')" id="buttonToDeleteRigaEdit'+row+'" data-toggle="tooltip" title="Annulla" data-placement="left"><i style="color:black" class="fa fa-times"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="cursor:pointer" onclick="update('+row+')" id="buttonToUpdateRigaEdit'+row+'" data-toggle="tooltip" title="Segnala fine modifiche" data-placement="right"><i style="color:green" class="fa fa-check"></i></a>';	
 	$("#descrizioneEntita_rowNumber_"+row).parent().html(descrizione);
 	$("#acronimoEntita_rowNumber_"+row).parent().html(acronimo);
 	$("#buttonToUpdateRigaEdit"+row).parent().html(check);
@@ -66,7 +66,7 @@ function back(row){
 	  success: function(res) {
 		descrizione = '<div id="descrizioneEntita_rowNumber_'+row+'">'+res.descrizione+'</div>';
 		acronimo = '<div id="acronimoEntita_rowNumber_'+row+'">'+ res.acronimo +'</div>';
-		check = '<a href="#" onclick="removeEntita('+row+')" id="buttonToDeleteRigaEdit'+row+'" data-toggle="tooltip" title="Elimina" data-placement="left"><i style="color:red" class="fa fa-trash-o"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" onclick="updateEntita('+row+')" id="buttonToUpdateRigaEdit'+row+'" data-toggle="tooltip" title="Modifica" data-placement="right"><i class="fa fa-pencil"></i></a>';
+		check = '<a style="cursor:pointer" onclick="removeEntita('+row+')" id="buttonToDeleteRigaEdit'+row+'" data-toggle="tooltip" title="Elimina" data-placement="left"><i style="color:red" class="fa fa-trash-o"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="cursor:pointer" onclick="updateEntita('+row+')" id="buttonToUpdateRigaEdit'+row+'" data-toggle="tooltip" title="Modifica" data-placement="right"><i class="fa fa-pencil"></i></a>';
 		
 		$("#descrizioneEntita_rowNumber_"+row).parent().html(descrizione);
 		$("#acronimoEntita_rowNumber_"+row).parent().html(acronimo);
@@ -104,7 +104,7 @@ function update(row){
 		  success: function(res) {
 			descrizione = '<div id="descrizioneEntita_rowNumber_'+row+'">'+$("#descrizioneEntita_rowNumber_"+row).val()+'</div>';
 			acronimo = '<div id="acronimoEntita_rowNumber_'+row+'">'+ $("#acronimoEntita_rowNumber_"+row).val()+'</div>';
-			check = '<a href="#" onclick="removeEntita('+row+')" id="buttonToDeleteRigaEdit'+row+'" data-toggle="tooltip" title="Elimina" data-placement="left"><i style="color:red" class="fa fa-trash-o"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" onclick="updateMilestone('+row+')" id="buttonToUpdateRigaEdit'+row+'" data-toggle="tooltip" title="Modifica" data-placement="right"><i class="fa fa-pencil"></i></a>';
+			check = '<a style="cursor:pointer" onclick="removeEntita('+row+')" id="buttonToDeleteRigaEdit'+row+'" data-toggle="tooltip" title="Elimina" data-placement="left"><i style="color:red" class="fa fa-trash-o"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="cursor:pointer" onclick="updateMilestone('+row+')" id="buttonToUpdateRigaEdit'+row+'" data-toggle="tooltip" title="Modifica" data-placement="right"><i class="fa fa-pencil"></i></a>';
 			
 			$("#descrizioneEntita_rowNumber_"+row).parent().html(descrizione);
 			$("#acronimoEntita_rowNumber_"+row).parent().html(acronimo);
@@ -143,7 +143,7 @@ function insert(row){
 			codice = '<div id="idCodice'+row+'">'+res.codice+'</div>';
 			descrizione = '<div id="descrizioneEntita_rowNumber_'+row+'">'+res.descrizione+'</div>';
 			acronimo = '<div id="acronimoEntita_rowNumber_'+row+'">'+ res.acronimo +'</div>';
-			check = '<a href="#" onclick="removeEntita('+row+')" id="buttonToDeleteRigaEdit'+row+'" data-toggle="tooltip" title="Elimina" data-placement="left"><i style="color:red" class="fa fa-trash-o"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" onclick="updateEntita('+row+')" id="buttonToUpdateRigaEdit'+row+'" data-toggle="tooltip" title="Modifica" data-placement="right"><i class="fa fa-pencil"></i></a>';
+			check = '<a style="cursor:pointer" onclick="removeEntita('+row+')" id="buttonToDeleteRigaEdit'+row+'" data-toggle="tooltip" title="Elimina" data-placement="left"><i style="color:red" class="fa fa-trash-o"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="cursor:pointer" onclick="updateEntita('+row+')" id="buttonToUpdateRigaEdit'+row+'" data-toggle="tooltip" title="Modifica" data-placement="right"><i class="fa fa-pencil"></i></a>';
 						
 			$("#codiceEntita_New"+row).parent().parent().find(".idEntita").html(idEntita);
 			
@@ -170,7 +170,7 @@ var rowCounterFromDBData = 0;
 function getListaEntita(){
 	$.getJSON("ws/resources/Entita", function(dataSet){
 		for (i in dataSet){
-			dataSet[i].deleteRowButton = '<a href="#" onclick="removeEntita('+rowCounter+')" id="buttonToDeleteRigaEdit'+rowCounter+'" data-toggle="tooltip" title="Elimina" data-placement="left"><i style="color:red" class="fa fa-trash-o"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" onclick="updateEntita('+rowCounter+')" id="buttonToUpdateRigaEdit'+rowCounter+'" data-toggle="tooltip" title="Modifica" data-placement="right"><i class="fa fa-pencil"></i></a>';
+			dataSet[i].deleteRowButton = '<a style="cursor:pointer" onclick="removeEntita('+rowCounter+')" id="buttonToDeleteRigaEdit'+rowCounter+'" data-toggle="tooltip" title="Elimina" data-placement="left"><i style="color:red" class="fa fa-trash-o"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="cursor:pointer" onclick="updateEntita('+rowCounter+')" id="buttonToUpdateRigaEdit'+rowCounter+'" data-toggle="tooltip" title="Modifica" data-placement="right"><i class="fa fa-pencil"></i></a>';
 			dataSet[i].idEntita = '<div id="idEntita'+rowCounter+'">'+dataSet[i].idEntita+'</div>';
 			dataSet[i].codice = '<div id="idCodice'+rowCounter+'">'+dataSet[i].codice+'</div>';
 			dataSet[i].descrizione = '<div id="descrizioneEntita_rowNumber_'+rowCounter+'">'+dataSet[i].descrizione+'</div>';
@@ -212,7 +212,7 @@ function getListaEntita(){
  */
 function addInputForm(){	
 	var row = '<tr role="row">'
-	+'	<td class="tdCenter col-md-1"><a id="buttonToDeleteRigaNew'+rowCounter+'" style="cursor: pointer;" onclick="removeInputForm(this)" data-toggle="tooltip" title="Elimina" data-placement="left"><i style="color:red" class="fa fa-trash-o"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" onclick="insert('+rowCounter+')" id="buttonToUpdateRigaEdit'+rowCounter+'" data-toggle="tooltip" title="Inserisci dati" data-placement="right"><i style="color:green" class="fa fa-check"></i></a></td>'
+	+'	<td class="tdCenter col-md-1"><a id="buttonToDeleteRigaNew'+rowCounter+'" style="cursor: pointer;" onclick="removeInputForm(this)" data-toggle="tooltip" title="Elimina" data-placement="left"><i style="color:red" class="fa fa-trash-o"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="cursor:pointer" onclick="insert('+rowCounter+')" id="buttonToUpdateRigaEdit'+rowCounter+'" data-toggle="tooltip" title="Inserisci dati" data-placement="right"><i style="color:green" class="fa fa-check"></i></a></td>'
 	+'	<td class="idEntita hide"></td>'
 	+'	<td class="col-md-3"><input style="width:100%" placeholder="Codice" id="codiceEntita_New'+rowCounter+'" type="text" class="form-control"/></td>'
 	+'	<td class="col-md-4"><input style="width:100%" placeholder="Descrizione" id="descrizioneEntita_New'+rowCounter+'" type="text" class="form-control"/></td>'
