@@ -3,7 +3,7 @@
  * Funzione document.ready di jQuery
  */
 $(document).ready(function(){
-	getListaTipiEventi();
+	getListaTipiEvento();
 })
 
 
@@ -14,7 +14,7 @@ $(document).ready(function(){
  */
 function removeTipoEvento(row) {
 	idTipoEvento = $("#idTipoEvento"+row).text();
-	console.log(idTipoEvento);
+	console.log("idTipoEvento: "+idTipoEvento);
 	if(confirm("Sicuro di voler eliminare questo tipologia di evento?")){
 		$.ajax({
 			type : "DELETE",
@@ -48,8 +48,11 @@ function removeInputForm(row) {
 
 function updateTipoEvento(row) {	
 	descrizione = '<input style="width:100%" placeholder="Descrizione" id="descrizioneTipoEvento_rowNumber_'+row+'" type="text" class="form-control" value="'+$("#descrizioneTipoEvento_rowNumber_"+row).text()+'"/>'; 
-	check = '<a style="cursor:pointer" onclick="back('+row+')" id="buttonToDeleteRigaEdit'+row+'" data-toggle="tooltip" title="Annulla" data-placement="left"><i style="color:black" class="fa fa-times"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="cursor:pointer" onclick="update('+row+')" id="buttonToUpdateRigaEdit'+row+'" data-toggle="tooltip" title="Segnala fine modifiche" data-placement="right"><i style="color:green" class="fa fa-check"></i></a>';	
+	codice = '<input style="width:100%" placeholder="Codice" id="codiceTipoEvento_rowNumber_'+row+'" type="text" class="form-control" value="'+$("#codiceTipoEvento_rowNumber_"+row).text()+'"/>'; 
+	check = '<a style="cursor:pointer" onclick="back('+row+')" id="buttonToDeleteRigaEdit'+row+'" data-toggle="tooltip" title="Annulla" data-placement="left"><i style="color:black" class="fa fa-times"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="cursor:pointer" onclick="update('+row+')" id="buttonToUpdateRigaEdit'+row+'" data-toggle="tooltip" title="Segnala fine modifiche" data-placement="right"><i style="color:green" class="fa fa-check"></i></a>';
+	alert("codice: " +codice);
 	$("#descrizioneTipoEvento_rowNumber_"+row).parent().html(descrizione);
+	$("#codiceTipoEvento_rowNumber_"+row).parent().html(codice);
 	$("#buttonToUpdateRigaEdit"+row).parent().html(check);
 	
 	$('body>.tooltip').remove();
@@ -63,7 +66,7 @@ function back(row){
 	  url: "ws/resources/TipiEvento("+idTipoEvento+")",
 	  success: function(res) {
 		descrizione = '<div id="descrizioneTipoEvento_rowNumber_'+row+'">'+res.descrizione+'</div>';
-		check = '<a style="cursor:pointer" onclick="removeEntita('+row+')" id="buttonToDeleteRigaEdit'+row+'" data-toggle="tooltip" title="Elimina" data-placement="left"><i style="color:red" class="fa fa-trash-o"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="cursor:pointer" onclick="updateTipoEvento('+row+')" id="buttonToUpdateRigaEdit'+row+'" data-toggle="tooltip" title="Modifica" data-placement="right"><i class="fa fa-pencil"></i></a>';
+		check = '<a style="cursor:pointer" onclick="removeTipoEvento('+row+')" id="buttonToDeleteRigaEdit'+row+'" data-toggle="tooltip" title="Elimina" data-placement="left"><i style="color:red" class="fa fa-trash-o"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="cursor:pointer" onclick="updateTipoEvento('+row+')" id="buttonToUpdateRigaEdit'+row+'" data-toggle="tooltip" title="Modifica" data-placement="right"><i class="fa fa-pencil"></i></a>';
 		
 		$("#descrizioneTipoEvento_rowNumber_"+row).parent().html(descrizione);
 		$("#buttonToUpdateRigaEdit"+row).parent().html(check);
@@ -88,18 +91,18 @@ function back(row){
 function update(row){
 	var idTipoEvento = $("#idTipoEvento"+row).text();
 	var dataList = [];
-	dataList.push([$("#descrizioneTipoEvento_rowNumber_"+row).val(),  $("#idCodice"+row).text()]);
-	
+	dataList.push([$("#codiceTipoEvento_rowNumber_"+row).val(), $("#descrizioneTipoEvento_rowNumber_"+row).val(), $("#idCodice"+row).text()]);
+console.log(dataList);
 	for(var i = 0; i<dataList.length; i++){
 		var data = dataList[i];
 		var request = {            
-			codice:data[1],
-			descrizione:data[0]
+			codice:data[0],
+			descrizione:data[1]
 		};
 	}
 	
 	request = JSON.stringify(request); 
-	console.log("idEntita: "+idTipoEvento);
+	console.log("idTipoEvento: "+idTipoEvento);
 	console.log(request);
 	 $.ajax({
 		  type: "PUT",
@@ -109,9 +112,11 @@ function update(row){
 		  dataType: "json",
 		  success: function(res) {
 			descrizione = '<div id="descrizioneTipoEvento_rowNumber_'+row+'">'+$("#descrizioneTipoEvento_rowNumber_"+row).val()+'</div>';
+			codice = '<div id="codiceTipoEvento_rowNumber_'+row+'">'+$("#codiceTipoEvento_rowNumber_"+row).val()+'</div>';
 			check = '<a style="cursor:pointer" onclick="removeTipoEvento('+row+')" id="buttonToDeleteRigaEdit'+row+'" data-toggle="tooltip" title="Elimina" data-placement="left"><i style="color:red" class="fa fa-trash-o"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="cursor:pointer" onclick="updateTipoEvento('+row+')" id="buttonToUpdateRigaEdit'+row+'" data-toggle="tooltip" title="Modifica" data-placement="right"><i class="fa fa-pencil"></i></a>';
 			
 			$("#descrizioneTipoEvento_rowNumber_"+row).parent().html(descrizione);
+			$("#codiceTipoEvento_rowNumber_"+row).parent().html(codice);
 			$("#buttonToUpdateRigaEdit"+row).parent().html(check);
 			$('body>.tooltip').remove();
 			
@@ -124,12 +129,12 @@ function update(row){
 function insert(row){
 	var dataList = [];
 	dataList.push([$("#descrizioneTipoEvento_New"+row).val(), $("#codiceTipoEvento_New"+row).val()]);
-	
+	alert("dataList: "+dataList);
 	for(var i = 0; i<dataList.length; i++){
 		var data = dataList[i];
 		var request = {            
-			codice:data[1],
-			descrizione:data[0]
+			codice:data[0],
+			descrizione:data[1]
 		};
 	}
 	
@@ -154,13 +159,11 @@ function insert(row){
 			
 			$("#buttonToDeleteRigaNew"+row).parent().html(check);
 			$('body>.tooltip').remove();
-			
-			//alert("Inserimento dati avvenuto correttamente!");
+
 		  }
 		 });
 }
 
-$(document).ready(function(){getListaEntita()});
 
 
 
@@ -172,23 +175,25 @@ $(document).ready(function(){getListaEntita()});
  */
 var rowCounter = 0
 var rowCounterFromDBData = 0;
-function getListaEntita(){
+function getListaTipiEvento(){
 	$.getJSON("ws/resources/TipiEvento", function(dataSet){
 				for (i in dataSet){
 
-					dataSet[i].deleteRowButton = '<a href="#" onclick="removeMilestone('+rowCounter+')" id="buttonToDeleteRigaEdit'+rowCounter+'" data-toggle="tooltip" title="Elimina" data-placement="left"><i style="color:red" class="fa fa-trash-o"></i></a>';
-						
-					if (dataSet[i].descrizione != null)
-						dataSet[i].descrizione = '<input style="width:100%" placeholder="idEntita" id="descrizioneEntita_rowNumber_'+rowCounter+'" type="text" class="form-control" value="'+dataSet[i].descrizione+'"/>'; 
+					dataSet[i].deleteRowButton = '<a style="cursor:pointer" onclick="removeTipoEvento('+rowCounter+')" id="buttonToDeleteRigaEdit'+rowCounter+'" data-toggle="tooltip" title="Elimina" data-placement="left"><i style="color:red" class="fa fa-trash-o"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="cursor:pointer" onclick="updateTipoEvento('+rowCounter+')" id="buttonToUpdateRigaEdit'+rowCounter+'" data-toggle="tooltip" title="Modifica" data-placement="right"><i class="fa fa-pencil"></i></a>';
 
-					if (dataSet[i].codice != null)
-						dataSet[i].codice = '<input style="width:100%" placeholder="idEntita" id="acronimoEntita_rowNumber_'+rowCounter+'" type="text" class="form-control" value="'+dataSet[i].codice+'"/>'; 
+					dataSet[i].idTipoEvento = '<div id="idTipoEvento'+rowCounter+'">'+dataSet[i].idTipoEvento+'</div>';
+						
+//					if (dataSet[i].descrizione != null)
+//						dataSet[i].descrizione = '<input style="width:100%" placeholder="Descrizione" id="descrizioneTipoEvento_rowNumber_'+rowCounter+'" type="text" class="form-control" value="'+dataSet[i].descrizione+'"/>'; 
+//
+//					if (dataSet[i].codice != null)
+//						dataSet[i].codice = '<input style="width:100%" placeholder="Codice" id="codiceTipoEvento_rowNumber_'+rowCounter+'" type="text" class="form-control" value="'+dataSet[i].codice+'"/>'; 
 					
 					rowCounter++;
 					
 				}
 				//$("#div_tabella_entita_editabile").removeClass("hide");
-				
+
 				$("#tableGestioneTipiEvento").DataTable({
 					paging : false,
 					lengthChange : false,
@@ -201,18 +206,17 @@ function getListaEntita(){
 					destroy : true,
 					columns : [
 						{data : 'deleteRowButton', className : 'col-md-1 tdCenter', defaultContent : '' },
-						{data : 'idEntita', className : 'col-md-1 idTipoEvento', defaultContent : '' },
+						{data : 'idTipoEvento', className : 'col-md-1 idTipoEvento', defaultContent : '' },
 						{data : 'codice', className : 'col-md-2', defaultContent : ''}, 
-						{data : 'descrizione', className : 'col-md-4', defaultContent : ''},
+						{data : 'descrizione', className : 'col-md-4', defaultContent : ''}
 						]
 				});
 				
-				$('.idTipoEvento').each(function(){
-					if($(this).html() == ''){
-						$($(this).parent().remove());
-					}
-					
-				})
+//				$('.idTipoEvento').each(function(){
+//					if($(this).html() == ''){
+//						$($(this).parent().remove());
+//					}
+//				})
 				rowCounterFromDBData = rowCounter;
 				addButtonInputForm();
 				attivaWidget();
@@ -227,15 +231,15 @@ function getListaEntita(){
  */
 function addInputForm(){	
 	var row = '<tr role="row">'
-	+'	<td class="tdCenter col-md-1"><a id="buttonToDeleteRigaNew'+rowCounter+'" style="cursor: pointer;" onclick="removeInputForm(this)" data-toggle="tooltip" title="Elimina" data-placement="left"><i style="color:red" class="fa fa-trash-o"></i></a></td>'
-	+'	<td class="idEntita col-md-1"></td>'
-	+'	<td class="col-md-2"><input style="width:100%" placeholder="Codice" id="codiceEntita'+rowCounter+'" type="text" class="form-control"/></td>'
-	+'	<td class="col-md-4"><input style="width:100%" placeholder="Descrizione" id="descrizioneEntita'+rowCounter+'" type="text" class="form-control"/></td>'
+	+'	<td class="tdCenter col-md-1"><a id="buttonToDeleteRigaNew'+rowCounter+'" style="cursor: pointer;" onclick="removeInputForm(this)" data-toggle="tooltip" title="Elimina" data-placement="left"><i style="color:red" class="fa fa-trash-o"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="cursor:pointer" onclick="insert('+rowCounter+')" id="buttonToUpdateRigaEdit'+rowCounter+'" data-toggle="tooltip" title="Inserisci dati" data-placement="right"><i style="color:green" class="fa fa-check"></i></a></td>'
+	+'	<td class="idTipoEvento col-md-1"></td>'
+	+'	<td class="col-md-2"><input style="width:100%" placeholder="Codice" id="codiceTipoEvento_New'+rowCounter+'" type="text" class="form-control"/></td>'
+	+'	<td class="col-md-4"><input style="width:100%" placeholder="Descrizione" id="descrizioneTipoEvento_New'+rowCounter+'" type="text" class="form-control"/></td>'
 //	+'	<td class="col-md-2"><input style="width:100%" placeholder="Acronimo" id="acronimoEntita'+rowCounter+'" type="text" class="form-control"/></td>'
 	+'</tr>';
 	
 	//getListaMilestone_gestCal(rowCounter);
-	$('#tableGestioneEntita').append(row);
+	$('#tableGestioneTipiEvento').append(row);
 	addButtonInputForm();
 	attivaWidget();
 	rowCounter++;
@@ -255,7 +259,7 @@ function addButtonInputForm(){
 		+'	<td class="tdCenter col-md-2"></td>'
 		+'	<td class="tdCenter col-md-1"></td>'
 		+'	</tr>';
-	$('#tableGestioneEntita').append(row);
+	$('#tableGestioneTipiEvento').append(row);
 	$('body>.tooltip').remove();
 }
 
