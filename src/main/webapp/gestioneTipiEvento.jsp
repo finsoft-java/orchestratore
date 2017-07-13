@@ -4,7 +4,7 @@
 <t:template>
 
 		<section class="content-header">
-			<h1>Gestione Entità</h1>
+			<h1>Gestione Entitï¿½</h1>
 		</section>
 		
 		<section class="content">
@@ -30,7 +30,7 @@
 				<div class="col-md-12">
 					<div class="box box-info">
 						<div class="box-header with-border">
-							<h3 class="box-title">Entità</h3>
+							<h3 class="box-title">Entitï¿½</h3>
 						</div>
 						<div class="box-body">
 							<div class="table-responsive">

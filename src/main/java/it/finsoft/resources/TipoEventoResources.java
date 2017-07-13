@@ -38,7 +38,7 @@ public class TipoEventoResources {
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	@Path("TipiEvento({id})")
+	@Path("TipiEvento")
 	public TipoEvento create(TipoEvento cal) {
 		System.out.println("post resources, salvo entita " + cal);
 		return tipoEventoManager.save(cal);
