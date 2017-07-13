@@ -63,6 +63,9 @@ public class EmbeddedGlassfish {
 
 			// Wait for Enter
 
+			System.out.println("Install root: " + System.getProperty("com.sun.aas.installRoot"));
+			System.out.println("Application deployed to C:\\applicationserver\\domains\\domain1\\applications\\Orchestratore");
+			System.out.println("Listen url: http://localhost:8080/orchestratoreRADAR");
 			System.out.println("Press Enter to stop server");
 			try {
 				new BufferedReader(new InputStreamReader(System.in)).readLine();
