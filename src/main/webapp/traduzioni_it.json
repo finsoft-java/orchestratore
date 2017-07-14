@@ -1,0 +1,10 @@
+{
+	"titolo" : "Orchestratore RADAR",
+	"menu_monitor" : "Monitor Calendario",
+	"menu_gestione_calendario" : "Gestione Calendario",
+	"menu_eventi" : "Eventi",
+	"menu_amministrazione" : "Amministrazione",
+	"menu_gestione_entita" : "Gestione Entità",
+	"menu_gestione_tipiEvento" : "Gestione Tipi Evento",
+	"menu_gestione_milestones" : "Gestione Milestones"
+}

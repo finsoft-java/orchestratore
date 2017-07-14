@@ -1,8 +1,6 @@
 <%@tag description="Orchestratore" language="java"%>
-
 <!DOCTYPE html>
-
-<html>
+<html data-ng-app="app" data-ng-controller="labelsController">
 	
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -98,8 +96,8 @@
 		<script src="plugins/datatables/dataTables.bootstrap.js"></script>
 		<!-- sidebar remember state -->
 		<script src="dist/js/sidebarState.js"></script>
-		
-
+		<!-- AngularJS (al momento usato solo per le etichette -->
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.5/angular.min.js"></script>
 		
 		<div class="wrapper">
 
@@ -122,23 +120,23 @@
 
 					<ul class="sidebar-menu treeview-menu">
 						<li>
-							<a href="index.jsp"> <i class="fa fa-calendar"></i><span>Monitor Calendario</span></a>
+							<a href="index.jsp"> <i class="fa fa-calendar"></i><span>{{labels.menu_monitor}}</span></a>
 						</li>
 	
          			 	<li>
-          					<a href="gestioneCalendario.jsp"> <i class="fa fa-edit"></i><span>Gestione Calendario</span></a>
+          					<a href="gestioneCalendario.jsp"> <i class="fa fa-edit"></i><span>{{labels.menu_gestione_calendario}}</span></a>
 						</li>
 						
 						<li>
-          					<a href="eventi.jsp"> <i class="fa fa-list-alt"></i><span>Eventi</span></a>
+          					<a href="eventi.jsp"> <i class="fa fa-list-alt"></i><span>{{labels.menu_eventi}}</span></a>
 						</li>
 						
 						<li>
-							<a href="#"><i class="fa fa-cogs"></i><span>Amministrazione</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i></span></a>
+							<a href="#"><i class="fa fa-cogs"></i><span>{{labels.menu_amministrazione}}</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i></span></a>
 							<ul class="treeview-menu">
-								<li><a href="gestioneEntita.jsp"><i class="fa fa-edit"></i> Gestione Entità</a></li>
-								<li><a href="gestioneTipiEvento.jsp"><i class="fa fa-edit"></i> Gestione Tipi Evento</a></li>
-								<li><a href="gestioneMilestone.jsp"><i class="fa fa-edit"></i> Gestione Milestone</a></li>
+								<li><a href="gestioneEntita.jsp"><i class="fa fa-edit"></i> {{labels.menu_gestione_entita}}</a></li>
+								<li><a href="gestioneTipiEvento.jsp"><i class="fa fa-edit"></i> {{labels.menu_gestione_tipiEvento}}</a></li>
+								<li><a href="gestioneMilestone.jsp"><i class="fa fa-edit"></i> {{labels.menu_gestione_milestones}}</a></li>
 							</ul>
 						</li>
 	
@@ -173,7 +171,7 @@
 			activeDeactiveNavBarTab();
 		</script>
 		
-		
+		<script src="dist/js/angularApp.js"></script>
 		
 	</body>
 </html>
