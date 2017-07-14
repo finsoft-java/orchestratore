@@ -7,7 +7,7 @@
  * @param $scope
  * @returns
  */
-function loadContext(url, $http, $scope) {
+function loadContext(url, $scope, $http) {
 	$http.get(url).then(function(res) {
 		$scope.labels = res.data;
 	});
@@ -18,8 +18,8 @@ function loadContext(url, $http, $scope) {
  */
 var app = angular.module('app', []);
 
-app.controller('labelsController', function($scope, $http, $sce, $compile) {
+app.controller('labelsController', function($scope, $http) {
 
-	loadContext('labels_it.json', $http, $scope);
+	loadContext('labels_it.json', $scope, $http);
 
 });
