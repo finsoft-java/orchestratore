@@ -5,14 +5,14 @@
 
 	
 		<section class="content-header">
-			<h1>Gestione Calendario</h1>
+			<h1>{{labels.menu.gestioneCalendario}}</h1>
 		</section>
 
 		<section class="content">
 
 			<div class="box box-warning">
 				<div class="box-header with-border">
-        			<h3 class="box-title">Seleziona calendario</h3>
+        			<h3 class="box-title">{{labels.selezionaCalendario}}</h3>
 				</div>
 	              <div class="box-body">
 	              	<div class="row">
@@ -36,20 +36,20 @@
 				<div class="col-md-12">
 					<div class="box box-info">
 						<div class="box-header with-border">
-							<h3 class="box-title">Milestones</h3>
+							<h3 class="box-title">{{labels.milestones}}</h3>
 						</div>
 						<div class="box-body">
 							<div class="table-responsive">
 								<table id="tableCalendarioEditabile" class="table no-margin" style="margin-bottom: 120px !important">
 									<thead>
 										<tr role="row">
-											<th class="col-md-1 tdCenter">Opz.</th>
-											<th class='hide'>idCalendarioMilestone</th>
-											<th class="col-md-2 tdCenter">Milestones</th>
-											<th class="col-md-2 tdCenter">Data cut-off</th>
-											<th class="col-md-2 tdCenter">Ora cut-off</th>
-											<th class="col-md-1 tdCenter">TAG</th>
-											<th class="col-md-4 tdCenter">Descrizione TAG</th>
+											<th class="col-md-1 tdCenter">{{labels.gestioneCalendario.opz}}</th>
+											<th class='hide'>{{labels.global.id}}</th>
+											<th class="col-md-2 tdCenter">{{labels.global.milestones}}</th>
+											<th class="col-md-2 tdCenter">{{labels.gestioneCalendario.dataCutOff}}</th>
+											<th class="col-md-2 tdCenter">{{labels.gestioneCalendario.oraCutOff}}</th>
+											<th class="col-md-1 tdCenter">{{labels.global.tag}}</th>
+											<th class="col-md-4 tdCenter">{{labels.global.descrizioneTag}}</th>
 										</tr>
 									</thead>
 								</table>

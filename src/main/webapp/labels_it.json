@@ -1,0 +1,27 @@
+{
+	"titolo": "Orchestratore RADAR",
+	"menu": {
+		"monitor": "Monitor Calendario",
+		"gestioneCalendario": "Gestione Calendario",
+		"eventi": "Eventi",
+		"amministrazione": "Amministrazione",
+		"gestioneEntita": "Gestione Entita'", 
+		"gestioneTipiEvento": "Gestione Tipi Evento",
+		"gestioneMilestones": "Gestione Milestones"
+	},
+	"global": {
+		"selezionaCalendario": "Seleziona calendario...",
+		"milestones": "Milestones",
+		"entita": "Entità",
+		"eventi": "Eventi",
+		"tipiEvento": "Tipi evento",
+		"id": "ID",
+		"tag":"Tag",
+		"descrizioneTag": "Descrizione tag"
+	},
+	"gestioneCalendario": {
+		"opz": "Opz.",
+		"dataCutOff": "Data cut-off",
+		"oraCutOff": "Ora cut-off"
+	}
+}

@@ -20,6 +20,6 @@ var app = angular.module('app', []);
 
 app.controller('labelsController', function($scope, $http, $sce, $compile) {
 
-	loadContext('traduzioni_it.json', $http, $scope);
+	loadContext('labels_it.json', $http, $scope);
 
 });
