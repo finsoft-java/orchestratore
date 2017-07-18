@@ -47,6 +47,7 @@ function removeInputForm(row) {
 
 
 function updateTipoEvento(row) {	
+	alert("row: "+ row);
 	descrizione = '<input style="width:100%" placeholder="Descrizione" id="descrizioneTipoEvento_rowNumber_'+row+'" type="text" class="form-control" value="'+$("#descrizioneTipoEvento_rowNumber_"+row).text()+'"/>'; 
 	codice = '<input style="width:100%" placeholder="Codice" id="codiceTipoEvento_rowNumber_'+row+'" type="text" class="form-control" value="'+$("#codiceTipoEvento_rowNumber_"+row).text()+'"/>'; 
 	check = '<a style="cursor:pointer" onclick="back('+row+')" id="buttonToDeleteRigaEdit'+row+'" data-toggle="tooltip" title="Annulla" data-placement="left"><i style="color:black" class="fa fa-times"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="cursor:pointer" onclick="update('+row+')" id="buttonToUpdateRigaEdit'+row+'" data-toggle="tooltip" title="Segnala fine modifiche" data-placement="right"><i style="color:green" class="fa fa-check"></i></a>';
@@ -54,6 +55,8 @@ function updateTipoEvento(row) {
 	$("#descrizioneTipoEvento_rowNumber_"+row).parent().html(descrizione);
 	$("#codiceTipoEvento_rowNumber_"+row).parent().html(codice);
 	$("#buttonToUpdateRigaEdit"+row).parent().html(check);
+	
+	alert($("#descrizioneTipoEvento_rowNumber_"+row).parent());
 	
 	$('body>.tooltip').remove();
 }
@@ -183,12 +186,13 @@ function getListaTipiEvento(){
 
 					dataSet[i].idTipoEvento = '<div id="idTipoEvento'+rowCounter+'">'+dataSet[i].idTipoEvento+'</div>';
 						
-//					if (dataSet[i].descrizione != null)
-//						dataSet[i].descrizione = '<input style="width:100%" placeholder="Descrizione" id="descrizioneTipoEvento_rowNumber_'+rowCounter+'" type="text" class="form-control" value="'+dataSet[i].descrizione+'"/>'; 
-//
-//					if (dataSet[i].codice != null)
-//						dataSet[i].codice = '<input style="width:100%" placeholder="Codice" id="codiceTipoEvento_rowNumber_'+rowCounter+'" type="text" class="form-control" value="'+dataSet[i].codice+'"/>'; 
-					
+					if (dataSet[i].descrizione != null)
+						dataSet[i].descrizione = '<div id="descrizioneTipoEvento_rowNumber_'+rowCounter+'"/>'+dataSet[i].descrizione+'</div>'; 
+
+					if (dataSet[i].codice != null)
+						dataSet[i].codice = '<div id="codiceTipoEvento_rowNumber_'+rowCounter+'"/>'+dataSet[i].codice+'</div>'; 
+					console.log(dataSet[i].descrizione);
+					console.log(dataSet[i].codice);
 					rowCounter++;
 					
 				}
