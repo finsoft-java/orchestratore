@@ -215,7 +215,6 @@ function addInputForm(){
 	+'	<td class="col-md-4"><input style="width:100%" placeholder="Descrizione" id="descrizioneTipoEvento_New'+rowCounter+'" type="text" class="form-control"/></td>'
 	+'</tr>';
 	
-	//getListaMilestone_gestCal(rowCounter);
 	$('#tableGestioneTipiEvento').append(row);
 	addButtonInputForm();
 	attivaWidget();
