@@ -47,17 +47,13 @@ function removeInputForm(row) {
 
 
 function updateTipoEvento(row) {	
-	alert("row: "+ row);
 	descrizione = '<input style="width:100%" placeholder="Descrizione" id="descrizioneTipoEvento_rowNumber_'+row+'" type="text" class="form-control" value="'+$("#descrizioneTipoEvento_rowNumber_"+row).text()+'"/>'; 
 	codice = '<input style="width:100%" placeholder="Codice" id="codiceTipoEvento_rowNumber_'+row+'" type="text" class="form-control" value="'+$("#codiceTipoEvento_rowNumber_"+row).text()+'"/>'; 
 	check = '<a style="cursor:pointer" onclick="back('+row+')" id="buttonToDeleteRigaEdit'+row+'" data-toggle="tooltip" title="Annulla" data-placement="left"><i style="color:black" class="fa fa-times"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="cursor:pointer" onclick="update('+row+')" id="buttonToUpdateRigaEdit'+row+'" data-toggle="tooltip" title="Segnala fine modifiche" data-placement="right"><i style="color:green" class="fa fa-check"></i></a>';
-	alert("codice: " +codice);
 	$("#descrizioneTipoEvento_rowNumber_"+row).parent().html(descrizione);
 	$("#codiceTipoEvento_rowNumber_"+row).parent().html(codice);
 	$("#buttonToUpdateRigaEdit"+row).parent().html(check);
-	
-	alert($("#descrizioneTipoEvento_rowNumber_"+row).parent());
-	
+		
 	$('body>.tooltip').remove();
 }
 
@@ -95,7 +91,7 @@ function update(row){
 	var idTipoEvento = $("#idTipoEvento"+row).text();
 	var dataList = [];
 	dataList.push([$("#codiceTipoEvento_rowNumber_"+row).val(), $("#descrizioneTipoEvento_rowNumber_"+row).val(), $("#idCodice"+row).text()]);
-console.log(dataList);
+
 	for(var i = 0; i<dataList.length; i++){
 		var data = dataList[i];
 		var request = {            
@@ -105,9 +101,8 @@ console.log(dataList);
 	}
 	
 	request = JSON.stringify(request); 
-	console.log("idTipoEvento: "+idTipoEvento);
-	console.log(request);
-	 $.ajax({
+
+	$.ajax({
 		  type: "PUT",
 		  url: "ws/resources/TipiEvento("+idTipoEvento+")",
 		  data: request,
@@ -123,7 +118,6 @@ console.log(dataList);
 			$("#buttonToUpdateRigaEdit"+row).parent().html(check);
 			$('body>.tooltip').remove();
 			
-			//alert("Aggiornamento dati avvenuto correttamente!");
 		  }
 		 });
 }
@@ -196,7 +190,6 @@ function getListaTipiEvento(){
 					rowCounter++;
 					
 				}
-				//$("#div_tabella_entita_editabile").removeClass("hide");
 
 				$("#tableGestioneTipiEvento").DataTable({
 					paging : false,
@@ -216,11 +209,6 @@ function getListaTipiEvento(){
 						]
 				});
 				
-//				$('.idTipoEvento').each(function(){
-//					if($(this).html() == ''){
-//						$($(this).parent().remove());
-//					}
-//				})
 				rowCounterFromDBData = rowCounter;
 				addButtonInputForm();
 				attivaWidget();
@@ -239,7 +227,6 @@ function addInputForm(){
 	+'	<td class="idTipoEvento col-md-1"></td>'
 	+'	<td class="col-md-2"><input style="width:100%" placeholder="Codice" id="codiceTipoEvento_New'+rowCounter+'" type="text" class="form-control"/></td>'
 	+'	<td class="col-md-4"><input style="width:100%" placeholder="Descrizione" id="descrizioneTipoEvento_New'+rowCounter+'" type="text" class="form-control"/></td>'
-//	+'	<td class="col-md-2"><input style="width:100%" placeholder="Acronimo" id="acronimoEntita'+rowCounter+'" type="text" class="form-control"/></td>'
 	+'</tr>';
 	
 	//getListaMilestone_gestCal(rowCounter);
