@@ -14,7 +14,7 @@ $(document).ready(function(){
  */
 function removeTipoEvento(row) {
 	idTipoEvento = $("#idTipoEvento"+row).text();
-	console.log("idTipoEvento: "+idTipoEvento);
+
 	if(confirm("Sicuro di voler eliminare questo tipologia di evento?")){
 		$.ajax({
 			type : "DELETE",
@@ -74,19 +74,6 @@ function back(row){
 	 });
 }
 
-/**
- * Funzione che il valore della chiave, di un option scelto da una combobox, catturato attraverso il metodo onchange 
- * @param selectIndex
- * @returns
- */
-//function selezionaCalendario_gestEntita(selectIndex){
-//	var idx = selectIndex.selectedIndex;
-//	var idCalendario = selectIndex.options[idx].value;
-//	getDettaglioCalendarioEntitaEditabile(idCalendario);
-//	rowCounter = 0;
-//}
-
-
 function update(row){
 	var idTipoEvento = $("#idTipoEvento"+row).text();
 	var dataList = [];
@@ -126,7 +113,7 @@ function update(row){
 function insert(row){
 	var dataList = [];
 	dataList.push([$("#descrizioneTipoEvento_New"+row).val(), $("#codiceTipoEvento_New"+row).val()]);
-	alert("dataList: "+dataList);
+
 	for(var i = 0; i<dataList.length; i++){
 		var data = dataList[i];
 		var request = {            
@@ -136,7 +123,7 @@ function insert(row){
 	}
 	
 	request = JSON.stringify(request); 
-	console.log(request);
+	
 	 $.ajax({
 		  type: "POST",
 		  url: "ws/resources/TipiEvento",
@@ -185,8 +172,7 @@ function getListaTipiEvento(){
 
 					if (dataSet[i].codice != null)
 						dataSet[i].codice = '<div id="codiceTipoEvento_rowNumber_'+rowCounter+'"/>'+dataSet[i].codice+'</div>'; 
-					console.log(dataSet[i].descrizione);
-					console.log(dataSet[i].codice);
+
 					rowCounter++;
 					
 				}
