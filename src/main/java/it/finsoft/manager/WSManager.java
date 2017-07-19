@@ -18,12 +18,14 @@ import org.jboss.logging.Logger;
 
 import it.finsoft.entity.Calendario;
 import it.finsoft.entity.DettaglioEvento;
-import it.finsoft.entity.Entita;
 import it.finsoft.entity.Evento;
 import it.finsoft.entity.Milestone;
 import it.finsoft.entity.MilestoneMilestone;
-import it.finsoft.entity.TipoEvento;
 
+/**
+ * Contiene le implementazioni di (quasi) tutti i webservice.
+ *
+ */
 @Stateless
 public class WSManager {
 
@@ -183,7 +185,7 @@ public class WSManager {
 		if (milestone == null)
 			return false;
 
-		if (!milestoneAggregata(milestone))
+		if (!milestoneManager.milestoneAggregata(milestone))
 			return true;
 
 		// la milestone/tag appare in qualche calendario?
@@ -212,16 +214,6 @@ public class WSManager {
 
 		// se arrivo fin qui, tutto a posto.
 		return true;
-	}
-
-	/**
-	 * Ci dice se la milestone è atomica o aggregata
-	 * 
-	 * @param milestone
-	 * @return
-	 */
-	public boolean milestoneAggregata(Milestone milestone) {
-		return milestone != null && milestone.getTipoEvento() == null && milestone.getEntita() == null;
 	}
 
 }

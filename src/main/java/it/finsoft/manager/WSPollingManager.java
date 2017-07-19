@@ -9,7 +9,8 @@ import javax.persistence.PersistenceContext;
 
 import org.jboss.logging.Logger;
 
-import it.finsoft.entity.Calendario;
+import com.sun.messaging.bridge.api.KeyNotFoundException;
+
 import it.finsoft.entity.CalendarioMilestone;
 import it.finsoft.entity.Entita;
 import it.finsoft.entity.Evento;
@@ -23,70 +24,81 @@ public class WSPollingManager {
 
 	@Inject
 	MilestoneManager milestoneManager;
-
 	@Inject
 	UtilityCheck utilityCheck;
-
 	@Inject
 	CalendarioManager calendarioManager;
-
 	@Inject
 	CalendarioMilestoneManager calendarioMilestoneManager;
-
 	@Inject
 	EventoManager eventoManager;
 
 	public final static Logger LOG = Logger.getLogger(WSManager.class);
 
-
-	// ----------Funzione Semaforo sul monitor Calendario-----------//
+	// ----------Polling-----------//
 
 	/**
-	 * Calcolo del semaforo
+	 * Calcolo del polling. Deve restituire 0 se l'evento non si è verificato, 1
+	 * se si è verificato in parte (per le aggregate), 2 se si è verificato
+	 * completamente.
 	 * 
+	 * @throws KeyNotFoundException
+	 *             se la milestone non è ben definita
 	 */
-	public int calcolaSemaforo(String codiceMilestone, String tag) {
+	public int calcolaPolling(String codiceMilestone, String tag) throws KeyNotFoundException {
 		Milestone milestone = milestoneManager.findByCod(codiceMilestone);
-		Calendario calendario = calendarioMilestoneManager.findUltimoCalendario(milestone, tag);
-		Map<String, String> mapCalendario = calendarioMilestoneManager.getMapMilestonesTags(calendario);
-		return calcolaSemaforo(milestone, tag, mapCalendario);
+		return calcolaPolling(milestone, tag);
 	}
 
 	/**
-	 * Calcolo del semaforo
+	 * Calcolo del polling. Deve restituire 0 se l'evento non si è verificato, 1
+	 * se si è verificato in parte (per le aggregate), 2 se si è verificato
+	 * completamente.
 	 * 
+	 * @throws KeyNotFoundException
+	 *             se la milestone non è ben definita
 	 */
-	public int calcolaSemaforo(CalendarioMilestone calendarioMilestone) {
+	public int calcolaPolling(CalendarioMilestone calendarioMilestone) throws KeyNotFoundException {
 		Milestone milestone = calendarioMilestone.getMilestone();
-		String tag = calendarioMilestone.getTag(); // prendo il tag
-		Calendario calendario = calendarioMilestone.getCalendario();
-		Map<String, String> mapCalendario = calendarioMilestoneManager.getMapMilestonesTags(calendario);
-		return calcolaSemaforo(milestone, tag, mapCalendario);
+		String tag = calendarioMilestone.getTag();
+		return calcolaPolling(milestone, tag);
 	}
 
-	private int calcolaSemaforo(Milestone milestone, String tag, Map<String, String> mapCalendario) {
+	/**
+	 * Calcolo del polling. Deve restituire 0 se l'evento non si è verificato, 1
+	 * se si è verificato in parte (per le aggregate), 2 se si è verificato
+	 * completamente.
+	 * 
+	 * @throws KeyNotFoundException
+	 *             se la milestone non è ben definita
+	 */
+	private int calcolaPolling(Milestone milestone, String tag) throws KeyNotFoundException {
 
 		TipoEvento tp = milestone.getTipoEvento(); // prendo il tipo evento
 		Entita ent = milestone.getEntita(); // prendo l'entita
 
-		if (ent != null & tp != null) { // se tipo evento e entita non sono
-										// vuoti
-										// (milestone effettiva)
+		if (!milestoneManager.milestoneAggregata(milestone)) {
 
+			// (milestone atomica)
 			// il semaforo è verde se l'evento si è verificato
-			List<Evento> evList = eventoManager.findBy(tag, ent, tp);
 
+			List<Evento> evList = eventoManager.findBy(tag, ent, tp);
 			return (evList.isEmpty()) ? 0 : 2;
 
-		} else { // se tipo evento e entita sono null (milestone aggregata)
+		} else {
 
-			// il semaforo è dipende, ricorsivamente, da tutte le milestone
+			// (milestone aggregata)
+			// il semaforo dipende, ricorsivamente, da tutte le milestone
 			// "componenti" dell'aggregato
+			// le tag devono essere reperite da calendario
+
+			Map<String, String> mapTags = calendarioMilestoneManager.findTagComponenti(milestone, tag);
+
 			int counter = 0;
 			for (MilestoneMilestone mm : milestone.getMilestoneMilestone()) {
 				Milestone milestoneChild = mm.getMilestoneComponente();
-				String tagChild = mapCalendario.get(milestoneChild.getCodice());
-				counter += calcolaSemaforo(milestoneChild, tagChild, mapCalendario);
+				String tagChild = mapTags.get(milestoneChild.getCodice());
+				counter += calcolaPolling(milestoneChild, tagChild);
 			}
 			if (counter == 0) {
 				return 0;
@@ -95,59 +107,7 @@ public class WSPollingManager {
 			} else {
 				return 1;
 			}
-		}
-	}
 
-	// ----------Polling-----------//
-
-	/**
-	 * Calcolo del polling
-	 * 
-	 */
-	public boolean calcolaPolling(String codiceMilestone, String tag) {
-		Milestone milestone = milestoneManager.findByCod(codiceMilestone);
-		Calendario calendario = calendarioMilestoneManager.findUltimoCalendario(milestone, tag);
-		Map<String, String> mapCalendario = calendarioMilestoneManager.getMapMilestonesTags(calendario);
-		return calcolaPolling(milestone, tag, mapCalendario);
-	}
-
-	/**
-	 * Calcolo del polling
-	 * 
-	 */
-	public boolean calcolaPolling(CalendarioMilestone calendarioMilestone) {
-		Milestone milestone = calendarioMilestone.getMilestone();
-		String tag = calendarioMilestone.getTag(); // prendo il tag
-		Calendario calendario = calendarioMilestone.getCalendario();
-		Map<String, String> mapCalendario = calendarioMilestoneManager.getMapMilestonesTags(calendario);
-		return calcolaPolling(milestone, tag, mapCalendario);
-	}
-
-	private boolean calcolaPolling(Milestone milestone, String tag, Map<String, String> mapCalendario) {
-
-		TipoEvento tp = milestone.getTipoEvento(); // prendo il tipo evento
-		Entita ent = milestone.getEntita(); // prendo l'entita
-
-		if (ent != null & tp != null) { // se tipo evento e entita non sono
-										// vuoti
-										// (milestone effettiva)
-
-			// Il polling restituisce true se tutte le milestone immediatamente
-			// precedenti si sono verificate. Non è ricorsivo.
-			for (MilestoneMilestone mm : milestone.getMilestoneMilestone()) {
-				Milestone milestoneChild = mm.getMilestoneComponente();
-				String tagChild = mapCalendario.get(milestoneChild.getCodice());
-				List<Evento> eventi = eventoManager.findBy(tagChild, milestoneChild.getEntita(),
-						milestoneChild.getTipoEvento());
-				if (eventi.isEmpty())
-					return false;
-			}
-
-			return true;
-
-		} else { // se tipo evento e entita sono null (milestone aggregata)
-			throw new IllegalArgumentException(
-					"Non e' possibile calcolare il polling di una milestone aggregata: " + milestone.getCodice());
 		}
 	}
 

@@ -76,13 +76,6 @@ public class CalendarioMilestoneResources {
 	public CalendarioMilestone create(@PathParam("idc") Long idCalendario, CalendarioMilestone cal) {
 		return calendarioMilestoneManager.save(idCalendario, cal);
 	}
-
-	@GET
-	@Produces(MediaType.TEXT_PLAIN)
-	@Path("CalendarioMilestones({id})/tags")
-	public String getTags(@PathParam("id") Long id) {
-		return calendarioMilestoneManager.findDescFoglieByIdMilestone(id);
-	}
 	
 	/* ---- TEST RESOURCES ---- */
 	@GET

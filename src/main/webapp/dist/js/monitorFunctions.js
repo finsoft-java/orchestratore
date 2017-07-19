@@ -102,7 +102,7 @@ function pad(numb) {
 }
 function getSemaforo(datatable, numRiga, data) {
     
-    var endpoint = "ws/Semaforo?milestone=" + data.milestone.codice + "&tag=" + data.tag;
+    var endpoint = "ws/Polling?milestone=" + data.milestone.codice + "&tag=" + data.tag;
     
     var _ora = data.ora;
     

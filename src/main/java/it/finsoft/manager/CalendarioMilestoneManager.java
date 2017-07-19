@@ -9,9 +9,12 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import com.sun.messaging.bridge.api.KeyNotFoundException;
+
 import it.finsoft.entity.Calendario;
 import it.finsoft.entity.CalendarioMilestone;
 import it.finsoft.entity.Milestone;
+import it.finsoft.entity.MilestoneMilestone;
 
 @Stateless
 public class CalendarioMilestoneManager {
@@ -95,4 +98,29 @@ public class CalendarioMilestoneManager {
 		return map;
 	}
 
+	/**
+	 * Crea una mappa codice milestone / tag di tutte le milestone componenti.
+	 * Le tag vengono cercate nello <b>stesso</b> calendario della milestone
+	 * padre. Nel caso di milestone atomica la mappa restituita sarà vuota.
+	 * 
+	 * @throws KeyNotFoundException
+	 *             se la milestone non è ben definita
+	 * 
+	 */
+	public Map<String, String> findTagComponenti(Milestone milestone, String tag) throws KeyNotFoundException {
+
+		Map<String, String> map = new HashMap<String, String>();
+
+		Calendario cal = findUltimoCalendario(milestone, tag);
+		Map<String, String> mapCompleta = getMapMilestonesTags(cal);
+
+		for (MilestoneMilestone mmChild : milestone.getMilestoneMilestone()) {
+			String codMilestone = mmChild.getMilestone().getCodice();
+			if (!mapCompleta.containsKey(codMilestone))
+				throw new KeyNotFoundException("Il calendario " + cal.getDescrizione()
+						+ " non contiene una tag per la milestone " + codMilestone);
+			map.put(codMilestone, mapCompleta.get(codMilestone));
+		}
+		return map;
+	}
 }

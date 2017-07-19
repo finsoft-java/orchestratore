@@ -1,6 +1,5 @@
 package it.finsoft.resources;
 
-import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
@@ -9,7 +8,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
-import it.finsoft.entity.Milestone;
+import com.sun.messaging.bridge.api.KeyNotFoundException;
+
 import it.finsoft.manager.MilestoneManager;
 import it.finsoft.manager.WSManager;
 import it.finsoft.manager.WSPollingManager;
@@ -21,25 +21,34 @@ public class WSPolling {
 
 	@Inject
 	WSManager wsManager;
-
 	@Inject
 	MilestoneManager milestoneManager;
-
 	@Inject
 	WSPollingManager wsPolling;
 
 	/**
 	 * Questo è il servizio web del Polling: dato un codice milestone e una
-	 * relativa tag, dice se il programma in questione può partire oppure no.
+	 * relativa tag, dice se la milestone è stata raggiunta oppure no. Ha senso
+	 * sia per le milestone atomiche (l'evento è avvenuto?) sia per le aggregate
+	 * (gli eventi prerequisiti sono avvenuti?).
 	 * 
 	 * @param codiceMilestone
 	 * @param tag
-	 * @return 1 se può partire, 0 in caso contrario
+	 * @return Deve restituire 0 se l'evento non si è verificato, 1 se si è
+	 *         verificato in parte (per le aggregate), 2 se si è verificato
+	 *         completamente.
 	 */
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
 	public String get(@QueryParam("milestone") String codiceMilestone, @QueryParam("tag") String tag) {
-		return wsPolling.calcolaPolling(codiceMilestone, tag) ? "1" : "0";
+
+		// TODO sarebbe bello restituire il dettaglio degli eventi avvenuti...
+
+		try {
+			return Integer.toString(wsPolling.calcolaPolling(codiceMilestone, tag));
+		} catch (KeyNotFoundException e) {
+			return e.getMessage();
+		}
 	}
 
 	/* ---- TEST RESOURCES ---- */
@@ -48,23 +57,5 @@ public class WSPolling {
 	public String prova() {
 		System.out.println("ok Polling");
 		return "ok Polling";
-	}
-
-	// TEST per l'esplosione della gerarchia
-	@GET
-	@Path("testTree")
-	@Produces(MediaType.APPLICATION_JSON)
-	public List<Milestone> Hierarchy(@QueryParam("milestone") String descMilestone) {
-		Milestone m = milestoneManager.findByCod(descMilestone.toUpperCase());
-		return milestoneManager.getHierarchy(m);
-	}
-
-	// TEST per l'esplosione solo delle foglie
-	@GET
-	@Path("testLeaf")
-	@Produces(MediaType.APPLICATION_JSON)
-	public List<Milestone> Leaf(@QueryParam("milestone") String descMilestone) {
-		Milestone m = milestoneManager.findByCod(descMilestone.toUpperCase());
-		return milestoneManager.getFoglie(m);
 	}
 }

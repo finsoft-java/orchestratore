@@ -78,4 +78,14 @@ public class MilestoneManager {
 		return output;
 	}
 
+	/**
+	 * Ci dice se la milestone è atomica o aggregata
+	 * 
+	 * @param milestone
+	 * @return
+	 */
+	public boolean milestoneAggregata(Milestone milestone) {
+		return milestone != null && milestone.getTipoEvento() == null && milestone.getEntita() == null;
+	}
+
 }
