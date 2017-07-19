@@ -16,6 +16,7 @@ import javax.persistence.Query;
 
 import org.jboss.logging.Logger;
 
+import it.finsoft.entity.Calendario;
 import it.finsoft.entity.DettaglioEvento;
 import it.finsoft.entity.Entita;
 import it.finsoft.entity.Evento;
@@ -34,6 +35,8 @@ public class WSManager {
 	EventoManager eventoManager;
 	@Inject
 	MilestoneManager milestoneManager;
+	@Inject
+	CalendarioMilestoneManager calendarioMilestoneManager;
 	@Inject
 	TipoEventoManager tipoEventoManager;
 	@Inject
@@ -76,59 +79,6 @@ public class WSManager {
 		} else {
 			return "RESET eseguito con errori: ";
 		}
-	}
-	// ------------------------------------WSPolling--------------------------------------//
-
-	public DatiPolling getPollingOld(String descMilestone, List<String> tags) {
-		DatiPolling result = new DatiPolling();
-
-		LOG.info("Parametri di ricerca: Milestone " + descMilestone + " Tag " + tags);
-		// descMilestone = syntax.trimToUp(descMilestone);
-		Milestone milestone = null;
-		try {
-			milestone = milestoneManager.findByCod(descMilestone);
-		} catch (Exception sqlError) {
-			LOG.error("ERROR: La Milestone: " + descMilestone
-					+ " non e' stata trovata, controllare la sintassi o la presenza effettiva sul database");
-			result.errorMessage = "ERROR: La Milestone: " + descMilestone
-					+ " non e' stata trovata, controllare la sintassi o la presenza effettiva sul database";
-			result.semaforoOk = false;
-		}
-		System.out.println(milestone.getMilestoneMilestone());
-		List<MilestoneMilestone> milestoneMilestones = milestone.getMilestoneMilestone();
-		result.expectedMilestones = milestoneMilestones.size();
-		System.out.println(milestoneMilestones.size());
-		System.out.println(milestoneMilestones);
-		for (int i = 0; i < milestoneMilestones.size(); i++) {
-			MilestoneMilestone sc = milestoneMilestones.get(i);
-			// non deve piu' prendere la
-			// milestone "INSERITA" ma verificare se le child si sono
-			// verificate.
-			Milestone m = sc.getMilestoneComponente();
-			String tag = "";
-			try {
-				tag = tags.get(i);
-				tag = utilityCheck.trimToUp(tag);
-			} catch (Exception e) {
-				LOG.error("ERROR:non sono stati passati sufficienti tag");
-				result.errorMessage = "ERROR:il numero di tag in input (" + tags.size()
-						+ ") non corrisponde con il numero di Milestone da controllare (" + milestoneMilestones.size()
-						+ "), i tag mancanti verranno calcolati come vuoti";
-			}
-			Entita ent = m.getEntita();
-			TipoEvento tp = m.getTipoEvento();
-			List<Evento> tmp = null;
-			tmp = eventoManager.findBy(tag, ent, tp);
-			System.out.println(tmp);
-			if (tmp.isEmpty()) {
-				result.semaforoOk = Boolean.FALSE;
-				result.NonVerificati.add(m.getDescrizione() + " - " + tag);
-			} else {
-				++result.okMilestones;
-			}
-			result.eventi.addAll(tmp);
-		}
-		return result;
 	}
 
 	// classe di output per il polling
@@ -206,6 +156,72 @@ public class WSManager {
 		public String eventError = null;
 		public String detailError = null;
 		public List<DettaglioEvento> listaDettagli = new ArrayList<>();
+	}
+
+	/**
+	 * per la milestone (aggregata) data, è stata correttamente definita la tag
+	 * data? Per le milestone atomiche la risposta è sempre positiva.
+	 * 
+	 * @param codiceMilestone
+	 * @param tag
+	 * @return
+	 */
+	public boolean tagBenDefinita(String codiceMilestone, String tag) {
+		Milestone milestone = milestoneManager.findByCod(codiceMilestone);
+		return tagBenDefinita(milestone, tag);
+	}
+
+	/**
+	 * per la milestone (aggregata) data, è stata correttamente definita la tag
+	 * data? Per le milestone atomiche la risposta è sempre positiva.
+	 * 
+	 * @param codiceMilestone
+	 * @param tag
+	 * @return
+	 */
+	public boolean tagBenDefinita(Milestone milestone, String tag) {
+		if (milestone == null)
+			return false;
+
+		if (!milestoneAggregata(milestone))
+			return true;
+
+		// la milestone/tag appare in qualche calendario?
+		Calendario cal = calendarioMilestoneManager.findUltimoCalendario(milestone, tag);
+		if (cal == null)
+			return false;
+
+		// le milestone componenti, appaiono nello stesso calendario, e sono qui
+		// ben definite?
+		Map<String, String> map = calendarioMilestoneManager.getMapMilestonesTags(cal);
+		for (MilestoneMilestone mmChild : milestone.getMilestoneMilestone()) {
+			Milestone mChild = mmChild.getMilestone();
+			if (!map.containsKey(mChild.getCodice()))
+				return false;
+			String tagChild = map.get(mChild.getCodice());
+			if (tagChild == null || tagChild.trim().equals(""))
+				return false;
+		}
+
+		// le milestone componenti, sono ricorsivamente ben definite?
+		for (MilestoneMilestone mmChild : milestone.getMilestoneMilestone()) {
+			Milestone mChild = mmChild.getMilestone();
+			if (!tagBenDefinita(mChild, map.get(mChild.getCodice())))
+				return false;
+		}
+
+		// se arrivo fin qui, tutto a posto.
+		return true;
+	}
+
+	/**
+	 * Ci dice se la milestone è atomica o aggregata
+	 * 
+	 * @param milestone
+	 * @return
+	 */
+	public boolean milestoneAggregata(Milestone milestone) {
+		return milestone != null && milestone.getTipoEvento() == null && milestone.getEntita() == null;
 	}
 
 }

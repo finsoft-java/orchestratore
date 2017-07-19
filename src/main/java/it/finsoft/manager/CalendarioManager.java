@@ -31,4 +31,5 @@ public class CalendarioManager {
 		return em.createQuery("FROM Calendario", Calendario.class).getResultList();
 	}
 
+	
 }

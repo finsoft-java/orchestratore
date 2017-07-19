@@ -64,33 +64,6 @@ public class CalendarioMilestoneManager {
 		return em.createQuery("FROM CalendarioMilestone", CalendarioMilestone.class).getResultList();
 	}
 
-	// FIXME obsoleto
-	public String findDescFoglieByIdMilestone(Long idMilestone) {
-		List<Milestone> foglie = milestoneManager.getFoglie(milestoneManager.findById(idMilestone));
-		String listDescFoglie = "";
-		/*
-		 * --- ciclo for di Francesco --- for (int i = 0; i < foglie.size();
-		 * i++) { listDescFoglie += ("< " + foglie.get(i).getDescrizione() +
-		 * " >,"); } return listDescFoglie;
-		 */
-
-		// modificato ciclo for in un ciclo foreach in maniera che venga
-		// controllata la presenza di
-		// una descrizioneTag [getDescrizioneTag()] all'interno di una
-		// determinata milestone, in caso affermativo
-		// prende il valore del campo altrimenti va a recuperare la descrizione
-		// [getDescrizione()] della milestone
-
-		for (Milestone milestone : foglie) {
-			if (milestone.getDescrizioneTag() != null) {
-				listDescFoglie += ("< " + milestone.getDescrizioneTag() + " >,");
-			} else {
-				listDescFoglie += ("< " + milestone.getDescrizione() + " >,");
-			}
-		}
-		return listDescFoglie;
-	}
-
 	/**
 	 * Cerca una milestone/tag all'interno di tutti i calendari; ci aspettiamo
 	 * che ne trovi solamente uno, ad ogni modo se ce ne fossero di più

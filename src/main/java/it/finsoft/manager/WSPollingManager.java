@@ -1,6 +1,5 @@
 package it.finsoft.manager;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -15,7 +14,6 @@ import it.finsoft.entity.CalendarioMilestone;
 import it.finsoft.entity.Entita;
 import it.finsoft.entity.Evento;
 import it.finsoft.entity.Milestone;
-import it.finsoft.entity.MilestoneConSemaforo;
 import it.finsoft.entity.MilestoneMilestone;
 import it.finsoft.entity.TipoEvento;
 
@@ -40,135 +38,6 @@ public class WSPollingManager {
 
 	public final static Logger LOG = Logger.getLogger(WSManager.class);
 
-	// ------------------------------------Polling0--------------------------------------//
-
-	// FIXME obsoleta
-	public MilestoneConSemaforo getPolling0(Milestone milestone, String tag) {
-		MilestoneConSemaforo result = new MilestoneConSemaforo();
-		result.setIdMilestone(milestone.getIdMilestone());
-		result.setTipoEvento(milestone.getTipoEvento());
-		result.setEntita(milestone.getEntita());
-		result.setDescrizione(milestone.getDescrizione());
-		result.setAzione(milestone.getAzione());
-		result.getTags().add(tag);
-
-		LOG.info("Parametri di ricerca: Milestone " + milestone + " Tag " + tag);
-
-		List<Evento> tmp = null;
-		tmp = eventoManager.findBy(tag, milestone.getEntita(), milestone.getTipoEvento());
-		System.out.println(tmp);
-		if (tmp.isEmpty()) {
-			result.setSemaforo(false);
-		} else {
-			result.setSemaforo(true);
-			result.getEventi().addAll(tmp);
-		}
-
-		return result;
-	}
-
-	// ------------------------------------PollingFoglie--------------------------------------//
-	// controlla che si siano verificati tutti gli eventi presenti al livello
-	// pi� basso dell'albero
-	// controlla che si siano verificati tutti gli eventi presenti al livello
-	// pi� basso dell'albero
-	// a partire da una milestone e da tutti i vari tag
-	// ritorna un booleano, eventualmente si pu� modificare per sviluppi futuri
-	//
-	// FIXME obsoleta
-	public boolean getPollingFoglie(Milestone milestone, List<String> tags) {
-		List<MilestoneConSemaforo> foglieConSemaforo = new ArrayList<MilestoneConSemaforo>();
-		List<Milestone> foglie = milestoneManager.getFoglie(milestone);
-
-		for (int i = 0; i < foglie.size(); i++) {
-			String tag = "";
-			try { // ho aggiunto solo questo try per evitare che vada in errore
-					// se non vengono passati i tag, o non ne vengono passati a
-					// sufficienza
-				tag = tags.get(i);
-				tag = utilityCheck.trimToUp(tag);
-			} catch (IndexOutOfBoundsException e) {
-				LOG.error("ERROR:non sono stati passati sufficienti tag");
-			}
-			MilestoneConSemaforo ms = getPolling0(foglie.get(i), tag);
-			if (ms.isSemaforo())
-				foglieConSemaforo.add(ms);
-
-		}
-
-		if (foglie.size() == foglieConSemaforo.size())
-			return true;
-		else
-			return false;
-	}
-
-	// ------------------------------------PollingFoglieByDescr-----------------------------------//
-
-	// FIXME obsoleta
-	public boolean getPollingFoglieByDescr(String descMilestone, List<String> tags) {
-		descMilestone = utilityCheck.toUp(descMilestone);
-		LOG.info("Parametri di ricerca: Milestone " + descMilestone + " Tag " + tags);
-		Milestone milestone = null;
-		try {
-			milestone = milestoneManager.findByCod(descMilestone.toUpperCase());
-		} catch (Exception sqlError) {
-			LOG.error("ERROR: La Milestone: " + descMilestone
-					+ " non e' stata trovata, controllare la sintassi o la presenza effettiva sul database");
-		}
-
-		return getPollingFoglie(milestone, tags);
-	}
-
-	// ------------------------------------WSPollingStandard1L(boolean)--------------------------------------------------//
-
-	// FIXME obsoleta
-	public boolean getPolling1LByDescr(String descMilestone, List<String> tags) {
-		descMilestone = utilityCheck.toUp(descMilestone);
-		LOG.info("Parametri di ricerca: Milestone " + descMilestone + " Tag " + tags);
-		Milestone milestone = null;
-		try {
-			milestone = milestoneManager.findByCod(descMilestone.toUpperCase());
-		} catch (Exception sqlError) {
-			LOG.error("ERROR: La Milestone: " + descMilestone
-					+ " non e' stata trovata, controllare la sintassi o la presenza effettiva sul database");
-		}
-
-		return getPolling1L(milestone, tags);
-	}
-
-	// FIXME obsoleta
-	public boolean getPolling1L(Milestone milestone, List<String> tags) {
-		List<MilestoneMilestone> milestoneMilestones = milestone.getMilestoneMilestone();
-		List<Evento> eventiVerificati = new ArrayList<Evento>();
-		if (milestoneMilestones.isEmpty()) {
-			String tag = "";
-			try {
-				tag = tags.get(0);
-				tag = utilityCheck.trimToUp(tag);
-			} catch (Exception e) {
-				LOG.error("ERROR:non sono stati passati sufficienti tag");
-			}
-			eventiVerificati.addAll(eventoManager.findBy(tag, milestone.getEntita(), milestone.getTipoEvento()));
-		}
-		for (int i = 0; i < milestoneMilestones.size(); i++) {
-			MilestoneMilestone sc = milestoneMilestones.get(i);
-			Milestone m = sc.getMilestoneComponente();
-			String tag = "";
-			try {
-				tag = tags.get(i);
-				tag = utilityCheck.trimToUp(tag);
-			} catch (Exception e) {
-				LOG.error("ERROR:non sono stati passati sufficienti tag");
-			}
-			Entita ent = m.getEntita();
-			TipoEvento tp = m.getTipoEvento();
-			eventiVerificati.addAll(eventoManager.findBy(tag, ent, tp));
-		}
-		if (eventiVerificati.size() == milestoneMilestones.size())
-			return true;
-		else
-			return false;
-	}
 
 	// ----------Funzione Semaforo sul monitor Calendario-----------//
 

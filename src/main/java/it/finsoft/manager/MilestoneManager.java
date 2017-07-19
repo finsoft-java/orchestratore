@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -15,6 +16,9 @@ public class MilestoneManager {
 
 	@PersistenceContext(unitName = "persistenceUnit")
 	private EntityManager em;
+
+	@Inject
+	UtilityCheck utilityCheck;
 
 	public Milestone save(Milestone tosave) {
 		return em.merge(tosave);
@@ -29,8 +33,11 @@ public class MilestoneManager {
 		return em.find(Milestone.class, id);
 	}
 
-	public Milestone findByCod(String cod) {
-		return em.createQuery("FROM Milestone WHERE codice= :cod", Milestone.class).setParameter("cod", cod)
+	public Milestone findByCod(String codiceMilestone) {
+
+		codiceMilestone = utilityCheck.trimToUp(codiceMilestone);
+
+		return em.createQuery("FROM Milestone WHERE codice= :cod", Milestone.class).setParameter("cod", codiceMilestone)
 				.getSingleResult();
 	}
 
