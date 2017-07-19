@@ -43,7 +43,7 @@ public class WSPolling {
 	}
 
 	/* ---- TEST RESOURCES ---- */
-	@Path("Polling/test")
+	@Path("test")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String prova() {
 		System.out.println("ok Polling");
