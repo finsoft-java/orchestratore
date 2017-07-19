@@ -19,6 +19,6 @@ public class WSPartCol {
 		// TODO
 		// es. P2017051LS
 		// Ma devo accedere alla funzione GET_PART_COL di U7B20...
-		return null;
+		return "TODO";
 	}
 }
