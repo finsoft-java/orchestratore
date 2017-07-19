@@ -3,15 +3,22 @@
 
 <t:template>
 
+	  <jsp:attribute name="head_area">
+	  	<!-- Select2 -->
+		<link rel="stylesheet" href="plugins/select2/select2.min.css">
+		<!-- DataTables -->
+	    <link rel="stylesheet" href="plugins/datatables/dataTables.bootstrap.css">
+	  </jsp:attribute>
+	
+	  <jsp:attribute name="body_area">
 		<section class="content-header">
-			<h1>Monitor Calendario</h1>
+			<h1>{{labels.menu.monitor}}</h1>
 		</section>
 		
 		<section class="content">
-		
 	      <div class="box box-warning">
 	        <div class="box-header with-border">
-	          <h3 class="box-title">Seleziona calendario</h3>
+	          <h3 class="box-title">{{labels.gestioneCalendario.selezionaCalendario}}</h3>
 	        </div>
 	        <div class="box-body">
 	          <div class="row">
@@ -30,20 +37,20 @@
 				<div class="col-md-12">
 					<div class="box box-info">
 						<div class="box-header with-border">
-							<h3 class="box-title">Milestones</h3>
+							<h3 class="box-title">{{labels.global.milestones}}</h3>
 						</div>
 						<div class="box-body">
 							<div class="table-responsive">
 								<table id="tableDettaglioCalendarioMilestone" class="table no-margin">
 						        	<thead>
 							          <tr role="row">
-							           <th class="col-md-2">Cod. Milestones</th>
-							           <th class="col-md-2">Milestones</th>
-							           <th class="col-md-1 tdCenter">Data cut-off</th>
-							           <th class="col-md-1 tdCenter">Ora cut-off</th>
-							           <th class="col-md-1 tdCenter">Stato</th>
-							           <th class="col-md-1">TAG</th>
-							           <th class="col-md-4">Descrizione TAG</th>
+							           <th class="col-md-2">{{labels.monitorCalendario.cod}}</th>
+							           <th class="col-md-2">{{labels.monitorCalendario.milestone}}</th>
+							           <th class="col-md-1 tdCenter">{{labels.monitorCalendario.data}}</th>
+							           <th class="col-md-1 tdCenter">{{labels.monitorCalendario.ora}}</th>
+							           <th class="col-md-1 tdCenter">{{labels.monitorCalendario.stato}}</th>
+							           <th class="col-md-1">{{labels.monitorCalendario.tag}}</th>
+							           <th class="col-md-4">{{labels.monitorCalendario.descrTag}}</th>
 							          </tr>
 							        </thead>          
 						        </table>
@@ -65,7 +72,20 @@
 			</div>
 			
 		</section>
-
+	  </jsp:attribute>
+	
+	  <jsp:attribute name="footer_area">
+		<!-- Select2 -->
+		<script src="plugins/select2/select2.full.min.js"></script>
+		<script src="plugins/select2/i18n/it.js"></script>
+		<!-- bootstrap Datatable -->
+		<script src="plugins/datatables/jquery.dataTables.js"></script>
+		<script src="plugins/datatables/dataTables.bootstrap.js"></script>
+		
 		<script src="dist/js/monitorFunctions.js"></script>
-
+		<script>
+			attivaWidgetSelect2();
+		</script>
+	  </jsp:attribute>
+	  
 </t:template>

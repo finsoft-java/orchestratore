@@ -17,7 +17,18 @@
 		"tipiEvento": "Tipi evento",
 		"id": "ID",
 		"tag":"Tag",
-		"descrizioneTag": "Descrizione tag"
+		"descrizioneTag": "Descrizione tag",
+		"dirittiRiservati" : "Tutti i diritti sono riservati.",
+		"versione": "Versione"
+	},
+	"monitorCalendario": {
+		"cod": "Cod. milestones",
+		"milestone": "Milestones",
+		"data": "Data cut-off",
+		"ora": "Ora cut-off",
+		"stato": "Stato",
+		"tag": "TAG",
+		"descrTag": "Descrizione TAG"
 	},
 	"gestioneCalendario": {
 		"opz": "Opz.",
@@ -26,6 +37,13 @@
 		"selezionaCalendario": "Seleziona calendario",
 		"elencoMilestones" : "Elenco milestones"
 	}, 
+	"eventi": {
+		"dataOra": "Data e ora",
+		"codTipoEv": "Codice tipo evento",
+		"codEnt": "Codice entita'",
+		"acronimo": "Acronimo",
+		"tag" : "Tag"
+	}, 
 	"gestioneEntita": {
 		"opz": "Opz.",
 		"codice": "Codice",
@@ -33,6 +51,11 @@
 		"acronimo": "Acronimo"
 	},
 	"gestioneTipiEvento": {
+		"opz": "Opz.",
+		"codice": "Codice",
+		"descrizione": "Descrizione"
+	},
+	"gestioneMilestones": {
 		"opz": "Opz.",
 		"codice": "Codice",
 		"descrizione": "Descrizione"

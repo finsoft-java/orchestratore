@@ -3,7 +3,12 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags"%>
 
 <t:template>
-
+	  <jsp:attribute name="head_area">
+		<!-- DataTables -->
+	    <link rel="stylesheet" href="plugins/datatables/dataTables.bootstrap.css">
+	  </jsp:attribute>
+	
+	  <jsp:attribute name="body_area">
 		<section class="content-header">
 			<h1>Gestione Milestone</h1>
 		</section>
@@ -33,7 +38,15 @@
 				</div>
 			</div>
 		</section>
-
+	  </jsp:attribute>
+		
+	  <jsp:attribute name="footer_area">
+		<!-- bootstrap Datatable -->
+		<script src="plugins/datatables/jquery.dataTables.js"></script>
+		<script src="plugins/datatables/dataTables.bootstrap.js"></script>
+		
 		<script src="dist/js/gestioneMilestone.js"></script>
+	  </jsp:attribute>			
+		
 
 </t:template>

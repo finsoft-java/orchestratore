@@ -19,7 +19,6 @@ function loadContext(url, $scope, $http) {
 var app = angular.module('app', []);
 
 app.controller('labelsController', function($scope, $http) {
-
-	loadContext('labels_it.json', $scope, $http);
+    loadContext('labels_it.json', $scope, $http);
 
 });

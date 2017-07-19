@@ -188,7 +188,6 @@ function getListaMilestones(){
 		
 		rowCounterFromDBData = rowCounter;
 		addButtonInputForm();
-		attivaWidget();
 	 });
 }
 
@@ -208,7 +207,6 @@ function addInputForm(){
 	
 	$('#tableTipiEventi').append(row);
 	addButtonInputForm();
-	attivaWidget();
 	rowCounter++;
 }
 
