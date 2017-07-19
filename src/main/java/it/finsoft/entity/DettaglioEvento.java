@@ -13,7 +13,7 @@ import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
-@Table(name = "DETTAGLI_EVENTO")
+@Table(name = "T_BDOR0_DETTAGLI_EVENTO")
 @XmlRootElement
 public class DettaglioEvento implements Serializable {
 

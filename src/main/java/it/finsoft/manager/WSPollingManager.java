@@ -152,7 +152,7 @@ public class WSPollingManager {
 		}
 		for (int i = 0; i < milestoneMilestones.size(); i++) {
 			MilestoneMilestone sc = milestoneMilestones.get(i);
-			Milestone m = sc.getMilestoneChild();
+			Milestone m = sc.getMilestoneComponente();
 			String tag = "";
 			try {
 				tag = tags.get(i);
@@ -215,7 +215,7 @@ public class WSPollingManager {
 			// "componenti" dell'aggregato
 			int counter = 0;
 			for (MilestoneMilestone mm : milestone.getMilestoneMilestone()) {
-				Milestone milestoneChild = mm.getMilestoneChild();
+				Milestone milestoneChild = mm.getMilestoneComponente();
 				String tagChild = mapCalendario.get(milestoneChild.getCodice());
 				counter += calcolaSemaforo(milestoneChild, tagChild, mapCalendario);
 			}
@@ -266,7 +266,7 @@ public class WSPollingManager {
 			// Il polling restituisce true se tutte le milestone immediatamente
 			// precedenti si sono verificate. Non è ricorsivo.
 			for (MilestoneMilestone mm : milestone.getMilestoneMilestone()) {
-				Milestone milestoneChild = mm.getMilestoneChild();
+				Milestone milestoneChild = mm.getMilestoneComponente();
 				String tagChild = mapCalendario.get(milestoneChild.getCodice());
 				List<Evento> eventi = eventoManager.findBy(tagChild, milestoneChild.getEntita(),
 						milestoneChild.getTipoEvento());

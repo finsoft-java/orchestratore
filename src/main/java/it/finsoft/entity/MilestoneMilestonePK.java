@@ -2,23 +2,24 @@ package it.finsoft.entity;
 
 import java.io.Serializable;
 
+/**
+ * Chiave primaria della MilestoneMilestone
+ *
+ */
 public class MilestoneMilestonePK implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -2788316622662564093L;
 
 	private long milestone;
 
-	private long milestoneChild;
+	private long milestoneComponente;
 
 	public MilestoneMilestonePK() {
 	}
 
-	public MilestoneMilestonePK(long milestone, long milestoneChild) {
+	public MilestoneMilestonePK(long milestone, long milestoneComponente) {
 		this.milestone = milestone;
-		this.milestoneChild = milestoneChild;
+		this.milestoneComponente = milestoneComponente;
 	}
 
 	@Override
@@ -26,7 +27,7 @@ public class MilestoneMilestonePK implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + (int) (milestone ^ (milestone >>> 32));
-		result = prime * result + (int) (milestoneChild ^ (milestoneChild >>> 32));
+		result = prime * result + (int) (milestoneComponente ^ (milestoneComponente >>> 32));
 		return result;
 	}
 
@@ -41,7 +42,7 @@ public class MilestoneMilestonePK implements Serializable {
 		MilestoneMilestonePK other = (MilestoneMilestonePK) obj;
 		if (milestone != other.milestone)
 			return false;
-		if (milestoneChild != other.milestoneChild)
+		if (milestoneComponente != other.milestoneComponente)
 			return false;
 		return true;
 	}

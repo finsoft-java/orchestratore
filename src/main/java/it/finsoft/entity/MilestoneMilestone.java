@@ -27,7 +27,7 @@ public class MilestoneMilestone implements Serializable {
 	@Id
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "ID_MILESTONE_CHILD", referencedColumnName = "ID_MILESTONE")
-	private Milestone milestoneChild;
+	private Milestone milestoneComponente;
 
 	@Column(name = "ORDINAMENTO")
 	private Integer ordinamento;
@@ -38,7 +38,7 @@ public class MilestoneMilestone implements Serializable {
 	public MilestoneMilestone(Milestone milestone, Milestone milestoneChild, Integer ordinamento) {
 
 		this.milestone = milestone;
-		this.milestoneChild = milestoneChild;
+		this.milestoneComponente = milestoneChild;
 		this.ordinamento = ordinamento;
 	}
 
@@ -50,12 +50,12 @@ public class MilestoneMilestone implements Serializable {
 		this.milestone = milestone;
 	}
 
-	public Milestone getMilestoneChild() {
-		return milestoneChild;
+	public Milestone getMilestoneComponente() {
+		return milestoneComponente;
 	}
 
-	public void setMilestoneChild(Milestone milestoneChild) {
-		this.milestoneChild = milestoneChild;
+	public void setMilestoneComponente(Milestone milestoneChild) {
+		this.milestoneComponente = milestoneChild;
 	}
 
 	public Integer getOrdinamento() {
@@ -71,7 +71,7 @@ public class MilestoneMilestone implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((milestone == null) ? 0 : milestone.hashCode());
-		result = prime * result + ((milestoneChild == null) ? 0 : milestoneChild.hashCode());
+		result = prime * result + ((milestoneComponente == null) ? 0 : milestoneComponente.hashCode());
 		result = prime * result + ((ordinamento == null) ? 0 : ordinamento.hashCode());
 		return result;
 	}
@@ -90,10 +90,10 @@ public class MilestoneMilestone implements Serializable {
 				return false;
 		} else if (!milestone.equals(other.milestone))
 			return false;
-		if (milestoneChild == null) {
-			if (other.milestoneChild != null)
+		if (milestoneComponente == null) {
+			if (other.milestoneComponente != null)
 				return false;
-		} else if (!milestoneChild.equals(other.milestoneChild))
+		} else if (!milestoneComponente.equals(other.milestoneComponente))
 			return false;
 		if (ordinamento == null) {
 			if (other.ordinamento != null)

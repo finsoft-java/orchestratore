@@ -15,7 +15,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.util.Date;
 @Entity
-@Table(name = "CALENDARI_MILESTONE")
+@Table(name = "T_BDOR0_CALENDARI_MILESTONE")
 @XmlRootElement
 public class CalendarioMilestone implements Serializable {
 

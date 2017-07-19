@@ -103,7 +103,7 @@ public class WSManager {
 			// non deve piu' prendere la
 			// milestone "INSERITA" ma verificare se le child si sono
 			// verificate.
-			Milestone m = sc.getMilestoneChild();
+			Milestone m = sc.getMilestoneComponente();
 			String tag = "";
 			try {
 				tag = tags.get(i);

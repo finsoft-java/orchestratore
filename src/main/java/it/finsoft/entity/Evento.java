@@ -21,7 +21,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
-@Table(name = "EVENTI")
+@Table(name = "T_BDOR0_EVENTI")
 @XmlRootElement
 public class Evento implements Serializable {
 

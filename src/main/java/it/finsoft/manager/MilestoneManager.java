@@ -43,7 +43,7 @@ public class MilestoneManager {
 		List<MilestoneMilestone> ml = milestone.getMilestoneMilestone();
 		output.add(milestone);
 		for (MilestoneMilestone milestoneMilestone : ml) {
-			List<Milestone> tmp = getHierarchy(milestoneMilestone.getMilestoneChild());
+			List<Milestone> tmp = getHierarchy(milestoneMilestone.getMilestoneComponente());
 			for (Milestone m : tmp) {
 				if (!output.contains(m)) {
 					output.add(m);
@@ -61,7 +61,7 @@ public class MilestoneManager {
 			output.add(milestone);
 		}
 		for (MilestoneMilestone milestoneMilestone : ml) {
-			List<Milestone> tmp = getFoglie(milestoneMilestone.getMilestoneChild());
+			List<Milestone> tmp = getFoglie(milestoneMilestone.getMilestoneComponente());
 			for (Milestone m : tmp) {
 				if (!output.contains(m)) {
 					output.add(m);

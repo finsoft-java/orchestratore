@@ -19,7 +19,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
-@Table(name = "MILESTONES")
+@Table(name = "T_BDOR0_MILESTONES")
 @XmlRootElement
 public class Milestone implements Serializable {
 

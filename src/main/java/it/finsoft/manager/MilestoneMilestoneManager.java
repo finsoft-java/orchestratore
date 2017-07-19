@@ -56,7 +56,7 @@ public class MilestoneMilestoneManager {
 	 */
 	public MilestoneMilestone preCheck(MilestoneMilestone mMilestone) {
 		long idMil = mMilestone.getMilestone().getIdMilestone();
-		long idMilCh = mMilestone.getMilestoneChild().getIdMilestone();
+		long idMilCh = mMilestone.getMilestoneComponente().getIdMilestone();
 		Milestone master = em.find(Milestone.class, idMil);
 		Milestone child = em.find(Milestone.class, idMilCh);
 		boolean ok = true;

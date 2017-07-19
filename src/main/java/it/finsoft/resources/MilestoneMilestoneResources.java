@@ -60,7 +60,7 @@ public class MilestoneMilestoneResources {
 	// Bisogna vedere se va bene per l'update via interfaccia
 	public void update(@PathParam("id") Long id, @PathParam("idCh") Long idCh, MilestoneMilestone m) {
 		m.setMilestone(milestoneManager.findById(id));
-		m.setMilestoneChild(milestoneManager.findById(idCh));
+		m.setMilestoneComponente(milestoneManager.findById(idCh));
 		milestoneMilestonesManager.save(m);
 	}
 
