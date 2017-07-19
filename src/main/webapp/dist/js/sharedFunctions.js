@@ -40,25 +40,26 @@ function convertDataOraToTimestamp(data, ora){
 
 
 /**
- * Funzione che richiama i widget riattivandoli sulle righe nuove create a runtine, attraverso
- * il tasto 'aggiungi riga'
+ * Funzione che inizializza il widget Select2
  * @returns
  */
-function attivaWidget(){
+function attivaWidgetSelect2(){
 	$(function () {
 		  //Initialize Select2 Elements
-		  $(".select2").select2({
+		  $("select").select2({
 		  	placeholder: "Seleziona",
 		    minimumResultsForSearch: 10,
 		    language: 'it'
 		  });
-		
-		  //Datemask dd/mm/yyyy
-		  $("#datemask").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
-		  
-		  //Money Euro
-		  $("[data-mask]").inputmask();
-		
+	});
+}
+
+/**
+ * Funzione che inizializza il widget datapicker
+ * @returns
+ */
+function attivaWidgetDatepicker(){
+	$(function () {
 		  //Date picker
 		  $('.datepicker').datepicker({
 		 	language: 'it',
@@ -69,13 +70,15 @@ function attivaWidget(){
 		    todayBtn: "linked",
 		    toggleActive: true
 		  });
-		
-		  //iCheck for checkbox and radio inputs
-		  $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
-		    checkboxClass: 'icheckbox_minimal-blue',
-		    radioClass: 'iradio_minimal-blue'
-		  });
-		  
+	});
+}
+
+/**
+ * Funzione che inizializza il widget timepicker
+ * @returns
+ */
+function attivaWidgetTimepicker(){
+	$(function () {
 		  //Timepicker
 		  $(".timepicker").timepicker({
 		    showInputs: false,
@@ -101,4 +104,19 @@ function activeDeactiveNavBarTab(){
 	}).parent().parent().parent().addClass('active');
 }
 
+/**
+ * Funzione utilizzata per mandare un messaggio di errore all'utente che si dissolve automaticamente dopo 2,5 secondi
+ * @param message
+ * @returns
+ */
+function customAlertError(message) {
+	  var dialog = bootbox.dialog({
+	    message: '<i class="fa fa-times"></i>   ' + message
+	  });
+	  dialog.init(function () {
+	    setTimeout(function () {
+	      dialog.modal('hide');
+	    }, 2500);
+	  });
+	}
 

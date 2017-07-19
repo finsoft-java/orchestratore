@@ -3,13 +3,23 @@
 
 <t:template>
 
+	  <jsp:attribute name="head_area">
+	  	<!-- bootstrap datepicker -->
+		<link rel="stylesheet" href="plugins/datepicker/datepicker3.css">
+		<!-- Bootstrap time Picker -->
+		<link rel="stylesheet" href="plugins/timepicker/bootstrap-timepicker.min.css">		
+		<!-- Select2 -->
+		<link rel="stylesheet" href="plugins/select2/select2.min.css">
+	    <!-- DataTables -->
+	    <link rel="stylesheet" href="plugins/datatables/dataTables.bootstrap.css">
+	  </jsp:attribute>
 	
-		<section class="content-header">
+	  <jsp:attribute name="body_area">
+	  	<section class="content-header">
 			<h1>{{labels.menu.gestioneCalendario}}</h1>
 		</section>
 
 		<section class="content">
-
 			<div class="box box-warning">
 				<div class="box-header with-border">
         			<h3 class="box-title">{{labels.gestioneCalendario.selezionaCalendario}}</h3>
@@ -54,15 +64,32 @@
 									</thead>
 								</table>
 							</div>
-							<br/>
-							<a id="id_button_inserisci_calendario" onclick="saveEditedCalendar()" type="button" class="btn btn-success"><i class="fa fa-save"></i> Salva</a>							
 						</div>
 					</div>
 				</div>
 			</div>
-			
 		</section>
+	  </jsp:attribute>
+	
+	  <jsp:attribute name="footer_area">
+	  	<!-- bootstrap datepicker -->
+		<script src="plugins/datepicker/bootstrap-datepicker.js"></script>
+		<script src="plugins/datepicker/locales/bootstrap-datepicker.it.js"></script>
+		<!-- bootstrap time picker -->
+		<script src="plugins/timepicker/bootstrap-timepicker.min.js"></script>
+		<!-- Select2 -->
+		<script src="plugins/select2/select2.full.min.js"></script>
+		<script src="plugins/select2/i18n/it.js"></script>
+		<!-- bootstrap Datatable -->
+		<script src="plugins/datatables/jquery.dataTables.js"></script>
+		<script src="plugins/datatables/dataTables.bootstrap.js"></script>
 		
 		<script src="dist/js/gestioneCalFunctions.js"></script>
+		<script>
+			attivaWidgetSelect2();
+			attivaWidgetDatepicker();
+			attivaWidgetTimepicker();
+		</script>
+	  </jsp:attribute>
 		
 </t:template>

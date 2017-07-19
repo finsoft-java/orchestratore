@@ -99,17 +99,33 @@ function selezionaCalendario_gestCal(selectIndex){
 function deleteCalendar(){
 	var idSelect = $("#select_elenco_calendari").val();
 	if(idSelect !== '') {
-		if(confirm("Sicuro di voler eliminare questo calendario?")){
-			$.ajax({
-				type : "DELETE",
-				url : "ws/resources/Calendari(" + idSelect + ")",
-				dataType : "json",
-				success : function(dataSet) {		
-					location.reload(true);
-				}
-			});
-		}
-	} else alert("Selezionare un calendario per poterlo eliminare");
+		bootbox.confirm({
+		    title: "Eliminare tipolgia di evento",
+		    message: "Si \u00E8 sicuri di voler eliminare questo tipologia di evento?<br/>L'operazione \u00E8 irreversibile!",
+		    buttons: {
+		      cancel: {
+		        label: '<i class="fa fa-times"></i> Annulla',
+		        className: 'btn-danger'
+		      },
+		      confirm: {
+		        label: '<i class="fa fa-trash-o"></i> Conferma',
+		        className: 'btn-success'
+		      }
+		    },
+		    callback: function (result) {
+		      if (result) {
+				$.ajax({
+					type : "DELETE",
+					url : "ws/resources/Calendari(" + idSelect + ")",
+					dataType : "json",
+					success : function(dataSet) {		
+						location.reload(true);
+					}
+				});
+		      }
+		    }
+		  });
+	} else customAlertError("Selezionare un calendario per poterlo eliminare");
 }
 
 
@@ -264,7 +280,9 @@ function getDettaglioCalendarioMilestoneEditabile(idCalendario){
 				});
 				rowCounterFromDBData = rowCounter;
 				addButtonInputForm();
-				attivaWidget();
+				attivaWidgetSelect2();
+				attivaWidgetDatepicker();
+				attivaWidgetTimepicker();
 			}
 		});	
 	 });
@@ -289,7 +307,9 @@ function addInputForm(){
 	getListaMilestone_gestCal(rowCounter);
 	$('#tableCalendarioEditabile').append(row);
 	addButtonInputForm();
-	attivaWidget();
+	attivaWidgetSelect2();
+	attivaWidgetDatepicker();
+	attivaWidgetTimepicker();
 	rowCounter++;
 }
 
