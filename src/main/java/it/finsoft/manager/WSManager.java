@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -153,8 +154,8 @@ public class WSManager {
 	 * @param values
 	 * @return
 	 */
-	public DatiCollector insertEvent(String codiceEntita, String codiceTipoEvento, String tag, List<String> keys,
-			List<String> values) {
+	public DatiCollector insertEvent(String codiceEntita, String codiceTipoEvento, String tag,
+			Map<String, String> dettagli) {
 		DatiCollector result = new DatiCollector();
 		try {
 			Evento e = new Evento();
@@ -166,28 +167,17 @@ public class WSManager {
 			List<DettaglioEvento> listaDettagliEvento = e.getDettagliEvento();
 			// TODO controllare che keys e values abbiano lo stesso numero di
 			// valori
-			if (keys.size() != values.size()) {
-				// GENERARE ERRORE
-				LOG.error("ERROR:il numero di key e di valori inseriti non corrisponde");
-				result.detailError = "Il numero di key e di valori inseriti non corrisponde, vedere dettaglio per maggiori informazioni";
-				DettaglioEvento dettaglioErr = new DettaglioEvento();
-				dettaglioErr.setEvento(e);
-				dettaglioErr.setChiave("ERROR");
-				dettaglioErr.setValore("il numero di key e di valori inseriti non corrisponde: key=" + keys.toString()
-						+ " valori=" + values.toString());
-				listaDettagliEvento.add(dettaglioErr);
-			} else {
-				for (int i = 0; i < keys.size(); i++) {
-					DettaglioEvento dettaglio = new DettaglioEvento();
-					String key = keys.get(i);
-					String value = values.get(i);
-					dettaglio.setChiave(key);
-					dettaglio.setValore(value);
-					dettaglio.setEvento(e);
-					listaDettagliEvento.add(dettaglio);
-				}
-				e.setDettagliEvento(listaDettagliEvento);
+
+			for (String key : dettagli.keySet()) {
+				DettaglioEvento dettaglio = new DettaglioEvento();
+				String valore = dettagli.get(key);
+				dettaglio.setChiave(key);
+				dettaglio.setValore(valore);
+				dettaglio.setEvento(e);
+				listaDettagliEvento.add(dettaglio);
 			}
+			e.setDettagliEvento(listaDettagliEvento);
+
 			// per ogni chiave, inserire un record chiave/valore nella tabella
 			// dettagli
 			eventoManager.save(e);

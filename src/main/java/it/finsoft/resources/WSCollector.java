@@ -1,6 +1,8 @@
 package it.finsoft.resources;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -8,7 +10,10 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.UriInfo;
 
 import it.finsoft.manager.WSManager;
 import it.finsoft.manager.WSManager.DatiCollector;
@@ -26,17 +31,24 @@ public class WSCollector {
 	 * codiceEnt a Entita e da codiceTipi a TipoEvento
 	 */
 	@GET
-	public DatiCollector insertEvent(@QueryParam("entita") String codiceEnt, @QueryParam("tipiEvento") String codiceTipi,
-			@QueryParam("tag") String tag, @QueryParam("key") List<String> keys,
-			@QueryParam("valore") List<String> values) {
-		
-		return wsManager.insertEvent(codiceEnt, codiceTipi, tag, keys, values);
+	public DatiCollector insertEvent(@QueryParam("entita") String codiceEnt,
+			@QueryParam("tipoEvento") String codiceTipi, @QueryParam("tag") String tag, @Context UriInfo uriInfo) {
+
+		MultivaluedMap<String, String> queryParams = uriInfo.getQueryParameters();
+		Map<String, String> dettagli = new HashMap<String, String>();
+		for (String key : queryParams.keySet()) {
+			if (!"entita".equals(key) && !"tipiEvento".equals(key) && !"tag".equals(key)) {
+				dettagli.put(key, queryParams.getFirst(key));
+			}
+		}
+
+		return wsManager.insertEvent(codiceEnt, codiceTipi, tag, dettagli);
 
 	}
-	
+
 	/* ---- TEST RESOURCES ---- */
 	@GET
-	@Path("Collector/test")
+	@Path("test")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String prova() {
 		System.out.println("ok collector");
