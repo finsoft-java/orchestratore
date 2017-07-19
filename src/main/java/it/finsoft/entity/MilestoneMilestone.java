@@ -13,7 +13,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @IdClass(MilestoneMilestonePK.class)
-@Table(name = "MILESTONE_MILESTONES")
+@Table(name = "T_BDOR0_MILESTONE_MILESTONES")
 @XmlRootElement
 public class MilestoneMilestone implements Serializable {
 
