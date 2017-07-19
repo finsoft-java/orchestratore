@@ -47,8 +47,8 @@ function removeInputForm(row) {
 
 
 function updateEntita(row) {	
-	descrizione = '<input style="width:100%" placeholder="Descrizione" id="descrizioneEntita_rowNumber_'+row+'" type="text" class="form-control" value="'+$("#descrizioneEntita_rowNumber_"+row).text()+'"/>'; 
-	acronimo = '<input style="width:100%" placeholder="Acronimo" id="acronimoEntita_rowNumber_'+row+'" type="text" class="form-control" value="'+$("#acronimoEntita_rowNumber_"+row).text()+'"/>'; 
+	descrizione = '<input style="width:100%" placeholder="{{labels.gestioneEntita.descrizione}}" id="descrizioneEntita_rowNumber_'+row+'" type="text" class="form-control" value="'+$("#descrizioneEntita_rowNumber_"+row).text()+'"/>'; 
+	acronimo = '<input style="width:100%" placeholder="{{labels.gestioneEntita.acronimo}}" id="acronimoEntita_rowNumber_'+row+'" type="text" class="form-control" value="'+$("#acronimoEntita_rowNumber_"+row).text()+'"/>'; 
 	check = '<a style="cursor:pointer"="#" onclick="back('+row+')" id="buttonToDeleteRigaEdit'+row+'" data-toggle="tooltip" title="Annulla" data-placement="left"><i style="color:black" class="fa fa-times"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="cursor:pointer" onclick="update('+row+')" id="buttonToUpdateRigaEdit'+row+'" data-toggle="tooltip" title="Segnala fine modifiche" data-placement="right"><i style="color:green" class="fa fa-check"></i></a>';	
 	$("#descrizioneEntita_rowNumber_"+row).parent().html(descrizione);
 	$("#acronimoEntita_rowNumber_"+row).parent().html(acronimo);
@@ -214,9 +214,9 @@ function addInputForm(){
 	var row = '<tr role="row">'
 	+'	<td class="tdCenter col-md-1"><a id="buttonToDeleteRigaNew'+rowCounter+'" style="cursor: pointer;" onclick="removeInputForm(this)" data-toggle="tooltip" title="Elimina" data-placement="left"><i style="color:red" class="fa fa-trash-o"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="cursor:pointer" onclick="insert('+rowCounter+')" id="buttonToUpdateRigaEdit'+rowCounter+'" data-toggle="tooltip" title="Inserisci dati" data-placement="right"><i style="color:green" class="fa fa-check"></i></a></td>'
 	+'	<td class="idEntita hide"></td>'
-	+'	<td class="col-md-3"><input style="width:100%" placeholder="Codice" id="codiceEntita_New'+rowCounter+'" type="text" class="form-control"/></td>'
-	+'	<td class="col-md-4"><input style="width:100%" placeholder="Descrizione" id="descrizioneEntita_New'+rowCounter+'" type="text" class="form-control"/></td>'
-	+'	<td class="col-md-4"><input style="width:100%" placeholder="Acronimo" id="acronimoEntita_New'+rowCounter+'" type="text" class="form-control"/></td>'
+	+'	<td class="col-md-3"><input style="width:100%" placeholder="{{labels.gestioneEntita.codice}}" id="codiceEntita_New'+rowCounter+'" type="text" class="form-control"/></td>'
+	+'	<td class="col-md-4"><input style="width:100%" placeholder="{{labels.gestioneEntita.descrizione}}" id="descrizioneEntita_New'+rowCounter+'" type="text" class="form-control"/></td>'
+	+'	<td class="col-md-4"><input style="width:100%" placeholder="{{labels.gestioneEntita.acronimo}}" id="acronimoEntita_New'+rowCounter+'" type="text" class="form-control"/></td>'
 	+'</tr>';
 	
 	//getListaMilestone_gestCal(rowCounter);

@@ -9,7 +9,7 @@
 		</section>
 		
 		<section class="content">
-			<div id="div_tabella_entita_editabile" class="row">
+			<div class="row">
 				<div class="col-md-12">
 					<div class="box box-info">
 						<div class="box-header with-border">
@@ -20,11 +20,11 @@
 								<table id="tableGestioneEntita" class="table no-margin">
 						        	<thead>
 							          <tr role="row">
-							           <th class="col-md-1">Opz.</th>
+							           <th class="col-md-1">{{labels.gestioneEntita.opz}}</th>
 							           <th class="hide">Id</th>
-							           <th class="col-md-3">Codice</th>
-							           <th class="col-md-4">Descrizione</th>
-							           <th class="col-md-4">Acronimo</th>
+							           <th class="col-md-3">{{labels.gestioneEntita.codice}}</th>
+							           <th class="col-md-4">{{labels.gestioneEntita.descrizione}}</th>
+							           <th class="col-md-4">{{labels.gestioneEntita.acronimo}}</th>
 							          </tr>
 							        </thead>          
 						        </table>
