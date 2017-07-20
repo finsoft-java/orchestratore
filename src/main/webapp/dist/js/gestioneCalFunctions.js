@@ -212,10 +212,6 @@ function insertMilestoneInCalendar() {
 }
 
 
-
-
-
-
 /**
  * Funzione che popola la tabella presente nella pagina 'gestioneCalendario.jsp' visualizzando le milestone del relativo
  * calendario selezionato
@@ -274,8 +270,8 @@ function getDettaglioCalendarioMilestoneEditabile(idCalendario){
 						{data : 'selectMilestones', className : 'tdCenter col-md-2'}, 
 						{data : 'dataOraPreviste1', className : 'tdCenter col-md-2'}, 
 						{data : 'dataOraPreviste2', className : 'tdCenter col-md-2'}, 
-						{data : 'tag', className : 'tdCenter col-md-1'}, 
-						{data : 'milestone.descrizioneTag', className : 'tdCenter col-md-4', defaultContent : ''}, 
+						{data : 'tag', className : 'tdCenter col-md-2'}, 
+						{data : 'milestone.descrizioneTag', className : 'hide', defaultContent : ''}
 						]
 				});
 				rowCounterFromDBData = rowCounter;
@@ -301,7 +297,6 @@ function addInputForm(){
 	+'	<td class="tdCenter col-md-2"><div style="width:100%" class="form-group"><div class="input-group"><div class="input-group-addon"><i class="fa fa-calendar"></i></div><input placeholder="Data" id="dataCalNew'+rowCounter+'" onkeydown="return false" type="text" class="form-control pull-right datepicker"></div></div></td>'
 	+'	<td class="tdCenter col-md-2"><div style="width:100%" class="bootstrap-timepicker"><div class="form-group"><div class="input-group"><div class="input-group-addon"><i class="fa fa-clock-o"></i></div><input id="oraCalNew'+rowCounter+'" placeholder="Ora" type="text" class="form-control timepicker"/></div></div></div></td>'
 	+'	<td class="tdCenter col-md-2"><input style="width:100%" placeholder="Tag" id="tagsCalNew'+rowCounter+'" type="text" class="form-control"/></td>'
-	+'	<td class="tdCenter col-md-4"><input style="width:100%" placeholder="Descrizione" id="descrizioneCalNew'+rowCounter+'" type="text" class="form-control"/></td>'
 	+'</tr>';
 	
 	getListaMilestone_gestCal(rowCounter);
@@ -320,7 +315,7 @@ function addInputForm(){
  */
 function addButtonInputForm(){	
 	$("#aggiungiButtonRow").remove();
-	var row = '<tr id="aggiungiButtonRow" role="row"><td class="tdCenter col-md-1"><a style="cursor: pointer;" onclick="addInputForm()" data-toggle="tooltip" title="Aggiungi" data-placement="bottom"><i style="color:green" class="fa fa-plus-circle"></i></a></td><td class="tdCenter col-md-2"></td><td class="tdCenter col-md-2"></td><td class="tdCenter col-md-2"></td><td class="tdCenter col-md-1"></td><td class="tdCenter col-md-4"></td></tr>';
+	var row = '<tr id="aggiungiButtonRow" role="row"><td class="tdCenter col-md-1"><a style="cursor: pointer;" onclick="addInputForm()" data-toggle="tooltip" title="Aggiungi" data-placement="bottom"><i style="color:green" class="fa fa-plus-circle"></i></a></td><td class="tdCenter col-md-2"></td><td class="tdCenter col-md-2"></td><td class="tdCenter col-md-2"></td><td class="tdCenter col-md-1"></td><td class="hide"></td></tr>';
 	$('#tableCalendarioEditabile').append(row);
 	$('body>.tooltip').remove();
 }

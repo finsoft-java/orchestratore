@@ -26,7 +26,7 @@
 						        	<thead>
 							          <tr role="row">
 							           <th class="col-md-1">{{labels.gestioneEntita.opz}}</th>
-							           <th class="hide">Id</th>
+							           <th class="hide">{{labels.global.id}}</th>
 							           <th class="col-md-3">{{labels.gestioneEntita.codice}}</th>
 							           <th class="col-md-4">{{labels.gestioneEntita.descrizione}}</th>
 							           <th class="col-md-4">{{labels.gestioneEntita.acronimo}}</th>
