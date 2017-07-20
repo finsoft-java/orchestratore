@@ -9,12 +9,11 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import com.sun.messaging.bridge.api.KeyNotFoundException;
-
 import it.finsoft.entity.Calendario;
 import it.finsoft.entity.CalendarioMilestone;
 import it.finsoft.entity.Milestone;
 import it.finsoft.entity.MilestoneMilestone;
+import it.finsoft.util.KeyNotFoundException;
 
 @Stateless
 public class CalendarioMilestoneManager {

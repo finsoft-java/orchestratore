@@ -8,11 +8,10 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
-import com.sun.messaging.bridge.api.KeyNotFoundException;
-
 import it.finsoft.manager.MilestoneManager;
 import it.finsoft.manager.WSManager;
 import it.finsoft.manager.WSPollingManager;
+import it.finsoft.util.KeyNotFoundException;
 
 @Stateless
 @Path("Polling")
