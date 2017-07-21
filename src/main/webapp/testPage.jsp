@@ -2,7 +2,7 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags"%>
 
 <t:template>
-
+<jsp:attribute name="body_area">
 	<!-- Content Wrapper. Contains page content -->
 	<div class="content-wrapper">
 		<!-- Content Header (Page header) -->
@@ -23,8 +23,8 @@
 				Cod evento: <input name="tipiEvento" value="DISDATI" /><br />				
 				Tag: <input name="tag" value="201705" /><br /> <input
 					type="submit" />
-			</form>
-		
+			</form>  
+		 
 			<br /> FORM per recuperare lo stato di una milestone (Restituisce TRUE o FALSE):
 			<form action="ws/Polling" target="_blank" method="get">
 				Milestone: <input name="milestone" value="ELABORAZIONE ACQUISIZIONE CRM FV" /><br />
@@ -65,4 +65,6 @@
 		<!-- /.content -->
 	</div>
 	<!-- /.content-wrapper -->
+	
+	</jsp:attribute>
 </t:template>
