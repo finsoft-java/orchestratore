@@ -155,12 +155,12 @@ function insert(row){
 	}
 	
 	function getBoolAggregate(data, type, row, meta){
-		console.log(row);
+		console.log($(this));
+		console.log("row.idMilestone: " + row.idMilestone);
 		boolAggregate = false;
+				
 		
-		if(row.parent())
 		
-		//if()
 		return '<a style="cursor:pointer" onclick="removeTipoEvento('+row.idMilestone+')" id="buttonToDeleteRigaEdit'+row.idMilestone+'" data-toggle="tooltip" title="Elimina" data-placement="left"><i style="color:red" class="fa fa-trash-o"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="cursor:pointer" onclick="updateTipoEvento('+row.idMilestone+')" id="buttonToUpdateRigaEdit'+row.idMilestone+'" data-toggle="tooltip" title="Modifica" data-placement="right"><i class="fa fa-pencil"></i></a>';		
 	}
 
@@ -174,66 +174,87 @@ var rowCounter = 0
 var rowCounterFromDBData = 0;
 function getListaMilestones(){
 	
-	console.log("dentro getListaMilestones");
+//	console.log("dentro getListaMilestones");
 	
+//		$("#tableListaMilestones").DataTable({
+//			ajax: {
+//				url: 'ws/resources/Milestones',
+//				dataSrc: ''
+//			},
+//			columns : [
+//				{data : 'deleteRowButton', className : 'col-md-1 tdCenter', render : getOptionButtons },
+//				{data : 'boolAggregato', className : 'col-md-1 tdCenter', defaultContent : '', render : getBoolAggregate},
+//				{data : 'idMilestone', className : 'hide provaFede', defaultContent : '' },
+//				{data : 'codice', className : 'col-md-1', defaultContent : ''}, 
+//				{data : 'descrizione', className : 'col-md-3', defaultContent : ''},
+//				{data : 'descrizioneTag', className : 'col-md-3', defaultContent : ''},
+//				{data : 'tipoEvento.codice', className : 'col-md-1 tipoEvento', defaultContent : ''},
+//				{data : 'entita.codice', className : 'col-md-1', defaultContent : ''},
+//				{data : 'predecessori', className : 'col-md-1', defaultContent : 'ToDo'}
+//				]
+//		});	
+		
+		//'<a style="cursor:pointer" onclick="removeTipoEvento('+rowCounter+')" id="buttonToDeleteRigaEdit'+rowCounter+'" data-toggle="tooltip" title="Elimina" data-placement="left"><i style="color:red" class="fa fa-trash-o"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="cursor:pointer" onclick="updateTipoEvento('+rowCounter+')" id="buttonToUpdateRigaEdit'+rowCounter+'" data-toggle="tooltip" title="Modifica" data-placement="right"><i class="fa fa-pencil"></i></a>';
+		
+		//console.log($("#tableListaMilestones").val());
+		
+		$.getJSON("ws/resources/Milestones", function(dataSet){
+		for (i in dataSet){
+			dataSet[i].deleteRowButton = '<a style="cursor:pointer" onclick="removeTipoEvento('+rowCounter+')" id="buttonToDeleteRigaEdit'+rowCounter+'" data-toggle="tooltip" title="Elimina" data-placement="left"><i style="color:red" class="fa fa-trash-o"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="cursor:pointer" onclick="updateTipoEvento('+rowCounter+')" id="buttonToUpdateRigaEdit'+rowCounter+'" data-toggle="tooltip" title="Modifica" data-placement="right"><i class="fa fa-pencil"></i></a>';
+			console.log("idTipoEvento: " + dataSet[i].idTipoEvento);
+			if(dataSet[i].idTipoEvento != null)
+				dataSet[i].boolAggregato= 'Atomica';
+			else
+				dataSet[i].boolAggregato= 'Aggregata';
+
+			dataSet[i].idTipoEvento = '<div id="idTipoEvento'+rowCounter+'">'+dataSet[i].idTipoEvento+'</div>';
+			dataSet[i].codice = '<div id="idCodice'+rowCounter+'">'+dataSet[i].codice+'</div>';
+			dataSet[i].descrizione = '<div id="descrizioneTipoEvento_rowNumber_'+rowCounter+'">'+dataSet[i].descrizione+'</div>';
+
+			rowCounter++;
+		}		
+		
 		$("#tableListaMilestones").DataTable({
-			ajax: {
-				url: 'ws/resources/Milestones',
-				dataSrc: ''
-			},
+			paging : false,
+			lengthChange : false,
+			searching : false,
+			ordering : false,
+			info : false,
+			autoWidth : false,
+			data : dataSet,
+			autoWidth : false,
+			destroy : true,
 			columns : [
-				{data : 'deleteRowButton', className : 'col-md-1 tdCenter', render : getOptionButtons },
-				{data : 'boolAggregato', className : 'col-md-1 tdCenter', defaultContent : '', render : getBoolAggregate},
+				{data : 'deleteRowButton', className : 'col-md-1 tdCenter', defaultContent : '' },
+				{data : 'boolAggregato', className : 'col-md-1 tdCenter boolAggregato', defaultContent : '' },
 				{data : 'idMilestone', className : 'hide', defaultContent : '' },
 				{data : 'codice', className : 'col-md-1', defaultContent : ''}, 
 				{data : 'descrizione', className : 'col-md-3', defaultContent : ''},
 				{data : 'descrizioneTag', className : 'col-md-3', defaultContent : ''},
+				{data : 'tipoEvento.codice', className : 'col-md-1 tipoEvento', defaultContent : ''},
 				{data : 'entita.codice', className : 'col-md-1', defaultContent : ''},
-				{data : 'tipoEvento.codice', className : 'col-md-1', defaultContent : ''},
 				{data : 'predecessori', className : 'col-md-1', defaultContent : 'ToDo'}
 				]
-		});	
-		
-		//'<a style="cursor:pointer" onclick="removeTipoEvento('+rowCounter+')" id="buttonToDeleteRigaEdit'+rowCounter+'" data-toggle="tooltip" title="Elimina" data-placement="left"><i style="color:red" class="fa fa-trash-o"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="cursor:pointer" onclick="updateTipoEvento('+rowCounter+')" id="buttonToUpdateRigaEdit'+rowCounter+'" data-toggle="tooltip" title="Modifica" data-placement="right"><i class="fa fa-pencil"></i></a>';
-		
-		console.log($("#tableListaMilestones").val());
-//		$.getJSON("ws/resources/Milestones", function(dataSet){
-//		for (i in dataSet){
-//			dataSet[i].deleteRowButton = '<a style="cursor:pointer" onclick="removeTipoEvento('+rowCounter+')" id="buttonToDeleteRigaEdit'+rowCounter+'" data-toggle="tooltip" title="Elimina" data-placement="left"><i style="color:red" class="fa fa-trash-o"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="cursor:pointer" onclick="updateTipoEvento('+rowCounter+')" id="buttonToUpdateRigaEdit'+rowCounter+'" data-toggle="tooltip" title="Modifica" data-placement="right"><i class="fa fa-pencil"></i></a>';
-//			dataSet[i].idTipoEvento = '<div id="idTipoEvento'+rowCounter+'">'+dataSet[i].idTipoEvento+'</div>';
-//			dataSet[i].codice = '<div id="idCodice'+rowCounter+'">'+dataSet[i].codice+'</div>';
-//			dataSet[i].descrizione = '<div id="descrizioneTipoEvento_rowNumber_'+rowCounter+'">'+dataSet[i].descrizione+'</div>';
-//
-//			rowCounter++;
-//		}		
-//		
-//		$("#tableListaMilestones").DataTable({
-//			paging : false,
-//			lengthChange : false,
-//			searching : false,
-//			ordering : false,
-//			info : false,
-//			autoWidth : false,
-//			data : dataSet,
-//			autoWidth : false,
-//			destroy : true,
-//			columns : [
-//				{data : 'deleteRowButton', className : 'col-md-1 tdCenter', defaultContent : '' },
-//				{data : 'boolAggregato', className : 'col-md-1 tdCenter', defaultContent : '0' },
-//				{data : 'idMilestone', className : 'hide', defaultContent : '' },
-//				{data : 'codice', className : 'col-md-1', defaultContent : ''}, 
-//				{data : 'descrizione', className : 'col-md-3', defaultContent : ''},
-//				{data : 'descrizioneTag', className : 'col-md-3', defaultContent : ''},
-//				{data : 'entita.codice', className : 'col-md-1', defaultContent : ''},
-//				{data : 'tipoEvento.codice', className : 'col-md-1', defaultContent : ''},
-//				{data : 'predecessori', className : 'col-md-1', defaultContent : 'ToDo'}
-//				]
-//		});
-		
-//		rowCounterFromDBData = rowCounter;
-//		addButtonInputForm();
-//		attivaWidget();
-//	 });
+		});
+	
+		rowCounterFromDBData = rowCounter;
+		addButtonInputForm();
+		getIfAggregate(table);
+	 });
+}
+
+/**
+ * Funzione che aggiunge una nuova riga alla tabella 'Milestone' presente in gestioneCalendario.jsp per aggiungere una nuova milestone
+ * a un determinato calendario
+ * @returns
+ */
+function getIfAggregate(){	
+	$(".boolAggregato").each(function(){
+	    var value_tipoEvento = $(this).parent().parent().find('.tipoEvento').html();
+	    console.log(value_tipoEvento)
+        if (value_tipoEvento != null || value_tipoEvento != '') $(this).html('Atomica');
+        else $(this).html('Aggregata');
+	});
 }
 
 

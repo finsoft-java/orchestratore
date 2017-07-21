@@ -31,7 +31,7 @@
 							           <th class="col-md-1">Codice</th>
 							           <th class="col-md-3">Descrizione</th>
 							           <th class="col-md-2">Descrizione Tag</th>
-							           <th class="col-md-1 tipoEvento">Tipo Evento</th>
+							           <th class="col-md-1">Tipo Evento</th>
 							           <th class="col-md-1">Tipo Entita</th>
 							           <th class="col-md-2">Predecessori</th>
 							          </tr>
