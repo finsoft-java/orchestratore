@@ -22,8 +22,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
-import com.sun.messaging.jmq.io.Status;
+import javax.ws.rs.core.Response.Status;
 
 import it.finsoft.manager.CommonManager;
 

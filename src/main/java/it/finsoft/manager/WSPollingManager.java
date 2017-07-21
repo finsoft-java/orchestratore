@@ -9,14 +9,13 @@ import javax.persistence.PersistenceContext;
 
 import org.jboss.logging.Logger;
 
-import com.sun.messaging.bridge.api.KeyNotFoundException;
-
 import it.finsoft.entity.CalendarioMilestone;
 import it.finsoft.entity.Entita;
 import it.finsoft.entity.Evento;
 import it.finsoft.entity.Milestone;
 import it.finsoft.entity.MilestoneMilestone;
 import it.finsoft.entity.TipoEvento;
+import it.finsoft.util.KeyNotFoundException;
 
 public class WSPollingManager {
 	@PersistenceContext(unitName = "persistenceUnit")

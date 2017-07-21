@@ -58,8 +58,8 @@
 											<th class="col-md-2 tdCenter">{{labels.global.milestones}}</th>
 											<th class="col-md-2 tdCenter">{{labels.gestioneCalendario.dataCutOff}}</th>
 											<th class="col-md-2 tdCenter">{{labels.gestioneCalendario.oraCutOff}}</th>
-											<th class="col-md-1 tdCenter">{{labels.global.tag}}</th>
-											<th class="col-md-4 tdCenter">{{labels.global.descrizioneTag}}</th>
+											<th class="col-md-2 tdCenter">{{labels.global.tag}}</th>
+											<th class="hide">{{labels.global.descrizioneTag}}</th>
 										</tr>
 									</thead>
 								</table>

@@ -11,8 +11,10 @@ import java.util.Map;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.ParameterMode;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.StoredProcedureQuery;
 
 import org.jboss.logging.Logger;
 
@@ -214,6 +216,82 @@ public class WSManager {
 
 		// se arrivo fin qui, tutto a posto.
 		return true;
+	}
+
+	/**
+	 * Restiutisce un codice partizione costruito sulla base degli input. Il
+	 * codice è essenzialmente una concatenzaione degli input, più una lettera
+	 * che si trova in apposita tabella di configurazione.
+	 * 
+	 * @param nomeTabella
+	 * @param annoMese
+	 *            YYYYMM
+	 * @param giro
+	 *            01, 02, 03...
+	 * @param perimetro
+	 *            A, B, C
+	 * @param abi
+	 *            can be null
+	 * @return
+	 */
+	public String getPartCol(String nomeTabella, String annoMese, String giro, String perimetro, String abi) {
+
+		if (nomeTabella == null || nomeTabella.equals("")) {
+			throw new IllegalArgumentException("missing parameter 'nomeTabella'");
+		}
+
+		if (annoMese == null || annoMese.equals("")) {
+			throw new IllegalArgumentException("missing parameter 'annoMese'");
+		}
+
+		if (annoMese.length() != 6) {
+			throw new IllegalArgumentException("'annoMese' must be in form 'YYYYMM'");
+		}
+
+		if (giro == null || giro.equals("")) {
+			throw new IllegalArgumentException("missing parameter 'giro'");
+		}
+
+		if (giro.length() > 2) {
+			throw new IllegalArgumentException("'giro' can have at most 2 characters");
+		}
+
+		if (perimetro == null || perimetro.equals("")) {
+			throw new IllegalArgumentException("missing parameter 'perimetro'");
+		}
+
+		if (perimetro.length() > 1) {
+			throw new IllegalArgumentException("'perimetro' must be 1 char long");
+		}
+
+		if (abi != null) {
+			if (abi.equals(""))
+				abi = null;
+			else if (abi.length() != 5)
+				throw new IllegalArgumentException("'abi' can be null, or a 5-digits ABI.");
+		}
+
+		// TODO. Momentaneaente, chiamiamo la stored procedure esistente.
+		// In futuro, dovremo convertire questa procedure in Java.
+		StoredProcedureQuery query = em.createStoredProcedureQuery("PKG_INPUT_CAR_CRMS.prepareInputAbi");
+		query.registerStoredProcedureParameter("nomeTabella", String.class, ParameterMode.IN);
+		query.registerStoredProcedureParameter("nomePeriodo", String.class, ParameterMode.IN);
+		query.registerStoredProcedureParameter("idGiro", String.class, ParameterMode.IN);
+		query.registerStoredProcedureParameter("idPerimetro", String.class, ParameterMode.IN);
+		query.registerStoredProcedureParameter("simula", String.class, ParameterMode.IN);
+		query.registerStoredProcedureParameter("inAbi", String.class, ParameterMode.IN);
+		query.registerStoredProcedureParameter("partOut", String.class, ParameterMode.OUT);
+		query.setParameter("nomeTabella", nomeTabella);
+		query.setParameter("nomePeriodo", annoMese);
+		query.setParameter("idGiro", giro);
+		query.setParameter("idPerimetro", perimetro);
+		query.setParameter("simula", "N");
+		query.setParameter("inAbi", abi);
+		query.execute();
+		String partOut = (String) query.getOutputParameterValue("partOut");
+
+		return partOut;
+
 	}
 
 }
