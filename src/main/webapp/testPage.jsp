@@ -23,7 +23,7 @@
 				Cod evento: <input name="tipiEvento" value="DISDATI" /><br />				
 				Tag: <input name="tag" value="201705" /><br /> <input
 					type="submit" />
-			</form>
+			</form> 
 		 
 			<br /> FORM per recuperare lo stato di una milestone (Restituisce TRUE o FALSE):
 			<form action="ws/Polling" target="_blank" method="get">
