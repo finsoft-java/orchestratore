@@ -24,7 +24,7 @@
 				Tag: <input name="tag" value="201705" /><br /> <input
 					type="submit" />
 			</form>
-		
+		 
 			<br /> FORM per recuperare lo stato di una milestone (Restituisce TRUE o FALSE):
 			<form action="ws/Polling" target="_blank" method="get">
 				Milestone: <input name="milestone" value="ELABORAZIONE ACQUISIZIONE CRM FV" /><br />
