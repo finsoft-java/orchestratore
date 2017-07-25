@@ -15,7 +15,11 @@
 		"milestones": "Milestones",
 		"entita": "Entit\u00E0",
 		"eventi": "Eventi",
+		"evento": "Evento",
 		"tipiEvento": "Tipi evento",
+		"tipoEvento": "Tipo evento",
+		"codice": "Codice",
+		"descrizione": "Descrizione",
 		"id": "ID",
 		"tag":"Tag",
 		"descrizioneTag": "Descrizione tag",
@@ -58,7 +62,6 @@
 	},
 	"gestioneMilestones": {
 		"opz": "Opz.",
-		"codice": "Codice",
-		"descrizione": "Descrizione"
+		"componenti": "Milestone componenti"
 	}
 }

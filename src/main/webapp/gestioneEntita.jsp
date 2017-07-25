@@ -1,6 +1,9 @@
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib prefix="t" tagdir="/WEB-INF/tags"%>
+<%@ page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="t" tagdir="/WEB-INF/tags"%>
+<fmt:setLocale value="it" />
+<fmt:setBundle basename="global" /> <%--  using global.properties --%>
 
 <t:template>
 	  <jsp:attribute name="head_area">
@@ -10,7 +13,7 @@
 	
 	  <jsp:attribute name="body_area">
 		<section class="content-header">
-			<h1>{{labels.menu.gestioneEntita}}</h1>
+			<h1>${labels.menu_gestioneEntita}</h1>
 		</section>
 		
 		<section class="content">
@@ -18,18 +21,18 @@
 				<div class="col-md-12">
 					<div class="box box-info">
 						<div class="box-header with-border">
-							<h3 class="box-title">{{labels.global.entita}}</h3>
+							<h3 class="box-title">${labels.global_entita}</h3>
 						</div>
 						<div class="box-body">
 							<div class="table-responsive">
 								<table id="tableGestioneEntita" class="table no-margin">
 						        	<thead>
 							          <tr role="row">
-							           <th class="col-md-1">{{labels.gestioneEntita.opz}}</th>
-							           <th class="hide">{{labels.global.id}}</th>
-							           <th class="col-md-3">{{labels.gestioneEntita.codice}}</th>
-							           <th class="col-md-4">{{labels.gestioneEntita.descrizione}}</th>
-							           <th class="col-md-4">{{labels.gestioneEntita.acronimo}}</th>
+							           <th class="col-md-1">${labels.gestioneEntita_opz}</th>
+							           <th class="hide">${labels.global_id}</th>
+							           <th class="col-md-3">${labels.gestioneEntita_codice}</th>
+							           <th class="col-md-4">${labels.gestioneEntita_descrizione}</th>
+							           <th class="col-md-4">${labels.gestioneEntita_acronimo}</th>
 							          </tr>
 							        </thead>          
 						        </table>

@@ -10,7 +10,7 @@
 	
 	  <jsp:attribute name="body_area">
 		<section class="content-header">
-			<h1>Gestione Milestone</h1>
+			<h1>{{labels.menu.gestioneMilestones}}</h1>
 		</section>
 		
 		<section class="content">
@@ -18,22 +18,22 @@
 				<div class="col-md-12">
 					<div class="box box-info">
 						<div class="box-header with-border">
-							<h3 class="box-title">Milestones</h3>
+							<h3 class="box-title">{{labels.global.milestones}}</h3>
 						</div>
 						<div class="box-body">
 							<div class="table-responsive">
 								<table id="tableListaMilestones" class="table no-margin">
 						        	<thead>
 							          <tr role="row">
-							           <th class="col-md-1">Opz.</th>
-							           <th class="col-md-1">Tipo</th>
-							           <th class="hide">Id</th>
-							           <th class="col-md-1">Codice</th>
-							           <th class="col-md-3">Descrizione</th>
-							           <th class="col-md-2">Descrizione Tag</th>
-							           <th class="col-md-1">Tipo Evento</th>
-							           <th class="col-md-1">Tipo Entita</th>
-							           <th class="col-md-2">Predecessori</th>
+							           <th class="col-md-1">{{labels.gestioneMilestones.opz}}</th>
+							           <th class="col-md-1">{{labels.gestioneMilestones.tipo}}</th>
+							           <th class="hide">{{labels.global.id}}</th>
+							           <th class="col-md-1">{{labels.global.codice}}</th>
+							           <th class="col-md-3">{{labels.global.descrizione}}</th>
+							           <th class="col-md-2">{{labels.global.descrizioneTag}}</th>
+							           <th class="col-md-1">{{labels.global.tipoEvento}}</th>
+							           <th class="col-md-1">{{labels.global.entita}}</th>
+							           <th class="col-md-2">{{labels.gestioneMilestones.componenti}}</th>
 							          </tr>
 							        </thead>          
 						        </table>
