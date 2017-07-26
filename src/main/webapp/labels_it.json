@@ -69,7 +69,8 @@
 		"descrizioneTag": "Descrizione tag",
 		"tipoEvento": "Tipo evento",
 		"entita": "Tipo entit\u00E0",
-		"componenti": "Milestone componenti"
+		"componenti": "Milestone componenti",
+		"predecessori": "Predecessori"
 	}
 }
 

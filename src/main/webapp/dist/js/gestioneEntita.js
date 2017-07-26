@@ -180,7 +180,6 @@ function insert(row){
  * @returns
  */
 var rowCounter = 0
-var rowCounterFromDBData = 0;
 function getListaEntita(){
 	$.getJSON("ws/resources/Entita", function(dataSet){
 		for (i in dataSet){
@@ -211,8 +210,6 @@ function getListaEntita(){
 				{data : 'acronimo', className : 'col-md-4', defaultContent : ''}
 				]
 		});
-		
-		rowCounterFromDBData = rowCounter;
 		addButtonInputForm("tableGestioneEntita");
 	 });
 }

@@ -17,7 +17,7 @@
 		</section>
 		
 		<section class="content">
-			<div id="div_tabella_gestMS_editabile" class="row">
+			<div class="row">
 				<div class="col-md-12">
 					<div class="box box-info">
 						<div class="box-header with-border">

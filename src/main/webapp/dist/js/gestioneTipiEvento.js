@@ -169,7 +169,6 @@ function insert(row){
  * @returns
  */
 var rowCounter = 0
-var rowCounterFromDBData = 0;
 function getListaTipiEventi(){
 	$.getJSON("ws/resources/TipiEvento", function(dataSet){
 		for (i in dataSet){
@@ -198,8 +197,6 @@ function getListaTipiEventi(){
 				{data : 'descrizione', className : 'col-md-8', defaultContent : ''},
 				]
 		});
-		
-		rowCounterFromDBData = rowCounter;
 		addButtonInputForm("tableTipiEventi");
 	 });
 }
