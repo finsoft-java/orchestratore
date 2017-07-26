@@ -229,7 +229,7 @@ function getDettaglioCalendarioMilestoneEditabile(idCalendario){
 			success : function(dataSet) {		
 				
 				for (i in dataSet){
-					dataSet[i].deleteRowButton = '<a href="#" onclick="removeMilestone('+rowCounter+')" id="buttonToDeleteRigaEdit'+rowCounter+'" data-toggle="tooltip" title="Elimina" data-placement="left"><i style="color:red" class="fa fa-trash-o"></i></a>';
+					dataSet[i].deleteRowButton = '<a onclick="removeMilestone('+rowCounter+')" id="buttonToDeleteRigaEdit'+rowCounter+'" style="cursor:pointer" data-toggle="tooltip" title="Elimina" data-placement="left"><i style="color:red" class="fa fa-trash-o"></i></a>';
 					 var opt = "<div style='width:100%' class='form-group'><select class='form-control select2' id='selectMilestoneCalEdit"+rowCounter+"'>";
 					 for(j in dataSet2){
 						 if(dataSet[i].milestone.descrizione === dataSet2[j].descrizione) opt += "<option selected value='"+dataSet2[j].idMilestone+"'>"+dataSet2[j].descrizione+"</option>";

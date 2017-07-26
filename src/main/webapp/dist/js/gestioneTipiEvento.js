@@ -46,19 +46,6 @@ function removeTipoEvento(row) {
 }
 
 /**
- * Funzione che rimuove le row inserite dall'utente attraverso il bottone verde '+' a fondo tabella, il quale serve per inserire
- * una nuova riga vuota per inserire una nuova tipologia di evento. Questa row viene eliminata solo dalla
- * tabella vista sulla pagina, poichè non è ancora stata inserita nel DB
- * @param row
- * @returns
- */
-function removeInputForm(row) {
-	$(row).parent().parent().remove();
-	rowCounter = rowCounter - 1;
-	$('body>.tooltip').remove();
-}
-
-/**
  * Funzione che viene richiamata al premere del mouse sull'icona della matita di una determinata row, la quale rende editabili i campi 'descrizione' così
  * da poter essere editati dall'utente
  * @param row
@@ -213,7 +200,7 @@ function getListaTipiEventi(){
 		});
 		
 		rowCounterFromDBData = rowCounter;
-		addButtonInputForm();
+		addButtonInputForm("tableTipiEventi");
 	 });
 }
 
@@ -231,24 +218,8 @@ function addInputForm(){
 	+'</tr>';
 	
 	$('#tableTipiEventi').append(row);
-	addButtonInputForm();
+	addButtonInputForm("tableTipiEventi");
 	rowCounter++;
-}
-
-/**
- * Funzione che aggiunge il pulsante a fondo tabella necessario per inserire un nuovo record, in questo caso una nuova tipologia di evento.
- * @returns
- */
-function addButtonInputForm(){	
-	$("#aggiungiButtonRow").remove();
-	var row = '<tr id="aggiungiButtonRow" role="row">'
-		+'	<td class="tdCenter col-md-1"><a style="cursor: pointer;" onclick="addInputForm()" data-toggle="tooltip" title="Aggiungi" data-placement="bottom"><i style="color:green" class="fa fa-plus-circle"></i></a></td>'
-		+'	<td class="hide"></td>'
-		+'	<td class="tdCenter col-md-3"></td>'
-		+'	<td class="tdCenter col-md-8"></td>'
-		+'	</tr>';
-	$('#tableTipiEventi').append(row);
-	$('body>.tooltip').remove();
 }
 
 

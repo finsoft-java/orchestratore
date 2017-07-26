@@ -53,7 +53,7 @@
 								<table id="tableCalendarioEditabile" class="table no-margin" style="margin-bottom: 120px !important">
 									<thead>
 										<tr role="row">
-											<th class="col-md-1 tdCenter">{{labels.gestioneCalendario.opz}}</th>
+											<th class="col-md-1 tdCenter"></th>
 											<th class='hide'>{{labels.global.id}}</th>
 											<th class="col-md-2 tdCenter">{{labels.global.milestones}}</th>
 											<th class="col-md-2 tdCenter">{{labels.gestioneCalendario.dataCutOff}}</th>
@@ -84,7 +84,7 @@
 		<script src="plugins/datatables/jquery.dataTables.js"></script>
 		<script src="plugins/datatables/dataTables.bootstrap.js"></script>
 		
-		<script src="dist/js/gestioneCalFunctions.js"></script>
+		<script src="dist/js/gestioneCalendario.js"></script>
 		<script>
 			attivaWidgetSelect2();
 			attivaWidgetDatepicker();

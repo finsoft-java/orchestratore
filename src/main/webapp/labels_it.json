@@ -45,7 +45,7 @@
 	"eventi": {
 		"dataOra": "Data e ora",
 		"codTipoEv": "Codice tipo evento",
-		"codEnt": "Codice entita'",
+		"codEnt": "Codice entit\u00E0",
 		"acronimo": "Acronimo",
 		"tag" : "Tag"
 	}, 
@@ -62,6 +62,16 @@
 	},
 	"gestioneMilestones": {
 		"opz": "Opz.",
+		"tipo": "Tipo milestone",
+		"id": "Id",
+		"codice": "Codice",
+		"descrizione": "Descrizione milestone",
+		"descrizioneTag": "Descrizione tag",
+		"tipoEvento": "Tipo evento",
+		"entita": "Tipo entit\u00E0",
 		"componenti": "Milestone componenti"
 	}
 }
+
+
+

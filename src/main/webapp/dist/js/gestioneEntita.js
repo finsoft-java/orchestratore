@@ -44,20 +44,6 @@ function removeEntita(row) {
 	  });	
 }
 
-
-/**
- * Funzione che rimuove le row inserite dall'utente attraverso il bottone verde '+' a fondo tabella, il quale serve per inserire
- * una nuova riga vuota per inserire una nuova entità. Questa row viene eliminata solo dalla
- * tabella vista sulla pagina, poichè non è ancora stata inserita nel DB
- * @param row
- * @returns
- */
-function removeInputForm(row) {
-	$(row).parent().parent().remove();
-	rowCounter = rowCounter - 1;
-	$('body>.tooltip').remove();
-}
-
 /**
  * Funzione che viene richiamata al premere del mouse sull'icona della matita di una determinata row, la quale rende editabili i campi 'descrizione' e 'acronimo' così
  * da poter essere editati dall'utente
@@ -227,7 +213,7 @@ function getListaEntita(){
 		});
 		
 		rowCounterFromDBData = rowCounter;
-		addButtonInputForm();
+		addButtonInputForm("tableGestioneEntita");
 	 });
 }
 
@@ -247,25 +233,9 @@ function addInputForm(){
 	
 	//getListaMilestone_gestCal(rowCounter);
 	$('#tableGestioneEntita').append(row);
-	addButtonInputForm();
+	addButtonInputForm("tableGestioneEntita");
 	rowCounter++;
 }
 
-/**
- * Funzione che aggiunge il pulsante a fondo tabella necessario per inserire un nuovo record, in questo caso una nuova entità.
- * @returns
- */
-function addButtonInputForm(){	
-	$("#aggiungiButtonRow").remove();
-	var row = '<tr id="aggiungiButtonRow" role="row">'
-		+'	<td class="tdCenter col-md-1"><a style="cursor: pointer;" onclick="addInputForm()" data-toggle="tooltip" title="Aggiungi" data-placement="bottom"><i style="color:green" class="fa fa-plus-circle"></i></a></td>'
-		+'	<td class="hide"></td>'
-		+'	<td class="tdCenter col-md-3"></td>'
-		+'	<td class="tdCenter col-md-4"></td>'
-		+'	<td class="tdCenter col-md-4"></td>'
-		+'	</tr>';
-	$('#tableGestioneEntita').append(row);
-	$('body>.tooltip').remove();
-}
 
 

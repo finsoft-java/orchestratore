@@ -25,7 +25,7 @@
 								<table id="tableTipiEventi" class="table no-margin">
 						        	<thead>
 							          <tr role="row">
-							           <th class="col-md-1">{{labels.gestioneTipiEvento.opz}}</th>
+							           <th class="col-md-1"></th>
 							           <th class="hide">{{labels.global.id}}</th>
 							           <th class="col-md-3">{{labels.gestioneTipiEvento.codice}}</th>
 							           <th class="col-md-8">{{labels.gestioneTipiEvento.descrizione}}</th>

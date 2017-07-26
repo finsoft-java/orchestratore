@@ -23,7 +23,8 @@ function caricaEventi() {
 		//data : dataSet,
 		ajax: {
 			url: 'ws/resources/Eventi',
-			dataSrc: ''
+			dataSrc: '',
+			language: "it"
 		},
 		columns : [
 			{data : 'tStampEvento', className : 'col-md-2', defaultContent : '', render: renderTimestamp },

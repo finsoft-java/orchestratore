@@ -28,7 +28,7 @@
 								<table id="tableGestioneEntita" class="table no-margin">
 						        	<thead>
 							          <tr role="row">
-							           <th class="col-md-1">${labels.gestioneEntita_opz}</th>
+							           <th class="col-md-1"></th>
 							           <th class="hide">${labels.global_id}</th>
 							           <th class="col-md-3">${labels.gestioneEntita_codice}</th>
 							           <th class="col-md-4">${labels.gestioneEntita_descrizione}</th>

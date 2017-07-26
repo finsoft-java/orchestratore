@@ -1,5 +1,5 @@
 
-
+/////////////////////////CONVERSIONE DATA/ORA///////////////////////////////////////////
 /**
  * Funzione che splitta e converte la data passata come parametro, dal formato timeStamp a quello dd/MM/yyyy.
  * In più viene anche eliminata l'ora dal parametro così da restituire solamente la data
@@ -24,7 +24,6 @@ function convertTimestampToTime(ora){
 	return secondSplit[0];
 }
 
-
 /**
  * Funzione che passata data e ora in formato dd/MM/yyyy e hh:mm rispettivamente, li unisce e li converte in una stringa
  * in formato compatibile con timestamp
@@ -39,6 +38,36 @@ function convertDataOraToTimestamp(data, ora){
 }
 
 
+/////////////////////////FUNZIONI CUSTOM COMUNI PER DATATABLE///////////////////////////////////////////
+/**
+ * Funzione cha aggiunge una row alla tabella di id passato come parametro. La row aggiunta presenta un unico pulsante, presente nella prima colonna (quella delle opzioni), che permette
+ * di aggiungere un nuovo record alla tabella
+ * @param table
+ * @returns
+ */
+function addButtonInputForm(table){	
+	$("#aggiungiButtonRow").remove();
+	var row = '<tr id="aggiungiButtonRow" role="row">'
+		+'	<td class="tdCenter col-md-1"><a style="cursor: pointer;" onclick="addInputForm()" data-toggle="tooltip" title="Aggiungi" data-placement="bottom"><i style="color:green" class="fa fa-plus-circle"></i></a></td>'
+		+'	</tr>';
+	$('#'+table).append(row);
+	$('body>.tooltip').remove();
+}
+
+/**
+ * Funzione che rimuove le row inserite dall'utente attraverso il bottone verde '+' a fondo tabella, il quale serve per inserire
+ * una nuova riga vuota per inserire una nuova entry all'interno della tabella. Questa row viene eliminata solo dalla
+ * tabella vista sulla pagina, poichè non è ancora stata inserita nel DB
+ * @param row
+ * @returns
+ */
+function removeInputForm(row) {
+	$(row).parent().parent().remove();
+	rowCounter = rowCounter - 1;
+	$('body>.tooltip').remove();
+}
+
+/////////////////////////ATTIVAZIONE MANUALE WIDGET///////////////////////////////////////////
 /**
  * Funzione che inizializza il widget Select2
  * @returns
@@ -104,6 +133,8 @@ function activeDeactiveNavBarTab(){
 	}).parent().parent().parent().addClass('active');
 }
 
+
+////////////////////////////////////////MESSAGGI UTENTE/////////////////////////////////////////////
 /**
  * Funzione utilizzata per mandare un messaggio di errore all'utente che si dissolve automaticamente dopo 2,5 secondi
  * @param message
@@ -119,4 +150,11 @@ function customAlertError(message) {
 	    }, 2500);
 	  });
 	}
+
+
+
+
+
+
+
 
