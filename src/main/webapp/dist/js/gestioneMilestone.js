@@ -123,16 +123,44 @@ function addEditForm(row) {
 
 function back(row){
 	idMilestone = $("#idMilestone"+row).text();
+	console.log("idMilestone: "+idMilestone);
 	$.ajax({
 	  type: "GET",
 	  url: "ws/resources/Milestones("+idMilestone+")",
 	  success: function(res) {
-		descrizione = '<div id="descrizioneMilestone'+row+'">'+res.descrizione+'</div>';
-		check = '<a style="cursor:pointer" onclick="removeEntita('+row+')" id="buttonToDeleteRigaEdit'+row+'" data-toggle="tooltip" title="Elimina" data-placement="left"><i style="color:red" class="fa fa-trash-o"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="cursor:pointer" onclick="addEditForm('+row+')" id="buttonToUpdateRigaEdit'+row+'" data-toggle="tooltip" title="Modifica" data-placement="right"><i class="fa fa-pencil"></i></a>';
+			console.log("res.idMilestone: " + res.idMilestone);
+		  
+		  	//boolAggregato = '<div id="boolAggregato'+row+'">'+res.boolAggregato+'</div>';
+			idMilestone = '<div id="idMilestone'+row+'">'+res.idMilestone+'</div>';
+			codiceMilestone = '<div id="codiceMilestone'+row+'">'+res.codice+'</div>';
+			descrizioneMilestone = '<div id="descrizioneMilestone'+row+'">'+res.descrizione+'</div>';
+			descrizioneTagMilestone = '<div id="descrizioneTagMilestone'+row+'">'+res.descrizioneTag+'</div>';
+			codiceTipoEvento = '<div id="codiceTipoEvento'+row+'">'+res.tipoEvento.codice+'</div>';
+			codiceEntita = '<div id="codiceEntita'+row+'">'+res.entita.codice+'</div>';
+			predecessori = '<div id="predecessori'+row+'">'+res.predecessori+'</div>';
 		
-		$("#descrizioneMilestone"+row).parent().html(descrizione);
-		$("#buttonToUpdateRigaEdit"+row).parent().html(check);
+		check = '<a style="cursor:pointer" onclick="removeMilestone('+row+')" id="buttonToDeleteRigaEdit'+row+'" data-toggle="tooltip" title="Elimina" data-placement="left"><i style="color:red" class="fa fa-trash-o"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="cursor:pointer" onclick="addEditForm('+row+')" id="buttonToUpdateRigaEdit'+row+'" data-toggle="tooltip" title="Modifica" data-placement="right"><i class="fa fa-pencil"></i></a>';
+					
+		$("#codiceMilestone_rowEdit_"+row).parent().parent().find(".idMilestone").html(idMilestone);
+		
+		$("#codiceMilestone_rowEdit_"+row).parent().html(codiceMilestone);
+		$("#descrizioneMilestone_rowEdit_"+row).parent().html(descrizioneMilestone);
+		$("#descrizioneTagMilestone_rowEdit_"+row).parent().html(descrizioneTagMilestone);
+		$("#selectCodiceTipoEvento_rowEdit_"+row).parent().html(codiceTipoEvento);
+		$("#selectCodiceEntita_rowEdit_"+row).parent().html(codiceEntita);
+		$("#predecessori_rowEdit_"+row).parent().html(predecessori);
+		
+		$("#buttonToCancelRigaEdit"+row).parent().html(check);
+		
 		$('body>.tooltip').remove();
+		
+		  
+//		descrizione = '<div id="descrizioneMilestone'+row+'">'+res.descrizione+'</div>';
+//		check = '<a style="cursor:pointer" onclick="removeEntita('+row+')" id="buttonToDeleteRigaEdit'+row+'" data-toggle="tooltip" title="Elimina" data-placement="left"><i style="color:red" class="fa fa-trash-o"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="cursor:pointer" onclick="addEditForm('+row+')" id="buttonToUpdateRigaEdit'+row+'" data-toggle="tooltip" title="Modifica" data-placement="right"><i class="fa fa-pencil"></i></a>';
+//		
+//		$("#descrizioneMilestone"+row).parent().html(descrizione);
+//		$("#buttonToUpdateRigaEdit"+row).parent().html(check);
+//		$('body>.tooltip').remove();
 	  }
 	 });
 }
