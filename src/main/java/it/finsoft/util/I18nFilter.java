@@ -30,7 +30,7 @@ import javax.servlet.http.HttpServletResponse;
  * kind of EL replacement.
  *
  */
-@WebFilter(value = "i18nFilter", urlPatterns = { "*.html", "*.htm", "*.xhtml", "*.jsp" })
+@WebFilter(urlPatterns = { "*.html", "*.htm", "*.xhtml", "*.jsp" })
 public class I18nFilter implements Filter {
 
 	static Map<String, Map<String, String>> properties = new HashMap<String, Map<String, String>>();

@@ -11,8 +11,8 @@ $(document).ready(function(){
  */
 function removeEntita(row) {
 	bootbox.confirm({
-	    title: "Eliminare entità",
-	    message: "Si \u00E8 sicuri di voler eliminare questa entità?<br/>L'operazione \u00E8 irreversibile!",
+	    title: "Eliminare entit\u00E0",
+	    message: "Si \u00E8 sicuri di voler eliminare questa entit\u00E0?<br/>L'operazione \u00E8 irreversibile!",
 	    buttons: {
 	      cancel: {
 	        label: '<i class="fa fa-times"></i> Annulla',
