@@ -275,14 +275,14 @@ public class WSManager {
 		// In futuro, dovremo convertire questa procedure in Java.
 		StoredProcedureQuery query = em.createStoredProcedureQuery("PKG_INPUT_CAR_CRMS.prepareInputAbi");
 		query.registerStoredProcedureParameter("nomeTabella", String.class, ParameterMode.IN);
-		query.registerStoredProcedureParameter("nomePeriodo", String.class, ParameterMode.IN);
+		query.registerStoredProcedureParameter("idPeriodo", String.class, ParameterMode.IN);
 		query.registerStoredProcedureParameter("idGiro", String.class, ParameterMode.IN);
 		query.registerStoredProcedureParameter("idPerimetro", String.class, ParameterMode.IN);
 		query.registerStoredProcedureParameter("simula", String.class, ParameterMode.IN);
 		query.registerStoredProcedureParameter("inAbi", String.class, ParameterMode.IN);
 		query.registerStoredProcedureParameter("partOut", String.class, ParameterMode.OUT);
 		query.setParameter("nomeTabella", nomeTabella);
-		query.setParameter("nomePeriodo", annoMese);
+		query.setParameter("idPeriodo", annoMese);
 		query.setParameter("idGiro", giro);
 		query.setParameter("idPerimetro", perimetro);
 		query.setParameter("simula", "N");
