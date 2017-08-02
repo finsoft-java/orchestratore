@@ -151,6 +151,20 @@ function customAlertError(message) {
 	  });
 	}
 
+function customAlertOK(message) {
+	  var dialog = bootbox.dialog({
+	    message: '<i class="fa fa-check"></i>   ' + message
+	  });
+	  dialog.init(function () {
+	    setTimeout(function () {
+	      dialog.modal('hide');
+	    }, 2500);
+	  });
+	}
+
+
+
+
 
 
 
