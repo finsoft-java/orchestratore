@@ -77,9 +77,9 @@ public class AllResources {
 
 	@PUT
 	@Path("Entita({id})")
-	public void update(@PathParam("id") Long id, Entita m) {
+	public Entita update(@PathParam("id") Long id, Entita m) {
 		m.setIdEntita(id);
-		entitaManager.save(m);
+		return entitaManager.save(m);
 	}
 
 	// ==== Tipo
@@ -116,9 +116,9 @@ public class AllResources {
 
 	@PUT
 	@Path("TipiEvento({id})")
-	public void update2(@PathParam("id") Long id, TipoEvento m) {
+	public TipoEvento update2(@PathParam("id") Long id, TipoEvento m) {
 		m.setidTipoEvento(id);
-		tipoEventoManager.save(m);
+		return tipoEventoManager.save(m);
 	}
 
 	// ==== milestones========================================
@@ -153,9 +153,9 @@ public class AllResources {
 
 	@PUT
 	@Path("Milestones({id})")
-	public void update3(@PathParam("id") Long id, Milestone m) {
+	public Milestone update3(@PathParam("id") Long id, Milestone m) {
 		m.setIdMilestone(id);
-		milestoneManager.save(m);
+		return milestoneManager.save(m);
 	}
 
 	// ===milestone milestone=============================================
@@ -192,11 +192,11 @@ public class AllResources {
 	@PUT
 	@Path("MilestoneMilestones({id},{idCh})")
 	// Bisogna vedere se va bene per l'update via interfaccia
-	public void update(@PathParam("id") Long id, @PathParam("idCh") Long idCh,
+	public MilestoneMilestone update(@PathParam("id") Long id, @PathParam("idCh") Long idCh,
 			MilestoneMilestone m) {
 		m.setMilestone(milestoneManager.findById(id));
 		m.setMilestoneComponente(milestoneManager.findById(idCh));
-		milestoneMilestonesManager.save(m);
+		return milestoneMilestonesManager.save(m);
 	}
 
 	// =====Eventi==============================================
@@ -231,9 +231,9 @@ public class AllResources {
 
 	@PUT
 	@Path("Eventi({id})")
-	public void update5(@PathParam("id") Long id, Evento m) {
+	public Evento update5(@PathParam("id") Long id, Evento m) {
 		m.setIdEvento(id);
-		eventoManager.save(m);
+		return eventoManager.save(m);
 	}
 
 	// ===Dettagli evento============================================
@@ -268,9 +268,9 @@ public class AllResources {
 
 	@PUT
 	@Path("DettagliEvento({id})")
-	public void update6(@PathParam("id") Long id, DettaglioEvento m) {
+	public DettaglioEvento update6(@PathParam("id") Long id, DettaglioEvento m) {
 		m.setIdDettaglioEvento(id);
-		dettaglioEventoManager.save(m);
+		return dettaglioEventoManager.save(m);
 	}
 
 	// ===Calendari====================================
@@ -305,9 +305,9 @@ public class AllResources {
 
 	@PUT
 	@Path("Calendari({id})")
-	public void update7(@PathParam("id") Long id, Calendario m) {
+	public Calendario update7(@PathParam("id") Long id, Calendario m) {
 		m.setIdCalendario(id);
-		calendarioManager.save(m);
+		return calendarioManager.save(m);
 	}
 
 	// ==Calendari milestone===========================================
@@ -342,9 +342,9 @@ public class AllResources {
 
 	@PUT
 	@Path("CalendarioMilestones({id})")
-	public void update8(@PathParam("id") Long id, CalendarioMilestone m) {
+	public CalendarioMilestone update8(@PathParam("id") Long id, CalendarioMilestone m) {
 		m.setIdCalendarioMilestone(id);
-		calendarioMilestoneManager.save(m);
+		return calendarioMilestoneManager.save(m);
 	}
 
 	/*
@@ -401,8 +401,8 @@ public class AllResources {
 
 	@PUT
 	@Path("Azioni({id})")
-	public void update9(@PathParam("id") Long id, Azione m) {
+	public Azione update9(@PathParam("id") Long id, Azione m) {
 		m.setIdAzione(id);
-		azioneManager.save(m);
+		return azioneManager.save(m);
 	}
 }

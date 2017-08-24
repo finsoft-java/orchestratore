@@ -30,7 +30,7 @@ function caricaEventi() {
 		ajax: {
 			url: 'ws/resources/Eventi',
 			dataSrc: '',
-			language: "it"
+			language: 'it'
 		},
 		columns : [
 			{data : 'tStampEvento', className : 'col-md-2', defaultContent : '', render: renderTimestamp },

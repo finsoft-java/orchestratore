@@ -1,6 +1,6 @@
 
 /**
- * Questa costante dice che il JSON passa il timestamp come numero e non come stringa
+ * Questa costante dice che il JSON passa il timestamp come numero e non come stringa (dipende da quale versione di JAX-RS si usa)
  */
 var USE_TIMESTAMP = true;
 
@@ -78,19 +78,25 @@ function convertDataOraToTimestamp(data, ora) {
  * @param table
  * @returns
  */
-function addButtonInputForm(table) {	
+function addButtonInputForm(table) {
 	$("#aggiungiButtonRow").remove();
-	var row = '<tr id="aggiungiButtonRow" role="row">'
+	
+	//FIXME non può e non deve stare dentro la Datatable!!!
+	/*var row = '<tr id="aggiungiButtonRow" role="row">'
 		+'	<td class="tdCenter col-md-1"><a style="cursor: pointer;" onclick="addInputForm()" data-toggle="tooltip" title="Aggiungi" data-placement="bottom"><i style="color:green" class="fa fa-plus-circle"></i></a></td>'
 		+'	</tr>';
 	$('#'+table).append(row);
+	*/
+	var btn = '<div id="aggiungiButtonRow"><a style="cursor: pointer;" onclick="addInputForm()" data-toggle="tooltip" title="Aggiungi" data-placement="bottom"><i style="color:green" class="fa fa-plus-circle"></i></a></div>';
+	$('#'+table).parent().append(btn);
+	
 	$('body>.tooltip').remove();
 }
 
 /**
  * Funzione che rimuove le row inserite dall'utente attraverso il bottone verde '+' a fondo tabella, il quale serve per inserire
  * una nuova riga vuota per inserire una nuova entry all'interno della tabella. Questa row viene eliminata solo dalla
- * tabella vista sulla pagina, poichÃ¨ non Ã¨ ancora stata inserita nel DB
+ * tabella vista sulla pagina, poiche' non e' ancora stata inserita nel DB
  * @param row
  * @returns
  */
@@ -98,6 +104,93 @@ function removeInputForm(row) {
 	$(row).parent().parent().remove();
 	rowCounter = rowCounter - 1;
 	$('body>.tooltip').remove();
+}
+
+/**
+ * Inserisce un DIV intorno al testo dato in input
+ * @param divIdPrefix obbligatorio, es. "idEntita"
+ * @param rowNum obbligatorio, viene concatenato all'ID
+ * @param data dati che verranno messi dentro il DIV
+ * @returns {String}
+ */
+function wrapDiv(divIdPrefix, rowNum, data) {
+	if (data == null || data == undefined) data = "";
+	return '<div id="' + divIdPrefix + rowNum + '">' + data + '</div>';
+}
+
+/**
+ * Funzione che richiama un'url per esseguire una UPDATE, e in caso di successo aggiorna anche la Datatable
+ * @param rowNum
+ * @param url
+ * @param requestJSON
+ */
+function commonUpdate(rowNum, url, requestJSON) {
+	
+	var request = JSON.stringify(requestJSON); 
+	$.ajax({
+		type: "PUT",
+		url: url,
+		data: request,
+		contentType: "application/json; charset=utf-8",
+		dataType: "json",
+		success: function(res) {
+			
+			var oldData = mainDatatable.row(rowNum).data();
+			for (var attrName in res) {
+				oldData[attrName] = res[attrName];
+			}
+			mainDatatable.row(rowNum).data(oldData).draw(); 
+			
+			$('body>.tooltip').remove();
+		}
+	});
+}
+
+/**
+ * Funzione che richiama un'url per esseguire una INSERT, e in caso di successo aggiorna anche la Datatable
+ * @param rowNum
+ * @param url
+ * @param requestJSON
+ */
+function commonInsert(rowNum, url, requestJSON) {
+	
+	var request = JSON.stringify(requestJSON); 
+	$.ajax({
+		type: "POST",
+		url: url,
+		data: request,
+		contentType: "application/json; charset=utf-8",
+		dataType: "json",
+		success: function(res) {
+			
+			mainDatatable.row.add(res).draw();
+
+			$('body>.tooltip').remove();
+
+		}
+	});
+}
+
+/**
+ * Funzione che richiama un'url per esseguire una DELETE, e in caso di successo aggiorna anche la Datatable
+ * @param rowNum
+ * @param url
+ * @param requestJSON
+ */
+function commonDelete(rowNum, url) {
+	
+	$.ajax({
+		type : "DELETE",
+		url :  url,
+		dataType : "json",
+		success : function(dataSet) {
+			mainDatatable.row(row).remove().draw();
+		},
+		error : function(errore) {
+			//FIXME i18n?
+			customAlertError("Errore nell'eliminazione: probabilmente l'oggetto e' utilizzato altrove ");
+		}
+	});
 }
 
 /////////////////////////ATTIVAZIONE MANUALE WIDGET///////////////////////////////////////////
