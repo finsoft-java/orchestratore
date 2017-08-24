@@ -1,4 +1,9 @@
 
+/**
+ * Questa costante dice che il JSON passa il timestamp come numero e non come stringa
+ */
+var USE_TIMESTAMP = true;
+
 /////////////////////////CONVERSIONE DATA/ORA///////////////////////////////////////////
 /**
  * Funzione che splitta e converte la data passata come parametro, dal formato timeStamp a quello dd/MM/yyyy.
@@ -6,10 +11,19 @@
  * @param data
  * @returns
  */
-function convertTimestampToData(data){
-	var firstSplit = data.split("T");
-	var secondSplit = firstSplit[0].split("-");
-	return secondSplit[2]+"/"+secondSplit[1]+"/"+secondSplit[0];
+function convertTimestampToData(data) {
+	
+	if (USE_TIMESTAMP && (typeof data == "number")) {
+		
+		var date = new Date(data);
+		return "" + date.getDate() + "/" + date.getMonth()+1 + "/" + date.getFullYear();
+		
+	} else {
+		
+		var firstSplit = data.split("T");
+		var secondSplit = firstSplit[0].split("-");
+		return secondSplit[2] + "/" + secondSplit[1] + "/" + secondSplit[0];
+	}
 }
 
 /**
@@ -18,10 +32,19 @@ function convertTimestampToData(data){
  * @param data
  * @returns
  */
-function convertTimestampToTime(ora){
-	var firstSplit = ora.split("T");
-	var secondSplit = firstSplit[1].split("+");
-	return secondSplit[0];
+function convertTimestampToTime(ora) {
+	
+	if (USE_TIMESTAMP && (typeof ora == "number")) {
+		
+		var date = new Date(ora);
+		return "" + date.getHours() + ":" + date.getMinutes();
+		
+	} else {
+		
+		var firstSplit = ora.split("T");
+		var secondSplit = firstSplit[1].split("+");
+		return secondSplit[0];
+	}
 }
 
 /**
@@ -31,10 +54,20 @@ function convertTimestampToTime(ora){
  * @param ora
  * @returns
  */
-function convertDataOraToTimestamp(data, ora){
-	var splitDate = data.split("/");
-	var sqlDate = splitDate[2] +"-"+ splitDate[1] +"-"+ splitDate[0];
-	return sqlDate +"T"+ ora + ":00+02:00"; 
+function convertDataOraToTimestamp(data, ora) {
+	if (USE_TIMESTAMP) {
+		
+		var splitDate = data.split("/");
+		var splitHour = ora.split(":");
+		var date = new Date(splitDate[2], splitDate[1], splitDate[0], splitHour[0], splitHour[1]);
+		return date.getTime();
+		
+	} else {
+		
+		var splitDate = data.split("/");
+		var sqlDate = splitDate[2] +"-"+ splitDate[1] +"-"+ splitDate[0];
+		return sqlDate +"T"+ ora + ":00+02:00"; 
+	}
 }
 
 
@@ -45,7 +78,7 @@ function convertDataOraToTimestamp(data, ora){
  * @param table
  * @returns
  */
-function addButtonInputForm(table){	
+function addButtonInputForm(table) {	
 	$("#aggiungiButtonRow").remove();
 	var row = '<tr id="aggiungiButtonRow" role="row">'
 		+'	<td class="tdCenter col-md-1"><a style="cursor: pointer;" onclick="addInputForm()" data-toggle="tooltip" title="Aggiungi" data-placement="bottom"><i style="color:green" class="fa fa-plus-circle"></i></a></td>'
@@ -72,7 +105,7 @@ function removeInputForm(row) {
  * Funzione che inizializza il widget Select2
  * @returns
  */
-function attivaWidgetSelect2(){
+function attivaWidgetSelect2() {
 	$(function () {
 		  //Initialize Select2 Elements
 		  $("select").select2({
@@ -87,7 +120,7 @@ function attivaWidgetSelect2(){
  * Funzione che inizializza il widget datapicker
  * @returns
  */
-function attivaWidgetDatepicker(){
+function attivaWidgetDatepicker() {
 	$(function () {
 		  //Date picker
 		  $('.datepicker').datepicker({
@@ -106,7 +139,7 @@ function attivaWidgetDatepicker(){
  * Funzione che inizializza il widget timepicker
  * @returns
  */
-function attivaWidgetTimepicker(){
+function attivaWidgetTimepicker() {
 	$(function () {
 		  //Timepicker
 		  $(".timepicker").timepicker({
@@ -125,7 +158,7 @@ function attivaWidgetTimepicker(){
  * il tab contente la pagina vista attualmente dall'utente abbia la classe 'active'
  * @returns
  */
-function activeDeactiveNavBarTab(){
+function activeDeactiveNavBarTab() {
 	var url = location.pathname.substring(location.pathname.lastIndexOf("/") + 1);
 	$('.treeview-menu li a[href="' + url + '"]').parent().addClass('active');
 	$('.treeview-menu li a').filter(function() {

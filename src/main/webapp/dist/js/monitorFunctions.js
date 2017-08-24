@@ -14,6 +14,7 @@ $(document).ready(function(){
  */
 function getListaCalendari(){
 	 $.getJSON("ws/resources/Calendari", function(dataSet){
+		 
 		 for(i in dataSet){
 			 var opt = "<option value='"+dataSet[i].idCalendario+"'>"+dataSet[i].descrizione+"</option>";
 			 $("#select_elenco_calendari").append(opt);
@@ -42,6 +43,7 @@ function selezionaCalendarioMonitor(selectIndex){
  */
 function getListaCalendariMonitor(){
   $.getJSON("ws/resources/Calendari", function(dataSet){
+	  
    for(i in dataSet){
     var opt = "<option value='"+dataSet[i].idCalendario+"'>"+dataSet[i].descrizione+"</option>";
     $("#select_elenco_calendari").append(opt);
@@ -62,7 +64,9 @@ function getDettaglioCalendarioMilestone(idCalendario) {
 	    url : "ws/resources/Calendari(" + idCalendario + ")/Milestone",
 	    dataType : "json",
 	    success : function(dataSet) {
-
+	    	
+	    	//FIXME usare datatable con indirizzo ajax
+	    	
 	    	for (var i in dataSet){
 	    		dataSet[i].data = convertTimestampToData(dataSet[i].dataOraPreviste);
 		        dataSet[i].ora = convertTimestampToTime(dataSet[i].dataOraPreviste);
@@ -104,7 +108,7 @@ function getSemaforo(datatable, numRiga, data) {
     
     var endpoint = "ws/Polling?milestone=" + data.milestone.codice + "&tag=" + data.tag;
     
-    var _ora = data.ora;
+    var _ora = data.oraPrevista;
     
     var _now = new Date($.now());
     var nYear  = pad(_now.getFullYear());
@@ -135,7 +139,9 @@ function getSemaforo(datatable, numRiga, data) {
        dataType : "json",
        success : function(dataSet) {
     	   
-           if (dataSet != null) {
+    	   dataSet = dataSet.data;
+    	   
+           if (dataSet != null && dataSet != undefined) {
                if (dataSet == 0 && diff < 0) {
             	   dataSet = '<span class="btn btn-primary btn-circle btn-sm btn-semaforo" style="width:15px; height: 15px; font-size:0%; cursor: default;">3 blu</span>';
                } else if (dataSet == 0) {

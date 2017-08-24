@@ -1,7 +1,6 @@
 package it.finsoft.resources;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.ejb.Stateless;
@@ -16,7 +15,7 @@ import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.UriInfo;
 
 import it.finsoft.manager.WSManager;
-import it.finsoft.manager.WSManager.DatiCollector;
+import it.finsoft.util.CommonJsonResponse;
 
 @Stateless
 @Path("Collector")
@@ -31,18 +30,29 @@ public class WSCollector {
 	 * codiceEnt a Entita e da codiceTipi a TipoEvento
 	 */
 	@GET
-	public DatiCollector insertEvent(@QueryParam("entita") String codiceEnt,
-			@QueryParam("tipoEvento") String codiceTipi, @QueryParam("tag") String tag, @Context UriInfo uriInfo) {
+	public CommonJsonResponse insertEvent(@QueryParam("entita") String codiceEntita,
+			@QueryParam("tipoEvento") String codiceTipoEvento, @QueryParam("tag") String tag, @Context UriInfo uriInfo) {
 
-		MultivaluedMap<String, String> queryParams = uriInfo.getQueryParameters();
-		Map<String, String> dettagli = new HashMap<String, String>();
-		for (String key : queryParams.keySet()) {
-			if (!"entita".equals(key) && !"tipiEvento".equals(key) && !"tag".equals(key)) {
-				dettagli.put(key, queryParams.getFirst(key));
+		CommonJsonResponse ret = new CommonJsonResponse();
+
+		try {
+			MultivaluedMap<String, String> queryParams = uriInfo.getQueryParameters();
+			Map<String, String> dettagli = new HashMap<String, String>();
+			for (String key : queryParams.keySet()) {
+				if (!"entita".equals(key) && !"tipiEvento".equals(key) && !"tag".equals(key)) {
+					dettagli.put(key, queryParams.getFirst(key));
+				}
 			}
+
+			wsManager.insertEvento(codiceEntita, codiceTipoEvento, tag, dettagli);
+
+		} catch (Exception exc) {
+			ret.errorCode = "1"; // FIXME
+			ret.errorMessage = exc.getMessage();
 		}
 
-		return wsManager.insertEvent(codiceEnt, codiceTipi, tag, dettagli);
+		return ret;
+		// FIXME con JAX-RS 1 ho dovuto inibire l'output DatiCollector
 
 	}
 

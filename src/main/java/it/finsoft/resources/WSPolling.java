@@ -12,6 +12,7 @@ import it.finsoft.manager.MilestoneManager;
 import it.finsoft.manager.WSManager;
 import it.finsoft.manager.WSPollingManager;
 import it.finsoft.util.KeyNotFoundException;
+import it.finsoft.util.StringJsonResponse;
 
 @Stateless
 @Path("Polling")
@@ -26,28 +27,38 @@ public class WSPolling {
 	WSPollingManager wsPolling;
 
 	/**
-	 * Questo è il servizio web del Polling: dato un codice milestone e una
-	 * relativa tag, dice se la milestone è stata raggiunta oppure no. Ha senso
-	 * sia per le milestone atomiche (l'evento è avvenuto?) sia per le aggregate
-	 * (gli eventi prerequisiti sono avvenuti?).
+	 * Questo e' il servizio web del Polling: dato un codice milestone e una
+	 * relativa tag, dice se la milestone e' stata raggiunta oppure no. Ha senso
+	 * sia per le milestone atomiche (l'evento e' avvenuto?) sia per le
+	 * aggregate (gli eventi prerequisiti sono avvenuti?).
 	 * 
 	 * @param codiceMilestone
 	 * @param tag
-	 * @return Deve restituire 0 se l'evento non si è verificato, 1 se si è
-	 *         verificato in parte (per le aggregate), 2 se si è verificato
+	 * @return Deve restituire 0 se l'evento non si e' verificato, 1 se si e'
+	 *         verificato in parte (per le aggregate), 2 se si e' verificato
 	 *         completamente.
 	 */
 	@GET
-	@Produces(MediaType.TEXT_PLAIN)
-	public String get(@QueryParam("milestone") String codiceMilestone, @QueryParam("tag") String tag) {
+	public StringJsonResponse get(@QueryParam("milestone") String codiceMilestone,
+			@QueryParam("tag") String tag) {
 
 		// TODO sarebbe bello restituire il dettaglio degli eventi avvenuti...
+		StringJsonResponse ret = new StringJsonResponse();
 
 		try {
-			return Integer.toString(wsPolling.calcolaPolling(codiceMilestone, tag));
+			ret.data = Integer.toString(wsPolling.calcolaPolling(
+					codiceMilestone, tag));
+			
 		} catch (KeyNotFoundException e) {
-			return e.getMessage();
+			ret.errorCode = "20";
+			ret.errorMessage = e.getMessage();
+			
+		} catch (Exception exc) {
+			ret.errorCode = "1"; // FIXME
+			ret.errorMessage = exc.getMessage();
 		}
+
+		return ret;
 	}
 
 	/* ---- TEST RESOURCES ---- */

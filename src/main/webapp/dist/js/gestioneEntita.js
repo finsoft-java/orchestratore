@@ -182,6 +182,7 @@ function insert(row){
 var rowCounter = 0
 function getListaEntita(){
 	$.getJSON("ws/resources/Entita", function(dataSet){
+		
 		for (i in dataSet){
 			dataSet[i].deleteRowButton = '<a style="cursor:pointer" onclick="removeEntita('+rowCounter+')" id="buttonToDeleteRigaEdit'+rowCounter+'" data-toggle="tooltip" title="Elimina" data-placement="left"><i style="color:red" class="fa fa-trash-o"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="cursor:pointer" onclick="updateEntita('+rowCounter+')" id="buttonToUpdateRigaEdit'+rowCounter+'" data-toggle="tooltip" title="Modifica" data-placement="right"><i class="fa fa-pencil"></i></a>';
 			dataSet[i].idEntita = '<div id="idEntita'+rowCounter+'">'+dataSet[i].idEntita+'</div>';

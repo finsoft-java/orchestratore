@@ -9,6 +9,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import it.finsoft.manager.WSManager;
+import it.finsoft.util.StringJsonResponse;
 
 /**
  * Questo servizio risponde alla domanda: per la milestone (aggregata) data, è
@@ -17,15 +18,25 @@ import it.finsoft.manager.WSManager;
  */
 @Stateless
 @Path("TagBenDefinita")
-@Produces({ MediaType.TEXT_PLAIN })
+@Produces({ MediaType.APPLICATION_JSON })
 public class WSTagDefinita {
 
 	@Inject
 	WSManager manager;
-	
-	@GET
-	public Boolean get(@QueryParam("codiceMilestone") String codiceMilestone, @QueryParam("tag") String tag) {
 
-		return manager.tagBenDefinita(codiceMilestone, tag);
+	@GET
+	public StringJsonResponse get(@QueryParam("codiceMilestone") String codiceMilestone, @QueryParam("tag") String tag) {
+
+		StringJsonResponse ret = new StringJsonResponse();
+		try {
+
+			boolean benDef = manager.tagBenDefinita(codiceMilestone, tag);
+			ret.data = benDef ? "1" : "0";
+
+		} catch (Exception exc) {
+			ret.errorCode = "1"; // FIXME
+			ret.errorMessage = exc.getMessage();
+		}
+		return ret;
 	}
 }

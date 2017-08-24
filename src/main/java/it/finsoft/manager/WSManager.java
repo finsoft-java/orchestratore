@@ -20,13 +20,15 @@ import org.jboss.logging.Logger;
 
 import it.finsoft.entity.Calendario;
 import it.finsoft.entity.DettaglioEvento;
+import it.finsoft.entity.Entita;
 import it.finsoft.entity.Evento;
 import it.finsoft.entity.Milestone;
 import it.finsoft.entity.MilestoneMilestone;
+import it.finsoft.entity.TipoEvento;
 
 /**
  * Contiene le implementazioni di (quasi) tutti i webservice.
- *
+ * 
  */
 @Stateless
 public class WSManager {
@@ -54,8 +56,7 @@ public class WSManager {
 	 * Esegue i comandi contenuti in script.sql
 	 */
 	public String resetDb() throws FileNotFoundException, IOException {
-		BufferedReader reader = new BufferedReader(
-				new InputStreamReader(getClass().getResourceAsStream("/script.sql")));
+		BufferedReader reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/script.sql")));
 		String sql = "";
 		String error = "";
 		while (reader.ready() == true) {
@@ -97,69 +98,50 @@ public class WSManager {
 
 	// ------------------------------------WSCollector--------------------------------------//
 	/**
-	 * Inserisce un evento a sistema (Webservice Collector). Non c'è nessuna
+	 * Inserisce un evento a sistema (Webservice Collector). Non c'e'nessuna
 	 * relazione con le milestone, codiceEntita e codiceTipoEvento potrebbero
 	 * non corrispondere ad una milestone.
 	 * 
-	 * @param codiceEntita
-	 * @param codiceTipoEvento
-	 * @param tag
-	 * @param keys
-	 * @param values
-	 * @return
+	 * @throws NoResultException
+	 * @throws NonUniqueResultException
+	 * @throws HibernatetException
 	 */
-	public DatiCollector insertEvent(String codiceEntita, String codiceTipoEvento, String tag,
-			Map<String, String> dettagli) {
-		DatiCollector result = new DatiCollector();
-		try {
-			Evento e = new Evento();
-			codiceEntita = utilityCheck.trimToUp(codiceEntita);
-			codiceTipoEvento = utilityCheck.trimToUp(codiceTipoEvento);
-			e.setEntita(entitaManager.findByCod(codiceEntita));
-			e.setTipoEvento(tipoEventoManager.findByCod(codiceTipoEvento));
-			e.setTag(tag);
-			List<DettaglioEvento> listaDettagliEvento = e.getDettagliEvento();
-			// TODO controllare che keys e values abbiano lo stesso numero di
-			// valori
+	public void insertEvento(Entita entita, TipoEvento tipoEvento, String tag, Map<String, String> dettagli) {
 
-			for (String key : dettagli.keySet()) {
-				DettaglioEvento dettaglio = new DettaglioEvento();
-				String valore = dettagli.get(key);
-				dettaglio.setChiave(key);
-				dettaglio.setValore(valore);
-				dettaglio.setEvento(e);
-				listaDettagliEvento.add(dettaglio);
-			}
-			e.setDettagliEvento(listaDettagliEvento);
+		Evento e = new Evento();
+		e.setEntita(entita);
+		e.setTipoEvento(tipoEvento);
+		e.setTag(tag);
+		List<DettaglioEvento> listaDettagliEvento = e.getDettagliEvento();
 
-			// per ogni chiave, inserire un record chiave/valore nella tabella
-			// dettagli
-			eventoManager.save(e);
-			result.evento = e;
-			result.listaDettagli.addAll(listaDettagliEvento);
-
-		} catch (Exception sqlError) {
-			if (result.detailError == null) {
-				LOG.error("ERROR: nessuna corrispondenza con " + codiceEntita + " e " + codiceTipoEvento
-						+ " nella base dati, controllare che siano presenti");
-				result.eventError = "ERROR: nessuna corrispondenza con " + codiceEntita + " e " + codiceTipoEvento
-						+ " nella base dati, controllare che siano presenti";
-				return result;
-			}
-
+		for (String key : dettagli.keySet()) {
+			DettaglioEvento dettaglio = new DettaglioEvento();
+			String valore = dettagli.get(key);
+			dettaglio.setChiave(key);
+			dettaglio.setValore(valore);
+			dettaglio.setEvento(e);
+			listaDettagliEvento.add(dettaglio);
 		}
-		return result;
+		e.setDettagliEvento(listaDettagliEvento);
+
+		eventoManager.save(e);
 	}
 
 	/**
-	 * Classe di output per il collector
-	 *
+	 * 
+	 * @throws NoResultException
+	 * @throws NonUniqueResultException
+	 * @throws HibernatetException
 	 */
-	public static class DatiCollector {
-		public Evento evento;
-		public String eventError = null;
-		public String detailError = null;
-		public List<DettaglioEvento> listaDettagli = new ArrayList<>();
+	public void insertEvento(String codiceEntita, String codiceTipoEvento, String tag, Map<String, String> dettagli) {
+
+		codiceEntita = utilityCheck.trimToUp(codiceEntita);
+		Entita entita = entitaManager.findByCod(codiceEntita);
+
+		codiceTipoEvento = utilityCheck.trimToUp(codiceTipoEvento);
+		TipoEvento tipoEvento = tipoEventoManager.findByCod(codiceTipoEvento);
+
+		insertEvento(entita, tipoEvento, tag, dettagli);
 	}
 
 	/**
@@ -278,15 +260,15 @@ public class WSManager {
 		query.registerStoredProcedureParameter("idPeriodo", String.class, ParameterMode.IN);
 		query.registerStoredProcedureParameter("idGiro", String.class, ParameterMode.IN);
 		query.registerStoredProcedureParameter("idPerimetro", String.class, ParameterMode.IN);
-		query.registerStoredProcedureParameter("simula", String.class, ParameterMode.IN);
-		query.registerStoredProcedureParameter("inAbi", String.class, ParameterMode.IN);
+		query.registerStoredProcedureParameter("simula", Character.class, ParameterMode.IN);
+		query.registerStoredProcedureParameter("inABI", String.class, ParameterMode.IN);
 		query.registerStoredProcedureParameter("partOut", String.class, ParameterMode.OUT);
 		query.setParameter("nomeTabella", nomeTabella);
 		query.setParameter("idPeriodo", annoMese);
 		query.setParameter("idGiro", giro);
 		query.setParameter("idPerimetro", perimetro);
-		query.setParameter("simula", "N");
-		query.setParameter("inAbi", abi);
+		query.setParameter("simula", new Character('N'));
+		query.setParameter("inABI", abi);
 		query.execute();
 		String partOut = (String) query.getOutputParameterValue("partOut");
 

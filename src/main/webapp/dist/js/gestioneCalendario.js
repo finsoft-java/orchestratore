@@ -21,7 +21,8 @@ function removeMilestone(row) {
 			type : "DELETE",
 			url : "ws/resources/CalendarioMilestones(" + idSelectMilestoneCal + ")",
 			dataType : "json",
-			success : function(dataSet) {		
+			success : function(dataSet) {
+				
 				$("#idCalendarioMilestone"+row).parent().parent().remove();
 				rowCounter = rowCounter - 1;
 				if(rowCounter === 0) {
@@ -55,6 +56,7 @@ function removeInputForm(row) {
  */
 function getListaMilestone_gestCal(j){
 	 $.getJSON("ws/resources/Milestones", function(dataSet){
+		 
 	   for(i in dataSet){
 	    var opt = "<option value='"+dataSet[i].idMilestone+"'>"+dataSet[i].descrizione+"</option>";
 	    $("#selectMilestoneCalNew"+(j)).append(opt);
@@ -71,6 +73,7 @@ function getListaMilestone_gestCal(j){
  */
 function getListaCalendari(){
 	 $.getJSON("ws/resources/Calendari", function(dataSet){
+		 
 		 for(i in dataSet){
 			 var opt = "<option value='"+dataSet[i].idCalendario+"'>"+dataSet[i].descrizione+"</option>";
 			 $("#select_elenco_calendari").append(opt);
@@ -222,11 +225,12 @@ var rowCounter = 0
 var rowCounterFromDBData = 0;
 function getDettaglioCalendarioMilestoneEditabile(idCalendario){
 	$.getJSON("ws/resources/Milestones", function(dataSet2){
+		
 		$.ajax({
 			type : "GET",
 			url : "ws/resources/Calendari(" + idCalendario + ")/Milestone",
 			dataType : "json",
-			success : function(dataSet) {		
+			success : function(dataSet) {
 				
 				for (i in dataSet){
 					dataSet[i].deleteRowButton = '<a onclick="removeMilestone('+rowCounter+')" id="buttonToDeleteRigaEdit'+rowCounter+'" style="cursor:pointer" data-toggle="tooltip" title="Elimina" data-placement="left"><i style="color:red" class="fa fa-trash-o"></i></a>';
