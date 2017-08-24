@@ -16,7 +16,7 @@ function convertTimestampToData(data) {
 	if (USE_TIMESTAMP && (typeof data == "number")) {
 		
 		var date = new Date(data);
-		return "" + date.getDate() + "/" + date.getMonth()+1 + "/" + date.getFullYear();
+		return "" + date.getDate() + "/" + (date.getMonth()+1) + "/" + date.getFullYear();
 		
 	} else {
 		

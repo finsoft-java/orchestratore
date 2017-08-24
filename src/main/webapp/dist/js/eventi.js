@@ -4,7 +4,13 @@ $(document).ready(function(){
 
 function renderTimestamp(data, type, row, meta) {
 	if (data == null) return null;
-	return data.substring(8,10) + '/'+data.substring(5,7)+'/'+data.substring(0,4)+ ' ' + data.substring(11,19);
+	
+	if (typeof data == "number") {
+		return convertTimestampToData(data) + " " + convertTimestampToTime(data);
+		
+	} else {
+		return data.substring(8,10) + '/' + data.substring(5,7) + '/' + data.substring(0,4) + ' ' + data.substring(11,19);
+	}
 }
 
 function caricaEventi() {
