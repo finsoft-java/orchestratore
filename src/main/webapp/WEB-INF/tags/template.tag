@@ -48,20 +48,20 @@
 				<section class="sidebar">
 					<ul class="sidebar-menu treeview-menu">
 						<li>
-							<a href="index.jsp"> <i class="fa fa-calendar"></i><span>{{labels.menu.monitor}}</span></a>
+							<a href="index.jsp"> <i class="fa fa-calendar"></i><span>${labels.menu_monitor}</span></a>
 						</li>
          			 	<li>
-          					<a href="gestioneCalendario.jsp"> <i class="fa fa-edit"></i><span>{{labels.menu.gestioneCalendario}}</span></a>
+          					<a href="gestioneCalendario.jsp"> <i class="fa fa-edit"></i><span>${labels.menu_gestioneCalendario}</span></a>
 						</li>
 						<li>
-          					<a href="eventi.jsp"> <i class="fa fa-list-alt"></i><span>{{labels.menu.eventi}}</span></a>
+          					<a href="eventi.jsp"> <i class="fa fa-list-alt"></i><span>${labels.menu_eventi}</span></a>
 						</li>
 						<li>
-							<a href="#"><i class="fa fa-cogs"></i><span>{{labels.menu.amministrazione}}</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i></span></a>
+							<a href="#"><i class="fa fa-cogs"></i><span>${labels.menu_amministrazione}</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i></span></a>
 							<ul class="treeview-menu">
-								<li><a href="gestioneEntita.jsp"><i class="fa fa-edit"></i> {{labels.menu.gestioneEntita}}</a></li>
-								<li><a href="gestioneTipiEvento.jsp"><i class="fa fa-edit"></i> {{labels.menu.gestioneTipiEvento}}</a></li>
-								<li><a href="gestioneMilestone.jsp"><i class="fa fa-edit"></i> {{labels.menu.gestioneMilestones}}</a></li>
+								<li><a href="gestioneEntita.jsp"><i class="fa fa-edit"></i> ${labels.menu_gestioneEntita}</a></li>
+								<li><a href="gestioneTipiEvento.jsp"><i class="fa fa-edit"></i> ${labels.menu_gestioneTipiEvento}</a></li>
+								<li><a href="gestioneMilestone.jsp"><i class="fa fa-edit"></i> ${labels.menu_gestioneMilestones}</a></li>
 							</ul>
 						</li>
 					</ul>
@@ -75,9 +75,9 @@
 	
 			<footer class="main-footer">
 				<div class="pull-right hidden-xs">
-					<b>{{labels.global.versione}}</b> Beta 0.1
+					<b>${labels.global_versione}</b> Beta 0.1
 				</div>
-				<strong>Copyright &copy; 2017 <a href="http://www.finsoft.it">Finsoft S.r.l.</a></strong> {{labels.global.dirittiRiservati}}
+				<strong>Copyright &copy; 2017 <a href="http://www.finsoft.it">Finsoft S.r.l.</a></strong> ${labels.global_dirittiRiservati}
 			</footer>
 		</div>		
 	</body>
@@ -91,10 +91,6 @@
 		<script type="text/javascript" src="dist/js/adminlte.min.js"></script>		
 		<!-- sidebar remember state -->
 		<script src="dist/js/sidebarState.js"></script>
-		<!-- AngularJS (al momento usato solo per le etichette) -->
-		<script src="plugins/angularjs/angular.min.js"></script>
-		<!-- funzioni AngularJS -->
-		<script src="dist/js/angularApp.js"></script>
 		<!-- bootbox widget for all notification -->
 		<script src="plugins/bootbox/js/bootbox.min.js"></script>	
 		<!-- funzioni terze -->

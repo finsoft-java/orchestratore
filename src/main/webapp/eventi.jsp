@@ -1,5 +1,5 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib prefix="t" tagdir="/WEB-INF/tags"%>
+<%@ page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="t" tagdir="/WEB-INF/tags"%>
 
 <t:template>
 	  <jsp:attribute name="head_area">
@@ -11,7 +11,7 @@
 	
 	  <jsp:attribute name="body_area">
 		<section class="content-header">
-			<h1>{{labels.menu.eventi}}</h1>
+			<h1>${labels.menu_eventi}</h1>
 		</section>
 		
 		<section class="content">
@@ -20,18 +20,18 @@
 					<div class="col-md-12">
 						<div class="box box-info">
 							<div class="box-header with-border">
-								<h3 class="box-title">{{labels.global.eventi}}</h3>
+								<h3 class="box-title">${labels.global_eventi}</h3>
 							</div>
 							<div class="box-body">
 								<div class="table-responsive">
 									<table id="tableEventi" class="table no-margin">
 							        	<thead>
 								          <tr role="row">
-								           <th class="col-md-2">{{labels.eventi.dataOra}}</th>
-								           <th class="col-md-2">{{labels.eventi.codTipoEv}}</th>
-								           <th class="col-md-2">{{labels.eventi.codEnt}}</th>
-								           <th class="col-md-2">{{labels.eventi.acronimo}}</th>
-								           <th class="col-md-3">{{labels.eventi.tag}}</th>
+								           <th class="col-md-2">${labels.eventi_dataOra}</th>
+								           <th class="col-md-2">${labels.eventi_codTipoEv}</th>
+								           <th class="col-md-2">${labels.eventi_codEnt}</th>
+								           <th class="col-md-2">${labels.eventi_acronimo}</th>
+								           <th class="col-md-3">${labels.eventi_tag}</th>
 								          </tr>
 								        </thead>          
 							        </table>

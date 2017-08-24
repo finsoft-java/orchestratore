@@ -1,5 +1,5 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib prefix="t" tagdir="/WEB-INF/tags"%>
+<%@ page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="t" tagdir="/WEB-INF/tags"%>
 
 <t:template>
 
@@ -12,13 +12,13 @@
 	
 	  <jsp:attribute name="body_area">
 		<section class="content-header">
-			<h1>{{labels.menu.monitor}}</h1>
+			<h1>${labels.menu_monitor}</h1>
 		</section>
 		
 		<section class="content">
 	      <div class="box box-warning">
 	        <div class="box-header with-border">
-	          <h3 class="box-title">{{labels.gestioneCalendario.selezionaCalendario}}</h3>
+	          <h3 class="box-title">${labels.gestioneCalendario_selezionaCalendario}</h3>
 	        </div>
 	        <div class="box-body">
 	          <div class="row">
@@ -37,20 +37,20 @@
 				<div class="col-md-12">
 					<div class="box box-info">
 						<div class="box-header with-border">
-							<h3 class="box-title">{{labels.global.milestones}}</h3>
+							<h3 class="box-title">${labels.global_milestones}</h3>
 						</div>
 						<div class="box-body">
 							<div class="table-responsive">
 								<table id="tableDettaglioCalendarioMilestone" class="table no-margin">
 						        	<thead>
 							          <tr role="row">
-							           <th class="col-md-2">{{labels.monitorCalendario.cod}}</th>
-							           <th class="col-md-2">{{labels.monitorCalendario.milestone}}</th>
-							           <th class="col-md-1 tdCenter">{{labels.monitorCalendario.data}}</th>
-							           <th class="col-md-1 tdCenter">{{labels.monitorCalendario.ora}}</th>
-							           <th class="col-md-1 tdCenter">{{labels.monitorCalendario.stato}}</th>
-							           <th class="col-md-1">{{labels.monitorCalendario.tag}}</th>
-							           <th class="col-md-4">{{labels.monitorCalendario.descrTag}}</th>
+							           <th class="col-md-2">${labels.monitorCalendario_cod}</th>
+							           <th class="col-md-2">${labels.monitorCalendario_milestone}</th>
+							           <th class="col-md-1 tdCenter">${labels.monitorCalendario_data}</th>
+							           <th class="col-md-1 tdCenter">${labels.monitorCalendario_ora}</th>
+							           <th class="col-md-1 tdCenter">${labels.monitorCalendario_stato}</th>
+							           <th class="col-md-1">${labels.monitorCalendario_tag}</th>
+							           <th class="col-md-4">${labels.monitorCalendario_descrTag}</th>
 							          </tr>
 							        </thead>          
 						        </table>

@@ -1,5 +1,5 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib prefix="t" tagdir="/WEB-INF/tags"%>
+<%@ page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="t" tagdir="/WEB-INF/tags"%>
 
 <t:template>
 
@@ -16,13 +16,13 @@
 	
 	  <jsp:attribute name="body_area">
 	  	<section class="content-header">
-			<h1>{{labels.menu.gestioneCalendario}}</h1>
+			<h1>${labels.menu_gestioneCalendario}</h1>
 		</section>
 
 		<section class="content">
 			<div class="box box-warning">
 				<div class="box-header with-border">
-        			<h3 class="box-title">{{labels.gestioneCalendario.selezionaCalendario}}</h3>
+        			<h3 class="box-title">${labels.gestioneCalendario_selezionaCalendario}</h3>
 				</div>
 	              <div class="box-body">
 	              	<div class="row">
@@ -46,7 +46,7 @@
 				<div class="col-md-12">
 					<div class="box box-info">
 						<div class="box-header with-border">
-							<h3 class="box-title">{{labels.gestioneCalendario.elencoMilestones}}</h3>
+							<h3 class="box-title">${labels.gestioneCalendario_elencoMilestones}</h3>
 						</div>
 						<div class="box-body">
 							<div class="table-responsive">
@@ -54,12 +54,12 @@
 									<thead>
 										<tr role="row">
 											<th class="col-md-1 tdCenter"></th>
-											<th class='hide'>{{labels.global.id}}</th>
-											<th class="col-md-2 tdCenter">{{labels.global.milestones}}</th>
-											<th class="col-md-2 tdCenter">{{labels.gestioneCalendario.dataCutOff}}</th>
-											<th class="col-md-2 tdCenter">{{labels.gestioneCalendario.oraCutOff}}</th>
-											<th class="col-md-2 tdCenter">{{labels.global.tag}}</th>
-											<th class="hide">{{labels.global.descrizioneTag}}</th>
+											<th class='hide'>${labels.global_id}</th>
+											<th class="col-md-2 tdCenter">${labels.global_milestones}</th>
+											<th class="col-md-2 tdCenter">${labels.gestioneCalendario_dataCutOff}</th>
+											<th class="col-md-2 tdCenter">${labels.gestioneCalendario_oraCutOff}</th>
+											<th class="col-md-2 tdCenter">${labels.global_tag}</th>
+											<th class="hide">${labels.global_descrizioneTag}</th>
 										</tr>
 									</thead>
 								</table>
