@@ -4,29 +4,37 @@
  */
 $(document).ready(function(){
 	getListaMilestones();
-})
+});
 
+
+var mainDatatable = null;
 
 /**
  * Funzione che elimina la riga selezionata dalla tabella 'Milestones' presente in gestioneMilestones.jsp e nel DB (chiedendone conferma)
  * @returns
  */
 function removeMilestone(row) {
+	
+	var idMilestone = mainDatatable.row(row).data().idMilestone;
+	
+	commonAskAndDelete(row, "ws/resources/Milestones(" + idMilestone + ")");
+	
+	/*
 	bootbox.confirm({
-	    title: "Eliminare entità",
-	    message: "Si \u00E8 sicuri di voler eliminare questa milestone?<br/>L'operazione \u00E8 irreversibile!",
-	    buttons: {
-	      cancel: {
-	        label: '<i class="fa fa-times"></i> Annulla',
-	        className: 'btn-default'
-	      },
-	      confirm: {
-	        label: '<i class="fa fa-trash-o"></i> Conferma',
-	        className: 'btn-danger'
-	      }
-	    },
-	    callback: function (result) {
-	      if (result) {
+		title: "Eliminare entità",
+		message: "Si \u00E8 sicuri di voler eliminare questa milestone?<br/>L'operazione \u00E8 irreversibile!",
+		buttons: {
+		  cancel: {
+			label: '<i class="fa fa-times"></i> Annulla',
+			className: 'btn-default'
+		  },
+		  confirm: {
+			label: '<i class="fa fa-trash-o"></i> Conferma',
+			className: 'btn-danger'
+		  }
+		},
+		callback: function (result) {
+		  if (result) {
 			idMilestone = $("#idMilestone"+row).text();
 				$.ajax({
 					type : "DELETE",
@@ -41,9 +49,9 @@ function removeMilestone(row) {
 					}
 				});
 			$('body>.tooltip').remove();
-	      }
-	    }
-	  });	
+		  }
+		}
+	  });	*/
 }
 
 /**
@@ -53,17 +61,17 @@ function removeMilestone(row) {
 */
 function getListaEntitaForUpdate(row, selectedEntita){
 	$.getJSON("ws/resources/Entita", function(dataSet){
-		 for(i in dataSet){
-		    var opt = "<option value='"+dataSet[i].idEntita+"'>"+dataSet[i].codice+"</option>";
-		    $("#selectCodiceEntita_rowEdit_"+row).append(opt);
-	      }
-		 
-			$("#selectCodiceEntita_rowEdit_"+row+" option").each(function(){
-				if ($(this).text() == selectedEntita)
-				    $(this).attr("selected","selected");
-				});
-
-	  });
+		for(i in dataSet) {
+			var opt = "<option value='"+dataSet[i].idEntita+"'>"+dataSet[i].codice+"</option>";
+			$("#selectCodiceEntita_rowEdit_"+row).append(opt);
+		}
+		
+		$("#selectCodiceEntita_rowEdit_"+row+" option").each(function() {
+			if ($(this).text() == selectedEntita)
+				$(this).attr("selected","selected");
+		});
+		
+	});
 }
 
 /**
@@ -72,18 +80,18 @@ function getListaEntitaForUpdate(row, selectedEntita){
 * @returns
 */
 function getListaTipiEventiForUpdate(row, selectedTipoEvento){
-	 $.getJSON("ws/resources/TipiEvento", function(dataSet){
-	   for(i in dataSet){
-	    var opt = "<option value='"+dataSet[i].idTipoEvento+"'>"+dataSet[i].codice+"</option>";
-	    $("#selectCodiceTipoEvento_rowEdit_"+row).append(opt);
-	      }
+	$.getJSON("ws/resources/TipiEvento", function(dataSet){
+		for(i in dataSet){
+			var opt = "<option value='"+dataSet[i].idTipoEvento+"'>"+dataSet[i].codice+"</option>";
+			$("#selectCodiceTipoEvento_rowEdit_"+row).append(opt);
+		}
 	   
 		$("#selectCodiceTipoEvento_rowEdit_"+row+" option").each(function(){
 			if ($(this).text() == selectedTipoEvento)
-			    $(this).attr("selected","selected");
-			});
+				$(this).attr("selected","selected");
+		});
 		
-	  });
+	});
 }
 
 
@@ -122,7 +130,15 @@ function addEditForm(row) {
 }
 
 
-function back(row){
+function back(row) {
+	
+	var idMilestone = mainDatatable.row(row).data().idEntita;
+	
+	commonGoBack(row, "ws/resources/Milestones(" + idMilestone + ")");
+	
+	
+	/* VECCHIO CODICE. Che non capisco.
+	
 	idMilestone = $("#idMilestone"+row).text();
 	console.log("idMilestone: "+idMilestone);
 	$.ajax({
@@ -162,12 +178,31 @@ function back(row){
 		$("#buttonToCancelRigaEdit"+row).parent().html(check);
 		$('body>.tooltip').remove();
 	  }
-	 });
+	 }); */
 }
 
 
 
 function update(row){
+	
+	var idMilestone = mainDatatable.row(row).data().idMilestone;
+	
+	var request = {
+		codice: $("#codiceMilestone_rowEdit_"+row).val(),  // FIXME: modificabile?!?
+		descrizione: $("#descrizioneMilestone_rowEdit_"+row).val(),
+		descrizioneTag: $("#descrizioneTagMilestone_rowEdit_"+row).val(),
+		tipoEvento: {
+			idTipoEvento: $("#selectCodiceTipoEvento_rowEdit_"+row).val(),
+		},
+		entita: {
+			idEntita: $("#selectCodiceEntita_rowEdit_"+row).val()
+		}
+		//FIXME predecessori
+	};
+	
+	commonUpdate(row, "ws/resources/Milestones("+idMilestone+")", request);
+	
+	/*
 	var idMilestone = $("#idMilestone"+row).text();
 	
 	var valueTipoEvento = $("#idMilestone_rowEdit_"+row).parent().find(".tipoEvento").val();
@@ -238,11 +273,27 @@ function update(row){
 			back(row);
 			//customAlertOK("Aggiornamento avvenuto correttamente");
 		  }
-		 });
+		 });*/
 }
 	
 function insert(row){		
 	
+	var request = {
+		codice: $("#codiceMilestone_New"+row).val(),
+		descrizione: $("#descrizioneMilestone_New"+row).val(),
+		descrizioneTag: $("#descrizioneTagMilestone_New"+row).val(),
+		tipoEvento: {
+			idTipoEvento: $("#codiceTipoEvento_New"+row).val(),
+		},
+		entita: {
+			idEntita: $("#codiceEntita_New"+row).val()
+		}
+		//FIXME predecessori
+	};
+	
+	commonInsert(row, "ws/resources/Milestones", request);
+		
+	/*
 	var sCodiceMilestone_New = $("#codiceMilestone_New"+row).val();
 	var sDescrizioneMilestone_New = $("#descrizioneMilestone_New"+row).val();
 	var sDescrizioneTagMilestone_New = $("#descrizioneTagMilestone_New"+row).val();
@@ -290,7 +341,7 @@ function insert(row){
 			
 			alert("Inserimento dati avvenuto correttamente!");
 		  }
-		 });
+		 });*/
 }
 
 
@@ -298,12 +349,83 @@ function getOptionButtons(data, type, row, meta){
 	return '<a style="cursor:pointer" onclick="removeMilestone('+row.idMilestone+')" id="buttonToDeleteRigaEdit'+row.idMilestone+'" data-toggle="tooltip" title="Elimina" data-placement="left"><i style="color:red" class="fa fa-trash-o"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="cursor:pointer" onclick="addEditForm('+row.idMilestone+')" id="buttonToUpdateRigaEdit'+row.idMilestone+'" data-toggle="tooltip" title="Modifica" data-placement="right"><i class="fa fa-pencil"></i></a>';
 }
 
+
+function renderIdMilestone(data, type, row, meta) {
+	return wrapDiv("idMilestone", meta.row, data);
+}
+
+function renderAggregata(data, type, row, meta) {
+	
+	if(row.tipoEvento == null)
+		return '<span class="alert-danger">Aggregata</span>';
+	else
+		return 'Atomica';
+}
+
+function renderCodice(data, type, row, meta) {
+	return wrapDiv("codiceMilestone", meta.row, data);
+}
+
+function renderDescrizione(data, type, row, meta) {
+	return wrapDiv("descrizioneMilestone", meta.row, data);
+}
+
+function renderDescrizioneTag(data, type, row, meta) {
+	return wrapDiv("descrizioneTagMilestone", meta.row, data);
+}
+
+function renderTipoEvento(data, type, row, meta) {
+	return wrapDiv("codiceTipoEvento", meta.row, data);
+}
+
+function renderEntita(data, type, row, meta) {
+	return wrapDiv("codiceEntita", meta.row, data);
+}
+
+function renderRowButtons(data, type, row, meta) {
+	return '<a style="cursor:pointer" onclick="removeMilestone('+meta.row+')" id="buttonToDeleteRigaEdit'+meta.row+'" data-toggle="tooltip" title="Elimina" data-placement="left"><i style="color:red" class="fa fa-trash-o"></i></a>'+
+		'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+
+		'<a style="cursor:pointer" onclick="addEditForm('+meta.row+')" id="buttonToUpdateRigaEdit'+meta.row+'" data-toggle="tooltip" title="Modifica" data-placement="right"><i class="fa fa-pencil"></i></a>';
+}
+
+
 /**
  * Funzione che popola la tabella presente nella pagina 'gestioneMilestones.jsp' visualizzando le milestone atomiche e aggregate
  * @returns
  */
 var rowCounter = 0
 function getListaMilestones(){
+	
+	mainDatatable = $("#tableListaMilestones").DataTable({
+		paging : false,
+		lengthChange : false,
+		searching : false,
+		ordering : true,
+		info : false,
+		autoWidth : false,
+		ajax: {
+			url: 'ws/resources/Milestones',
+			dataSrc: '',
+			language: 'it'
+		},
+		autoWidth : false,
+		destroy : true,
+		columns : [
+			{data : 'deleteRowButton', className : 'col-md-1 tdCenter', defaultContent : '', render: renderRowButtons },
+			{data : 'boolAggregato', className : 'col-md-1 boolAggregato', defaultContent : '', render: renderAggregata },
+			{data : 'idMilestone', className : 'hide', defaultContent : '', render: renderIdMilestone },
+			{data : 'codice', className : 'col-md-1', defaultContent : '', render: renderCodice }, 
+			{data : 'descrizione', className : 'col-md-3', defaultContent : '', render: renderDescrizione },
+			{data : 'descrizioneTag', className : 'col-md-3', defaultContent : '', render: renderDescrizioneTag },
+			{data : 'tipoEvento.codice', className : 'col-md-1 tipoEvento', defaultContent : '', render: renderTipoEvento},
+			{data : 'entita.codice', className : 'col-md-1', defaultContent : '', render: renderEntita },
+			{data : 'predecessori', className : 'col-md-1', defaultContent : 'ToDo' }
+			]
+	});
+	
+	addButtonInputForm("tableListaMilestones");
+	
+	/*
 		$.getJSON("ws/resources/Milestones", function(dataSet){
 			
 		for (i in dataSet){
@@ -357,7 +479,7 @@ function getListaMilestones(){
 		});
 		getIfAggregate();
 		addButtonInputForm("tableListaMilestones");
-	 });
+	 });*/
 }
 
 /**
@@ -366,10 +488,10 @@ function getListaMilestones(){
  */
 function getIfAggregate(){	
 	$('.boolAggregato').each(function(){
-	    var value_tipoEvento = $(this).parent().find('.tipoEvento').html();
-	    console.log(value_tipoEvento);
-        if (value_tipoEvento != '') $(this).html('Atomica');
-        else $(this).html('Aggregata');
+		var value_tipoEvento = $(this).parent().find('.tipoEvento').html();
+		console.log(value_tipoEvento);
+		if (value_tipoEvento != '') $(this).html('Atomica');
+		else $(this).html('Aggregata');
 	});
 }
 
@@ -378,7 +500,10 @@ function getIfAggregate(){
  * Funzione che aggiunge una nuova riga alla tabella 'Milestone' presente in gestioneMilestones.jsp per aggiungere una nuova milestone
  * @returns
  */
-function addInputForm(){	
+function addInputForm() {
+	
+	var rowCounter = mainDatatable.rows().length;
+	
 	var row = '<tr role="row">'
 	+'	<td class="tdCenter col-md-1"><a id="buttonToDeleteRigaNew'+rowCounter+'" style="cursor: pointer;" onclick="removeInputForm(this)" data-toggle="tooltip" title="Elimina" data-placement="left"><i style="color:red" class="fa fa-trash-o"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="cursor:pointer" onclick="insert('+rowCounter+')" id="buttonToUpdateRigaEdit'+rowCounter+'" data-toggle="tooltip" title="Inserisci dati" data-placement="right"><i style="color:green" class="fa fa-check"></i></a></td>'
 	+'	<td class="col-md-1"></td>'
@@ -395,8 +520,8 @@ function addInputForm(){
 	getListaTipiEventi(rowCounter);
 	$('#tableListaMilestones').append(row);
 	addButtonInputForm("tableListaMilestones");
+	
 	attivaWidgetSelect2();
-	rowCounter++;
 }
 
 /**
@@ -404,13 +529,13 @@ function addInputForm(){
  * @param row
  * @returns
  */
-function getListaEntita(row){
-	 $.getJSON("ws/resources/Entita", function(dataSet){
-		 for(i in dataSet){
-		    var opt = "<option value='"+dataSet[i].idEntita+"'>"+dataSet[i].codice+"</option>";
-		    $("#codiceEntita_New"+(row)).append(opt);
-	      }
-	  });
+function getListaEntita(row) {
+	$.getJSON("ws/resources/Entita", function(dataSet) {
+		for(i in dataSet){
+			var opt = "<option value='"+dataSet[i].idEntita+"'>"+dataSet[i].codice+"</option>";
+			$("#codiceEntita_New"+(row)).append(opt);
+		}
+	});
 }
 
 /**
@@ -419,11 +544,11 @@ function getListaEntita(row){
  * @returns
  */
 function getListaTipiEventi(row){
-	 $.getJSON("ws/resources/TipiEvento", function(dataSet){
-	   for(i in dataSet){
-	    var opt = "<option value='"+dataSet[i].idTipoEvento+"'>"+dataSet[i].codice+"</option>";
-	    $("#codiceTipoEvento_New"+(row)).append(opt);
-	      }
-	  });
+	$.getJSON("ws/resources/TipiEvento", function(dataSet){
+		for(i in dataSet){
+			var opt = "<option value='"+dataSet[i].idTipoEvento+"'>"+dataSet[i].codice+"</option>";
+			$("#codiceTipoEvento_New"+(row)).append(opt);
+		}
+	});
 }
 

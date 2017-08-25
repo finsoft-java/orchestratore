@@ -4,6 +4,8 @@
  */
 var USE_TIMESTAMP = true;
 
+//FIXME i18n?
+
 /////////////////////////CONVERSIONE DATA/ORA///////////////////////////////////////////
 /**
  * Funzione che splitta e converte la data passata come parametro, dal formato timeStamp a quello dd/MM/yyyy.
@@ -81,13 +83,17 @@ function convertDataOraToTimestamp(data, ora) {
 function addButtonInputForm(table) {
 	$("#aggiungiButtonRow").remove();
 	
-	//FIXME non può e non deve stare dentro la Datatable!!!
-	/*var row = '<tr id="aggiungiButtonRow" role="row">'
+	/* VECCHIO CODICE non può e non deve stare dentro la Datatable!!!
+	
+	var row = '<tr id="aggiungiButtonRow" role="row">'
 		+'	<td class="tdCenter col-md-1"><a style="cursor: pointer;" onclick="addInputForm()" data-toggle="tooltip" title="Aggiungi" data-placement="bottom"><i style="color:green" class="fa fa-plus-circle"></i></a></td>'
 		+'	</tr>';
 	$('#'+table).append(row);
 	*/
-	var btn = '<div id="aggiungiButtonRow"><a style="cursor: pointer;" onclick="addInputForm()" data-toggle="tooltip" title="Aggiungi" data-placement="bottom"><i style="color:green" class="fa fa-plus-circle"></i></a></div>';
+	var btn = '<div id="aggiungiButtonRow">' +
+		'<a style="cursor: pointer;" onclick="addInputForm()" data-toggle="tooltip" title="Aggiungi" data-placement="bottom"><i style="color:green" class="fa fa-plus-circle"></i></a>' +
+		'&nbsp;<a style="cursor: pointer;" onclick="mainDatatable.ajax.reload()" data-toggle="tooltip" title="Reload" data-placement="bottom"><i style="color:blue" class="fa fa-refresh"></i></a>' +
+		'</div>';
 	$('#'+table).parent().append(btn);
 	
 	$('body>.tooltip').remove();
@@ -102,7 +108,6 @@ function addButtonInputForm(table) {
  */
 function removeInputForm(row) {
 	$(row).parent().parent().remove();
-	rowCounter = rowCounter - 1;
 	$('body>.tooltip').remove();
 }
 
@@ -119,7 +124,7 @@ function wrapDiv(divIdPrefix, rowNum, data) {
 }
 
 /**
- * Funzione che richiama un'url per esseguire una UPDATE, e in caso di successo aggiorna anche la Datatable
+ * Funzione che richiama un'url per eseguire una UPDATE, e in caso di successo aggiorna anche la Datatable
  * @param rowNum
  * @param url
  * @param requestJSON
@@ -147,7 +152,36 @@ function commonUpdate(rowNum, url, requestJSON) {
 }
 
 /**
- * Funzione che richiama un'url per esseguire una INSERT, e in caso di successo aggiorna anche la Datatable
+ * Funzione che richiama un'url per recuperare i dati di una singola riga.
+ * Da usare quando l'utente preme "annulla", in fase di modifica.
+ * 
+ * @param rowNum
+ * @param url
+ * @param requestJSON
+ */
+function commonGoBack(rowNum, url) {
+	
+	//FIXME a essere precisi forse AJAX non serve, i dati vecchi sono conservati nella Datatable
+	// Quindi forse basta richiamare il metodo draw() ?
+	
+	$.ajax({
+		type: "GET",
+		url: url,
+		success: function(res) {
+			
+			var oldData = mainDatatable.row(rowNum).data();
+			for (var attrName in res) {
+				oldData[attrName] = res[attrName];
+			}
+			mainDatatable.row(rowNum).data(oldData).draw();
+		
+			$('body>.tooltip').remove();
+		}
+	});
+}
+
+/**
+ * Funzione che richiama un'url per eseguire una INSERT, e in caso di successo aggiorna anche la Datatable
  * @param rowNum
  * @param url
  * @param requestJSON
@@ -172,7 +206,7 @@ function commonInsert(rowNum, url, requestJSON) {
 }
 
 /**
- * Funzione che richiama un'url per esseguire una DELETE, e in caso di successo aggiorna anche la Datatable
+ * Funzione che richiama un'url per eseguire una DELETE, e in caso di successo aggiorna anche la Datatable
  * @param rowNum
  * @param url
  * @param requestJSON
@@ -184,13 +218,39 @@ function commonDelete(rowNum, url) {
 		url :  url,
 		dataType : "json",
 		success : function(dataSet) {
-			mainDatatable.row(row).remove().draw();
+			mainDatatable.row(rowNum).remove().draw();
 		},
 		error : function(errore) {
-			//FIXME i18n?
 			customAlertError("Errore nell'eliminazione: probabilmente l'oggetto e' utilizzato altrove ");
 		}
 	});
+	
+	$('body>.tooltip').remove();
+}
+
+/**
+ * Funzione che elimina un oggetto dalla datatable e dal DB chiedendone conferma prima
+ */
+function commonAskAndDelete(rowNum, url) {
+	bootbox.confirm({
+		title: "Eliminare oggetto",
+		message: "Si \u00E8 sicuri di voler eliminare questo oggetto?<br/>L'operazione \u00E8 irreversibile!",
+		buttons: {
+			cancel: {
+				label: '<i class="fa fa-times"></i> Annulla',
+				className: 'btn-danger'
+			},
+			confirm: {
+				label: '<i class="fa fa-trash-o"></i> Conferma',
+				className: 'btn-success'
+			}
+		},
+		callback: function (result) {
+			if (result) {
+				commonDelete(rowNum, url);
+			}
+		}
+	});	
 }
 
 /////////////////////////ATTIVAZIONE MANUALE WIDGET///////////////////////////////////////////

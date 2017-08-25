@@ -4,13 +4,21 @@
  */
 $(document).ready(function(){
 	getListaTipiEventi();
-})
+});
 
+
+var mainDatatable = null;
 
 /**
  * Funzione che elimina una tipologia di evento dalla datatable e dal DB chiedendone conferma prima
  */
 function removeTipoEvento(row) {
+	
+	var idTipoEvento = mainDatatable.row(row).data().idTipoEvento;
+	
+	commonAskAndDelete(row, "ws/resources/TipiEvento(" + idTipoEvento + ")");
+	
+/*
 	bootbox.confirm({
 	    title: "Eliminare tipolgia di evento",
 	    message: "Si \u00E8 sicuri di voler eliminare questo tipologia di evento?<br/>L'operazione \u00E8 irreversibile!",
@@ -42,7 +50,7 @@ function removeTipoEvento(row) {
 			$('body>.tooltip').remove();
 	      }
 	    }
-	  });
+	  }); */
 }
 
 /**
@@ -67,6 +75,12 @@ function updateTipoEvento(row) {
  * @returns
  */
 function back(row){
+	
+	var idTipoEvento = mainDatatable.row(row).data().idTipoEvento;
+	
+	commonGoBack(row, "ws/resources/TipiEvento(" + idTipoEvento + ")");
+	
+	/*
 	idTipoEvento = $("#idTipoEvento"+row).text();
 	$.ajax({
 	  type: "GET",
@@ -79,7 +93,7 @@ function back(row){
 		$("#buttonToUpdateRigaEdit"+row).parent().html(check);
 		$('body>.tooltip').remove();
 	  }
-	 });
+	 });*/
 }
 
 /**
@@ -90,6 +104,17 @@ function back(row){
  * @returns
  */
 function update(row){
+	
+	var idTipoEvento = mainDatatable.row(row).data().idTipoEvento;
+	
+	var request = {
+		codice: mainDatatable.row(row).data().codice,
+		descrizione: $("#descrizioneTipoEvento_rowNumber_"+row).val()
+	};
+		
+	commonUpdate(row, "ws/resources/TipiEvento("+idTipoEvento+")", request);
+		
+	/*
 	var idTipoEvento = $("#idTipoEvento"+row).text();
 	var dataList = [];
 	dataList.push([$("#descrizioneTipoEvento_rowNumber_"+row).val(),  $("#idCodice"+row).text()]);
@@ -118,7 +143,7 @@ function update(row){
 			$("#buttonToUpdateRigaEdit"+row).parent().html(check);
 			$('body>.tooltip').remove();
 		  }
-		 });
+		 });*/
 }
 
 /**
@@ -129,6 +154,15 @@ function update(row){
  * @returns
  */
 function insert(row){
+	
+	var request = {
+			codice: $("#codiceTipoEvento_New"+row).val(),
+			descrizione: $("#descrizioneTipoEvento_New"+row).val()
+	};
+		
+	commonInsert(row, "ws/resources/TipiEvento", request);
+	
+	/*
 	var dataList = [];
 	dataList.push([$("#descrizioneTipoEvento_New"+row).val(), $("#codiceTipoEvento_New"+row).val()]);
 	
@@ -160,7 +194,26 @@ function insert(row){
 			$("#buttonToDeleteRigaNew"+row).parent().html(check);
 			$('body>.tooltip').remove();
 		  }
-		 });
+		 });*/
+}
+
+function renderIdTipoEvento(data, type, row, meta) {
+	return wrapDiv("idTipoEvento", meta.row, data);
+}
+
+function renderCodice(data, type, row, meta) {
+	return wrapDiv("idCodice", meta.row, data);
+}
+
+function renderDescrizione(data, type, row, meta) {
+	return wrapDiv("descrizioneTipoEvento_rowNumber_", meta.row, data);
+}
+
+function renderRowButtons(data, type, row, meta) {
+	
+	return '<a style="cursor:pointer" onclick="removeTipoEvento('+meta.row+')" id="buttonToDeleteRigaEdit'+meta.row+'" data-toggle="tooltip" title="Elimina" data-placement="left"><i style="color:red" class="fa fa-trash-o"></i></a>'
+		+ '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
+		+ '<a style="cursor:pointer" onclick="updateTipoEvento('+meta.row+')" id="buttonToUpdateRigaEdit'+meta.row+'" data-toggle="tooltip" title="Modifica" data-placement="right"><i class="fa fa-pencil"></i></a>';
 }
 
 /**
@@ -168,8 +221,34 @@ function insert(row){
  * @param idCalendario
  * @returns
  */
-var rowCounter = 0
-function getListaTipiEventi(){
+//var rowCounter = 0
+function getListaTipiEventi() {
+	
+	mainDatatable = $("#tableTipiEventi").DataTable({
+		paging : false,
+		lengthChange : false,
+		searching : false,
+		ordering : true,
+		info : false,
+		autoWidth : false,
+		ajax: {
+			url: 'ws/resources/TipiEvento',
+			dataSrc: '',
+			language: 'it'
+		},
+		autoWidth : false,
+		destroy : true,
+		columns : [
+			{data : 'deleteRowButton', className : 'col-md-1 tdCenter', defaultContent : '', render: renderRowButtons },
+			{data : 'idTipoEvento', className : 'hide', defaultContent : '', render: renderIdTipoEvento },
+			{data : 'codice', className : 'col-md-3', defaultContent : '', render: renderCodice }, 
+			{data : 'descrizione', className : 'col-md-8', defaultContent : '', render: renderDescrizione },
+			]
+	});
+	
+	addButtonInputForm("tableTipiEventi");
+	
+	/*
 	$.getJSON("ws/resources/TipiEvento", function(dataSet){
 		
 		for (i in dataSet){
@@ -199,7 +278,7 @@ function getListaTipiEventi(){
 				]
 		});
 		addButtonInputForm("tableTipiEventi");
-	 });
+	 });*/
 }
 
 
@@ -207,7 +286,10 @@ function getListaTipiEventi(){
  * Funzione che aggiunge una nuova riga alla datatable 'Tipi evento' presente in gestioneTipiEvento.jsp per aggiungere una nuova tipologia di evento al DB
  * @returns
  */
-function addInputForm(){	
+function addInputForm() {
+	
+	var rowCounter = mainDatatable.rows().length;
+	
 	var row = '<tr role="row">'
 	+'	<td class="tdCenter col-md-1"><a id="buttonToDeleteRigaNew'+rowCounter+'" style="cursor: pointer;" onclick="removeInputForm(this)" data-toggle="tooltip" title="Elimina" data-placement="left"><i style="color:red" class="fa fa-trash-o"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="cursor:pointer" onclick="insert('+rowCounter+')" id="buttonToUpdateRigaEdit'+rowCounter+'" data-toggle="tooltip" title="Inserisci" data-placement="right"><i style="color:green" class="fa fa-check"></i></a></td>'
 	+'	<td class="idTipoEvento hide"></td>'
@@ -217,7 +299,7 @@ function addInputForm(){
 	
 	$('#tableTipiEventi').append(row);
 	addButtonInputForm("tableTipiEventi");
-	rowCounter++;
+	
 }
 
 

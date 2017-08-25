@@ -4,7 +4,7 @@
  */
 $(document).ready(function(){
 	getListaEntita();
-})
+});
 
 var mainDatatable = null;
 
@@ -12,6 +12,13 @@ var mainDatatable = null;
  * Funzione che elimina una entita'  dalla datatable e dal DB chiedendone conferma prima
  */
 function removeEntita(row) {
+	
+	var idEntita = mainDatatable.row(row).data().idEntita;
+	
+	commonAskAndDelete(rowNum, "ws/resources/Entita(" + idEntita + ")");
+	
+	/* VECCHIO CODICE
+	
 	bootbox.confirm({
 		title: "Eliminare entit\u00E0",
 		message: "Si \u00E8 sicuri di voler eliminare questa entit\u00E0?<br/>L'operazione \u00E8 irreversibile!",
@@ -27,6 +34,7 @@ function removeEntita(row) {
 		},
 		callback: function (result) {
 			if (result) {
+				
 				idEntita = $("#idEntita"+row).text();
 				
 				//TODO usare commonDelete(row, "ws/resources/Entita(" + idEntita + ")")
@@ -48,7 +56,7 @@ function removeEntita(row) {
 			$('body>.tooltip').remove();
 		  }
 		}
-	});	
+	});	*/
 }
 
 /**
@@ -59,9 +67,9 @@ function removeEntita(row) {
  */
 function updateEntita(row) {
 	
-	descrizione = '<input style="width:100%" placeholder="{{labels.gestioneEntita.descrizione}}" id="descrizioneEntita_rowNumber_'+row+'" type="text" class="form-control" value="'+$("#descrizioneEntita_rowNumber_"+row).text()+'"/>'; 
-	acronimo = '<input style="width:100%" placeholder="{{labels.gestioneEntita.acronimo}}" id="acronimoEntita_rowNumber_'+row+'" type="text" class="form-control" value="'+$("#acronimoEntita_rowNumber_"+row).text()+'"/>'; 
-	check = '<a style="cursor:pointer"="#" onclick="back('+row+')" id="buttonToDeleteRigaEdit'+row+'" data-toggle="tooltip" title="Annulla" data-placement="left"><i style="color:black" class="fa fa-times"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="cursor:pointer" onclick="update('+row+')" id="buttonToUpdateRigaEdit'+row+'" data-toggle="tooltip" title="Salva" data-placement="right"><i style="color:green" class="fa fa-check"></i></a>';	
+	var descrizione = '<input style="width:100%" placeholder="{{labels.gestioneEntita.descrizione}}" id="descrizioneEntita_rowNumber_'+row+'" type="text" class="form-control" value="'+$("#descrizioneEntita_rowNumber_"+row).text()+'"/>'; 
+	var acronimo = '<input style="width:100%" placeholder="{{labels.gestioneEntita.acronimo}}" id="acronimoEntita_rowNumber_'+row+'" type="text" class="form-control" value="'+$("#acronimoEntita_rowNumber_"+row).text()+'"/>'; 
+	var check = '<a style="cursor:pointer"="#" onclick="back('+row+')" id="buttonToDeleteRigaEdit'+row+'" data-toggle="tooltip" title="Annulla" data-placement="left"><i style="color:black" class="fa fa-times"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="cursor:pointer" onclick="update('+row+')" id="buttonToUpdateRigaEdit'+row+'" data-toggle="tooltip" title="Salva" data-placement="right"><i style="color:green" class="fa fa-check"></i></a>';	
 	
 	$("#descrizioneEntita_rowNumber_"+row).parent().html(descrizione);
 	$("#acronimoEntita_rowNumber_"+row).parent().html(acronimo);
@@ -77,7 +85,15 @@ function updateEntita(row) {
  * @returns
  */
 function back(row){
+	
+	var idEntita = mainDatatable.row(row).data().idEntita;
+	
+	commonGoBack(row, "ws/resources/Entita(" + idEntita + ")");
+	
+	/* VECCHIO CODICE
+	
 	idEntita = $("#idEntita"+row).text();
+	
 	$.ajax({
 		type: "GET",
 		url: "ws/resources/Entita("+idEntita+")",
@@ -93,7 +109,7 @@ function back(row){
 		
 			$('body>.tooltip').remove();
 		}
-	});
+	});*/
 }
 
 /**
@@ -103,16 +119,20 @@ function back(row){
  * @param row
  * @returns
  */
-function update(row){
-	var idEntita = $("#idEntita"+row).text();
-	
-	var request = {			
+function update(row) {
+	// VECCHIO CODICE
+	// var idEntita = $("#idEntita"+row).text();
+	var idEntita = mainDatatable.row(row).data().idEntita;
+		
+	var request = {
 		acronimo: $("#acronimoEntita_rowNumber_"+row).val(),
-		codice: $("#idCodice"+row).text(),
+		codice: mainDatatable.row(row).data().codice,  // VECCHIO CODICE $("#idCodice"+row).text(),
 		descrizione: $("#descrizioneEntita_rowNumber_"+row).val()
 	};
 	
-	//TODO usare commonUpdate(row, "ws/resources/Entita("+idEntita+")", request)
+	commonUpdate(row, "ws/resources/Entita("+idEntita+")", request);
+	
+	/* VECCHIO CODICE
 	
 	request = JSON.stringify(request); 
 	$.ajax({
@@ -123,13 +143,6 @@ function update(row){
 		dataType: "json",
 		success: function(res) {
 			
-			// modifica per miglior gestione datatable
-			var oldData = mainDatatable.row(row).data();
-			oldData.descrizione = res.descrizione;
-			oldData.acronimo = res.acronimo;
-			mainDatatable.row(row).data(oldData).draw();
-			
-			/*
 			descrizione = wrapDiv('descrizioneEntita_rowNumber_', row, res.descrizione);
 			acronimo = wrapDiv('acronimoEntita_rowNumber_', row, res.acronimo);
 			check = '<a style="cursor:pointer" onclick="removeEntita('+row+')" id="buttonToDeleteRigaEdit'+row+'" data-toggle="tooltip" title="Elimina" data-placement="left"><i style="color:red" class="fa fa-trash-o"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="cursor:pointer" onclick="updateEntita('+row+')" id="buttonToUpdateRigaEdit'+row+'" data-toggle="tooltip" title="Modifica" data-placement="right"><i class="fa fa-pencil"></i></a>';
@@ -137,10 +150,10 @@ function update(row){
 			$("#descrizioneEntita_rowNumber_"+row).parent().html(descrizione);
 			$("#acronimoEntita_rowNumber_"+row).parent().html(acronimo);
 			$("#buttonToUpdateRigaEdit"+row).parent().html(check);
-			*/
+			
 			$('body>.tooltip').remove();
 		  }
-		 });
+		 });*/
 }
 
 /**
@@ -158,8 +171,10 @@ function insert(row){
 		descrizione: $("#descrizioneEntita_New"+row).val()
 	};
 	
-	//TODO usare commonInsert(row, "ws/resources/Entita", request)
+	commonInsert(row, "ws/resources/Entita", request);
 	
+	/* VECCHIO CODICE
+
 	request = JSON.stringify(request);
 	
 	$.ajax({
@@ -170,11 +185,6 @@ function insert(row){
 		dataType: "json",
 		success: function(res) {
 			
-			// modifica per miglior gestione datatable
-			mainDatatable.row.add(res).draw();
-			
-			//Cosa serve ancora e cosa no?
-			/*idEntita = wrapDiv('idEntita', row, res.idEntita);
 			codice = wrapDiv('idCodice', row, res.codice);
 			descrizione = wrapDiv('descrizioneEntita_rowNumber_', row, res.descrizione);
 			acronimo = wrapDiv('acronimoEntita_rowNumber_', row, res.acronimo);
@@ -187,12 +197,13 @@ function insert(row){
 			$("#acronimoEntita_New"+row).parent().html(acronimo);
 			
 			$("#buttonToDeleteRigaNew"+row).parent().html(check);
-			*/
+		
 			$('body>.tooltip').remove();
 			
 			//alert("Inserimento dati avvenuto correttamente!");
 		  }
 		 });
+	*/
 }
 
 function renderIdEntita(data, type, row, meta) {
@@ -227,8 +238,8 @@ function getListaEntita() {
 	mainDatatable = $("#tableGestioneEntita").DataTable({
 		paging : false,
 		lengthChange : false,
-		searching : false,
-		ordering : false,
+		searching : true,
+		ordering : true,
 		info : false,
 		autoWidth : false,
 		ajax: {
@@ -258,10 +269,10 @@ function getListaEntita() {
  */
 function addInputForm(){
 	
-	// modifica per miglior gestione datatable
+	// il VECCHIO CODICE usava rowCounter variabile globale
 	var rowCounter = mainDatatable.rows().length;
 		
-	//FIXME per avere i placeholder corretti, si può creare all'inizio una riga nascosta, poi duplicarla
+	//FIXME per avere i placeholder corretti, magari si può creare all'inizio una riga nascosta, poi duplicarla?
 	var row = '<tr role="row">'
 	+'	<td class="tdCenter col-md-1"><a id="buttonToDeleteRigaNew'+rowCounter+'" style="cursor: pointer;" onclick="removeInputForm(this)" data-toggle="tooltip" title="Elimina" data-placement="left"><i style="color:red" class="fa fa-trash-o"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="cursor:pointer" onclick="insert('+rowCounter+')" id="buttonToUpdateRigaEdit'+rowCounter+'" data-toggle="tooltip" title="Inserisci" data-placement="right"><i style="color:green" class="fa fa-check"></i></a></td>'
 	+'	<td class="idEntita hide"></td>'
@@ -270,9 +281,7 @@ function addInputForm(){
 	+'	<td class="col-md-4"><input style="width:100%" placeholder="${labels.gestioneEntita._acronimo}" id="acronimoEntita_New'+rowCounter+'" type="text" class="form-control"/></td>'
 	+'</tr>';
 	
-	//getListaMilestone_gestCal(rowCounter);
 	$('#tableGestioneEntita').append(row);
-	
 	addButtonInputForm("tableGestioneEntita");
 	
 }
