@@ -528,6 +528,7 @@ function addInputForm() {
 	+'</tr>';
 	
 	
+	
 	getListaEntita(rowCounter);
 	getListaTipiEventi(rowCounter);
 	getListaPredecessori(rowCounter)
