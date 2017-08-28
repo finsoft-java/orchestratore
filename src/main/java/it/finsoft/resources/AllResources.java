@@ -175,6 +175,12 @@ public class AllResources {
 		return milestoneMilestonesManager.findById(id, idCh);
 	}
 
+	@GET
+	@Path("MilestoneMilestones({idM})")
+	public List<MilestoneMilestone>  findByIdMilestone(@PathParam("idM") Long idMilestone) {
+		return milestoneMilestonesManager.findByIdMilestone(idMilestone);
+	}
+
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("MilestoneMilestones")

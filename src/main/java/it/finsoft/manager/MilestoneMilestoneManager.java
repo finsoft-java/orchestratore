@@ -30,13 +30,14 @@ public class MilestoneMilestoneManager {
 	}
 
 	public MilestoneMilestone findById(Long id, Long idCh) {
-		try {
-			return em.createQuery(
-					"FROM MilestoneMilestone WHERE milestone.idMilestone= :m AND milestoneChild.idMilestone= :ch",
-					MilestoneMilestone.class).setParameter("m", id).setParameter("ch", idCh).getSingleResult();
-		} catch (Exception sqlError) {
-			return null;
-		}
+		return em.createQuery(
+				"FROM MilestoneMilestone WHERE milestone.idMilestone= :m AND milestoneChild.idMilestone= :ch",
+				MilestoneMilestone.class).setParameter("m", id).setParameter("ch", idCh).getSingleResult();
+	}
+
+	public List<MilestoneMilestone> findByIdMilestone(Long idMilestone) {
+		return em.createQuery("FROM MilestoneMilestone WHERE milestone.idMilestone= :m ", MilestoneMilestone.class)
+				.setParameter("m", idMilestone).getResultList();
 	}
 
 	public List<MilestoneMilestone> findAll() {
