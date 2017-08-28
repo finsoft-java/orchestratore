@@ -527,6 +527,7 @@ function addInputForm() {
 //	+'	<td class="col-md-1"><input style="width:100%" placeholder="{{labels.gestioneMilestones_predecessori}}" id="predecessori_New'+rowCounter+'" type="text" class="form-control"/></td>'
 	+'</tr>';
 	
+	
 	getListaEntita(rowCounter);
 	getListaTipiEventi(rowCounter);
 	getListaPredecessori(rowCounter)
