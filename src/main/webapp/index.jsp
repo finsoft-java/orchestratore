@@ -85,6 +85,9 @@
 		<script src="dist/js/monitorFunctions.js"></script>
 		<script>
 			attivaWidgetSelect2();
+			
+			var wsPath = '${sessionBean.wsPath}';
+			var userName = '${sessionBean.userName}';
 		</script>
 	  </jsp:attribute>
 	  
