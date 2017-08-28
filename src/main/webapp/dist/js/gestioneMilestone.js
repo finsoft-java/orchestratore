@@ -114,6 +114,10 @@ function addEditForm(row) {
 	else sCodiceEntita = '<div class="form-group" style="width:100%;"><select style="width:100%;" id="selectCodiceEntita_rowEdit_'+row+'" class="form-control select2"><option></option></select></div>'; 
 	
 	sPredecessori = '<input style="width:100%" placeholder="Predecessori" id="predecessori_rowEdit_'+row+'" type="text" class="form-control" value="'+$("#predecessori"+row).text()+'"/>'; 
+
+	if($("#predecessori_"+row).parent().hasClass("form-group")) sPredecessori = '<select style="width:100%;" id="selectPredecessori_rowEdit_'+row+'" class="form-control select2"><option></option></select>'; 
+	else sPredecessori = '<div class="form-group" style="width:100%;"><select style="width:100%;" id="selectPredecessori_rowEdit_'+row+'" class="form-control select2"><option></option></select></div>'; 
+	
 	
 	$("#codiceMilestone"+row).parent().html(sCodiceMilestone);
 	$("#descrizioneMilestone"+row).parent().html(sDescrizioneMilestone);
@@ -356,8 +360,10 @@ function renderIdMilestone(data, type, row, meta) {
 
 function renderAggregata(data, type, row, meta) {
 	
-	if(row.tipoEvento == null)
-		return '<span class="alert-danger">Aggregata</span>';
+	if(row.tipoEvento == null && row.idEntita == null)
+		return '<span class="alert-info">Aggregata</span>';
+	else if (row.predecessori != null) //FIXME
+		return '<span class="alert-danger">Errore</span>';
 	else
 		return 'Atomica';
 }
@@ -380,6 +386,10 @@ function renderTipoEvento(data, type, row, meta) {
 
 function renderEntita(data, type, row, meta) {
 	return wrapDiv("codiceEntita", meta.row, data);
+}
+
+function renderPredecessori(data, type, row, meta) {
+	return wrapDiv("predecessori", meta.row, data);
 }
 
 function renderRowButtons(data, type, row, meta) {
@@ -419,7 +429,7 @@ function getListaMilestones(){
 			{data : 'descrizioneTag', className : 'col-md-3', defaultContent : '', render: renderDescrizioneTag },
 			{data : 'tipoEvento.codice', className : 'col-md-1 tipoEvento', defaultContent : '', render: renderTipoEvento},
 			{data : 'entita.codice', className : 'col-md-1', defaultContent : '', render: renderEntita },
-			{data : 'predecessori', className : 'col-md-1', defaultContent : 'ToDo' }
+			{data : 'predecessori', className : 'col-md-1', defaultContent : '', render: renderPredecessori }
 			]
 	});
 	
@@ -505,19 +515,21 @@ function addInputForm() {
 	var rowCounter = mainDatatable.rows().length;
 	
 	var row = '<tr role="row">'
-	+'	<td class="tdCenter col-md-1"><a id="buttonToDeleteRigaNew'+rowCounter+'" style="cursor: pointer;" onclick="removeInputForm(this)" data-toggle="tooltip" title="Elimina" data-placement="left"><i style="color:red" class="fa fa-trash-o"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="cursor:pointer" onclick="insert('+rowCounter+')" id="buttonToUpdateRigaEdit'+rowCounter+'" data-toggle="tooltip" title="Inserisci dati" data-placement="right"><i style="color:green" class="fa fa-check"></i></a></td>'
-	+'	<td class="col-md-1"></td>'
+	+'	<td class="tdCenter"><a id="buttonToDeleteRigaNew'+rowCounter+'" style="cursor: pointer;" onclick="removeInputForm(this)" data-toggle="tooltip" title="Elimina" data-placement="left"><i style="color:red" class="fa fa-trash-o"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="cursor:pointer" onclick="insert('+rowCounter+')" id="buttonToUpdateRigaEdit'+rowCounter+'" data-toggle="tooltip" title="Inserisci dati" data-placement="right"><i style="color:green" class="fa fa-check"></i></a></td>'
+	+'	<td></td>'
 	+'	<td class="idMilestone hide"></td>'
-	+'	<td class="col-md-1"><input style="width:100%" placeholder="{{labels.gestioneMilestones.codice}}" id="codiceMilestone_New'+rowCounter+'" type="text" class="form-control"/></td>'
-	+'	<td class="col-md-3"><input style="width:100%" placeholder="{{labels.gestioneMilestones.descrizione}}" id="descrizioneMilestone_New'+rowCounter+'" type="text" class="form-control"/></td>'
-	+'	<td class="col-md-3"><input style="width:100%" placeholder="{{labels.gestioneMilestones.descrizioneTag}}" id="descrizioneTagMilestone_New'+rowCounter+'" type="text" class="form-control"/></td>'
-	+'	<td class="col-md-1"><div class="form-group" style="width:100%;"><select style="width:100%;" id="codiceTipoEvento_New'+rowCounter+'" class="form-control select2"><option></option></select></div></td>'
-	+'	<td class="col-md-1"><div class="form-group" style="width:100%;"><select style="width:100%;" id="codiceEntita_New'+rowCounter+'" class="form-control select2"><option></option></select></div></td>'
-	+'	<td class="col-md-1"><input style="width:100%" placeholder="{{labels.gestioneMilestones.predecessori}}" id="predecessori_New'+rowCounter+'" type="text" class="form-control"/></td>'
+	+'	<td><input style="width:100%" placeholder="{{labels.gestioneMilestones_codice}}" id="codiceMilestone_New'+rowCounter+'" type="text" class="form-control"/></td>'
+	+'	<td><input style="width:100%" placeholder="{{labels.gestioneMilestones_descrizione}}" id="descrizioneMilestone_New'+rowCounter+'" type="text" class="form-control"/></td>'
+	+'	<td><input style="width:100%" placeholder="{{labels.gestioneMilestones_descrizioneTag}}" id="descrizioneTagMilestone_New'+rowCounter+'" type="text" class="form-control"/></td>'
+	+'	<td><div class="form-group" style="width:100%;"><select style="width:100%;" id="codiceTipoEvento_New'+rowCounter+'" class="form-control select2"><option></option></select></div></td>'
+	+'	<td><div class="form-group" style="width:100%;"><select style="width:100%;" id="codiceEntita_New'+rowCounter+'" class="form-control select2"><option></option></select></div></td>'
+	+'	<td><div class="form-group" style="width:100%;"><select style="width:100%;" id="predecessori_New'+rowCounter+'" class="form-control select2" multiple="multiple"><option></option></select></div></td>'
+//	+'	<td class="col-md-1"><input style="width:100%" placeholder="{{labels.gestioneMilestones_predecessori}}" id="predecessori_New'+rowCounter+'" type="text" class="form-control"/></td>'
 	+'</tr>';
 	
 	getListaEntita(rowCounter);
 	getListaTipiEventi(rowCounter);
+	getListaPredecessori(rowCounter)
 	$('#tableListaMilestones').append(row);
 	addButtonInputForm("tableListaMilestones");
 	
@@ -551,4 +563,29 @@ function getListaTipiEventi(row){
 		}
 	});
 }
+
+
+/**
+ * Funzione che come prima cosa ottiene la lista dei predecessori (tramite chiamata ad opportuno servizio) ed infine ne popola le opzioni di uno specifico tag <select>
+ * @param row
+ * @returns
+ */
+function getListaPredecessori(row) {
+	$.getJSON("ws/resources/MilestoneMilestones", function(dataSet) {
+		for(i in dataSet){
+			console.log("milestoneComponente2: "+ dataSet[i].milestoneComponente.descrizione);
+//			console.log("milestoneComponente3: "+ dataSet[i].milestoneComponente);
+//			console.log("milestoneComponente4: "+ dataSet[i].milestoneComponente);
+
+			var opt = "<option value='"+dataSet[i].milestoneComponente.idMilestone+"'>"+dataSet[i].milestoneComponente.descrizione+"</option>";
+			$("#predecessori_New"+(row)).append(opt);
+		}
+	});
+}
+
+
+
+
+
+
 
