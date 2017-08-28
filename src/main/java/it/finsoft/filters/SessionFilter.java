@@ -1,4 +1,4 @@
-package it.finsoft.resources;
+package it.finsoft.filters;
 
 import it.finsoft.entity.Settings;
 import it.finsoft.manager.SettingsManager;

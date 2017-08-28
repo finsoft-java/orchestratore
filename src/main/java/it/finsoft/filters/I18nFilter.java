@@ -3,7 +3,7 @@
 * Luca Vercelli 2017
 * Released under GPLv3 
 */
-package it.finsoft.util;
+package it.finsoft.filters;
 
 import java.io.IOException;
 import java.util.HashMap;
