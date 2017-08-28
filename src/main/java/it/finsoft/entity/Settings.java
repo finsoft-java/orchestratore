@@ -15,7 +15,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * 
  */
 @Entity
-@Table(name = "U7B2_OWN.T_BDOR0_SETTINGS")
+@Table(name = "T_BDOR0_SETTINGS")
 @XmlRootElement
 public class Settings implements Serializable {
 
@@ -30,8 +30,8 @@ public class Settings implements Serializable {
 		return id;
 	}
 
-	public void setId(long id) {
-		if (id != 1L)
+	public void setId(Long id) {
+		if (id.longValue() != 1L)
 			throw new IllegalArgumentException("Cannot create another instance of this class");
 		this.id = id;
 	}
