@@ -26,7 +26,8 @@ public class SettingsManager {
 	}
 
 	public Settings find() {
-		Settings instance = em.find(Settings.class, 1L);
+
+		Settings instance = em.find(Settings.class, new Long(1L));
 		if (instance == null)
 			LOG.error("Record SETTINGS non trovato!? N.B. deve avere ID=1.");
 		return instance;
