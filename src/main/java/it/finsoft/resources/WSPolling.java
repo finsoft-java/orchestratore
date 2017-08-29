@@ -2,7 +2,7 @@ package it.finsoft.resources;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
@@ -42,7 +42,7 @@ public class WSPolling {
 	 *         verificato in parte (per le aggregate), 2 se si e' verificato
 	 *         completamente.
 	 */
-	@GET
+	@POST
 	public StringJsonResponse get(@QueryParam("milestone") String codiceMilestone, @QueryParam("tag") String tag) {
 
 		// TODO sarebbe bello restituire il dettaglio degli eventi avvenuti...
@@ -62,13 +62,5 @@ public class WSPolling {
 		}
 
 		return ret;
-	}
-
-	/* ---- TEST RESOURCES ---- */
-	@Path("test")
-	@Produces(MediaType.TEXT_PLAIN)
-	public String prova() {
-		System.out.println("ok Polling");
-		return "ok Polling";
 	}
 }

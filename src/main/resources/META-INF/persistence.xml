@@ -16,6 +16,7 @@
 		<class>it.finsoft.entity.MilestoneMilestone</class>
 		<class>it.finsoft.entity.TipoEvento</class>
 		<class>it.finsoft.entity.Settings</class>
+		<class>it.finsoft.entity.Token</class>
 		
 		<properties>
 			<!-- Non utilizziamo user e pwd per accedere al db 

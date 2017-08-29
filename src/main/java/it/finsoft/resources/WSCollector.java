@@ -5,7 +5,7 @@ import java.util.Map;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
@@ -29,7 +29,7 @@ public class WSCollector {
 	 * Metodo GET per inserire dati via http esegue due query per risolvere dal
 	 * codiceEnt a Entita e da codiceTipi a TipoEvento
 	 */
-	@GET
+	@POST
 	public CommonJsonResponse insertEvent(@QueryParam("entita") String codiceEntita,
 			@QueryParam("tipoEvento") String codiceTipoEvento, @QueryParam("tag") String tag, @Context UriInfo uriInfo) {
 
@@ -52,18 +52,7 @@ public class WSCollector {
 		}
 
 		return ret;
-		// FIXME con JAX-RS 1 ho dovuto inibire l'output DatiCollector
 
 	}
-
-	/* ---- TEST RESOURCES ---- */
-	@GET
-	@Path("test")
-	@Produces(MediaType.TEXT_PLAIN)
-	public String prova() {
-		System.out.println("ok collector");
-		return "ok collector";
-	}
-	/* ---- TEST RESOURCES ---- */
 
 }

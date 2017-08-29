@@ -2,7 +2,7 @@ package it.finsoft.resources;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
@@ -24,7 +24,7 @@ public class WSTagDefinita {
 	@Inject
 	WSManager manager;
 
-	@GET
+	@POST
 	public StringJsonResponse get(@QueryParam("codiceMilestone") String codiceMilestone, @QueryParam("tag") String tag) {
 
 		StringJsonResponse ret = new StringJsonResponse();

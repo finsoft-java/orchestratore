@@ -189,7 +189,7 @@ function getSemaforo(datatable, numRiga, data) {
 	var diff = _now - _data;	
 	
 	$.ajax({
-		type : "GET",
+		type : "POST",
 		url : endpoint,
 		dataType : "json",
 		success : function(dataSet) {
