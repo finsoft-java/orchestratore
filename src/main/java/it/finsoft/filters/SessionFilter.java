@@ -34,8 +34,8 @@ public class SessionFilter implements Filter {
 	public final static Logger LOG = Logger.getLogger(SessionFilter.class);
 
 	@Override
-	public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException,
-			ServletException {
+	public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain)
+			throws IOException, ServletException {
 
 		if (req instanceof HttpServletRequest && resp instanceof HttpServletResponse) {
 
@@ -56,8 +56,16 @@ public class SessionFilter implements Filter {
 
 			if (sessionBean.getUserName() == null) {
 				loadRequestInBean(sessionBean, request, false);
-				
-				//TODO swa2
+
+				// TODO swa2
+			}
+
+			if (sessionBean.getAmbiente() == null) {
+				String ambiente = System.getProperty("DD_U7SC0_ambiente_ISP");
+				if (ambiente == null) {
+					ambiente = "POUN";
+				}
+				sessionBean.setAmbiente(ambiente);
 			}
 
 			chain.doFilter(request, response); // Continue chain

@@ -5,9 +5,6 @@ import java.util.Map;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
 import org.jboss.logging.Logger;
 
 import it.finsoft.entity.CalendarioMilestone;
@@ -20,8 +17,6 @@ import it.finsoft.util.KeyNotFoundException;
 
 @Stateless
 public class WSPollingManager {
-	@PersistenceContext(unitName = "persistenceUnit")
-	private EntityManager em;
 
 	@Inject
 	MilestoneManager milestoneManager;
@@ -39,25 +34,27 @@ public class WSPollingManager {
 	// ----------Polling-----------//
 
 	/**
-	 * Calcolo del polling. Deve restituire 0 se l'evento non si è verificato, 1
-	 * se si è verificato in parte (per le aggregate), 2 se si è verificato
+	 * Calcolo del polling. Deve restituire 0 se l'evento non si e' verificato,
+	 * 1 se si e' verificato in parte (per le aggregate), 2 se si e' verificato
 	 * completamente.
 	 * 
 	 * @throws KeyNotFoundException
-	 *             se la milestone non è ben definita
+	 *             se la milestone non e' ben definita
 	 */
 	public int calcolaPolling(String codiceMilestone, String tag) throws KeyNotFoundException {
 		Milestone milestone = milestoneManager.findByCod(codiceMilestone);
+		if (milestone == null)
+			throw new IllegalArgumentException("Milestone '" + codiceMilestone + "' inesistente");
 		return calcolaPolling(milestone, tag);
 	}
 
 	/**
-	 * Calcolo del polling. Deve restituire 0 se l'evento non si è verificato, 1
-	 * se si è verificato in parte (per le aggregate), 2 se si è verificato
+	 * Calcolo del polling. Deve restituire 0 se l'evento non si e' verificato,
+	 * 1 se si e' verificato in parte (per le aggregate), 2 se si e' verificato
 	 * completamente.
 	 * 
 	 * @throws KeyNotFoundException
-	 *             se la milestone non è ben definita
+	 *             se la milestone non e' ben definita
 	 */
 	public int calcolaPolling(CalendarioMilestone calendarioMilestone) throws KeyNotFoundException {
 		Milestone milestone = calendarioMilestone.getMilestone();
@@ -66,12 +63,12 @@ public class WSPollingManager {
 	}
 
 	/**
-	 * Calcolo del polling. Deve restituire 0 se l'evento non si è verificato, 1
-	 * se si è verificato in parte (per le aggregate), 2 se si è verificato
+	 * Calcolo del polling. Deve restituire 0 se l'evento non si e' verificato,
+	 * 1 se si e' verificato in parte (per le aggregate), 2 se si e' verificato
 	 * completamente.
 	 * 
 	 * @throws KeyNotFoundException
-	 *             se la milestone non è ben definita
+	 *             se la milestone non e' ben definita
 	 */
 	private int calcolaPolling(Milestone milestone, String tag) throws KeyNotFoundException {
 
@@ -81,7 +78,7 @@ public class WSPollingManager {
 		if (!milestoneManager.milestoneAggregata(milestone)) {
 
 			// (milestone atomica)
-			// il semaforo è verde se l'evento si è verificato
+			// il semaforo e' verde se l'evento si e' verificato
 
 			List<Evento> evList = eventoManager.findBy(tag, ent, tp);
 			return (evList.isEmpty()) ? 0 : 2;

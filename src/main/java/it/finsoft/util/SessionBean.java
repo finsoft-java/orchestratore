@@ -17,6 +17,7 @@ public class SessionBean implements Serializable {
 	private String wsPath;
 	private String language;
 
+	private String ambiente;
 	private String profileId;
 	private String userName;
 	private String svcUrl;
@@ -77,5 +78,13 @@ public class SessionBean implements Serializable {
 
 	public void setErrorsConnectingSWA(boolean errorConnectionSWA) {
 		this.errorsConnectingSWA = errorConnectionSWA;
+	}
+
+	public String getAmbiente() {
+		return ambiente;
+	}
+
+	public void setAmbiente(String ambiente) {
+		this.ambiente = ambiente;
 	}
 }

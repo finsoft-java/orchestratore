@@ -8,6 +8,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
+import org.jboss.logging.Logger;
+
 import it.finsoft.manager.MilestoneManager;
 import it.finsoft.manager.WSManager;
 import it.finsoft.manager.WSPollingManager;
@@ -26,6 +28,8 @@ public class WSPolling {
 	@Inject
 	WSPollingManager wsPolling;
 
+	public final static Logger LOG = Logger.getLogger(WSManager.class);
+
 	/**
 	 * Questo e' il servizio web del Polling: dato un codice milestone e una
 	 * relativa tag, dice se la milestone e' stata raggiunta oppure no. Ha senso
@@ -39,21 +43,20 @@ public class WSPolling {
 	 *         completamente.
 	 */
 	@GET
-	public StringJsonResponse get(@QueryParam("milestone") String codiceMilestone,
-			@QueryParam("tag") String tag) {
+	public StringJsonResponse get(@QueryParam("milestone") String codiceMilestone, @QueryParam("tag") String tag) {
 
 		// TODO sarebbe bello restituire il dettaglio degli eventi avvenuti...
 		StringJsonResponse ret = new StringJsonResponse();
 
 		try {
-			ret.data = Integer.toString(wsPolling.calcolaPolling(
-					codiceMilestone, tag));
-			
+			ret.data = Integer.toString(wsPolling.calcolaPolling(codiceMilestone, tag));
+
 		} catch (KeyNotFoundException e) {
 			ret.errorCode = "20";
 			ret.errorMessage = e.getMessage();
-			
+
 		} catch (Exception exc) {
+			LOG.error("Unexpected exception while calculating polling", exc);
 			ret.errorCode = "1"; // FIXME
 			ret.errorMessage = exc.getMessage();
 		}
