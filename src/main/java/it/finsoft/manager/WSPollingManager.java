@@ -3,6 +3,7 @@ package it.finsoft.manager;
 import java.util.List;
 import java.util.Map;
 
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -17,6 +18,7 @@ import it.finsoft.entity.MilestoneMilestone;
 import it.finsoft.entity.TipoEvento;
 import it.finsoft.util.KeyNotFoundException;
 
+@Stateless
 public class WSPollingManager {
 	@PersistenceContext(unitName = "persistenceUnit")
 	private EntityManager em;
