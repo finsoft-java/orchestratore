@@ -4,7 +4,10 @@
  */
 $(document).ready(function(){
 	getListaCalendari();
-})
+});
+
+var mainDatatable = null;
+
 
 /**
  * Funzione che effettua una chiamata AJAX all'apposito ws, il quale restituisce una lista
@@ -18,7 +21,7 @@ function getListaCalendari(){
 		 for(i in dataSet){
 			 var opt = "<option value='"+dataSet[i].idCalendario+"'>"+dataSet[i].descrizione+"</option>";
 			 $("#select_elenco_calendari").append(opt);
-	     }
+		 }
 	 });
 }
 
@@ -42,13 +45,23 @@ function selezionaCalendarioMonitor(selectIndex){
  * @returns
  */
 function getListaCalendariMonitor(){
-  $.getJSON("ws/resources/Calendari", function(dataSet){
+	$.getJSON("ws/resources/Calendari", function(dataSet){
 	  
-   for(i in dataSet){
-    var opt = "<option value='"+dataSet[i].idCalendario+"'>"+dataSet[i].descrizione+"</option>";
-    $("#select_elenco_calendari").append(opt);
-      }
-  });
+		for(i in dataSet){
+			var opt = "<option value='"+dataSet[i].idCalendario+"'>"+dataSet[i].descrizione+"</option>";
+			$("#select_elenco_calendari").append(opt);
+		}
+	});
+}
+
+function renderData(data, type, row, meta) {
+
+	return convertTimestampToData(row.dataOraPreviste);
+}
+
+function renderOra(data, type, row, meta) {
+
+	return convertTimestampToTime(row.dataOraPreviste);
 }
 
 
@@ -59,106 +72,144 @@ function getListaCalendariMonitor(){
  * @returns
  */
 function getDettaglioCalendarioMilestone(idCalendario) {
-	 $.ajax({
-	    type : "GET",
-	    url : "ws/resources/Calendari(" + idCalendario + ")/Milestone",
-	    dataType : "json",
-	    success : function(dataSet) {
-	    	
-	    	//FIXME usare datatable con indirizzo ajax
-	    	
-	    	for (var i in dataSet){
-	    		dataSet[i].data = convertTimestampToData(dataSet[i].dataOraPreviste);
-		        dataSet[i].ora = convertTimestampToTime(dataSet[i].dataOraPreviste);
-	    	}
-	    	
-	    	var dataTable = $("#tableDettaglioCalendarioMilestone").DataTable({
-	             paging : false,
-	             lengthChange : false,
-	             searching : false,
-	             ordering : false,
-	             info : false,
-	             data: dataSet,
-	             autoWidth : false,
-	             destroy : true,
-	             columns : [
-		           { data : 'milestone.codice' },
-		           { data : 'milestone.descrizione' },
-	               { data : 'data', className: 'tdCenter' },
-	               { data : 'ora', className: 'tdCenter' },
-	               { data : 'semaforo', className: 'tdCenter', defaultContent:'' },
-	               { data : 'tag' },
-	               { data : 'milestone.descrizioneTag', defaultContent : '' } 
-	              ]
-	           });
-	    	 
-		     for (j in dataSet) {
-		    	 getSemaforo(dataTable, j, dataSet[j]);
-		     }
-		     
-		     $("#divDettagliCalendarioMilestone").removeClass("hide");
-	     
-	     }
-	   });
+
+	mainDatatable = $("#tableDettaglioCalendarioMilestone").DataTable({
+		paging : false,
+		lengthChange : false,
+		searching : false,
+		ordering : false,
+		info : false,
+		ajax: {
+			url: 'ws/resources/Calendari(' + idCalendario + ')/Milestone',
+			dataSrc: '',
+			language: 'it'
+		},
+		autoWidth : false,
+		destroy : true,
+		columns : [
+		  { data : 'milestone.codice' },
+		  { data : 'milestone.descrizione' },
+		  { data : 'data', className: 'tdCenter', render : renderData },
+		  { data : 'ora', className: 'tdCenter', render : renderOra },
+		  { data : 'semaforo', className: 'tdCenter', defaultContent : '' },
+		  { data : 'tag' },
+		  { data : 'milestone.descrizioneTag', defaultContent : '' } 
+		],
+		initComplete: function(settings, json) {
+			
+			//N.B. by now, mainDatatable should be set
+			
+			mainDatatable.rows().every(function() {
+			    var data = this.data();
+			    var rowNum = this.index();
+			    getSemaforo(mainDatatable, rowNum, data);
+			} );
+	  	}
+	});
+
+	$("#divDettagliCalendarioMilestone").removeClass("hide");
+	
+	/* VECCHIO CODICE
+	 
+	 
+	$.ajax({
+		type : "GET",
+		url : "ws/resources/Calendari(" + idCalendario + ")/Milestone",
+		dataType : "json",
+		success : function(dataSet) {
+			
+			//FIXME usare datatable con indirizzo ajax
+			
+			for (var i in dataSet){
+				dataSet[i].data = convertTimestampToData(dataSet[i].dataOraPreviste);
+				dataSet[i].ora = convertTimestampToTime(dataSet[i].dataOraPreviste);
+			}
+			
+			var dataTable = $("#tableDettaglioCalendarioMilestone").DataTable({
+				 paging : false,
+				 lengthChange : false,
+				 searching : false,
+				 ordering : false,
+				 info : false,
+				 data: dataSet,
+				 autoWidth : false,
+				 destroy : true,
+				 columns : [
+				   { data : 'milestone.codice' },
+				   { data : 'milestone.descrizione' },
+				   { data : 'data', className: 'tdCenter' },
+				   { data : 'ora', className: 'tdCenter' },
+				   { data : 'semaforo', className: 'tdCenter', defaultContent:'' },
+				   { data : 'tag' },
+				   { data : 'milestone.descrizioneTag', defaultContent : '' } 
+				  ]
+			   });
+			 
+			 for (j in dataSet) {
+				 getSemaforo(dataTable, j, dataSet[j]);
+			 }
+			 
+			 $("#divDettagliCalendarioMilestone").removeClass("hide");
+		 
+		 }
+	   });*/
 }
+
 function pad(numb) {
-    return (numb < 10 ? '0' : '') + numb;
+	return (numb < 10 ? '0' : '') + numb;
 }
+
 function getSemaforo(datatable, numRiga, data) {
-    
-    var endpoint = "ws/Polling?milestone=" + data.milestone.codice + "&tag=" + data.tag;
-    
-    var _ora = data.oraPrevista;
-    
-    var _now = new Date($.now());
-    var nYear  = pad(_now.getFullYear());
-    var nMonth = pad(_now.getMonth() + 1);
-    var nDay   = pad(_now.getDate());
-    var nHours = pad(_now.getHours()); //returns 0-23
-    var nMinutes = pad(_now.getMinutes()); //returns 0-59
-    var nSeconds = pad(_now.getSeconds()); //returns 0-59    
-      
-    var _data = new Date(data.dataOraPreviste);
-    var dYear  = pad(_data.getFullYear());
-    var dMonth = pad(_data.getMonth() + 1);
-    var dDay   = pad(_data.getDate());
-    var dHours = pad(_data.getHours()); //returns 0-23
-    var dMinutes = pad(_data.getMinutes()); //returns 0-59
-    var dSeconds = pad(_data.getSeconds()); //returns 0-59    
+	
+	var endpoint = wsPath + "/Polling?milestone=" + data.milestone.codice + "&tag=" + data.tag;
+	
+	var _ora = data.oraPrevista;
+	
+	var _now = new Date($.now());
+	var nYear  = pad(_now.getFullYear());
+	var nMonth = pad(_now.getMonth() + 1);
+	var nDay   = pad(_now.getDate());
+	var nHours = pad(_now.getHours()); //returns 0-23
+	var nMinutes = pad(_now.getMinutes()); //returns 0-59
+	var nSeconds = pad(_now.getSeconds()); //returns 0-59	
+	  
+	var _data = new Date(data.dataOraPreviste);
+	var dYear  = pad(_data.getFullYear());
+	var dMonth = pad(_data.getMonth() + 1);
+	var dDay   = pad(_data.getDate());
+	var dHours = pad(_data.getHours()); //returns 0-23
+	var dMinutes = pad(_data.getMinutes()); //returns 0-59
+	var dSeconds = pad(_data.getSeconds()); //returns 0-59	
    
 
-    _now = parseInt(nYear+nMonth+nDay+nHours+nMinutes+nSeconds);
-    _data = parseInt(dYear+dMonth+dDay+dHours+dMinutes+dSeconds);
-    
+	_now = parseInt(nYear+nMonth+nDay+nHours+nMinutes+nSeconds);
+	_data = parseInt(dYear+dMonth+dDay+dHours+dMinutes+dSeconds);
+	
 
-    var diff = _now - _data;    
-    
-     $.ajax({
-       type : "GET",
-       url : endpoint,
-       dataType : "json",
-       success : function(dataSet) {
-    	   
-    	   dataSet = dataSet.data;
-    	   
-           if (dataSet != null && dataSet != undefined) {
-               if (dataSet == 0 && diff < 0) {
-            	   dataSet = '<span class="btn btn-primary btn-circle btn-sm btn-semaforo" style="width:15px; height: 15px; font-size:0%; cursor: default;">3 blu</span>';
-               } else if (dataSet == 0) {
-            	   dataSet = '<span class="btn btn-danger btn-circle btn-sm btn-semaforo" style="width:15px; height: 15px; font-size:0%; cursor: default;">0 rosso</span>';
-               } else if (dataSet == 1) {
-            	   dataSet = '<span class="btn btn-warning btn-circle btn-sm btn-semaforo" style="width:15px; height: 15px; font-size:0%; cursor: default;">1 giallo</span>';
-               } else if (dataSet == 2) {
-            	   dataSet = '<span class="btn btn-success btn-circle btn-sm btn-semaforo" style="width:15px; height: 15px; font-size:0%; cursor: default;">2 verde</span>';
-               } else {
-            	   dataSet = '';
-               }
-           }
-    	   datatable.cell(numRiga, 4).data(dataSet).draw();
-       }
-     })
+	var diff = _now - _data;	
+	
+	$.ajax({
+		type : "GET",
+		url : endpoint,
+		dataType : "json",
+		success : function(dataSet) {
+		   
+			dataSet = dataSet.data;
+		   
+			if (dataSet != null && dataSet != undefined) {
+				if (dataSet == 0 && diff < 0) {
+					dataSet = '<span class="btn btn-primary btn-circle btn-sm btn-semaforo" style="width:15px; height: 15px; font-size:0%; cursor: default;">3 blu</span>';
+				} else if (dataSet == 0) {
+					dataSet = '<span class="btn btn-danger btn-circle btn-sm btn-semaforo" style="width:15px; height: 15px; font-size:0%; cursor: default;">0 rosso</span>';
+				} else if (dataSet == 1) {
+					dataSet = '<span class="btn btn-warning btn-circle btn-sm btn-semaforo" style="width:15px; height: 15px; font-size:0%; cursor: default;">1 giallo</span>';
+				} else if (dataSet == 2) {
+					dataSet = '<span class="btn btn-success btn-circle btn-sm btn-semaforo" style="width:15px; height: 15px; font-size:0%; cursor: default;">2 verde</span>';
+				} else {
+					dataSet = '';
+				}
+			}
+			datatable.cell(numRiga, 4).data(dataSet).draw();
+	   	}
+	 });
 }
-     
-     
-     
-     

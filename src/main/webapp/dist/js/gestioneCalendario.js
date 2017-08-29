@@ -58,9 +58,9 @@ function getListaMilestone_gestCal(j){
 	 $.getJSON("ws/resources/Milestones", function(dataSet){
 		 
 	   for(i in dataSet){
-	    var opt = "<option value='"+dataSet[i].idMilestone+"'>"+dataSet[i].descrizione+"</option>";
-	    $("#selectMilestoneCalNew"+(j)).append(opt);
-	      }
+		var opt = "<option value='"+dataSet[i].idMilestone+"'>"+dataSet[i].descrizione+"</option>";
+		$("#selectMilestoneCalNew"+(j)).append(opt);
+		  }
 	  });
 }
 
@@ -77,7 +77,7 @@ function getListaCalendari(){
 		 for(i in dataSet){
 			 var opt = "<option value='"+dataSet[i].idCalendario+"'>"+dataSet[i].descrizione+"</option>";
 			 $("#select_elenco_calendari").append(opt);
-	     }
+		 }
 	 });
 }
 
@@ -103,20 +103,20 @@ function deleteCalendar(){
 	var idSelect = $("#select_elenco_calendari").val();
 	if(idSelect !== '') {
 		bootbox.confirm({
-		    title: "Eliminare tipolgia di evento",
-		    message: "Si \u00E8 sicuri di voler eliminare questo tipologia di evento?<br/>L'operazione \u00E8 irreversibile!",
-		    buttons: {
-		      cancel: {
-		        label: '<i class="fa fa-times"></i> Annulla',
-		        className: 'btn-danger'
-		      },
-		      confirm: {
-		        label: '<i class="fa fa-trash-o"></i> Conferma',
-		        className: 'btn-success'
-		      }
-		    },
-		    callback: function (result) {
-		      if (result) {
+			title: "Eliminare tipolgia di evento",
+			message: "Si \u00E8 sicuri di voler eliminare questo tipologia di evento?<br/>L'operazione \u00E8 irreversibile!",
+			buttons: {
+			  cancel: {
+				label: '<i class="fa fa-times"></i> Annulla',
+				className: 'btn-danger'
+			  },
+			  confirm: {
+				label: '<i class="fa fa-trash-o"></i> Conferma',
+				className: 'btn-success'
+			  }
+			},
+			callback: function (result) {
+			  if (result) {
 				$.ajax({
 					type : "DELETE",
 					url : "ws/resources/Calendari(" + idSelect + ")",
@@ -125,8 +125,8 @@ function deleteCalendar(){
 						location.reload(true);
 					}
 				});
-		      }
-		    }
+			  }
+			}
 		  });
 	} else customAlertError("Selezionare un calendario per poterlo eliminare");
 }
@@ -157,7 +157,7 @@ function updateCalendarData(){
 	
 	for(var i = 0; i<dataList.length; i++){
 		var data = dataList[i];
-		var request = {            
+		var request = {			
 			_milestone:data[0],
 			_dataOrePreviste:data[1],
 			_tag:data[2],
@@ -183,14 +183,14 @@ function updateCalendarData(){
 }
 
 function insertMilestoneInCalendar() {
-    var temp = rowCounterFromDBData+counterRicorsione;
+	var temp = rowCounterFromDBData+counterRicorsione;
 	if(counterRicorsione === (rowCounter - rowCounterFromDBData)) return;
 	var dataList = [];
 	dataList.push([$("#selectMilestoneCalNew"+temp).val(), convertDataOraToTimestamp($("#dataCalNew"+temp).val(), $("#oraCalNew"+temp).val()), $("#tagsCalNew"+temp).val(), $("#descrizioneCalNew"+temp).val()]);
 	
 	for(var i = 0; i<dataList.length; i++){
 		var data = dataList[i];
-		var request = {            
+		var request = {			
 			_milestone:data[0],
 			_dataOrePreviste:data[1],
 			_tag:data[2],
@@ -237,8 +237,8 @@ function getDettaglioCalendarioMilestoneEditabile(idCalendario){
 					 var opt = "<div style='width:100%' class='form-group'><select class='form-control select2' id='selectMilestoneCalEdit"+rowCounter+"'>";
 					 for(j in dataSet2){
 						 if(dataSet[i].milestone.descrizione === dataSet2[j].descrizione) opt += "<option selected value='"+dataSet2[j].idMilestone+"'>"+dataSet2[j].descrizione+"</option>";
-					     else opt += "<option select2' value='"+dataSet2[j].idMilestone+"'>"+dataSet2[j].descrizione+"</option>";
-				     }
+						 else opt += "<option select2' value='"+dataSet2[j].idMilestone+"'>"+dataSet2[j].descrizione+"</option>";
+					}
 					opt += "</select></div>";
 					
 					dataSet[i].selectMilestones = opt;
