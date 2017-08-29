@@ -17,8 +17,10 @@ function convertTimestampToData(data) {
 	
 	if (USE_TIMESTAMP && (typeof data == "number")) {
 		
-		var date = new Date(data);
-		return "" + date.getDate() + "/" + (date.getMonth()+1) + "/" + date.getFullYear();
+		var splitDate = data.split("/");
+		var splitHour = ora.split(":");
+		var date = new Date(splitDate[2], splitDate[1], splitDate[0], splitHour[0], splitHour[1]);
+		return date.getTime();
 		
 	} else {
 		
@@ -83,7 +85,7 @@ function convertDataOraToTimestamp(data, ora) {
 function addButtonInputForm(table) {
 	$("#aggiungiButtonRow").remove();
 	
-	/* VECCHIO CODICE non può e non deve stare dentro la Datatable!!!
+	/* VECCHIO CODICE non puï¿½ e non deve stare dentro la Datatable!!!
 	
 	var row = '<tr id="aggiungiButtonRow" role="row">'
 		+'	<td class="tdCenter col-md-1"><a style="cursor: pointer;" onclick="addInputForm()" data-toggle="tooltip" title="Aggiungi" data-placement="bottom"><i style="color:green" class="fa fa-plus-circle"></i></a></td>'
@@ -221,7 +223,7 @@ function commonDelete(rowNum, url) {
 			mainDatatable.row(rowNum).remove().draw();
 		},
 		error : function(errore) {
-			customAlertError("Errore nell'eliminazione: probabilmente l'oggetto e' utilizzato altrove ");
+			customAlertError("Errore nell'eliminazione: probabilmente l'oggetto e' utilizzato altroveï¿½");
 		}
 	});
 	
