@@ -94,13 +94,36 @@ function getListaTipiEventiForUpdate(row, selectedTipoEvento){
 	});
 }
 
+/**
+* Funzione che come prima cosa ottiene la lista dei predecessori (tramite chiamata ad opportuno servizio) ed infine ne popola le opzioni di uno specifico tag <select>
+* @param row
+* @returns
+*/
+function getListaPredecessoriForUpdate(row, selectedPredecessori){
+	$.getJSON("ws/resources/MilestoneMilestones", function(dataSet){
+		for(i in dataSet){
+			var opt = "<option value='"+dataSet[i].milestoneComponente.idMilestone+"'>"+dataSet[i].milestoneComponente.descrizione+"</option>";
+			$("#selectPredecessori_rowEdit_"+(row)).append(opt);
+		}
+	   
+		$("#selectPredecessori_rowEdit_"+row+" option").each(function(){
+			if ($(this).text() == selectedPredecessori)
+				$(this).attr("selected","selected");
+		});
+		
+	});
+}
+
 
 function addEditForm(row) {	
 
 	var selectedEntita = $("#codiceEntita"+row).html();
 	var selectedTipoEvento = $("#codiceTipoEvento"+row).html();
+	var selectedPredecessori = $("#predecessori"+row).html();
+
 	console.log(selectedEntita);
 	console.log("selectedTipoEvento:" + selectedTipoEvento);
+	
 	check = '<a style="cursor:pointer" onclick="back('+row+')" id="buttonToCancelRigaEdit'+row+'" data-toggle="tooltip" title="Annulla" data-placement="left"><i style="color:black" class="fa fa-times"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="cursor:pointer" onclick="update('+row+')" id="buttonToUpdateRigaEdit'+row+'" data-toggle="tooltip" title="Salva" data-placement="right"><i style="color:green" class="fa fa-check"></i></a>';	
 
 	sCodiceMilestone = '<input style="width:100%" placeholder="Codice Milestone" id="codiceMilestone_rowEdit_'+row+'" type="text" class="form-control" value="'+$("#codiceMilestone"+row).text()+'"/>'; 
@@ -113,10 +136,10 @@ function addEditForm(row) {
 	if($("#codiceEntita"+row).parent().hasClass("form-group")) sCodiceEntita = '<select style="width:100%;" id="selectCodiceEntita_rowEdit_'+row+'" class="form-control select2"><option></option></select>';
 	else sCodiceEntita = '<div class="form-group" style="width:100%;"><select style="width:100%;" id="selectCodiceEntita_rowEdit_'+row+'" class="form-control select2"><option></option></select></div>'; 
 	
-	sPredecessori = '<input style="width:100%" placeholder="Predecessori" id="predecessori_rowEdit_'+row+'" type="text" class="form-control" value="'+$("#predecessori"+row).text()+'"/>'; 
+//	sPredecessori = '<input style="width:100%" placeholder="Predecessori" id="predecessori_rowEdit_'+row+'" type="text" class="form-control" value="'+$("#predecessori"+row).text()+'"/>'; 
 
-	if($("#predecessori_"+row).parent().hasClass("form-group")) sPredecessori = '<select style="width:100%;" id="selectPredecessori_rowEdit_'+row+'" class="form-control select2"><option></option></select>'; 
-	else sPredecessori = '<div class="form-group" style="width:100%;"><select style="width:100%;" id="selectPredecessori_rowEdit_'+row+'" class="form-control select2"><option></option></select></div>'; 
+	if($("#predecessori"+row).parent().hasClass("form-group")) sPredecessori = '<select style="width:100%;" id="selectPredecessori_rowEdit_'+row+'" class="form-control select2" multiple="multiple"><option></option></select>'; 
+	else sPredecessori = '<div class="form-group" style="width:100%;"><select style="width:100%;" id="selectPredecessori_rowEdit_'+row+'" class="form-control select2" multiple="multiple"><option></option></select></div>'; 
 	
 	
 	$("#codiceMilestone"+row).parent().html(sCodiceMilestone);
@@ -128,18 +151,22 @@ function addEditForm(row) {
 	$("#buttonToUpdateRigaEdit"+row).parent().html(check);
 	
 	getListaEntitaForUpdate(row, selectedEntita);
-	getListaTipiEventiForUpdate(row, selectedTipoEvento);	
-	//attivaWidgetSelect2();
+	getListaTipiEventiForUpdate(row, selectedTipoEvento);
+	getListaPredecessoriForUpdate(row, selectedPredecessori);
+	
+	attivaWidgetSelect2();
+	
 	$('body>.tooltip').remove();
 }
 
 
 function back(row) {
 	
-	var idMilestone = mainDatatable.row(row).data().idEntita;
+//	var idMilestone = mainDatatable.row(row).data().idEntita;
+//	
+//	commonGoBack(row, "ws/resources/Milestones(" + idMilestone + ")");
 	
-	commonGoBack(row, "ws/resources/Milestones(" + idMilestone + ")");
-	
+	mainDatatable.row(row).ajax.reload();
 	
 	/* VECCHIO CODICE. Che non capisco.
 	
@@ -200,9 +227,13 @@ function update(row){
 		},
 		entita: {
 			idEntita: $("#selectCodiceEntita_rowEdit_"+row).val()
+		},
+		milestoneComponente: {
+			idMilestone: $("#selectPredecessori_rowEdit_"+row).val()
 		}
-		//FIXME predecessori
 	};
+	
+	console.log("requestUpdate: "+ request);
 	
 	commonUpdate(row, "ws/resources/Milestones("+idMilestone+")", request);
 	
@@ -281,7 +312,8 @@ function update(row){
 }
 	
 function insert(row){		
-	
+
+	//prima salvo la riga senza componenti, per avere l'ID
 	var request = {
 		codice: $("#codiceMilestone_New"+row).val(),
 		descrizione: $("#descrizioneMilestone_New"+row).val(),
@@ -292,10 +324,60 @@ function insert(row){
 		entita: {
 			idEntita: $("#codiceEntita_New"+row).val()
 		}
-		//FIXME predecessori
 	};
+
+	console.log(request);
 	
-	commonInsert(row, "ws/resources/Milestones", request);
+//	console.log("row: "+ row);
+//	callback(data.results[0]);
+//	And if you have set multiple:true, just accept the entire results array;
+//	callback(data.results);
+	
+	//COPIA E INCOLLA DA commonInsert(row, "ws/resources/Milestones", request);
+	request = JSON.stringify(request); 
+	$.ajax({
+		type: "POST",
+		url: "ws/resources/Milestones",
+		data: request,
+		contentType: "application/json; charset=utf-8",
+		dataType: "json",
+		success: function(res) {
+			
+			var nuovaRequest = [];
+			var arrMilestoneComponenti = $("#predecessori_New"+row).val();
+			for (var i in arrMilestoneComponenti) {
+				nuovaRequest.push({
+					milestone: {
+						idMilestone: res.idMilestone
+					},
+					milestoneComponente: {
+						idMilestone: parseInt(arrMilestoneComponenti[i])
+					},
+					ordinamento: parseInt(i)
+				});
+			}
+			console.log("arrMilestoneComponenti: "+ arrMilestoneComponenti);
+			console.log("res.idMilestone: "+ res.idMilestone);
+			console.log("nuovaRequest: ", nuovaRequest);
+			//commonInsert(row, "ws/resources/MilestoneMilestones("+res.idMilestone+")", nuovaRequest);
+			
+			nuovaRequest = JSON.stringify(nuovaRequest); 
+			$.ajax({
+				type: "POST",
+				url: "ws/resources/MilestoneMilestones("+res.idMilestone+")",
+				data: nuovaRequest,
+				contentType: "application/json; charset=utf-8",
+				dataType: "json",
+				success: function(res) {
+				}
+			});
+			
+			mainDatatable.row.add(res).draw();
+
+			$('body>.tooltip').remove();
+
+		}
+	});
 		
 	/*
 	var sCodiceMilestone_New = $("#codiceMilestone_New"+row).val();
@@ -389,6 +471,13 @@ function renderEntita(data, type, row, meta) {
 }
 
 function renderPredecessori(data, type, row, meta) {
+	
+//	callback(data.results[0]);
+//	
+//	And if you have set multiple:true, just accept the entire results array;
+//
+//	callback(data.results);
+	
 	return wrapDiv("predecessori", meta.row, data);
 }
 
@@ -432,6 +521,8 @@ function getListaMilestones(){
 			{data : 'predecessori', className : 'col-md-1', defaultContent : '', render: renderPredecessori }
 			]
 	});
+	
+
 	
 	addButtonInputForm("tableListaMilestones");
 	
@@ -531,7 +622,8 @@ function addInputForm() {
 	
 	getListaEntita(rowCounter);
 	getListaTipiEventi(rowCounter);
-	getListaPredecessori(rowCounter)
+	getListaPredecessori(rowCounter);
+	
 	$('#tableListaMilestones').append(row);
 	addButtonInputForm("tableListaMilestones");
 	
@@ -575,10 +667,6 @@ function getListaTipiEventi(row){
 function getListaPredecessori(row) {
 	$.getJSON("ws/resources/MilestoneMilestones", function(dataSet) {
 		for(i in dataSet){
-			console.log("milestoneComponente2: "+ dataSet[i].milestoneComponente.descrizione);
-//			console.log("milestoneComponente3: "+ dataSet[i].milestoneComponente);
-//			console.log("milestoneComponente4: "+ dataSet[i].milestoneComponente);
-
 			var opt = "<option value='"+dataSet[i].milestoneComponente.idMilestone+"'>"+dataSet[i].milestoneComponente.descrizione+"</option>";
 			$("#predecessori_New"+(row)).append(opt);
 		}
