@@ -170,23 +170,20 @@ public class AllResources {
 
 	@GET
 	@Path("MilestoneMilestones({idM},{idCh})")
-	public MilestoneMilestone findById4(@PathParam("idM") Long id,
-			@PathParam("idCh") Long idCh) {
+	public MilestoneMilestone findById4(@PathParam("idM") Long id, @PathParam("idCh") Long idCh) {
 		return milestoneMilestonesManager.findById(id, idCh);
 	}
 
 	@GET
 	@Path("MilestoneMilestones({idM})")
-	public List<MilestoneMilestone>  findByIdMilestone(@PathParam("idM") Long idMilestone) {
+	public List<MilestoneMilestone> findByIdMilestone(@PathParam("idM") Long idMilestone) {
 		return milestoneMilestonesManager.findByIdMilestone(idMilestone);
 	}
 
 	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Path("MilestoneMilestones")
-	public MilestoneMilestone create4(MilestoneMilestone cal) {
-		System.out.println("post resources, salvo semaforomilestone " + cal);
-		return milestoneMilestonesManager.preCheck(cal);
+	@Path("MilestoneMilestones({idM})")
+	public void saveOrUpdateMilestoneMilestones(@PathParam("idM") Long idMilestone, List<MilestoneMilestone> list) {
+		milestoneMilestonesManager.updateByIdMilestone(idMilestone, list);
 	}
 
 	@DELETE
@@ -198,8 +195,7 @@ public class AllResources {
 	@PUT
 	@Path("MilestoneMilestones({id},{idCh})")
 	// Bisogna vedere se va bene per l'update via interfaccia
-	public MilestoneMilestone update(@PathParam("id") Long id, @PathParam("idCh") Long idCh,
-			MilestoneMilestone m) {
+	public MilestoneMilestone update(@PathParam("id") Long id, @PathParam("idCh") Long idCh, MilestoneMilestone m) {
 		m.setMilestone(milestoneManager.findById(id));
 		m.setMilestoneComponente(milestoneManager.findById(idCh));
 		return milestoneMilestonesManager.save(m);
@@ -362,16 +358,14 @@ public class AllResources {
 
 	@GET
 	@Path("Calendari({idc})/Milestone")
-	public List<CalendarioMilestone> findByIdCalendario8(
-			@PathParam("idc") Long idCalendario) {
+	public List<CalendarioMilestone> findByIdCalendario8(@PathParam("idc") Long idCalendario) {
 		return calendarioMilestoneManager.findByIdCalendario(idCalendario);
 	}
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("Calendari({idc})/Milestone")
-	public CalendarioMilestone create8(@PathParam("idc") Long idCalendario,
-			CalendarioMilestone cal) {
+	public CalendarioMilestone create8(@PathParam("idc") Long idCalendario, CalendarioMilestone cal) {
 		return calendarioMilestoneManager.save(idCalendario, cal);
 	}
 

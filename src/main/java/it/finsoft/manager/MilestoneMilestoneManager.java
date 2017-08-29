@@ -44,6 +44,21 @@ public class MilestoneMilestoneManager {
 		return em.createQuery("FROM MilestoneMilestone", MilestoneMilestone.class).getResultList();
 	}
 
+	/**
+	 * Elimino le vecchie milestoneMilestone e salvo quelle che mi arrivano da interfaccia
+	 */
+	public void updateByIdMilestone(Long idMilestone, List<MilestoneMilestone> nuoveMilestoneMilestone) {
+		List<MilestoneMilestone> old = findByIdMilestone(idMilestone);
+		for(MilestoneMilestone mm: old){
+			em.remove(mm);
+		}
+		
+		for(MilestoneMilestone mm: nuoveMilestoneMilestone){
+			em.merge(mm);
+		}
+	}
+
+	
 	// CONTROLLO PER EVITARE CONFLITTI E LOOP NELLE MILESTONEMILESTONE IN FASE
 	// DI CREAZIONE E UPDATE
 	// IMPORTANTE: NON VALIDA L'UPDATE SE VIENE CAMBIATO SOLO IL CAMPO
@@ -54,7 +69,7 @@ public class MilestoneMilestoneManager {
 	 * "ordinamento":1 } AGGIORNATO CON { "milestone":{ "idMilestone":1 },
 	 * "milestoneChild":{ "idMilestone":4 }, "ordinamento":2 } per il momento
 	 * non la ritiene una modifica valida
-	 */
+	 *
 	public MilestoneMilestone preCheck(MilestoneMilestone mMilestone) {
 		long idMil = mMilestone.getMilestone().getIdMilestone();
 		long idMilCh = mMilestone.getMilestoneComponente().getIdMilestone();
@@ -83,6 +98,5 @@ public class MilestoneMilestoneManager {
 			return save(mMilestone);
 		} else {
 			return null;
-		}
-	}
+		*/
 }
