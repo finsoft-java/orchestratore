@@ -2,8 +2,6 @@ package it.finsoft.resources;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.persistence.NoResultException;
-import javax.persistence.NonUniqueResultException;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -13,6 +11,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import org.jboss.logging.Logger;
 
+import it.finsoft.entity.Engine;
 import it.finsoft.manager.EngineManager;
 import it.finsoft.manager.TokenManager;
 import it.finsoft.util.StringJsonResponse;
@@ -54,28 +53,19 @@ public class WSAuth {
 	public StringJsonResponse auth(Credentials credentials, @Context HttpServletRequest request) {
 
 		StringJsonResponse ret = new StringJsonResponse();
-
 		try {
+			Engine e = engineManager.findByUsernamePassword(credentials.username, credentials.password);
 
-			// Authenticate the user using the credentials provided
-			engineManager.findByUsernamePassword(credentials.username, credentials.password);
+			if (e == null) {
+				ret.errorCode = "401";
+				ret.errorMessage = "Invalid credentials";
+			} else {
 
-			// Issue a token for the user
-			String token = tokenManager.issueToken(credentials.username, request.getRemoteAddr());
+				String token = tokenManager.issueToken(credentials.username, request.getRemoteAddr());
 
-			// Return the token on the response
-			ret.data = token;
+				ret.data = token;
 
-		} catch (NoResultException exc) {
-			ret.errorCode = "401";
-			ret.errorMessage = "Invalid credentials";
-
-		} catch (NonUniqueResultException exc) {
-			// Should not happen
-			LOG.error("Sono state trovate più engine con lo stesso nome: " + credentials.username);
-			ret.errorCode = "533";
-			ret.errorMessage = "Invalid configuration for given engine name";
-
+			}
 		} catch (Exception exc) {
 			LOG.error("Eccezione durante l'autenticazione ", exc);
 			ret.errorCode = "500";

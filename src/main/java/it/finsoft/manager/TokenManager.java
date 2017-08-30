@@ -14,7 +14,6 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.SignatureException;
 import io.jsonwebtoken.impl.DefaultClaims;
 import io.jsonwebtoken.impl.crypto.MacProvider;
 import it.finsoft.entity.Token;
@@ -90,9 +89,15 @@ public class TokenManager {
 	 * @param token
 	 * @throws Exception
 	 */
-	public void validateToken(String token, String callerIP) throws SignatureException {
+	public boolean validateToken(String token, String callerIP) {
 
-		Jws<Claims> jws = Jwts.parser().setSigningKey(SERVER_SECRET_KEY).parseClaimsJws(token);
+		Jws<Claims> jws;
+
+		try {
+			jws = Jwts.parser().setSigningKey(SERVER_SECRET_KEY).parseClaimsJws(token);
+		} catch (Exception e) {
+			return false;
+		}
 
 		// OK, we can trust this JWT (well, JWS). What about its content?
 
@@ -102,12 +107,15 @@ public class TokenManager {
 		LOG.info("Caller IP: " + callerIP + "IP in token: " + claims.get("ipc"));
 
 		if (claims.get("ipc") != null && !claims.get("ipc").equals(callerIP)) {
-			throw new SecurityException("Token was issued for a different IP!");
+			// throw new SecurityException("Token was issued for a different
+			// IP!");
+			return false;
 		}
 
 		if (claims.getExpiration() != null && claims.getExpiration().before(new Date())) {
-			throw new SecurityException("Token expired!");
+			return false;
 		}
 
+		return true;
 	}
 }

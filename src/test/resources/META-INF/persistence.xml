@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1"
+	xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="persistenceUnit" transaction-type="RESOURCE_LOCAL">
+
+		<!-- <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider> -->
+		<provider>it.finsoft.util.HibernatePersistenceProvider</provider>
+		
+		<class>it.finsoft.entity.Azione</class>
+		<class>it.finsoft.entity.Calendario</class>
+		<class>it.finsoft.entity.CalendarioMilestone</class>
+		<class>it.finsoft.entity.DettaglioEvento</class>
+		<class>it.finsoft.entity.Entita</class>
+		<class>it.finsoft.entity.Evento</class>
+		<class>it.finsoft.entity.Milestone</class>
+		<class>it.finsoft.entity.MilestoneMilestone</class>
+		<class>it.finsoft.entity.TipoEvento</class>
+		<class>it.finsoft.entity.Settings</class>
+		<class>it.finsoft.entity.Token</class>
+
+		<properties>
+            <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDataSource"/>
+			<property name="javax.persistence.jdbc.url" value="jdbc:derby:testDatabase;create=true" />
+
+			<property name="hibernate.show_sql" value="true" />
+			<property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect" />
+			<property name="hibernate.transaction.jta.platform"
+				value="org.hibernate.service.jta.platform.internal.WeblogicJtaPlatform" />
+		</properties>
+
+	</persistence-unit>
+</persistence>
+

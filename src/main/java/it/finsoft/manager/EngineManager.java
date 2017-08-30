@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
 import org.jboss.logging.Logger;
@@ -44,19 +45,21 @@ public class EngineManager {
 	 * 
 	 * @param username
 	 * @param clearTextPassword
-	 * @return
-	 * @throws NoResultException
+	 * @return null if not found
 	 * @throws NonUniqueResultException
 	 */
 	public Engine findByUsernamePassword(String engineName, String clearTextPassword) {
 		String encPassword = MD5.digest(clearTextPassword);
-		return em
-				.createQuery("FROM Engine WHERE name = :n AND encryptedPassword = :p AND fineValidita > :t ",
-						Engine.class)
-				.setParameter("n", engineName)
-				.setParameter("p", encPassword)
-				.setParameter("t", new Date())
-				.getSingleResult();
+		try {
+			return em
+					.createQuery("FROM Engine WHERE name = :n AND encryptedPassword = :p AND fineValidita > :t ",
+							Engine.class)
+					.setParameter("n", engineName).setParameter("p", encPassword).setParameter("t", new Date())
+					.getSingleResult();
+
+		} catch (NoResultException exc) {
+			return null;
+		}
 	}
 
 }
