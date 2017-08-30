@@ -18,7 +18,7 @@ import it.finsoft.manager.WSManager;
 import it.finsoft.util.CommonJsonResponse;
 
 @Stateless
-@Path("Collector")
+@Path("secured/Collector")
 @Produces({ MediaType.APPLICATION_JSON })
 public class WSCollector {
 
@@ -26,8 +26,7 @@ public class WSCollector {
 	WSManager wsManager;
 
 	/**
-	 * Metodo GET per inserire dati via http esegue due query per risolvere dal
-	 * codiceEnt a Entita e da codiceTipi a TipoEvento
+	 * Metodo POST per inserire dati via HTTP
 	 */
 	@POST
 	public CommonJsonResponse insertEvent(@QueryParam("entita") String codiceEntita,

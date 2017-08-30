@@ -17,7 +17,7 @@ import it.finsoft.util.StringJsonResponse;
  * risposta è sempre positiva.
  */
 @Stateless
-@Path("TagBenDefinita")
+@Path("secured/TagBenDefinita")
 @Produces({ MediaType.APPLICATION_JSON })
 public class WSTagDefinita {
 

@@ -11,6 +11,7 @@
 		<class>it.finsoft.entity.CalendarioMilestone</class>
 		<class>it.finsoft.entity.DettaglioEvento</class>
 		<class>it.finsoft.entity.Entita</class>
+		<class>it.finsoft.entity.Engine</class>
 		<class>it.finsoft.entity.Evento</class>
 		<class>it.finsoft.entity.Milestone</class>
 		<class>it.finsoft.entity.MilestoneMilestone</class>

@@ -17,7 +17,7 @@ import it.finsoft.util.KeyNotFoundException;
 import it.finsoft.util.StringJsonResponse;
 
 @Stateless
-@Path("Polling")
+@Path("secured/Polling")
 @Produces({ MediaType.APPLICATION_JSON })
 public class WSPolling {
 

@@ -18,7 +18,7 @@ import it.finsoft.util.StringJsonResponse;
  * 
  */
 @Stateless
-@Path("PartCol")
+@Path("secured/PartCol")
 @Produces({ MediaType.APPLICATION_JSON })
 public class WSPartCol {
 
@@ -26,8 +26,9 @@ public class WSPartCol {
 	WSManager manager;
 
 	@POST
-	public StringJsonResponse get(@QueryParam("nomeTabella") String nomeTabella, @QueryParam("annoMese") String annoMese,
-			@QueryParam("giro") String giro, @QueryParam("perimetro") String perimetro, @QueryParam("abi") String abi) {
+	public StringJsonResponse get(@QueryParam("nomeTabella") String nomeTabella,
+			@QueryParam("annoMese") String annoMese, @QueryParam("giro") String giro,
+			@QueryParam("perimetro") String perimetro, @QueryParam("abi") String abi) {
 
 		StringJsonResponse ret = new StringJsonResponse();
 		try {

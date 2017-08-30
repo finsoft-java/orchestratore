@@ -44,6 +44,23 @@ public class Token implements Serializable {
 	public Token() {
 	}
 
+	/**
+	 * Full constructor
+	 * 
+	 * @param token
+	 * @param reqUsername
+	 * @param reqIP
+	 * @param reqTimestamp
+	 * @param expireTimestamp
+	 */
+	public Token(String token, String reqUsername, String reqIP, Date reqTimestamp, Date expireTimestamp) {
+		this.token = token;
+		this.reqUsername = reqUsername;
+		this.reqIP = reqIP;
+		this.reqTimestamp = reqTimestamp;
+		this.expireTimestamp = expireTimestamp;
+	}
+
 	@Override
 	public int hashCode() {
 		return repr().hashCode();

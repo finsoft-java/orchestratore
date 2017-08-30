@@ -1,16 +1,17 @@
 package it.finsoft.filters;
 
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureException;
+import it.finsoft.manager.TokenManager;
 
 import java.io.IOException;
 
+import javax.inject.Inject;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.HttpHeaders;
@@ -24,13 +25,16 @@ import javax.ws.rs.core.Response;
  * @author Luca Vercelli
  * 
  */
-// TODO @WebFilter("/*")
-public class TokenFilter implements Filter /* ContainerRequestFilter  since 2.0 */ {
+@WebFilter("/secured/*")
+public class TokenFilter implements Filter /* ContainerRequestFilter since 2.0 */{
 
-	private static final String AUTHENTICATION_SCHEME = "Bearer";
+	private static final String AUTHENTICATION_SCHEME = "Bearer"; // Come da
+																	// standard
+																	// JWT
+
+	@Inject
+	TokenManager tokenManager;
 	
-	String key = "somesecretkeyplease";
-
 	@Override
 	public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException,
 			ServletException {
@@ -55,10 +59,11 @@ public class TokenFilter implements Filter /* ContainerRequestFilter  since 2.0 
 			try {
 
 				// Validate the token
-				validateToken(token);
+				tokenManager.validateToken(token, request.getRemoteAddr());
 
 			} catch (Exception e) {
 				abortWithUnauthorized(request, response);
+				return;
 			}
 
 		} else {
@@ -66,38 +71,31 @@ public class TokenFilter implements Filter /* ContainerRequestFilter  since 2.0 
 		}
 	}
 
+	/**
+	 * Check if the Authorization header is valid. It must not be null and must
+	 * be prefixed with "Bearer" plus a whitespace Authentication scheme
+	 * comparison must be case-insensitive
+	 * 
+	 * @param authorizationHeader
+	 * @return
+	 */
 	private boolean isTokenBasedAuthentication(String authorizationHeader) {
 
-		// Check if the Authorization header is valid
-		// It must not be null and must be prefixed with "Bearer" plus a
-		// whitespace
-		// Authentication scheme comparison must be case-insensitive
 		return authorizationHeader != null
 				&& authorizationHeader.toLowerCase().startsWith(AUTHENTICATION_SCHEME.toLowerCase() + " ");
 	}
 
+	/**
+	 * Abort the filter chain with a 401 status code. The "WWW-Authenticate" is
+	 * sent along with the response.
+	 * 
+	 * @param request
+	 * @param response
+	 */
 	private void abortWithUnauthorized(HttpServletRequest request, HttpServletResponse response) {
 
-		// Abort the filter chain with a 401 status code
-		// The "WWW-Authenticate" is sent along with the response
 		response.setStatus(Response.Status.UNAUTHORIZED.getStatusCode());
 		response.setHeader(HttpHeaders.WWW_AUTHENTICATE, AUTHENTICATION_SCHEME);
-	}
-
-	private void validateToken(String token) throws Exception {
-		// Check if it was issued by the server and if it's not expired
-		// Throw an Exception if the token is invalid
-		
-		try {
-
-		    Jwts.parser().setSigningKey(key).parseClaimsJws(token);
-
-		    //OK, we can trust this JWT
-
-		} catch (SignatureException e) {
-
-		    //don't trust the JWT!
-		}
 	}
 
 	@Override
