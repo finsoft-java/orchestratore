@@ -100,18 +100,87 @@ function getListaTipiEventiForUpdate(row, selectedTipoEvento){
 * @returns
 */
 function getListaPredecessoriForUpdate(row, selectedPredecessori){
-	$.getJSON("ws/resources/MilestoneMilestones", function(dataSet){
-		for(i in dataSet){
-			var opt = "<option value='"+dataSet[i].milestoneComponente.idMilestone+"'>"+dataSet[i].milestoneComponente.descrizione+"</option>";
-			$("#selectPredecessori_rowEdit_"+(row)).append(opt);
-		}
-	   
-		$("#selectPredecessori_rowEdit_"+row+" option").each(function(){
-			if ($(this).text() == selectedPredecessori)
-				$(this).attr("selected","selected");
+//	$.getJSON("ws/resources/MilestoneMilestones", function(dataSet){
+//		for(i in dataSet){
+//			var opt = "<option value='"+dataSet[i].milestoneComponente.idMilestone+"'>"+dataSet[i].milestoneComponente.descrizione+"</option>";
+//			$("#selectPredecessori_rowEdit_"+(row)).append(opt);
+//		}
+//	   
+//		$.getJSON("ws/resources/MilestoneMilestones("+row+")", function(dataSet){
+//			for(i in dataSet){
+//				$.fn.select2.defaults.set("val", DataSet[i].idMilestone);
+//			}
+//		}
+
+	
+		$.ajax({
+			  type: "GET",
+			  url: "ws/resources/Milestones",
+			  success: function(dataSet) {
+					for(var i in dataSet){
+						var opt = "<option value='"+dataSet[i].idMilestone+"'>"+dataSet[i].descrizione+"</option>";
+						$("#selectPredecessori_rowEdit_"+row).append(opt);
+						
+						
+					}
+					
+					$("#selectPredecessori_rowEdit_"+row).select2();
+					
+//					
+//					$("#selectPredecessori_rowEdit_"+row+" option").each(function() {
+//						
+//						console.log($(this).val());
+//						
+//					})
+					
+					var idMilestone = $("#idMilestone"+row).html();
+					
+					$.getJSON("ws/resources/MilestoneMilestones("+idMilestone+")", function(dataSet2){
+					  
+						//$("#selectPredecessori_rowEdit_"+row+" option").select2(selectedPredecessori);
+//						
+//						if ($(this).text() == selectedPredecessori)
+//							$(this).attr("selected","selected");
+//					  
+					  
+					  var arrayDegliId = [];
+					  for(var j in dataSet2) arrayDegliId.push(dataSet2[j].milestoneComponente.idMilestone);
+					  
+					  console.log(arrayDegliId);
+					  
+					  $("#selectPredecessori_rowEdit_"+row).val(arrayDegliId).trigger('change');
+					  
+						//console.log("dataSet: "+dataSet);
+						//for(var j in dataSet2){
+//							$("#selectPredecessori_rowEdit_33").select2.defaults.set("val", dataSet2[j].idMilestone);
+//							console.log("dataSet"+j+": "+dataSet2[j]);
+							
+							
+							//if ($(this).text() == dataSet2[j].idMilestone)
+							//	$(this).attr("selected","selected");
+							
+							
+						//}
+						
+						//$("#selectPredecessori_rowEdit_"+row+" option").select2();
+						
+					});	
+			  }
 		});
 		
-	});
+		
+		
+		
+//		$("#selectPredecessori_rowEdit_"+row" option").each(function(){
+//			
+//			$("#selectPredecessori_rowEdit_"+row+" option").select2(selectedPredecessori);
+//			
+//			if ($(this).text() == selectedPredecessori)
+//				$(this).attr("selected","selected");
+//		});
+		
+		//$("#mySelect2").select2("val", "0");
+//	})
 }
 
 
@@ -122,11 +191,11 @@ function addEditForm(row) {
 	var selectedPredecessori = $("#predecessori"+row).html();
 
 	console.log(selectedEntita);
-	console.log("selectedTipoEvento:" + selectedTipoEvento);
+	console.log("predecessori: " + selectedPredecessori);
 	
 	check = '<a style="cursor:pointer" onclick="back('+row+')" id="buttonToCancelRigaEdit'+row+'" data-toggle="tooltip" title="Annulla" data-placement="left"><i style="color:black" class="fa fa-times"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="cursor:pointer" onclick="update('+row+')" id="buttonToUpdateRigaEdit'+row+'" data-toggle="tooltip" title="Salva" data-placement="right"><i style="color:green" class="fa fa-check"></i></a>';	
 
-	sCodiceMilestone = '<input style="width:100%" placeholder="Codice Milestone" id="codiceMilestone_rowEdit_'+row+'" type="text" class="form-control" value="'+$("#codiceMilestone"+row).text()+'"/>'; 
+	//sCodiceMilestone = '<input style="width:100%" placeholder="Codice Milestone" id="codiceMilestone_rowEdit_'+row+'" type="text" class="form-control" value="'+$("#codiceMilestone"+row).text()+'"/>'; 
 	sDescrizioneMilestone = '<input style="width:100%" placeholder="Descrizione" id="descrizioneMilestone_rowEdit_'+row+'" type="text" class="form-control" value="'+$("#descrizioneMilestone"+row).text()+'"/>'; 
 	sDescrizioneTagMilestone = '<input style="width:100%" placeholder="Descrizione Tag" id="descrizioneTagMilestone_rowEdit_'+row+'" type="text" class="form-control" value="'+$("#descrizioneTagMilestone"+row).text()+'"/>'; 
 	
@@ -142,7 +211,7 @@ function addEditForm(row) {
 	else sPredecessori = '<div class="form-group" style="width:100%;"><select style="width:100%;" id="selectPredecessori_rowEdit_'+row+'" class="form-control select2" multiple="multiple"><option></option></select></div>'; 
 	
 	
-	$("#codiceMilestone"+row).parent().html(sCodiceMilestone);
+	//$("#codiceMilestone"+row).parent().html(sCodiceMilestone);
 	$("#descrizioneMilestone"+row).parent().html(sDescrizioneMilestone);
 	$("#descrizioneTagMilestone"+row).parent().html(sDescrizioneTagMilestone);
 	$("#codiceTipoEvento"+row).parent().html(sCodiceTipoEvento);
@@ -219,7 +288,7 @@ function update(row){
 	var idMilestone = mainDatatable.row(row).data().idMilestone;
 	
 	var request = {
-		codice: $("#codiceMilestone_rowEdit_"+row).val(),  // FIXME: modificabile?!?
+	//	codice: $("#codiceMilestone_rowEdit_"+row).val(),  // FIXME: modificabile?!?
 		descrizione: $("#descrizioneMilestone_rowEdit_"+row).val(),
 		descrizioneTag: $("#descrizioneTagMilestone_rowEdit_"+row).val(),
 		tipoEvento: {
@@ -234,6 +303,8 @@ function update(row){
 	};
 	
 	console.log("requestUpdate: "+ request);
+	console.log("row: ", row);
+	console.log("idMilestone: ", idMilestone);
 	
 	commonUpdate(row, "ws/resources/Milestones("+idMilestone+")", request);
 	
@@ -367,9 +438,7 @@ function insert(row){
 				url: "ws/resources/MilestoneMilestones("+res.idMilestone+")",
 				data: nuovaRequest,
 				contentType: "application/json; charset=utf-8",
-				dataType: "json",
-				success: function(res) {
-				}
+				dataType: "json"
 			});
 			
 			mainDatatable.row.add(res).draw();
