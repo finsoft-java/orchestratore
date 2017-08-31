@@ -236,7 +236,7 @@ function back(row) {
 //	commonGoBack(row, "ws/resources/Milestones(" + idMilestone + ")");
 	
 	mainDatatable.row(row).ajax.reload();
-	
+	$('body>.tooltip').remove();
 	/* VECCHIO CODICE. Che non capisco.
 	
 	idMilestone = $("#idMilestone"+row).text();

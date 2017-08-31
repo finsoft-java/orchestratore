@@ -83,7 +83,7 @@ function convertDataOraToTimestamp(data, ora) {
  * @returns
  */
 function addButtonInputForm(table) {
-	$("#aggiungiButtonRow").remove();
+	$(".aggiungiButtonRow").remove();
 	
 	/* VECCHIO CODICE non pu� e non deve stare dentro la Datatable!!!
 	
@@ -92,10 +92,40 @@ function addButtonInputForm(table) {
 		+'	</tr>';
 	$('#'+table).append(row);
 	*/
-	var btn = '<div id="aggiungiButtonRow">' +
-		'<a style="cursor: pointer;" onclick="addInputForm()" data-toggle="tooltip" title="Aggiungi" data-placement="bottom"><i style="color:green" class="fa fa-plus-circle"></i></a>' +
-		'&nbsp;<a style="cursor: pointer;" onclick="mainDatatable.ajax.reload()" data-toggle="tooltip" title="Reload" data-placement="bottom"><i style="color:blue" class="fa fa-refresh"></i></a>' +
-		'</div>';
+//	var btn = '<div id="aggiungiButtonRow" class="row"><div class="col-md-1>"'  +
+//		'<a style="cursor: pointer;" onclick="addInputForm()" data-toggle="tooltip" title="Aggiungi" data-placement="bottom"><i style="color:green" class="fa fa-plus-circle"></i></a>' +
+//		'&nbsp;&nbsp;&nbsp;&nbsp;'+
+//		'<a style="cursor: pointer;" onclick="mainDatatable.ajax.reload()" data-toggle="tooltip" title="Reload" data-placement="bottom"><i style="color:blue" class="fa fa-refresh"></i></a>' +
+//		'</div></div>';
+	
+	var btn = '';
+
+	btn += '<table class="table no-margin no-footer aggiungiButtonRow" role="grid">';
+	btn += '<tbody>';
+	btn += '<tr role="row">';
+//	btn += '<a style="cursor: pointer;" onclick="addInputForm()" data-toggle="tooltip" title="Aggiungi" data-placement="bottom"><i style="color:green" class="fa fa-plus-circle"></i></a>';
+//	btn += '&nbsp;&nbsp;&nbsp;&nbsp;';
+//	btn += '<a style="cursor: pointer;" onclick="mainDatatable.ajax.reload()" data-toggle="tooltip" title="Reload" data-placement="bottom"><i style="color:blue" class="fa fa-refresh"></i></a>';
+	btn += '<td class="col-sm-1 tdCenter">';
+	btn += '<a style="cursor:pointer" onclick="addInputForm()" data-toggle="tooltip" title="Aggiungi" data-placement="left"><i style="color:green" class="fa fa-plus-circle"></i></a>';
+	btn += '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+	btn += '<a style="cursor:pointer" onclick="mainDatatable.ajax.reload()" data-toggle="tooltip" title="Refresh" data-placement="right"><i style="color:blue" class="fa fa-refresh"></i></a>';
+	btn += '</th>';
+	btn += '<td class="col-md-1"></th>';
+	btn += '<td class="hide"></th>';
+	btn += '<td class="col-md-1"></th>';
+	btn += '<td class="col-md-3"></th>';
+	btn += '<td class="col-md-2"></th>';
+	btn += '<td class="col-md-1"></th>';
+	btn += '<td class="col-md-1"></th>';
+	btn += '<td class="col-md-2"></th>';
+	btn += '</tr>';
+	btn += '</tbody>';          
+	btn += '</table>';
+
+	
+	
+	
 	$('#'+table).parent().append(btn);
 	
 	$('body>.tooltip').remove();
