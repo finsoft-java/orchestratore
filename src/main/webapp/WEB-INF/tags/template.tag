@@ -47,7 +47,13 @@
 			    </a>
 			    <nav class="navbar navbar-static-top">
 			      <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button"><span class="sr-only"></span></a>
+			     <div class="navbar-right" style="text-align: right;padding-right: 30px;">
+			        <span style="text-align: right;color:#ffffff"><b>'${sessionBean.userName}'</b></span>
+			        <br/>
+			        <span style="text-align: right;color:#ffffff"><b>${sessionBean.ambiente}</b></span>
+      			</div>   
 			    </nav>
+
 			  </header>
 		
 			<!-- Left side column -->
