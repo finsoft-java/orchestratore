@@ -32,7 +32,7 @@ public class WSTagDefinita {
 		try {
 
 			try {
-				boolean data = manager.tagBenDefinita(codiceMilestone, tag);
+				String data = Boolean.toString(manager.tagBenDefinita(codiceMilestone, tag));
 				return Response.ok(data, MediaType.TEXT_PLAIN).build();
 
 			} catch (EJBTransactionRolledbackException e) {

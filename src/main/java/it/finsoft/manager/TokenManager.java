@@ -1,10 +1,19 @@
 package it.finsoft.manager;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.security.Key;
 import java.util.Date;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -29,10 +38,12 @@ import it.finsoft.entity.Token;
 public class TokenManager {
 
 	/**
-	 * We need a signing key, so we'll create one just for this example. Usually
-	 * the key would be read from your application configuration instead.
+	 * The server private key used for signing and encoding messages.
 	 */
-	public static Key SERVER_SECRET_KEY = MacProvider.generateKey();
+	public static Key serverKey = null;
+
+	@Inject
+	SettingsManager settingsManager;
 
 	/**
 	 * Validita' del token in ms
@@ -43,6 +54,13 @@ public class TokenManager {
 
 	@PersistenceContext(unitName = "persistenceUnit")
 	private EntityManager em;
+
+	@PostConstruct
+	public void postConstructEJB() {
+		//either generate or load:
+		//serverKey = generateSecretKey();
+		serverKey = loadSecretKey();
+	}
 
 	public Token save(Token tosave) {
 		return em.merge(tosave);
@@ -74,7 +92,7 @@ public class TokenManager {
 		moreClaims.put("ipc", callerIP);
 
 		String compactJwts = Jwts.builder().setClaims(moreClaims).setSubject(username).setIssuedAt(now)
-				.setExpiration(expDate).signWith(SignatureAlgorithm.HS512, SERVER_SECRET_KEY).compact();
+				.setExpiration(expDate).signWith(SignatureAlgorithm.HS512, serverKey).compact();
 
 		Token t = new Token(compactJwts, username, callerIP, now, expDate);
 		save(t);
@@ -84,17 +102,18 @@ public class TokenManager {
 
 	/**
 	 * Check if it was issued by the server and if it's not expired. Check
-	 * caller IP's too. Throw exception if token is not valid.
+	 * caller IP's too.
 	 * 
 	 * @param token
 	 * @throws Exception
+	 * @return tru if token is valid
 	 */
 	public boolean validateToken(String token, String callerIP) {
 
 		Jws<Claims> jws;
 
 		try {
-			jws = Jwts.parser().setSigningKey(SERVER_SECRET_KEY).parseClaimsJws(token);
+			jws = Jwts.parser().setSigningKey(serverKey).parseClaimsJws(token);
 		} catch (Exception e) {
 			return false;
 		}
@@ -117,5 +136,53 @@ public class TokenManager {
 		}
 
 		return true;
+	}
+
+	/**
+	 * The new key is a random sequence generated through
+	 * MacProvider.generateKey(), to be used for SHA-256.
+	 * 
+	 * Questo metodo lo uso in locale per generare una nuova chiave, che poi
+	 * salvo sul server.
+	 * 
+	 * @throws IOException
+	 * @see https://stackoverflow.com/questions/11410770
+	 */
+	public Key generateSecretKey() {
+		String filename = "server.key";
+		Key key = MacProvider.generateKey();
+		FileOutputStream fos;
+		try {
+			File f = new File(filename).getAbsoluteFile();
+			System.out.println("Writing server key to " + f.getPath());
+			fos = new FileOutputStream(f, false);
+
+			try {
+				fos.write(key.getEncoded());
+			} finally {
+				fos.close();
+			}
+			return key;
+
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	/**
+	 * @throws IOException
+	 * @see https://stackoverflow.com/questions/11410770
+	 */
+	public SecretKey loadSecretKey() {
+		String filename = "server.key";
+		byte[] keyBytes;
+		try {
+			keyBytes = Files.readAllBytes(Paths.get(filename));
+			return new SecretKeySpec(keyBytes, "SHA-512");
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 }

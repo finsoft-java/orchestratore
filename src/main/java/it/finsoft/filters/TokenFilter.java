@@ -25,8 +25,9 @@ import javax.ws.rs.core.Response;
  * @author Luca Vercelli
  * 
  */
-@WebFilter("/secured/*")
-public class TokenFilter implements Filter /* ContainerRequestFilter since 2.0 */{
+@WebFilter("/ws/secured/*")
+public class TokenFilter
+		implements Filter /* ContainerRequestFilter since 2.0 */ {
 
 	private static final String AUTHENTICATION_SCHEME = "Bearer"; // Come da
 																	// standard
@@ -34,15 +35,15 @@ public class TokenFilter implements Filter /* ContainerRequestFilter since 2.0 *
 
 	@Inject
 	TokenManager tokenManager;
-	
+
 	@Override
-	public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException,
-			ServletException {
+	public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain)
+			throws IOException, ServletException {
 
 		if (req instanceof HttpServletRequest && resp instanceof HttpServletResponse) {
 
 			HttpServletRequest request = (HttpServletRequest) req;
-			HttpServletResponse response = (HttpServletResponse) req;
+			HttpServletResponse response = (HttpServletResponse) resp;
 
 			// Get the Authorization header from the request
 			String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
@@ -56,15 +57,15 @@ public class TokenFilter implements Filter /* ContainerRequestFilter since 2.0 *
 			// Extract the token from the Authorization header
 			String token = authorizationHeader.substring(AUTHENTICATION_SCHEME.length()).trim();
 
-			try {
+			// Validate the token
+			boolean valid = tokenManager.validateToken(token, request.getRemoteAddr());
 
-				// Validate the token
-				tokenManager.validateToken(token, request.getRemoteAddr());
-
-			} catch (Exception e) {
+			if (!valid) {
 				abortWithUnauthorized(request, response);
 				return;
 			}
+
+			chain.doFilter(req, resp); // Continue chain
 
 		} else {
 			chain.doFilter(req, resp); // Just continue chain
