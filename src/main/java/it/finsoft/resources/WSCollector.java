@@ -3,19 +3,23 @@ package it.finsoft.resources;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.ejb.EJBTransactionRolledbackException;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
+import org.jboss.logging.Logger;
+
 import it.finsoft.manager.WSManager;
-import it.finsoft.util.CommonJsonResponse;
+import it.finsoft.util.BusinessException;
 
 @Stateless
 @Path("secured/Collector")
@@ -25,14 +29,15 @@ public class WSCollector {
 	@Inject
 	WSManager wsManager;
 
+	public final static Logger LOG = Logger.getLogger(WSManager.class);
+
 	/**
 	 * Metodo POST per inserire dati via HTTP
 	 */
 	@POST
-	public CommonJsonResponse insertEvent(@QueryParam("entita") String codiceEntita,
-			@QueryParam("tipoEvento") String codiceTipoEvento, @QueryParam("tag") String tag, @Context UriInfo uriInfo) {
-
-		CommonJsonResponse ret = new CommonJsonResponse();
+	@Produces(MediaType.TEXT_PLAIN)
+	public Response insertEvent(@FormParam("entita") String codiceEntita,
+			@FormParam("tipoEvento") String codiceTipoEvento, @FormParam("tag") String tag, @Context UriInfo uriInfo) {
 
 		try {
 			MultivaluedMap<String, String> queryParams = uriInfo.getQueryParameters();
@@ -43,14 +48,30 @@ public class WSCollector {
 				}
 			}
 
-			wsManager.insertEvento(codiceEntita, codiceTipoEvento, tag, dettagli);
+			try {
+				wsManager.insertEvento(codiceEntita, codiceTipoEvento, tag, dettagli);
+				return Response.ok().build();
+
+			} catch (EJBTransactionRolledbackException e) {
+				// Brutto sistema per catturare la BusinessException dentro una
+				// EJB
+				if (e.getCause() != null && e.getCause().getCause() != null
+						&& e.getCause().getCause() instanceof BusinessException) {
+
+					throw (BusinessException) e.getCause().getCause();
+
+				} else {
+					throw e;
+				}
+			}
+
+		} catch (BusinessException exc) {
+			return Response.status(Response.Status.BAD_REQUEST).entity(exc.getMessage()).build();
 
 		} catch (Exception exc) {
-			ret.errorCode = "1"; // FIXME
-			ret.errorMessage = exc.getMessage();
+			LOG.error("Unexpected exception while calculating polling", exc);
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
 		}
-
-		return ret;
 
 	}
 

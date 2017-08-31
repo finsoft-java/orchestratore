@@ -6,6 +6,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
 import it.finsoft.entity.Milestone;
@@ -36,9 +37,12 @@ public class MilestoneManager {
 	public Milestone findByCod(String codiceMilestone) {
 
 		codiceMilestone = utilityCheck.trimToUp(codiceMilestone);
-
-		return em.createQuery("FROM Milestone WHERE codice= :cod", Milestone.class).setParameter("cod", codiceMilestone)
-				.getSingleResult();
+		try {
+			return em.createQuery("FROM Milestone WHERE codice= :cod", Milestone.class)
+					.setParameter("cod", codiceMilestone).getSingleResult();
+		} catch (NoResultException exc) {
+			return null;
+		}
 	}
 
 	public List<Milestone> findAll() {

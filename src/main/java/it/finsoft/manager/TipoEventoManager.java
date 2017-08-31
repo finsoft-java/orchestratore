@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
 import it.finsoft.entity.TipoEvento;
@@ -32,8 +33,12 @@ public class TipoEventoManager {
 	}
 
 	public TipoEvento findByCod(String cod) {
-		return em.createQuery("FROM TipoEvento WHERE codice=  :cod", TipoEvento.class).setParameter("cod", cod)
-				.getSingleResult();
+		try {
+			return em.createQuery("FROM TipoEvento WHERE codice=  :cod", TipoEvento.class).setParameter("cod", cod)
+					.getSingleResult();
+		} catch (NoResultException exc) {
+			return null;
+		}
 	}
 
 }

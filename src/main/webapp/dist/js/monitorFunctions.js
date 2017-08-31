@@ -161,7 +161,7 @@ function pad(numb) {
 
 function getSemaforo(datatable, numRiga, data) {
 	
-	var endpoint = wsPath + "/Polling?milestone=" + data.milestone.codice + "&tag=" + data.tag;
+	var endpoint = wsPath + "/Polling";
 	
 	var _ora = data.oraPrevista;
 	
@@ -192,9 +192,8 @@ function getSemaforo(datatable, numRiga, data) {
 		type : "POST",
 		url : endpoint,
 		dataType : "json",
+		data : "milestone=" + data.milestone.codice + "&tag=" + data.tag,
 		success : function(dataSet) {
-		   
-			dataSet = dataSet.data;
 		   
 			if (dataSet != null && dataSet != undefined) {
 				if (dataSet == 0 && diff < 0) {

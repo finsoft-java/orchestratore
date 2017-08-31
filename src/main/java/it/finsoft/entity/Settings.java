@@ -15,7 +15,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * 
  */
 @Entity
-@Table(name = "APP.T_BDOR0_SETTINGS")
+@Table(name = "T_BDOR0_SETTINGS")
 @XmlRootElement
 public class Settings implements Serializable {
 

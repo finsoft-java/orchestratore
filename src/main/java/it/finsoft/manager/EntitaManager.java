@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
 import it.finsoft.entity.Entita;
@@ -32,8 +33,12 @@ public class EntitaManager {
 	}
 
 	public Entita findByCod(String cod) {
-		return em.createQuery("FROM Entita WHERE codice = :cod", Entita.class).setParameter("cod", cod)
-				.getSingleResult();
+		try {
+			return em.createQuery("FROM Entita WHERE codice = :cod", Entita.class).setParameter("cod", cod)
+					.getSingleResult();
+		} catch (NoResultException exc) {
+			return null;
+		}
 	}
 
 }

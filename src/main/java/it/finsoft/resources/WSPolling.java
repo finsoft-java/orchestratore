@@ -1,24 +1,24 @@
 package it.finsoft.resources;
 
+import javax.ejb.EJBTransactionRolledbackException;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.jboss.logging.Logger;
 
 import it.finsoft.manager.MilestoneManager;
 import it.finsoft.manager.WSManager;
 import it.finsoft.manager.WSPollingManager;
-import it.finsoft.util.KeyNotFoundException;
-import it.finsoft.util.StringJsonResponse;
+import it.finsoft.util.BusinessException;
 
 @Stateless
-@Path("secured/Polling")
-@Produces({ MediaType.APPLICATION_JSON })
+@Path("Polling")
 public class WSPolling {
 
 	@Inject
@@ -43,24 +43,34 @@ public class WSPolling {
 	 *         completamente.
 	 */
 	@POST
-	public StringJsonResponse get(@QueryParam("milestone") String codiceMilestone, @QueryParam("tag") String tag) {
-
-		// TODO sarebbe bello restituire il dettaglio degli eventi avvenuti...
-		StringJsonResponse ret = new StringJsonResponse();
+	@Produces(MediaType.TEXT_PLAIN)
+	public Response get(@FormParam("milestone") String codiceMilestone, @FormParam("tag") String tag) {
 
 		try {
-			ret.data = Integer.toString(wsPolling.calcolaPolling(codiceMilestone, tag));
 
-		} catch (KeyNotFoundException e) {
-			ret.errorCode = "20";
-			ret.errorMessage = e.getMessage();
+			try {
+				String data = Integer.toString(wsPolling.calcolaPolling(codiceMilestone, tag));
+				return Response.ok(data, MediaType.TEXT_PLAIN).build();
+
+			} catch (EJBTransactionRolledbackException e) {
+				// Brutto sistema per catturare la BusinessException dentro una
+				// EJB
+				if (e.getCause() != null && e.getCause().getCause() != null
+						&& e.getCause().getCause() instanceof BusinessException) {
+
+					throw (BusinessException) e.getCause().getCause();
+
+				} else {
+					throw e;
+				}
+			}
+
+		} catch (BusinessException exc) {
+			return Response.status(Response.Status.BAD_REQUEST).entity(exc.getMessage()).build();
 
 		} catch (Exception exc) {
 			LOG.error("Unexpected exception while calculating polling", exc);
-			ret.errorCode = "1"; // FIXME
-			ret.errorMessage = exc.getMessage();
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
 		}
-
-		return ret;
 	}
 }

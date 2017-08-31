@@ -13,7 +13,7 @@ import it.finsoft.entity.Evento;
 import it.finsoft.entity.Milestone;
 import it.finsoft.entity.MilestoneMilestone;
 import it.finsoft.entity.TipoEvento;
-import it.finsoft.util.KeyNotFoundException;
+import it.finsoft.util.BusinessException;
 
 @Stateless
 public class WSPollingManager {
@@ -40,11 +40,12 @@ public class WSPollingManager {
 	 * 
 	 * @throws KeyNotFoundException
 	 *             se la milestone non e' ben definita
+	 * @throws BusinessException 
 	 */
-	public int calcolaPolling(String codiceMilestone, String tag) throws KeyNotFoundException {
+	public int calcolaPolling(String codiceMilestone, String tag) throws BusinessException {
 		Milestone milestone = milestoneManager.findByCod(codiceMilestone);
 		if (milestone == null)
-			throw new IllegalArgumentException("Milestone '" + codiceMilestone + "' inesistente");
+			throw new BusinessException("Milestone '" + codiceMilestone + "' inesistente");
 		return calcolaPolling(milestone, tag);
 	}
 
@@ -53,10 +54,10 @@ public class WSPollingManager {
 	 * 1 se si e' verificato in parte (per le aggregate), 2 se si e' verificato
 	 * completamente.
 	 * 
-	 * @throws KeyNotFoundException
+	 * @throws BusinessException
 	 *             se la milestone non e' ben definita
 	 */
-	public int calcolaPolling(CalendarioMilestone calendarioMilestone) throws KeyNotFoundException {
+	public int calcolaPolling(CalendarioMilestone calendarioMilestone) throws BusinessException {
 		Milestone milestone = calendarioMilestone.getMilestone();
 		String tag = calendarioMilestone.getTag();
 		return calcolaPolling(milestone, tag);
@@ -67,10 +68,10 @@ public class WSPollingManager {
 	 * 1 se si e' verificato in parte (per le aggregate), 2 se si e' verificato
 	 * completamente.
 	 * 
-	 * @throws KeyNotFoundException
+	 * @throws BusinessException
 	 *             se la milestone non e' ben definita
 	 */
-	private int calcolaPolling(Milestone milestone, String tag) throws KeyNotFoundException {
+	private int calcolaPolling(Milestone milestone, String tag) throws BusinessException {
 
 		TipoEvento tp = milestone.getTipoEvento(); // prendo il tipo evento
 		Entita ent = milestone.getEntita(); // prendo l'entita

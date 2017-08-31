@@ -21,6 +21,10 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.jboss.logging.Logger;
+
+import it.finsoft.manager.WSManager;
+
 /**
  * Simple filter that load translations from globals.properties into "labels"
  * request field.
@@ -32,6 +36,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebFilter(urlPatterns = { "*.html", "*.htm", "*.xhtml", "*.jsp" })
 public class I18nFilter implements Filter {
+
+	public final static Logger LOG = Logger.getLogger(WSManager.class);
 
 	static Map<String, Map<String, String>> properties = new HashMap<String, Map<String, String>>();
 
@@ -61,7 +67,7 @@ public class I18nFilter implements Filter {
 
 		} else {
 			// should not pass here
-			System.err.println("Not HTTP ? Why here?");
+			LOG.error("Not HTTP ? Why here?");
 			chain.doFilter(req, resp); // Just continue chain
 		}
 	}

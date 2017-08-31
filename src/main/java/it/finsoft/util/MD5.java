@@ -16,6 +16,9 @@ public class MD5 {
 	 */
 	public static String digest(String s) {
 
+		if (s == null)
+			return null;
+
 		MessageDigest m;
 		try {
 			m = MessageDigest.getInstance("MD5");

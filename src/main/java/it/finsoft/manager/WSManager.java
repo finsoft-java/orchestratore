@@ -25,6 +25,7 @@ import it.finsoft.entity.Evento;
 import it.finsoft.entity.Milestone;
 import it.finsoft.entity.MilestoneMilestone;
 import it.finsoft.entity.TipoEvento;
+import it.finsoft.util.BusinessException;
 
 /**
  * Contiene le implementazioni di (quasi) tutti i webservice.
@@ -56,7 +57,8 @@ public class WSManager {
 	 * Esegue i comandi contenuti in script.sql
 	 */
 	public String resetDb() throws FileNotFoundException, IOException {
-		BufferedReader reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/script.sql")));
+		BufferedReader reader = new BufferedReader(
+				new InputStreamReader(getClass().getResourceAsStream("/script.sql")));
 		String sql = "";
 		String error = "";
 		while (reader.ready() == true) {
@@ -102,8 +104,6 @@ public class WSManager {
 	 * relazione con le milestone, codiceEntita e codiceTipoEvento potrebbero
 	 * non corrispondere ad una milestone.
 	 * 
-	 * @throws NoResultException
-	 * @throws NonUniqueResultException
 	 * @throws HibernatetException
 	 */
 	public void insertEvento(Entita entita, TipoEvento tipoEvento, String tag, Map<String, String> dettagli) {
@@ -128,18 +128,25 @@ public class WSManager {
 	}
 
 	/**
+	 * Inserisce un evento a sistema (Webservice Collector). Non c'e'nessuna
+	 * relazione con le milestone, codiceEntita e codiceTipoEvento potrebbero
+	 * non corrispondere ad una milestone.
 	 * 
-	 * @throws NoResultException
-	 * @throws NonUniqueResultException
 	 * @throws HibernatetException
+	 * @throws BusinessException
 	 */
-	public void insertEvento(String codiceEntita, String codiceTipoEvento, String tag, Map<String, String> dettagli) {
+	public void insertEvento(String codiceEntita, String codiceTipoEvento, String tag, Map<String, String> dettagli)
+			throws BusinessException {
 
 		codiceEntita = utilityCheck.trimToUp(codiceEntita);
 		Entita entita = entitaManager.findByCod(codiceEntita);
+		if (entita == null)
+			throw new BusinessException("Entita '" + codiceEntita + "' non esistente");
 
 		codiceTipoEvento = utilityCheck.trimToUp(codiceTipoEvento);
 		TipoEvento tipoEvento = tipoEventoManager.findByCod(codiceTipoEvento);
+		if (tipoEvento == null)
+			throw new BusinessException("Tipo evento  '" + codiceTipoEvento + "' non esistente");
 
 		insertEvento(entita, tipoEvento, tag, dettagli);
 	}
@@ -151,9 +158,12 @@ public class WSManager {
 	 * @param codiceMilestone
 	 * @param tag
 	 * @return
+	 * @throws BusinessException
 	 */
-	public boolean tagBenDefinita(String codiceMilestone, String tag) {
+	public boolean tagBenDefinita(String codiceMilestone, String tag) throws BusinessException {
 		Milestone milestone = milestoneManager.findByCod(codiceMilestone);
+		if (milestone == null)
+			throw new BusinessException("Milestone '" + codiceMilestone + "' inesistente");
 		return tagBenDefinita(milestone, tag);
 	}
 
@@ -215,42 +225,43 @@ public class WSManager {
 	 * @param abi
 	 *            can be null
 	 * @return
+	 * @throws BusinessException 
 	 */
-	public String getPartCol(String nomeTabella, String annoMese, String giro, String perimetro, String abi) {
+	public String getPartCol(String nomeTabella, String annoMese, String giro, String perimetro, String abi) throws BusinessException {
 
 		if (nomeTabella == null || nomeTabella.equals("")) {
-			throw new IllegalArgumentException("missing parameter 'nomeTabella'");
+			throw new BusinessException("missing parameter 'nomeTabella'");
 		}
 
 		if (annoMese == null || annoMese.equals("")) {
-			throw new IllegalArgumentException("missing parameter 'annoMese'");
+			throw new BusinessException("missing parameter 'annoMese'");
 		}
 
 		if (annoMese.length() != 6) {
-			throw new IllegalArgumentException("'annoMese' must be in form 'YYYYMM'");
+			throw new BusinessException("'annoMese' must be in form 'YYYYMM'");
 		}
 
 		if (giro == null || giro.equals("")) {
-			throw new IllegalArgumentException("missing parameter 'giro'");
+			throw new BusinessException("missing parameter 'giro'");
 		}
 
 		if (giro.length() > 2) {
-			throw new IllegalArgumentException("'giro' can have at most 2 characters");
+			throw new BusinessException("'giro' can have at most 2 characters");
 		}
 
 		if (perimetro == null || perimetro.equals("")) {
-			throw new IllegalArgumentException("missing parameter 'perimetro'");
+			throw new BusinessException("missing parameter 'perimetro'");
 		}
 
 		if (perimetro.length() > 1) {
-			throw new IllegalArgumentException("'perimetro' must be 1 char long");
+			throw new BusinessException("'perimetro' must be 1 char long");
 		}
 
 		if (abi != null) {
 			if (abi.equals(""))
 				abi = null;
 			else if (abi.length() != 5)
-				throw new IllegalArgumentException("'abi' can be null, or a 5-digits ABI.");
+				throw new BusinessException("'abi' can be null, or a 5-digits ABI.");
 		}
 
 		// TODO. Momentaneaente, chiamiamo la stored procedure esistente.

@@ -22,7 +22,6 @@ public class EventoManager {
 	private EntityManager em;
 
 	public Evento save(Evento tosave) {
-		LOG.info("post manager ...." + tosave.toString());
 		return em.merge(tosave);
 	}
 
@@ -39,9 +38,7 @@ public class EventoManager {
 		return em.createQuery("FROM Evento", Evento.class).getResultList();
 	}
 
-	/* Aggiunta per test */
 	public List<Evento> findByTag(String tag) {
-		LOG.info("EventoManager TAG");
 		return em.createQuery("FROM Evento WHERE tag= :tag", Evento.class).setParameter("tag", tag).getResultList();
 	}
 

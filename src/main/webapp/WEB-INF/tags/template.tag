@@ -32,6 +32,13 @@
     	<link rel="shortcut icon" type="image/png" href="dist/img/favicon.ico"/>
 	</head>
 	<body class="hold-transition skin-green sidebar-mini">
+	
+		<script>
+			var wsPath = '${sessionBean.wsPath}';
+			var userName = '${sessionBean.userName}';
+			var ambiente = '${sessionBean.ambiente}';
+		</script>
+
 		<div class="wrapper">
 			<header class="main-header">
 			    <a href="index.jsp" class="logo">

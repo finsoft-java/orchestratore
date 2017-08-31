@@ -82,12 +82,6 @@
 		<script src="plugins/datatables/jquery.dataTables.js"></script>
 		<script src="plugins/datatables/dataTables.bootstrap.js"></script>
 		
-		<script>
-			var wsPath = '${sessionBean.wsPath}';
-			var userName = '${sessionBean.userName}';
-			var ambiente = '${sessionBean.ambiente}';
-		</script>
-
 		<script src="dist/js/monitorFunctions.js"></script>
 		<script>
 			attivaWidgetSelect2();

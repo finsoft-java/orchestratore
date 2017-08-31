@@ -1,15 +1,17 @@
 package it.finsoft.resources;
 
+import javax.ejb.EJBTransactionRolledbackException;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import it.finsoft.manager.WSManager;
-import it.finsoft.util.StringJsonResponse;
+import it.finsoft.util.BusinessException;
 
 /**
  * Questo servizio risponde alla domanda: per la milestone (aggregata) data, è
@@ -17,26 +19,40 @@ import it.finsoft.util.StringJsonResponse;
  * risposta è sempre positiva.
  */
 @Stateless
-@Path("secured/TagBenDefinita")
-@Produces({ MediaType.APPLICATION_JSON })
+@Path("TagBenDefinita")
 public class WSTagDefinita {
 
 	@Inject
 	WSManager manager;
 
 	@POST
-	public StringJsonResponse get(@QueryParam("codiceMilestone") String codiceMilestone, @QueryParam("tag") String tag) {
+	@Produces(MediaType.TEXT_PLAIN)
+	public Response get(@FormParam("codiceMilestone") String codiceMilestone, @FormParam("tag") String tag) {
 
-		StringJsonResponse ret = new StringJsonResponse();
 		try {
 
-			boolean benDef = manager.tagBenDefinita(codiceMilestone, tag);
-			ret.data = benDef ? "1" : "0";
+			try {
+				boolean data = manager.tagBenDefinita(codiceMilestone, tag);
+				return Response.ok(data, MediaType.TEXT_PLAIN).build();
+
+			} catch (EJBTransactionRolledbackException e) {
+				// Brutto sistema per catturare la BusinessException dentro una
+				// EJB
+				if (e.getCause() != null && e.getCause().getCause() != null
+						&& e.getCause().getCause() instanceof BusinessException) {
+
+					throw (BusinessException) e.getCause().getCause();
+
+				} else {
+					throw e;
+				}
+			}
+
+		} catch (BusinessException exc) {
+			return Response.status(Response.Status.BAD_REQUEST).entity(exc.getMessage()).build();
 
 		} catch (Exception exc) {
-			ret.errorCode = "1"; // FIXME
-			ret.errorMessage = exc.getMessage();
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
 		}
-		return ret;
 	}
 }
